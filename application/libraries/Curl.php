@@ -30,6 +30,7 @@
 			
 			// 需要通过POST方式发送的数据
 			if ($method === 'post'):
+				$params['app_type'] = 'biz'; // 应用类型默认为biz
 				curl_setopt($curl, CURLOPT_POST, count($params));
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
 			endif;

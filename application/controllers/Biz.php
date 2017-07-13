@@ -43,11 +43,9 @@
 		 * 创建时必要的字段名
 		 */
 		protected $names_create_required = array(
-			'user_id',
-			'name', 'brief_name', 'tel_public', 'tel_protected_biz',
-			'description', 'bank_name', 'bank_account', 'code_license', 'code_ssn_owner', 'code_ssn_auth',
-			'url_image_license', 'url_image_auth_id', 'url_image_auth_doc', 'url_image_produce', 'url_image_retail',
-			'url_image_owner_id', 'url_image_product',
+			'name', 'brief_name', 'tel_public',
+			'code_license', 'code_ssn_owner',
+			'url_image_license', 'url_image_owner_id',
 		);
 
 		/**
@@ -144,7 +142,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
+				$data['error'] = $result['content']['error']['message'];
 			endif;
 
 			// 将需要显示的数据传到视图以备使用
@@ -187,7 +185,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
+				$data['error'] = $result['content']['error']['message'];
 			endif;
 
 			// 将需要显示的数据传到视图以备使用
@@ -206,7 +204,7 @@
 		{
 			// 检查是否已传入必要参数
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
-			if ( empty($id) ):
+			if ( !empty($id) ):
 				$params['id'] = $id;
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
@@ -218,16 +216,13 @@
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
 			else:
-				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
+				$data['error'] = $result['content']['error']['message'];
 			endif;
 
 			// 页面信息
 			$data['title'] = $data['item']['name'];
 			$data['class'] = $this->class_name.' detail';
 			//$data['keywords'] = $this->class_name.','. $data['item']['name'];
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -271,7 +266,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
+				$data['error'] = $result['content']['error']['message'];
 			endif;
 
 			// 将需要显示的数据传到视图以备使用
@@ -292,92 +287,103 @@
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
 // 			$this->basic->permission_check($role_allowed, $min_level);
-
-			// 页面信息
-			$data = array(
-				'title' => '创建'.$this->class_name_cn,
-				'class' => $this->class_name.' create',
-			);
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '');
-			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('name', '全称', 'trim|required|min_length[7]|max_length[30]|is_unique[biz.name]');
-			$this->form_validation->set_rules('brief_name', '简称', 'trim|required|max_length[10]|is_unique[biz.brief_name]');
-			$this->form_validation->set_rules('description', '简介', 'trim|max_length[200]');
-			$this->form_validation->set_rules('tel_public', '消费者联系电话', 'trim|required|min_length[10]|max_length[13]|is_unique[biz.tel_public]');
-			$this->form_validation->set_rules('tel_protected_biz', '商务联系手机号', 'trim|required|is_natural|exact_length[11]|is_unique[biz.tel_protected_biz]');
-
-			$this->form_validation->set_rules('code_license', '统一社会信用代码', 'trim|required|exact_length[18]|is_unique[biz.code_license]');
-			$this->form_validation->set_rules('code_ssn_owner', '法人身份证号', 'trim|required|exact_length[18]|is_unique[biz.code_ssn_owner]');
-			$this->form_validation->set_rules('code_ssn_auth', '经办人身份证号', 'trim|exact_length[18]|is_unique[biz.code_ssn_auth]');
-			
-			$this->form_validation->set_rules('url_image_license', '营业执照', 'trim|required|max_length[255]');
-			$this->form_validation->set_rules('url_image_owner_id', '法人身份证', 'trim|required|max_length[255]');
-			$this->form_validation->set_rules('url_image_auth_id', '经办人身份证', 'trim|max_length[255]');
-			$this->form_validation->set_rules('url_image_auth_doc', '授权书', 'trim|max_length[255]');
-			
-			$this->form_validation->set_rules('bank_name', '开户行名称', 'trim|min_length[3]|max_length[20]');
-			$this->form_validation->set_rules('bank_account', '开户行账号', 'trim|max_length[30]|is_unique[biz.bank_account]');
-
-			$this->form_validation->set_rules('url_image_product', '产品', 'trim|max_length[255]');
-			$this->form_validation->set_rules('url_image_produce', '工厂/产地', 'trim|max_length[255]');
-			$this->form_validation->set_rules('url_image_retail', '门店/柜台', 'trim|max_length[255]');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] = validation_errors();
+	
+			// 若为其它商家的员工，不允许创建商家
+			if ( !empty($this->session->biz_id) ):
+				$data['title'] = $this->class_name_cn. '创建失败';
+				$data['class'] = 'fail';
+				$data['content'] = '您目前是其它商家的成员，不可创建商家；请与当前所属商家解除关系后再尝试。';
 
 				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/create', $data);
+				$this->load->view($this->view_root.'/result', $data);
 				$this->load->view('templates/footer', $data);
 
 			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_create_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) )
-						redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-				endforeach;
-				
-				// 需要创建的数据；逐一赋值需特别处理的字段
-				$data_to_create = array(
-					'creator_id' => $this->session->user_id,
-					'tel_protected_biz' => $this->session->mobile,
-					//'name' => $this->input->post('name')),
+
+				// 页面信息
+				$data = array(
+					'title' => '创建'.$this->class_name_cn,
+					'class' => $this->class_name.' create',
 				);
-				// 自动生成无需特别处理的数据
-				$data_need_no_prepare = array(
-					'biz_id', 'name', 'brief_name', 'url_name', 'url_logo', 'slogan', 'description', 'notification', 'tel_public', 'tel_protected_fiscal', 'tel_protected_order', 'freight', 'freight_free_subtotal', 'freight_free_count', 'min_order_subtotal', 'delivery_time_start', 'delivery_time_end', 'country', 'province', 'city', 'county', 'detail', 'longitude', 'latitude', 'bank_name', 'bank_account', 'code_license', 'code_ssn_owner', 'code_ssn_auth', 'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_web', 'url_weibo', 'url_taobao', 'url_wechat', 'url_image_product', 'url_image_produce', 'url_image_retail', 'note_admin', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id', 'status',
-				);
-				foreach ($data_need_no_prepare as $name)
-					$data_to_create[$name] = $this->input->post($name);
 
-				// 向API服务器发送待创建数据
-				$params = $data_to_create;
-				$url = api_url($this->class_name. '/create');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn. '创建成功';
-					$data['class'] = 'success';
-					$data['message'] = $result['content']['message'];
-					$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
+				// 待验证的表单项
+				$this->form_validation->set_error_delimiters('', '');
+				// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
+				$this->form_validation->set_rules('name', '全称', 'trim|required|min_length[7]|max_length[30]');
+				$this->form_validation->set_rules('brief_name', '简称', 'trim|required|max_length[10]');
+				$this->form_validation->set_rules('description', '简介', 'trim|max_length[200]');
+				$this->form_validation->set_rules('tel_public', '消费者联系电话', 'trim|required|min_length[10]|max_length[13]');
 
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
+				$this->form_validation->set_rules('code_license', '统一社会信用代码', 'trim|required|exact_length[18]');
+				$this->form_validation->set_rules('code_ssn_owner', '法人身份证号', 'trim|required|exact_length[18]');
+				$this->form_validation->set_rules('code_ssn_auth', '经办人身份证号', 'trim|exact_length[18]');
+			
+				$this->form_validation->set_rules('url_image_license', '营业执照', 'trim|required|max_length[255]');
+				$this->form_validation->set_rules('url_image_owner_id', '法人身份证', 'trim|required|max_length[255]');
+				$this->form_validation->set_rules('url_image_auth_id', '经办人身份证', 'trim|max_length[255]');
+				$this->form_validation->set_rules('url_image_auth_doc', '授权书', 'trim|max_length[255]');
+			
+				$this->form_validation->set_rules('bank_name', '开户行名称', 'trim|min_length[3]|max_length[20]');
+				$this->form_validation->set_rules('bank_account', '开户行账号', 'trim|max_length[30]');
 
-				else:
-					// 若创建失败，则进行提示
-					$data['error'] = $result['content']['error']['message'];
+				$this->form_validation->set_rules('url_image_product', '产品', 'trim|max_length[255]');
+				$this->form_validation->set_rules('url_image_produce', '工厂/产地', 'trim|max_length[255]');
+				$this->form_validation->set_rules('url_image_retail', '门店/柜台', 'trim|max_length[255]');
+
+				// 若表单提交不成功
+				if ($this->form_validation->run() === FALSE):
+					$data['error'] = validation_errors();
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/create', $data);
 					$this->load->view('templates/footer', $data);
 
-				endif;
+				else:
+					// 需要创建的数据；逐一赋值需特别处理的字段
+					$data_to_create = array(
+						'user_id' => $this->session->user_id,
+						'tel_protected_biz' => $this->session->mobile,
+						//'name' => $this->input->post('name')),
+					);
+					// 自动生成无需特别处理的数据
+					$data_need_no_prepare = array(
+						'name', 'brief_name', 'tel_public',
+						'description', 'bank_name', 'bank_account', 'code_license', 'code_ssn_owner', 'code_ssn_auth',
+						'url_image_license', 'url_image_auth_id', 'url_image_auth_doc', 'url_image_produce', 'url_image_retail',
+						'url_image_owner_id', 'url_image_product',
+					);
+					foreach ($data_need_no_prepare as $name)
+						$data_to_create[$name] = $this->input->post($name);
+
+					// 向API服务器发送待创建数据
+					$params = $data_to_create;
+					$url = api_url($this->class_name. '/create');
+					$result = $this->curl->go($url, $params, 'array');
+					if ($result['status'] === 200):
+						$data['title'] = $this->class_name_cn. '创建成功';
+						$data['class'] = 'success';
+						$data['content'] = $result['content']['message'];
+						$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
+
+						// 更新本地商家信息
+						$this->session->biz_id = $data['id'];
+
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/result', $data);
+						$this->load->view('templates/footer', $data);
+
+					else:
+						// 若创建失败，则进行提示
+						$data['error'] = $result['content']['error']['message'];
+
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/create', $data);
+						$this->load->view('templates/footer', $data);
+
+					endif;
 				
+				endif;
+
 			endif;
 		} // end create
 
@@ -447,7 +453,7 @@
 				$data['error'] = validation_errors();
 
 				// 从API服务器获取相应详情信息
-				$params['id'] = $this->input->get('id');
+				$params['id'] = $this->input->get_post('id');
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -461,18 +467,10 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) )
-						redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-				endforeach;
-
 				// 需要编辑的数据；逐一赋值需特别处理的字段
 				$data_to_edit = array(
-					'id' => $id,
-					'operator_id' => $this->session->user_id,
+					'id' => $this->input->post('id'),
+					'user_id' => $this->session->user_id,
 					//'name' => $this->input->post('name')),
 				);
 				// 自动生成无需特别处理的数据
@@ -493,7 +491,7 @@
 				if ($result['status'] === 200):
 					$data['title'] = $this->class_name_cn. '修改成功';
 					$data['class'] = 'success';
-					$data['message'] = $result['content']['message'];
+					$data['content'] = $result['content']['message'];
 					$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -502,7 +500,7 @@
 
 				else:
 					// 若创建失败，则进行提示
-					$data['message'] = $result['content']['error']['message'];
+					$data['error'] = $result['content']['error']['message'];
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/edit', $data);
@@ -582,13 +580,13 @@
 				$data['error'] = validation_errors();
 
 				// 从API服务器获取相应详情信息
-				$params['id'] = $this->input->get('id');
+				$params['id'] = $this->input->get_post('id');
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
 					$data['item'] = $result['content'];
 				else:
-					redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
+					$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
 				endif;
 
 				$this->load->view('templates/header', $data);
@@ -601,8 +599,10 @@
 				foreach ($required_params as $param):
 					${$param} = $this->input->post($param);
 					if ( $param !== 'value' && empty( ${$param} ) ): // value 可以为空；必要字段会在字段验证中另行检查
-						$this->result['status'] = 400;
-						$this->result['content']['error']['message'] = '必要的请求参数未全部传入';
+						$data['error'] = '必要的请求参数未全部传入';
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/'.$op_view, $data);
+						$this->load->view('templates/footer', $data);
 						exit();
 					endif;
 				endforeach;
@@ -622,7 +622,7 @@
 				if ($result['status'] === 200):
 					$data['title'] = $this->class_name_cn. '修改成功';
 					$data['class'] = 'success';
-					$data['message'] = $result['content']['message'];
+					$data['content'] = $result['content']['message'];
 					$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -690,8 +690,10 @@
 				foreach ($required_params as $param):
 					${$param} = $this->input->post($param);
 					if ( empty( ${$param} ) ):
-						$this->result['status'] = 400;
-						$this->result['content']['error']['message'] = '必要的请求参数未全部传入';
+						$data['error'] = '必要的请求参数未全部传入';
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/'.$op_view, $data);
+						$this->load->view('templates/footer', $data);
 						exit();
 					endif;
 				endforeach;
@@ -711,7 +713,7 @@
 				if ($result['status'] === 200):
 					$data['title'] = $this->class_name_cn.$op_name. '成功';
 					$data['class'] = 'success';
-					$data['message'] = $result['content']['message'];
+					$data['content'] = $result['content']['message'];
 					$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -720,7 +722,7 @@
 
 				else:
 					// 若创建失败，则进行提示
-					$data['message'] = $result['content']['error']['message'];
+					$data['error'] = $result['content']['error']['message'];
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/'.$op_view, $data);
@@ -778,8 +780,10 @@
 				foreach ($required_params as $param):
 					${$param} = $this->input->post($param);
 					if ( empty( ${$param} ) ):
-						$this->result['status'] = 400;
-						$this->result['content']['error']['message'] = '必要的请求参数未全部传入';
+						$data['error'] = '必要的请求参数未全部传入';
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/'.$op_view, $data);
+						$this->load->view('templates/footer', $data);
 						exit();
 					endif;
 				endforeach;
@@ -799,7 +803,7 @@
 				if ($result['status'] === 200):
 					$data['title'] = $this->class_name_cn.$op_name. '成功';
 					$data['class'] = 'success';
-					$data['message'] = $result['content']['message'];
+					$data['content'] = $result['content']['message'];
 					$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -808,7 +812,7 @@
 
 				else:
 					// 若创建失败，则进行提示
-					$data['message'] = $result['content']['error']['message'];
+					$data['error'] = $result['content']['error']['message'];
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/'.$op_view, $data);

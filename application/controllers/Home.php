@@ -61,6 +61,19 @@
 				'class' => $this->class_name, // 页面body标签的class属性值
 			);
 			
+			// 若当前用户是某商家员工，获取该商家信息
+			if ( !empty($this->session->biz_id) ):
+				// 从API服务器获取相应详情信息
+				$params['id'] = $this->session->biz_id;
+				$url = api_url('biz/detail');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['biz'] = $result['content'];
+				else:
+					$data['error'] = $result['content']['error']['message'];
+				endif;
+			endif;
+
 			// 载入视图
 			$this->load->view('templates/header', $data);
 			$this->load->view('home', $data);

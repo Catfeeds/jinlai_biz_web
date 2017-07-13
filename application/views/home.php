@@ -21,21 +21,15 @@
 </style>
 
 <div id=content class=container>
-	<?php var_dump($this->session->password) ?>
-	<?php var_dump($this->session->avatar) ?>
-	<?php var_dump($this->session->mobile) ?>
-	<?php var_dump($this->session->biz_id) ?>
-	<?php var_dump($this->session->role) ?>
-	<?php var_dump($this->session->level) ?>
-
-	<?php //if ( empty($this->session->biz_id) ): ?>
+	<?php if ( empty($this->session->biz_id) ): ?>
 	<a title="创建商家" class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('biz/create') ?>">创建商家</a>
 
-	<?php //elseif ( empty($biz) ): ?>
+	<?php elseif ( empty($biz) ): ?>
 	<p>商家状态异常</p>
 
-	<?php //else: ?>
+	<?php else: ?>
 	<section id=biz-info>
+		<h2>我的商家</h2>
 		<a title="商家详情" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">
 			<ul class=row>
 				<li><?php echo $biz['brief_name'] ?></li>
@@ -99,5 +93,5 @@
 		</ul>
 	</section>
 
-	<?php //endif ?>
+<?php endif ?>
 </div>
