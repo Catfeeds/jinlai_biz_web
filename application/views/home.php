@@ -22,25 +22,24 @@
 
 <div id=content class=container>
 	<?php if ( empty($this->session->biz_id) ): ?>
-	<a title="创建商家" class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('biz/create') ?>">创建商家</a>
+	<a title="创建商家" class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('biz/create') ?>">申请入驻</a>
 
 	<?php elseif ( empty($biz) ): ?>
 	<p>商家状态异常</p>
 
 	<?php else: ?>
 	<section id=biz-info>
-		<h2>我的商家</h2>
 		<a title="商家详情" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">
-			<ul class=row>
-				<li><?php echo $biz['brief_name'] ?></li>
+			<h2><?php echo $biz['brief_name'] ?></h2>
+			<ul class="row text-right">
 				<li><?php echo $biz['name'] ?></li>
-				<li><?php echo $biz['tel_public'] ?></li>
-				<li><?php echo $biz['tel_protected_biz'] ?></li>
-				<li><?php echo $biz['status'] ?></li>
+				<li>消费者服务电话 <?php echo $biz['tel_public'] ?></li>
+				<li>经营状态 <?php echo $biz['status'] ?></li>
 			</ul>
 		</a>
 	</section>
 
+		<?php if ($biz['status'] !== '待受理'): ?>
 	<section id=order-status>
 		<ul class=row>
 			<li class="col-xs-4 col-md-2">
@@ -63,7 +62,7 @@
 			</li>
 		</ul>
 	</section>
-	
+
 	<section id=function-list>
 		<ul class=row>
 			<li class="col-xs-3 col-md-2">
@@ -92,6 +91,6 @@
 			</li>
 		</ul>
 	</section>
-
-<?php endif ?>
+		<?php endif ?>
+	<?php endif ?>
 </div>

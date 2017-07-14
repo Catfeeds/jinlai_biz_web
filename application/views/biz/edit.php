@@ -53,6 +53,32 @@
 			<legend>基本信息</legend>
 			
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
+			
+			<div class=form-group>
+				<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号</label>
+				<div class=col-sm-10>
+					<p class="form-control-static"><?php echo $this->session->mobile ?></p>
+				</div>
+			</div>
+			
+			<div class=form-group>
+				<label for=name class="col-sm-2 control-label">商家名称</label>
+				<div class=col-sm-10>
+					<p class="form-control-static"><?php echo $item['name'] ?></p>
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=brief_name class="col-sm-2 control-label">简称</label>
+				<div class=col-sm-10>
+					<p class="form-control-static"><?php echo $item['brief_name'] ?></p>
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=url_name class="col-sm-2 control-label">店铺域名</label>
+				<div class=col-sm-10>
+					<p class="form-control-static"><?php echo $item['url_name'] ?></p>
+				</div>
+			</div>
 
 			<div class=form-group>
 				<label for=url_logo class="col-sm-2 control-label">LOGO</label>

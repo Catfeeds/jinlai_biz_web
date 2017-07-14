@@ -22,15 +22,27 @@
 			), // 接收到的请求参数
 			'timestamp' => null, // 返回时时间戳
 			'datetime' => null, // 返回时可读日期
-			'timezone' => null, // 服务器本地市区
+			'timezone' => null, // 服务器本地时区
 			'elapsed_time' => null, // 处理业务请求时间
 		);
 
+		/* 类名称小写，应用于多处动态生成内容 */
+		public $class_name;
+
+		/* 类名称中文，应用于多处动态生成内容 */
+		public $class_name_cn;
+		
 		/* 主要相关表名 */
 		public $table_name;
 
 		/* 主要相关表的主键名*/
 		public $id_name;
+		
+		/* 视图文件所在目录名 */
+		public $view_root;
+		
+		/* 需要显示的字段 */
+		public $data_to_display;
 
 		// 客户端类型
 		protected $app_type;
@@ -54,56 +66,30 @@
 	    {
 	        parent::__construct();
 
-			// 统计业务逻辑运行时间起点
-			$this->benchmark->mark('start');
-
-			// 若无任何通过POST方式传入的请求参数，提示并退出
-			if ( empty($_POST) ):
-				$this->result['status'] = 000;
-				$this->result['content']['error']['message'] = '请求方式不正确';
-				exit();
-			endif;
-
 			// 向类属性赋值
 			$this->timestamp = time();
-			$this->app_type = $this->input->post('app_type');
-			$this->app_version = $this->input->post('app_version');
-			$this->device_platform = $this->input->post('device_platform');
-			$this->device_number = $this->input->post('device_number');
-
-			// 签名有效性检查
-			// 测试环境可跳过签名检查
-			if ( ENVIRONMENT !== 'development' && $this->input->post('skip_sign') !== 'please' )
-				$this->sign_check();
+			$this->app_type = 'biz';
+			$this->app_version = '0.0.1';
+			$this->device_platform = 'web';
+			$this->device_number = '';
 	    }
 
+		/**
+		 * 截止3.1.3为止，CI_Controller类无析构函数，所以无需继承相应方法
+		 */
 		public function __destruct()
 		{
-			// 将请求参数一并返回以便调试
-			$this->result['param']['get'] = $this->input->get();
-			$this->result['param']['post'] = $this->input->post();
-
-			// 返回服务器端时间信息
-			$this->result['timestamp'] = time();
-			$this->result['datetime'] = date('Y-m-d H:i:s');
-			$this->result['timezone'] = date_default_timezone_get();
-
-			// 统计业务逻辑运行时间终点
-			$this->benchmark->mark('end');
-			// 计算并输出业务逻辑运行时间（秒）
-			$this->result['elapsed_time'] = $this->benchmark->elapsed_time('start', 'end');
-
-			header("Content-type:application/json;charset=utf-8");
-			$output_json = json_encode($this->result);
-			echo $output_json;
+			
 		}
 
 		/**
 		 * 签名有效性检查
 		 *
 		 * 依次检查签名的时间是否过期、参数是否完整、签名是否正确
+		 *
+		 * @params array sign_to_check 待检查的签名数据
 		 */
-		public function sign_check()
+		public function sign_check($sign_to_check)
 		{
 			$this->sign_check_exits();
 			$this->sign_check_time();
@@ -111,7 +97,7 @@
 			$this->sign_check_string();
 		}
 
-		// 检查签名是否传入
+		// TODO 检查签名是否传入
 		public function sign_check_exits()
 		{
 			$this->sign = $this->input->post('sign');
@@ -123,7 +109,7 @@
 			endif;
 		}
 
-		// 签名时间检查
+		// TODO 签名时间检查
 		public function sign_check_time()
 		{
 			$timestamp_sign = $this->input->post('timestamp');
@@ -134,6 +120,7 @@
 				exit();
 
 			else:
+				$this->timestamp = time();
 				$time_difference = ($this->timestamp - $timestamp_sign);
 
 				// 测试阶段签名有效期为600秒，生产环境应为60秒
@@ -150,7 +137,7 @@
 			endif;
 		}
 
-		// 签名参数检查
+		// TODO 签名参数检查
 		public function sign_check_params()
 		{
 			// 检查需要参与签名的必要参数；
@@ -175,7 +162,7 @@
 			endif;
 		}
 
-		// 签名正确性检查
+		// TODO 签名正确性检查
 		public function sign_check_string()
 		{
 			// 获取传入的参数们
@@ -225,80 +212,23 @@
 		}
 
 		/**
-		 * 客户端检查
+		 * 权限检查
 		 *
-		 * 根据客户端类型、版本号、平台等进行权限检查
+		 * @param array $role_allowed 拥有相应权限的角色
+		 * @param int $min_level 最低级别要求
+		 * @return void
 		 */
-		public function client_check($type_allowed, $platform_allowed = NULL, $min_version = NULL)
+		protected function permission_check($role_allowed, $min_level)
 		{
-			if ( !in_array($this->app_type, $type_allowed) ):
-				$this->result['status'] = 450;
-				$this->result['content']['error']['message'] = '当前类型的客户端不可进行该操作';
-				exit();
+			// 目前管理员角色和级别
+			$current_role = $this->session->role;
+			$current_level = $this->session->level;
 
-			elseif ( isset($platform_allowed) && !in_array($this->device_platform, $platform_allowed) ):
-				$this->result['status'] = 451;
-				$this->result['content']['error']['message'] = '当前软件平台的客户端不可进行该操作';
-				exit();
-
-			endif;
-
-			// 若已限制最低版本，进行检查
-			if ( isset($min_version) ):
-				$min_version_array = explode('.', $min_version);
-				$current_version_array = explode('.', $this->app_version);
-				
-				// 依次进行营销版本、功能版本、维护版本的版本号对比并进行提示
-				for ($i=0; $i<3; $i++):
-					if ($current_version_array[$i] < $min_version_array[$i]):
-						$this->result['status'] = 452;
-						$this->result['content']['error']['message'] = '当前版本的客户端不可进行该操作';
-						exit();
-					endif;
-				endfor;
-
-			else:
-				return TRUE;
-
-			endif;
-		}
-
-		/**
-		 * TODO 权限检查
-		 *
-		 * 对已登录用户，根据所需角色、所需等级等进行权限检查
-		 */
-		public function permission_check($role_allowed, $min_level)
-		{
-			return TRUE;
-		}
-
-		/**
-		 * 操作者有效性检查；通过操作者类型、ID、密码进行验证
-		 */
-		public function operator_check()
-		{
-			$table_name = $this->input->post('operator_type');
-
-			// 设置数据库参数
-			$this->basic_model->table_name = $table_name;
-			$this->basic_model->id_name = $table_name.'_id';
-			
-			// 尝试获取复合条件的数据
-			$data_to_search = array(
-				$table_name.'_id' => $this->input->post('operator_id'),
-				'password' => $this->input->post('password'),
-			);
-			$result = $this->basic_model->match($data_to_search);
-
-			// 还原原有数据库参数
-			$this->basic_model->table_name = $this->table_name;
-			$this->basic_model->id_name = $this->id_name;
-
-			if ( !empty($result) ):
-				return TRUE;
-			else:
-				return FALSE;
+			// 检查执行此操作的角色及权限要求
+			if ( ! in_array($current_role, $role_allowed)):
+				redirect( base_url('error/permission_role') );
+			elseif ( $current_level < $min_level):
+				redirect( base_url('error/permission_level') );
 			endif;
 		}
 	}

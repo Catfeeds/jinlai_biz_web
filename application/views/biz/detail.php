@@ -56,7 +56,7 @@
 	<dl id=list-info class=dl-horizontal>
 		<dt>商家ID</dt>
 		<dd><?php echo $item['biz_id'] ?></dd>
-		<dt>全称</dt>
+		<dt>商家名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>简称</dt>
 		<dd><?php echo $item['brief_name'] ?></dd>
@@ -74,8 +74,6 @@
 		<dd><?php echo $item['tel_public'] ?></dd>
 		<dt>商务联系手机号</dt>
 		<dd><?php echo $item['tel_protected_biz'] ?></dd>
-		<dt>财务联系手机号</dt>
-		<dd><?php echo $item['tel_protected_fiscal'] ?></dd>
 		<dt>订单通知手机号</dt>
 		<dd><?php echo $item['tel_protected_order'] ?></dd>
 		<dt>每笔订单运费（元）</dt>
@@ -86,6 +84,54 @@
 		<dd><?php echo $item['freight_free_count'] ?></dd>
 		<dt>最低小计金额（元）</dt>
 		<dd><?php echo $item['min_order_subtotal'] ?></dd>
+		<dt>官方网站</dt>
+		<dd><?php echo $item['url_web'] ?></dd>
+		<dt>官方微博</dt>
+		<dd><?php echo $item['url_weibo'] ?></dd>
+		<dt>淘宝/天猫店铺</dt>
+		<dd><?php echo $item['url_taobao'] ?></dd>
+		<dt>微信二维码</dt>
+		<dd><?php echo $item['url_wechat'] ?></dd>
+		<dt>产品</dt>
+		<dd><?php echo $item['url_image_product'] ?></dd>
+		<dt>工厂/产地</dt>
+		<dd><?php echo $item['url_image_produce'] ?></dd>
+		<dt>门店/柜台</dt>
+		<dd><?php echo $item['url_image_retail'] ?></dd>
+		<dt>状态</dt>
+		<dd><?php echo $item['status'] ?></dd>
+	</dl>
+	
+	<h2>资质信息</h2>
+	<dl class=dl-horizontal>
+		<dt>统一社会信用代码</dt>
+		<dd><?php echo $item['code_license'] ?></dd>
+		<dt>法人身份证号</dt>
+		<dd><?php echo $item['code_ssn_owner'] ?></dd>
+		<dt>经办人身份证号</dt>
+		<dd><?php echo $item['code_ssn_auth'] ?></dd>
+		<dt>营业执照</dt>
+		<dd><?php echo $item['url_image_license'] ?></dd>
+		<dt>法人身份证</dt>
+		<dd><?php echo $item['url_image_owner_id'] ?></dd>
+		<dt>经办人身份证</dt>
+		<dd><?php echo $item['url_image_auth_id'] ?></dd>
+		<dt>授权书</dt>
+		<dd><?php echo $item['url_image_auth_doc'] ?></dd>
+	</dl>
+	
+	<h2>财务信息</h2>
+	<dl class=dl-horizontal>
+		<dt>财务联系手机号</dt>
+		<dd><?php echo $item['tel_protected_fiscal'] ?></dd>
+		<dt>开户行名称</dt>
+		<dd><?php echo $item['bank_name'] ?></dd>
+		<dt>开户行账号</dt>
+		<dd><?php echo $item['bank_account'] ?></dd>
+	</dl>
+	
+	<h2>物流信息</h2>
+	<dl class=dl-horizontal>
 		<dt>配送起始时间</dt>
 		<dd><?php echo $item['delivery_time_start'] ?></dd>
 		<dt>配送结束时间</dt>
@@ -104,41 +150,6 @@
 		<dd><?php echo $item['longitude'] ?></dd>
 		<dt>纬度</dt>
 		<dd><?php echo $item['latitude'] ?></dd>
-		<dt>开户行名称</dt>
-		<dd><?php echo $item['bank_name'] ?></dd>
-		<dt>开户行账号</dt>
-		<dd><?php echo $item['bank_account'] ?></dd>
-		<dt>统一社会信用代码</dt>
-		<dd><?php echo $item['code_license'] ?></dd>
-		<dt>法人身份证号</dt>
-		<dd><?php echo $item['code_ssn_owner'] ?></dd>
-		<dt>经办人身份证号</dt>
-		<dd><?php echo $item['code_ssn_auth'] ?></dd>
-		<dt>营业执照</dt>
-		<dd><?php echo $item['url_image_license'] ?></dd>
-		<dt>法人身份证</dt>
-		<dd><?php echo $item['url_image_owner_id'] ?></dd>
-		<dt>经办人身份证</dt>
-		<dd><?php echo $item['url_image_auth_id'] ?></dd>
-		<dt>授权书</dt>
-		<dd><?php echo $item['url_image_auth_doc'] ?></dd>
-		<dt>官方网站</dt>
-		<dd><?php echo $item['url_web'] ?></dd>
-		<dt>官方微博</dt>
-		<dd><?php echo $item['url_weibo'] ?></dd>
-		<dt>淘宝/天猫店铺</dt>
-		<dd><?php echo $item['url_taobao'] ?></dd>
-		<dt>微信二维码</dt>
-		<dd><?php echo $item['url_wechat'] ?></dd>
-		<dt>产品</dt>
-		<dd><?php echo $item['url_image_product'] ?></dd>
-		<dt>工厂/产地</dt>
-		<dd><?php echo $item['url_image_produce'] ?></dd>
-		<dt>门店/柜台</dt>
-		<dd><?php echo $item['url_image_retail'] ?></dd>
-		<dt>状态</dt>
-		<dd><?php echo $item['status'] ?></dd>
-
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

@@ -23,7 +23,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20170713">
+		<meta name=version content="revision20170715">
 		<meta name=author content="刘亚杰Kamas">
 		<meta name=copyright content="青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -96,11 +96,12 @@
 								<?php endif ?>
 							</ul>
 						</li>
+				<?php if ( !empty($this->session->biz_id) ): ?>
 
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>商家<b class=caret></b></a>
 							<ul class=dropdown-menu>
-								<li><a title="我的店铺" href="<?php echo base_url('biz/mine') ?>">店铺资料</a></li>
+								<li><a title="我的店铺" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">店铺资料</a></li>
 							</ul>
 						</li>
 
@@ -108,6 +109,7 @@
 						// 仅获得大于10的权限的管理员可以管理员工
 						if ($this->session->role === '管理员' && $this->session->level > 10):
 						?>
+						<!--
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>员工<b class=caret></b></a>
 							<ul class=dropdown-menu>
@@ -115,6 +117,7 @@
 								<li><a title="创建员工" href="<?php echo base_url('stuff/create') ?>">创建员工</a></li>
 							</ul>
 						</li>
+						-->
 						<?php endif ?>
 
 						<li class=dropdown>
@@ -137,14 +140,18 @@
 							</ul>
 						</li>
 
+						<!--
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>店内营销<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>营销活动<b class=caret></b></a>
 							<ul class=dropdown-menu>
-								<li><a title="活动列表" href="<?php echo base_url('promotion') ?>">活动列表</a></li>
-								<li><a title="创建活动" href="<?php echo base_url('promotion/create') ?>">创建活动</a></li>
+								<li><a title="店内活动列表" href="<?php echo base_url('promotion_biz') ?>">店内活动列表</a></li>
+								<li><a title="创建店内活动" href="<?php echo base_url('promotion_biz/create') ?>">创建店内活动</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a title="平台活动列表" href="<?php echo base_url('promotion') ?>">平台活动列表</a></li>
+								<li><a title="平台活动" href="<?php echo base_url('promotion/create') ?>">申请平台活动</a></li>
 							</ul>
 						</li>
-						
+
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>优惠券<b class=caret></b></a>
 							<ul class=dropdown-menu>
@@ -155,6 +162,7 @@
 								<li><a title="创建优惠券包" href="<?php echo base_url('coupon_combo/create') ?>">创建优惠券包</a></li>
 							</ul>
 						</li>
+						-->
 
 						<!--
 						<li class=dropdown>
@@ -183,6 +191,7 @@
 						-->
 						<?php endif ?>
 					</ul>
+		<?php endif ?>
 
 					<ul class="nav navbar-nav navbar-right">
 						<?php if ( !isset($this->session->time_expire_login) ): ?>

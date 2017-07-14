@@ -31,13 +31,15 @@ a {color:#333;text-decoration:none;/* 清理BootStrap样式 */}
 noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid rgba(27,31,35,0.15);}
 
 /* 主导航栏 */
-#nav-main {text-align:center;background-color:#fff;position:fixed;bottom:0;left:0;right:0;height:6rem;z-index:101;}
+#nav-main {text-align:center;background-color:#fff;border-top:1px solid #ddd;position:fixed;bottom:0;left:0;right:0;height:6rem;line-height:6rem;z-index:101;}
 	#nav-main ul {height:100%;}
 		#nav-main li {width:25%;height:100%;display:inline-block;}
 			#nav-main a {width:100%;height:100%;display:block;}
 				#nav-main a.active {background-color:#aaa;}
 
-#footer {text-align:center;}
+#breadcrumb {display:none;}
+
+#footer {text-align:center;display:none;}
 
 /* 宽度在750像素以上的设备 */
 @media only screen and (min-width:751px)
@@ -45,6 +47,10 @@ noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid r
 	body {margin-bottom:0}
 	
 	#nav-main {display:none;}
+	
+	#breadcrumb {display:block;}
+	
+	#footer {text-align:left;}
 }
 
 /* 宽度在960像素以上的设备 */
