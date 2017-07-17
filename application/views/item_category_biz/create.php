@@ -20,6 +20,8 @@
 	}
 </style>
 
+<base href="<?php echo base_url('uploads/') ?>">
+
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
 		<li><a href="<?php echo base_url() ?>">首页</a></li>
@@ -50,69 +52,53 @@
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
-			<legend>基本信息</legend>
+			<div class=form-group>
+				<label for=system_category_id class="col-sm-2 control-label">所属系统商品分类</label>
+				<div class=col-sm-10>
+					<select class=form-control name=system_category_id required>
+						<option value="">请选择</option>
+						<?php foreach ($categories as $option): ?>
+							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('system_category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
+			
+			<?php if ( !empty($biz_categories) ): ?>
+			<div class=form-group>
+				<label for=parent_id class="col-sm-2 control-label">所属商家商品分类</label>
+				<div class=col-sm-10>
+					<select class=form-control name=parent_id required>
+						<option value="">请选择</option>
+						<?php foreach ($biz_categories as $option): ?>
+							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('parent_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
+			<?php endif ?>
 
-									<div class=form-group>
-							<label for=category_id class="col-sm-2 control-label">商品分类ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=category_id type=text value="<?php echo set_value('category_id') ?>" placeholder="商品分类ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=biz_id class="col-sm-2 control-label">所属商家企业ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=biz_id type=text value="<?php echo set_value('biz_id') ?>" placeholder="所属商家企业ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=parent_id class="col-sm-2 control-label">所属分类ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=parent_id type=text value="<?php echo set_value('parent_id') ?>" placeholder="所属分类ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=name class="col-sm-2 control-label">名称</label>
-							<div class=col-sm-10>
-								<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="名称" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=url_image class="col-sm-2 control-label">图片URL</label>
-							<div class=col-sm-10>
-								<input class=form-control name=url_image type=text value="<?php echo set_value('url_image') ?>" placeholder="图片URL" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_create class="col-sm-2 control-label">创建时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_create type=text value="<?php echo set_value('time_create') ?>" placeholder="创建时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_delete class="col-sm-2 control-label">删除时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_delete type=text value="<?php echo set_value('time_delete') ?>" placeholder="删除时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_edit class="col-sm-2 control-label">最后操作时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_edit type=text value="<?php echo set_value('time_edit') ?>" placeholder="最后操作时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=creator_id class="col-sm-2 control-label">创建者ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=creator_id type=text value="<?php echo set_value('creator_id') ?>" placeholder="创建者ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=operator_id class="col-sm-2 control-label">最后操作者ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=operator_id type=text value="<?php echo set_value('operator_id') ?>" placeholder="最后操作者ID" required>
-							</div>
-						</div>
+			<div class=form-group>
+				<label for=name class="col-sm-2 control-label">名称</label>
+				<div class=col-sm-10>
+					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="名称" required>
+				</div>
+			</div>
 
+			<div class=form-group>
+				<label for=url_image class="col-sm-2 control-label">图片</label>
+				<div class=col-sm-10>
+					<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+
+					<?php $name_to_upload = 'url_image' ?>
+					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
+
+					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="item_category_biz/url_image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+					<ul class="upload_preview list-inline row"></ul>
+				</div>
+			</div>
 		</fieldset>
 
 		<div class=form-group>

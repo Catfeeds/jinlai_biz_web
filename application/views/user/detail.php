@@ -20,6 +20,8 @@
 	}
 </style>
 
+<base href="<?php echo base_url('uploads/') ?>">
+
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
 		<li><a href="<?php echo base_url() ?>">首页</a></li>
@@ -39,25 +41,32 @@
 	?>
 	<div class=btn-group role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
-	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+	  	<!--<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>-->
 	</div>
 	<?php endif ?>
 	
 	<ul class=list-unstyled>
 		<?php
 		// 需要特定角色和权限进行该操作
-		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+		if ( $item['user_id'] === $this->session->user_id ):
 		?>
 		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>
 		<?php endif ?>
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>用户ID</dt>
+		<dt>头像</dt>
+		<?php if ( !empty($item['avatar']) ): ?>
+		<dd class=row>
+			<figure class="col-xs-12 col-sm-6 col-md-4">
+				<img src="<?php echo $item['avatar'] ?>">
+			</figure>
+		</dd>
+		<?php else: ?>
+		<dd>未上传</dd>
+		<?php endif ?>
+		<dt>用户ID</dt>
 		<dd><?php echo $item['user_id'] ?></dd>
-		<dt>密码</dt>
-		<dd><?php echo $item['password'] ?></dd>
 		<dt>昵称</dt>
 		<dd><?php echo $item['nickname'] ?></dd>
 		<dt>姓氏</dt>
@@ -72,42 +81,26 @@
 		<dd><?php echo $item['gender'] ?></dd>
 		<dt>出生日期</dt>
 		<dd><?php echo $item['dob'] ?></dd>
-		<dt>头像</dt>
-		<dd><?php echo $item['avatar'] ?></dd>
+
 		<dt>手机号</dt>
 		<dd><?php echo $item['mobile'] ?></dd>
 		<dt>电子邮件地址</dt>
 		<dd><?php echo $item['email'] ?></dd>
-		<dt>微信用户的union_id</dt>
-		<dd><?php echo $item['wechat_union_id'] ?></dd>
-		<dt>默认地址ID</dt>
+		<dt>默认地址</dt>
 		<dd><?php echo $item['address_id'] ?></dd>
 		<dt>开户行名称</dt>
 		<dd><?php echo $item['bank_name'] ?></dd>
 		<dt>开户行账号</dt>
 		<dd><?php echo $item['bank_account'] ?></dd>
-		<dt>创建时间</dt>
+		<dt>注册时间</dt>
 		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
 		<dt>最后登录时间</dt>
 		<dd><?php echo $item['last_login_timestamp'] ?></dd>
 		<dt>最后登录IP地址</dt>
 		<dd><?php echo $item['last_login_ip'] ?></dd>
-		<dt>最后操作者ID</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
-
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
-		<dt>创建时间</dt>
-		<dd>
-			<?php echo $item['time_create'] ?>
-			<a href="<?php echo base_url('stuff/detail?id='.$item['creator_id']) ?>" target=new>查看创建者</a>
-		</dd>
-
 		<?php if ( ! empty($item['time_delete']) ): ?>
 		<dt>删除时间</dt>
 		<dd><?php echo $item['time_delete'] ?></dd>

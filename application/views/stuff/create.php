@@ -40,23 +40,46 @@
 	<div class=btn-group role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<a class="btn btn-primary" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
 
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
-		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
+		$attributes = array('class' => 'form-'.$this->class_name.'-create form-horizontal', 'role' => 'form');
+		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
-			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
-			<input name=name type=hidden value="<?php echo $name ?>">
+			<legend>基本信息</legend>
 
 			<div class=form-group>
-				<label for=value class="col-sm-2 control-label"><?php echo $name ?></label>
+				<label for=mobile class="col-sm-2 control-label">手机号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=value type=text value="<?php echo $item['name'] ?>" required>
+					<p class=helper-block>该手机号必须已注册过本平台的账号（即通过短信登录过）</p>
+					<input class=form-control name=mobile type=tel value="<?php echo set_value('mobile') ?>" size=11 pattern="\d{11}" placeholder="手机号" required>
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=role class="col-sm-2 control-label">角色</label>
+				<div class=col-sm-10>
+					<?php $input_name = 'role' ?>
+					<select class=form-control name="<?php echo $input_name ?>" required>
+						<option value="" <?php echo set_select($input_name, '') ?>>请选择</option>
+						<?php
+							$options = array('管理员', '经理', '成员',);
+							foreach ($options as $option):
+						?>
+						<option value="<?php echo $option ?>" <?php echo set_select($input_name, $option) ?>><?php echo $option ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=level class="col-sm-2 control-label">级别</label>
+				<div class=col-sm-10>
+					<input class=form-control name=level type=text value="<?php echo set_value('level') ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
 				</div>
 			</div>
 		</fieldset>

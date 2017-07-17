@@ -20,6 +20,8 @@
 	}
 </style>
 
+<base href="<?php echo base_url('uploads/') ?>">
+
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
 		<li><a href="<?php echo base_url() ?>">首页</a></li>
@@ -50,6 +52,8 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
+			<p class="bg-info text-info text-center">带有“※”符号的为必填项</p>
+			
 			<legend>基本信息</legend>
 			
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
@@ -83,29 +87,49 @@
 			<div class=form-group>
 				<label for=url_logo class="col-sm-2 control-label">LOGO</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_logo type=text value="<?php echo $item['url_logo'] ?>" placeholder="LOGO" required>
+					<?php if ( !empty($item['url_image_main']) ): ?>
+					<div class=row>
+						<figure class="col-xs-12 col-sm-6 col-md-4">
+							<img src="<?php echo $item['url_logo'] ?>">
+						</figure>
+					</div>
+					<?php endif ?>
+
+					<div>
+						<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+						<?php $name_to_upload = 'url_logo' ?>
+					
+						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/logo" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+						<ul class="upload_preview list-inline row"></ul>
+					</div>
+
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=slogan class="col-sm-2 control-label">宣传语</label>
 				<div class=col-sm-10>
-					<input class=form-control name=slogan type=text value="<?php echo $item['slogan'] ?>" placeholder="宣传语" required>
+					<input class=form-control name=slogan type=text value="<?php echo $item['slogan'] ?>" placeholder="宣传语">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">简介</label>
 				<div class=col-sm-10>
-					<textarea class=form-control name=description rows=10 placeholder="简介" required><?php echo $item['description'] ?></textarea>
+					<textarea class=form-control name=description rows=10 placeholder="简介"><?php echo $item['description'] ?></textarea>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=notification class="col-sm-2 control-label">店铺公告</label>
 				<div class=col-sm-10>
-					<textarea class=form-control name=description rows=10 placeholder="店铺公告" required><?php echo $item['notification'] ?></textarea>
+					<textarea class=form-control name=description rows=10 placeholder="店铺公告"><?php echo $item['notification'] ?></textarea>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=tel_public class="col-sm-2 control-label">消费者联系电话</label>
+				<label for=tel_public class="col-sm-2 control-label">消费者联系电话※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=tel_public type=tel value="<?php echo $item['tel_public'] ?>" placeholder="消费者联系电话" required>
 				</div>
@@ -113,49 +137,49 @@
 			<div class=form-group>
 				<label for=tel_protected_fiscal class="col-sm-2 control-label">财务联系手机号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=tel_protected_fiscal type=tel value="<?php echo $item['tel_protected_fiscal'] ?>" placeholder="财务联系手机号" required>
+					<input class=form-control name=tel_protected_fiscal type=tel value="<?php echo $item['tel_protected_fiscal'] ?>" placeholder="财务联系手机号">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=tel_protected_order class="col-sm-2 control-label">订单通知手机号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=tel_protected_order type=tel value="<?php echo $item['tel_protected_order'] ?>" placeholder="订单通知手机号" required>
+					<input class=form-control name=tel_protected_order type=tel value="<?php echo $item['tel_protected_order'] ?>" placeholder="订单通知手机号">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=freight class="col-sm-2 control-label">每笔订单运费（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=freight type=text value="<?php echo $item['freight'] ?>" placeholder="每笔订单运费（元）" required>
+					<input class=form-control name=freight type=text value="<?php echo $item['freight'] ?>" placeholder="每笔订单运费（元）">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=freight_free_subtotal class="col-sm-2 control-label">免邮费起始金额（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=freight_free_subtotal type=text value="<?php echo $item['freight_free_subtotal'] ?>" placeholder="免邮费起始金额（元）" required>
+					<input class=form-control name=freight_free_subtotal type=text value="<?php echo $item['freight_free_subtotal'] ?>" placeholder="免邮费起始金额（元）">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=freight_free_count class="col-sm-2 control-label">免邮费起始份数（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=freight_free_count type=text value="<?php echo $item['freight_free_count'] ?>" placeholder="免邮费起始份数（份）" required>
+					<input class=form-control name=freight_free_count type=text value="<?php echo $item['freight_free_count'] ?>" placeholder="免邮费起始份数（份）">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=min_order_subtotal class="col-sm-2 control-label">最低小计金额（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=min_order_subtotal type=text value="<?php echo $item['min_order_subtotal'] ?>" placeholder="最低小计金额（元）" required>
+					<input class=form-control name=min_order_subtotal type=text value="<?php echo $item['min_order_subtotal'] ?>" placeholder="最低小计金额（元）">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=delivery_time_start class="col-sm-2 control-label">配送起始时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=delivery_time_start type=text value="<?php echo $item['delivery_time_start'] ?>" placeholder="配送起始时间" required>
+					<input class=form-control name=delivery_time_start type=text value="<?php echo $item['delivery_time_start'] ?>" placeholder="配送起始时间">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=delivery_time_end class="col-sm-2 control-label">配送结束时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=delivery_time_end type=text value="<?php echo $item['delivery_time_end'] ?>" placeholder="配送结束时间" required>
+					<input class=form-control name=delivery_time_end type=text value="<?php echo $item['delivery_time_end'] ?>" placeholder="配送结束时间">
 				</div>
 			</div>
 			<div class=form-group>
@@ -167,49 +191,49 @@
 			<div class=form-group>
 				<label for=province class="col-sm-2 control-label">省</label>
 				<div class=col-sm-10>
-					<input class=form-control name=province type=text value="<?php echo $item['province'] ?>" placeholder="省" required>
+					<input class=form-control name=province type=text value="<?php echo $item['province'] ?>" placeholder="省">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=city class="col-sm-2 control-label">市</label>
 				<div class=col-sm-10>
-					<input class=form-control name=city type=text value="<?php echo $item['city'] ?>" placeholder="市" required>
+					<input class=form-control name=city type=text value="<?php echo $item['city'] ?>" placeholder="市">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=county class="col-sm-2 control-label">区</label>
 				<div class=col-sm-10>
-					<input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区" required>
+					<input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=detail class="col-sm-2 control-label">详细地址</label>
 				<div class=col-sm-10>
-					<input class=form-control name=detail type=text value="<?php echo $item['detail'] ?>" placeholder="详细地址" required>
+					<input class=form-control name=detail type=text value="<?php echo $item['detail'] ?>" placeholder="详细地址">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=longitude class="col-sm-2 control-label">经度</label>
 				<div class=col-sm-10>
-					<input class=form-control name=longitude type=text value="<?php echo $item['longitude'] ?>" placeholder="经度" required>
+					<input class=form-control name=longitude type=text value="<?php echo $item['longitude'] ?>" placeholder="经度">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=latitude class="col-sm-2 control-label">纬度</label>
 				<div class=col-sm-10>
-					<input class=form-control name=latitude type=text value="<?php echo $item['latitude'] ?>" placeholder="纬度" required>
+					<input class=form-control name=latitude type=text value="<?php echo $item['latitude'] ?>" placeholder="纬度">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=bank_name class="col-sm-2 control-label">开户行名称</label>
 				<div class=col-sm-10>
-					<input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="开户行名称" required>
+					<input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="须与营业执照一致">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=bank_account class="col-sm-2 control-label">开户行账号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=bank_account type=text value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号" required>
+					<input class=form-control name=bank_account type=number step=1 value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号">
 				</div>
 			</div>
 			<div class=form-group>
@@ -227,73 +251,211 @@
 			<div class=form-group>
 				<label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=code_ssn_auth type=text value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号" required>
+					<input class=form-control name=code_ssn_auth type=text value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=url_image_license class="col-sm-2 control-label">营业执照</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_image_license type=text value="<?php echo $item['url_image_license'] ?>" placeholder="营业执照" required>
+					<?php if ( !empty($item['url_image_license']) ): ?>
+					<div class=row>
+						<figure class="col-xs-12 col-sm-6 col-md-4">
+							<img src="<?php echo $item['url_image_license'] ?>">
+						</figure>
+					</div>
+					<?php endif ?>
+
+					<div>
+						<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+						<?php $name_to_upload = 'url_image_license' ?>
+					
+						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>" required>
+
+						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/license" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+						<ul class="upload_preview list-inline row"></ul>
+					</div>
+
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=url_image_owner_id class="col-sm-2 control-label">法人身份证</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_image_owner_id type=text value="<?php echo $item['url_image_owner_id'] ?>" placeholder="法人身份证" required>
+					<?php if ( !empty($item['url_image_owner_id']) ): ?>
+					<div class=row>
+						<figure class="col-xs-12 col-sm-6 col-md-4">
+							<img src="<?php echo $item['url_image_owner_id'] ?>">
+						</figure>
+					</div>
+					<?php endif ?>
+
+					<div>
+						<?php $name_to_upload = 'url_image_owner_id' ?>
+					
+						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>" required>
+
+						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/owner_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+						<ul class="upload_preview list-inline row"></ul>
+					</div>
+
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=url_image_auth_id class="col-sm-2 control-label">经办人身份证</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_image_auth_id type=text value="<?php echo $item['url_image_auth_id'] ?>" placeholder="经办人身份证" required>
+					<?php if ( !empty($item['url_image_auth_id']) ): ?>
+					<div class=row>
+						<figure class="col-xs-12 col-sm-6 col-md-4">
+							<img src="<?php echo $item['url_image_auth_id'] ?>">
+						</figure>
+					</div>
+					<?php endif ?>
+
+					<div>
+						<?php $name_to_upload = 'url_image_auth_id' ?>
+					
+						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/auth_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+						<ul class="upload_preview list-inline row"></ul>
+					</div>
+
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=url_image_auth_doc class="col-sm-2 control-label">授权书</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_image_auth_doc type=text value="<?php echo $item['url_image_auth_doc'] ?>" placeholder="授权书" required>
+					<?php if ( !empty($item['url_image_auth_doc']) ): ?>
+					<div class=row>
+						<figure class="col-xs-12 col-sm-6 col-md-4">
+							<img src="<?php echo $item['url_image_auth_doc'] ?>">
+						</figure>
+					</div>
+					<?php endif ?>
+
+					<div>
+						<?php $name_to_upload = 'url_image_auth_doc' ?>
+					
+						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/auth_doc" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+						<ul class="upload_preview list-inline row"></ul>
+					</div>
+
 				</div>
 			</div>
+
+			<div class=form-group>
+				<label for=url_image_product class="col-sm-2 control-label">产品</label>
+				<div class=col-sm-10>
+					<?php if ( !empty($item['url_image_product']) ): ?>
+					<div class=row>
+						<figure class="col-xs-12 col-sm-6 col-md-4">
+							<img src="<?php echo $item['url_image_product'] ?>">
+						</figure>
+					</div>
+					<?php endif ?>
+
+					<div>
+						<p class=help-block>最多可上传4张，选择时按住“ctrl”或“⌘”键可选多张</p>
+						<?php $name_to_upload = 'url_image_product' ?>
+					
+						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/product" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+						<ul class="upload_preview list-inline row"></ul>
+					</div>
+
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=url_image_produce class="col-sm-2 control-label">工厂/产地</label>
+				<div class=col-sm-10>
+					<?php if ( !empty($item['url_image_produce']) ): ?>
+					<div class=row>
+						<figure class="col-xs-12 col-sm-6 col-md-4">
+							<img src="<?php echo $item['url_image_produce'] ?>">
+						</figure>
+					</div>
+					<?php endif ?>
+
+					<div>
+						<?php $name_to_upload = 'url_image_produce' ?>
+					
+						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/produce" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+						<ul class="upload_preview list-inline row"></ul>
+					</div>
+
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=url_image_retail class="col-sm-2 control-label">门店/柜台</label>
+				<div class=col-sm-10>
+					<?php if ( !empty($item['url_image_retail']) ): ?>
+					<div class=row>
+						<figure class="col-xs-12 col-sm-6 col-md-4">
+							<img src="<?php echo $item['url_image_retail'] ?>">
+						</figure>
+					</div>
+					<?php endif ?>
+
+					<div>
+						<?php $name_to_upload = 'url_image_retail' ?>
+					
+						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/retail" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+						<ul class="upload_preview list-inline row"></ul>
+					</div>
+
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>			
 			<div class=form-group>
 				<label for=url_web class="col-sm-2 control-label">官方网站</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_web type=text value="<?php echo $item['url_web'] ?>" placeholder="官方网站" required>
+					<input class=form-control name=url_web type=text value="<?php echo $item['url_web'] ?>" placeholder="官方网站">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=url_weibo class="col-sm-2 control-label">官方微博</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_weibo type=text value="<?php echo $item['url_weibo'] ?>" placeholder="官方微博" required>
+					<input class=form-control name=url_weibo type=text value="<?php echo $item['url_weibo'] ?>" placeholder="官方微博">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=url_taobao class="col-sm-2 control-label">淘宝/天猫店铺</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_taobao type=text value="<?php echo $item['url_taobao'] ?>" placeholder="淘宝/天猫店铺" required>
+					<input class=form-control name=url_taobao type=text value="<?php echo $item['url_taobao'] ?>" placeholder="淘宝/天猫店铺">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=url_wechat class="col-sm-2 control-label">微信二维码</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_wechat type=text value="<?php echo $item['url_wechat'] ?>" placeholder="微信二维码" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=url_image_product class="col-sm-2 control-label">产品</label>
-				<div class=col-sm-10>
-					<input class=form-control name=url_image_product type=text value="<?php echo $item['url_image_product'] ?>" placeholder="产品" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=url_image_produce class="col-sm-2 control-label">工厂/产地</label>
-				<div class=col-sm-10>
-					<input class=form-control name=url_image_produce type=text value="<?php echo $item['url_image_produce'] ?>" placeholder="工厂/产地" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=url_image_retail class="col-sm-2 control-label">门店/柜台</label>
-				<div class=col-sm-10>
-					<input class=form-control name=url_image_retail type=text value="<?php echo $item['url_image_retail'] ?>" placeholder="门店/柜台" required>
+					<input class=form-control name=url_wechat type=text value="<?php echo $item['url_wechat'] ?>" placeholder="微信二维码">
 				</div>
 			</div>
 		</fieldset>

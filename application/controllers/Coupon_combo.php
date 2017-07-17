@@ -12,12 +12,12 @@
 	 * @copyright ICBG <www.bingshankeji.com>
 	 */
 	class Coupon_combo extends MY_Controller
-	{	
+	{
 		/**
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'combo_id', 'biz_id', 'name', 'template_ids', 'time_start', 'time_end', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'combo_id', 'biz_id', 'name', 'template_ids', 'time_start', 'time_end',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -25,7 +25,7 @@
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'combo_id', 'biz_id', 'name', 'template_ids', 'time_start', 'time_end', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'name', 'template_ids', 'time_start', 'time_end',
 		);
 
 		/**
@@ -33,7 +33,7 @@
 		 */
 		protected $names_edit_required = array(
 			'id',
-			'combo_id', 'biz_id', 'name', 'template_ids', 'time_start', 'time_end', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'name', 'template_ids',
 		);
 		
 		/**
@@ -54,8 +54,8 @@
 		{
 			parent::__construct();
 
-			// （可选）未登录用户转到登录页
-			//($this->session->time_expire_login > time()) OR redirect( base_url('login') );
+			// 未登录用户转到登录页
+			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
 
 			// 向类属性赋值
 			$this->class_name = strtolower(__CLASS__);
@@ -67,14 +67,7 @@
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
 				'name' => '名称',
-				'description' => '描述',
 			);
-
-			// （可选）某些用于此类的自定义函数
-		    function function_name($parameter)
-			{
-				//...
-		    }
 		}
 		
 		/**
@@ -85,46 +78,6 @@
 			// 调试信息输出开关
 			// $this->output->enable_profiler(TRUE);
 		}
-
-		/**
-		 * 我的
-		 *
-		 * 限定获取的行的user_id（示例为通过session传入的user_id值），一般用于前台
-		 */
-		public function mine()
-		{
-			// 页面信息
-			$data = array(
-				'title' => '我的'. $this->class_name_cn, // 页面标题
-				'class' => $this->class_name.' mine', // 页面body标签的class属性值
-				
-				'keywords' => '关键词一,关键词二,关键词三', // （可选，后台功能可删除此行）页面关键词；每个关键词之间必须用半角逗号","分隔才能保证搜索引擎兼容性
-				'description' => '这个页面的主要内容', // （可选，后台功能可删除此行）页面内容描述
-				// 对于后台功能，一般不需要特别指定具体页面的keywords和description
-			);
-
-			// 筛选条件
-			$condition['user_id'] = $this->session->user_id;
-
-			// 排序条件
-			$order_by = NULL;
-			//$order_by['name'] = 'value';
-
-			// 从API服务器获取相应列表信息
-			$params = $condition;
-			$url = api_url($this->class_name. '/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-				$data['error'] = $result['content']['error']['message'];
-			endif;
-
-			// 输出视图
-			$this->load->view('templates/header', $data);
-			$this->load->view($this->view_root.'/mine', $data);
-			$this->load->view('templates/footer', $data);
-		} // end mine
 
 		/**
 		 * 列表页
@@ -138,7 +91,8 @@
 			);
 
 			// 筛选条件
-			$condition = NULL;
+			$condition['biz_id'] = $this->session->biz_id;
+			$condition['time_delete'] = 'NULL';
 			//$condition['name'] = 'value';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
@@ -147,8 +101,7 @@
 			endforeach;
 
 			// 排序条件
-			$condition['biz_id'] = $this->session->biz_id;
-			$condition['time_delete'] = NULL;
+			$order_by = NULL;
 			//$order_by['name'] = 'value';
 
 			// 从API服务器获取相应列表信息
@@ -270,17 +223,10 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('combo_id', '优惠券模板套餐ID', 'trim|');
-			$this->form_validation->set_rules('biz_id', '所属商家ID', 'trim|required');
 			$this->form_validation->set_rules('name', '名称', 'trim|');
 			$this->form_validation->set_rules('template_ids', '优惠券模板ID们', 'trim|');
 			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
 			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
-			$this->form_validation->set_rules('time_create', '创建时间', 'trim|');
-			$this->form_validation->set_rules('time_delete', '删除时间', 'trim|required');
-			$this->form_validation->set_rules('time_edit', '最后操作时间', 'trim|');
-			$this->form_validation->set_rules('creator_id', '创建者ID', 'trim|required');
-			$this->form_validation->set_rules('operator_id', '最后操作者ID', 'trim|required');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -295,11 +241,10 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 					'biz_id' => $this->session->biz_id,
-					//'name' => $this->input->post('name')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'combo_id', 'biz_id', 'name', 'template_ids', 'time_start', 'time_end', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+					'name', 'template_ids', 'time_start', 'time_end', 
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -349,17 +294,10 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('combo_id', '优惠券模板套餐ID', 'trim|');
-			$this->form_validation->set_rules('biz_id', '所属商家ID', 'trim|required');
 			$this->form_validation->set_rules('name', '名称', 'trim|');
 			$this->form_validation->set_rules('template_ids', '优惠券模板ID们', 'trim|');
 			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
 			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
-			$this->form_validation->set_rules('time_create', '创建时间', 'trim|');
-			$this->form_validation->set_rules('time_delete', '删除时间', 'trim|required');
-			$this->form_validation->set_rules('time_edit', '最后操作时间', 'trim|');
-			$this->form_validation->set_rules('creator_id', '创建者ID', 'trim|required');
-			$this->form_validation->set_rules('operator_id', '最后操作者ID', 'trim|required');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -388,7 +326,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'combo_id', 'biz_id', 'name', 'template_ids', 'time_start', 'time_end', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+					'name', 'template_ids', 'time_start', 'time_end', 
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -420,106 +358,6 @@
 		} // end edit
 
 		/**
-		 * 修改单项
-		 */
-		public function edit_certain()
-		{
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
-			// 页面信息
-			$data = array(
-				'title' => '修改'.$this->class_name_cn. $name,
-				'class' => $this->class_name.' edit-certain',
-			);
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			// 动态设置待验证字段名及字段值
-			$data_to_validate["{$name}"] = $value;
-			$this->form_validation->set_data($data_to_validate);
-			$this->form_validation->set_rules('id', '待修改项ID', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('combo_id', '优惠券模板套餐ID', 'trim|');
-			$this->form_validation->set_rules('biz_id', '所属商家ID', 'trim|required');
-			$this->form_validation->set_rules('name', '名称', 'trim|');
-			$this->form_validation->set_rules('template_ids', '优惠券模板ID们', 'trim|');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
-			$this->form_validation->set_rules('time_create', '创建时间', 'trim|');
-			$this->form_validation->set_rules('time_delete', '删除时间', 'trim|required');
-			$this->form_validation->set_rules('time_edit', '最后操作时间', 'trim|');
-			$this->form_validation->set_rules('creator_id', '创建者ID', 'trim|required');
-			$this->form_validation->set_rules('operator_id', '最后操作者ID', 'trim|required');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] = validation_errors();
-
-				// 从API服务器获取相应详情信息
-				$params['id'] = $this->input->get_post('id');
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['item'] = $result['content'];
-				else:
-					$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
-				endif;
-
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/edit_certain', $data);
-				$this->load->view('templates/footer', $data);
-
-			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_certain_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( $param !== 'value' && empty( ${$param} ) ): // value 可以为空；必要字段会在字段验证中另行检查
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
-				// 需要编辑的信息
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'id' => $id,
-					'name' => $name,
-					'value' => $value,
-				);
-
-				// 向API服务器发送待创建数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit_certain');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn. '修改成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若修改失败，则进行提示
-					$data['error'] = $result['content']['error']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/edit_certain', $data);
-					$this->load->view('templates/footer', $data);
-
-				endif;
-
-			endif;
-		} // end edit_certain
-
-		/**
 		 * 删除单行或多行项目
 		 *
 		 * 一般用于发货、退款、存为草稿、上架、下架、删除、恢复等状态变化，请根据需要修改方法名，例如deliver、refund、delete、restore、draft等
@@ -542,13 +380,24 @@
 			);
 
 			// 检查是否已传入必要参数
-			$ids = $this->input->get_post('ids')? $this->input->get_post('ids'): NULL;
-			if ( !empty($ids) ):
-				$ids = explode(',', $ids);
-				$data['ids'] = $ids;
+			if ( !empty($this->input->get_post('ids')) ):
+				$ids = $this->input->get_post('ids');
+
+				// 将字符串格式转换为数组格式
+				if ( !is_array($ids) ):
+					$ids = explode(',', $ids);
+				endif;
+
+			elseif ( !empty($this->input->post('ids[]')) ):
+				$ids = $this->input->post('ids[]');
+
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+
 			endif;
+			
+			// 赋值视图中需要用到的待操作项数据
+			$data['ids'] = $ids;
 			
 			// 获取待操作项数据
 			$data['items'] = array();
@@ -650,13 +499,24 @@
 			);
 
 			// 检查是否已传入必要参数
-			$ids = $this->input->get_post('ids')? $this->input->get_post('ids'): NULL;
-			if ( !empty($ids) ):
-				$ids = explode(',', $ids);
-				$data['ids'] = $ids;
+			if ( !empty($this->input->get_post('ids')) ):
+				$ids = $this->input->get_post('ids');
+
+				// 将字符串格式转换为数组格式
+				if ( !is_array($ids) ):
+					$ids = explode(',', $ids);
+				endif;
+
+			elseif ( !empty($this->input->post('ids[]')) ):
+				$ids = $this->input->post('ids[]');
+
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+
 			endif;
+			
+			// 赋值视图中需要用到的待操作项数据
+			$data['ids'] = $ids;
 			
 			// 获取待操作项数据
 			$data['items'] = array();

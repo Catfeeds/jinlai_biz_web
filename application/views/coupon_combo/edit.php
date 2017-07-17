@@ -55,9 +55,9 @@
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 									<div class=form-group>
-							<label for=combo_id class="col-sm-2 control-label">优惠券模板套餐ID</label>
+							<label for=combo_id class="col-sm-2 control-label">优惠券套餐ID</label>
 							<div class=col-sm-10>
-								<input class=form-control name=combo_id type=text value="<?php echo $item['combo_id'] ?>" placeholder="优惠券模板套餐ID" required>
+								<input class=form-control name=combo_id type=text value="<?php echo $item['combo_id'] ?>" placeholder="优惠券套餐ID" required>
 							</div>
 						</div>
 						<div class=form-group>

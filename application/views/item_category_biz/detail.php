@@ -20,6 +20,8 @@
 	}
 </style>
 
+<base href="<?php echo base_url('uploads/') ?>">
+
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
 		<li><a href="<?php echo base_url() ?>">首页</a></li>
@@ -54,27 +56,30 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>商品分类ID</dt>
+		<dt>商品分类ID</dt>
 		<dd><?php echo $item['category_id'] ?></dd>
-		<dt>所属商家企业ID</dt>
-		<dd><?php echo $item['biz_id'] ?></dd>
-		<dt>所属分类ID</dt>
-		<dd><?php echo $item['parent_id'] ?></dd>
+		
+		<dt>所属系统商品分类</dt>
+		<dd><?php echo $category['name'] ?></dd>
+		
+		<?php if ( !empty($item['parent_id']) ): ?>
+		<dt>所属商家商品分类</dt>
+		<dd><?php echo $category_biz['name'] ?></dd>
+		<?php endif ?>
+
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
-		<dt>图片URL</dt>
-		<dd><?php echo $item['url_image'] ?></dd>
-		<dt>创建时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
-		<dt>创建者ID</dt>
-		<dd><?php echo $item['creator_id'] ?></dd>
-		<dt>最后操作者ID</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
-
+		
+		<?php if ( !empty($item['url_image']) ): ?>
+		<dt>图片</dt>
+		<dd class=row>
+			<figure class="col-xs-12 col-sm-6 col-md-4">
+				<img src="<?php echo $item['url_image'] ?>">
+			</figure>
+		</dd>
+		<?php else: ?>
+		<dd>未设置</dd>
+		<?php endif ?>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

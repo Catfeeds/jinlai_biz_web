@@ -50,15 +50,61 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
+			<legend>基本信息</legend>
+
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
-			<input name=name type=hidden value="<?php echo $name ?>">
 
 			<div class=form-group>
-				<label for=value class="col-sm-2 control-label"><?php echo $name ?></label>
+				<label for=mobile class="col-sm-2 control-label">手机号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=value type=text value="<?php echo $item['name'] ?>" required>
+					<p class="form-control-static"><?php echo $item['mobile'] ?></p>
 				</div>
 			</div>
+
+			<div class=form-group>
+				<label for=fullname class="col-sm-2 control-label">姓名</label>
+				<div class=col-sm-10>
+					<p class="form-control-static"><?php echo $item['fullname'] ?></p>
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=role class="col-sm-2 control-label">角色</label>
+				<div class=col-sm-10>
+					<?php $input_name = 'role' ?>
+					<select class=form-control name="<?php echo $input_name ?>" required>
+						<?php
+							$options = array('管理员', '经理', '成员',);
+							foreach ($options as $option):
+						?>
+						<option value="<?php echo $option ?>" <?php if ($option === $item[$input_name]) echo 'selected'; ?>><?php echo $option ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=level class="col-sm-2 control-label">级别</label>
+				<div class=col-sm-10>
+					<input class=form-control name=level type=text value="<?php echo $item['level'] ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=status class="col-sm-2 control-label">状态</label>
+				<div class=col-sm-10>
+					<?php $input_name = 'status' ?>
+					<select class=form-control name="<?php echo $input_name ?>">
+						<?php
+							$options = array('正常', '冻结',);
+							foreach ($options as $option):
+						?>
+						<option value="<?php echo $option ?>" <?php if ($option === $item[$input_name]) echo 'selected'; ?>><?php echo $option ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
+
 		</fieldset>
 
 		<div class=form-group>

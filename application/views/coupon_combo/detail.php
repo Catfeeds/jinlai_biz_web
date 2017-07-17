@@ -54,7 +54,7 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>优惠券模板套餐ID</dt>
+				<dt>优惠券套餐ID</dt>
 		<dd><?php echo $item['combo_id'] ?></dd>
 		<dt>所属商家ID</dt>
 		<dd><?php echo $item['biz_id'] ?></dd>

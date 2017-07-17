@@ -23,7 +23,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20170715">
+		<meta name=version content="revision20170717">
 		<meta name=author content="刘亚杰Kamas">
 		<meta name=copyright content="青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -34,6 +34,7 @@
 		<script src="https://cdn.key2all.com/js/jquery/new.js"></script>
 		<script defer src="https://cdn.key2all.com/js/jquery/jquery.cookie.js"></script>
 		<script defer src="https://cdn.key2all.com/bootstrap/js/bootstrap-3_3_7.min.js"></script>
+		<script defer src="/js/file-upload.js"></script>
 
 		<link rel=stylesheet media=all href="https://cdn.key2all.com/css/reset.css">
 		<link rel=stylesheet media=all href="https://cdn.key2all.com/bootstrap/css/bootstrap-3_3_7.min.css">
@@ -56,7 +57,7 @@
 
 <!-- 内容开始 -->
 	<body<?php echo (isset($class))? ' class="'.$class.'"': NULL; ?>>
-		<noscript>
+		<noscript class="bg-info text-info">
 			<p>您的浏览器功能加载出现问题，请刷新浏览器重试；如果仍然出现此提示，请考虑更换浏览器。</p>
 		</noscript>
 
@@ -109,7 +110,6 @@
 						// 仅获得大于10的权限的管理员可以管理员工
 						if ($this->session->role === '管理员' && $this->session->level > 10):
 						?>
-						<!--
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>员工<b class=caret></b></a>
 							<ul class=dropdown-menu>
@@ -117,19 +117,17 @@
 								<li><a title="创建员工" href="<?php echo base_url('stuff/create') ?>">创建员工</a></li>
 							</ul>
 						</li>
-						-->
 						<?php endif ?>
 
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown><i class="fa fa-database" aria-hidden=true></i> 商品<b class=caret></b></a>
 							<ul class=dropdown-menu>
-								<!--
-								<li><a title="商家级商品分类列表" href="<?php echo base_url('category_biz') ?>">商品分类</a></li>
-								<li><a title="创建商品分类" href="<?php echo base_url('category_biz/create') ?>">创建商品分类</a></li>
+								<li><a title="店内分类列表" href="<?php echo base_url('item_category_biz') ?>">店内分类</a></li>
+								<li><a title="创建店内分类" href="<?php echo base_url('item_category_biz/create') ?>">创建店内分类</a></li>
 								<li role="separator" class="divider"></li>
-								-->
 								<li><a title="商品列表" href="<?php echo base_url('item') ?>">商品列表</a></li>
 								<li><a title="创建商品" href="<?php echo base_url('item/create') ?>">创建商品</a></li>
+								<li><a title="快速创建" href="<?php echo base_url('item/create_quick') ?>">快速创建 <i class="fa fa-bolt" aria-hidden="true"></i></a></li>
 							</ul>
 						</li>
 
@@ -140,7 +138,6 @@
 							</ul>
 						</li>
 
-						<!--
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>营销活动<b class=caret></b></a>
 							<ul class=dropdown-menu>
@@ -148,21 +145,20 @@
 								<li><a title="创建店内活动" href="<?php echo base_url('promotion_biz/create') ?>">创建店内活动</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a title="平台活动列表" href="<?php echo base_url('promotion') ?>">平台活动列表</a></li>
-								<li><a title="平台活动" href="<?php echo base_url('promotion/create') ?>">申请平台活动</a></li>
+								<!--<li><a title="平台活动" href="<?php echo base_url('promotion/create') ?>">申请平台活动</a></li>-->
 							</ul>
 						</li>
 
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>优惠券<b class=caret></b></a>
 							<ul class=dropdown-menu>
-								<li><a title="优惠券" href="<?php echo base_url('coupon_template') ?>">优惠券</a></li>
-								<li><a title="创建优惠券" href="<?php echo base_url('coupon_template/create') ?>">创建优惠券</a></li>
+								<li><a title="优惠券模板" href="<?php echo base_url('coupon_template') ?>">优惠券模板</a></li>
+								<li><a title="创建优惠券模板" href="<?php echo base_url('coupon_template/create') ?>">创建优惠券模板</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">优惠券包</a></li>
 								<li><a title="创建优惠券包" href="<?php echo base_url('coupon_combo/create') ?>">创建优惠券包</a></li>
 							</ul>
 						</li>
-						-->
 
 						<!--
 						<li class=dropdown>
@@ -190,8 +186,8 @@
 						</li>
 						-->
 						<?php endif ?>
+			<?php endif ?>
 					</ul>
-		<?php endif ?>
 
 					<ul class="nav navbar-nav navbar-right">
 						<?php if ( !isset($this->session->time_expire_login) ): ?>
@@ -203,7 +199,7 @@
 					</ul>
 
 				</div>
-			</div>
+			</nav>
 		</header>
 
 		<main id=maincontainer role=main>

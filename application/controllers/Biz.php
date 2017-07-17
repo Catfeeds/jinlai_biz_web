@@ -180,7 +180,6 @@
 					$data_to_create = array(
 						'user_id' => $this->session->user_id,
 						'tel_protected_biz' => $this->session->mobile,
-						//'name' => $this->input->post('name')),
 					);
 					// 自动生成无需特别处理的数据
 					$data_need_no_prepare = array(
@@ -200,10 +199,12 @@
 						$data['title'] = $this->class_name_cn. '创建成功';
 						$data['class'] = 'success';
 						$data['content'] = $result['content']['message'];
-						$data['id'] = $result['content']['$this->id_name']; // 创建后的信息ID
+						$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
 
 						// 更新本地商家信息
 						$this->session->biz_id = $data['id'];
+						$this->session->role = '管理员';
+						$this->session->level = '100';
 
 						$this->load->view('templates/header', $data);
 						$this->load->view($this->view_root.'/result', $data);
@@ -242,14 +243,10 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('url_logo', 'LOGO/图标', 'trim|max_length[255]');
+			$this->form_validation->set_rules('url_logo', 'LOGO', 'trim|max_length[255]');
 			$this->form_validation->set_rules('slogan', '说明', 'trim|max_length[20]');
 			$this->form_validation->set_rules('description', '简介', 'trim|max_length[200]');
 			$this->form_validation->set_rules('notification', '公告', 'trim|max_length[100]');
-			$this->form_validation->set_rules('url_web', '官方网站', 'trim|max_length[255]|valid_url');
-			$this->form_validation->set_rules('url_weibo', '官方微博', 'trim|max_length[255]|valid_url');
-			$this->form_validation->set_rules('url_taobao', '淘宝/天猫店铺', 'trim|max_length[255]|valid_url');
-			$this->form_validation->set_rules('url_wechat', '微信二维码', 'trim|max_length[255]');
 
 			$this->form_validation->set_rules('tel_public', '消费者联系电话', 'trim|required|min_length[10]|max_length[13]');
 			$this->form_validation->set_rules('tel_protected_fiscal', '财务联系手机号', 'trim|exact_length[11]|is_natural');
@@ -260,7 +257,7 @@
 			$this->form_validation->set_rules('code_ssn_auth', '经办人身份证号', 'trim|exact_length[18]');
 
 			$this->form_validation->set_rules('url_image_license', '营业执照正/副本', 'trim|required|max_length[255]');
-			$this->form_validation->set_rules('url_image_owner_id', '法人身份证照片', 'trim|required|max_length[255]');
+			$this->form_validation->set_rules('url_image_owner_id', '法人身份证', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('url_image_auth_id', '经办人身份证', 'trim|max_length[255]');
 			$this->form_validation->set_rules('url_image_auth_doc', '授权书', 'trim|max_length[255]');
 			$this->form_validation->set_rules('url_image_product', '产品', 'trim|max_length[255]');
@@ -283,6 +280,11 @@
 			$this->form_validation->set_rules('detail', '详细地址；小区名、路名、门牌号等', 'trim|max_length[50]');
 			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|decimal');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|decimal');
+			
+			$this->form_validation->set_rules('url_web', '官方网站', 'trim|max_length[255]|valid_url');
+			$this->form_validation->set_rules('url_weibo', '官方微博', 'trim|max_length[255]|valid_url');
+			$this->form_validation->set_rules('url_taobao', '淘宝/天猫店铺', 'trim|max_length[255]|valid_url');
+			$this->form_validation->set_rules('url_wechat', '微信二维码', 'trim|max_length[255]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -307,12 +309,11 @@
 				$data_to_edit = array(
 					'id' => $this->input->post('id'),
 					'user_id' => $this->session->user_id,
-					//'name' => $this->input->post('name')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'brief_name', 'url_name', 'url_logo', 'slogan', 'description', 'notification',
-					'tel_public', 'tel_protected_biz', 'tel_protected_fiscal', 'tel_protected_order',
+					'url_logo', 'slogan', 'description', 'notification',
+					'tel_public', 'tel_protected_fiscal', 'tel_protected_order',
 					'code_license', 'code_ssn_owner',  'code_ssn_auth',
 					'bank_name', 'bank_account', 'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_image_product', 'url_image_produce', 'url_image_retail',
 					'freight', 'freight_free_subtotal', 'freight_free_count', 'min_order_subtotal', 'delivery_time_start', 'delivery_time_end', 'longitude', 'latitude', 'province', 'city', 'county', 'detail', 'url_web', 'url_weibo', 'url_taobao', 'url_wechat',

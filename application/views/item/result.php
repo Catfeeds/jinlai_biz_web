@@ -1,8 +1,8 @@
 <style>
 
 
-	/* 宽度在768像素以上的设备 */
-	@media only screen and (min-width:769px)
+	/* 宽度在750像素以上的设备 */
+	@media only screen and (min-width:751px)
 	{
 
 	}
@@ -31,7 +31,7 @@
 <div id=content class=container>
 	<h2><?php echo $title ?></h2>
 	<section><?php echo $content ?></section>
-	
-	<a class="btn btn-default" title="个人中心" href="<?php echo base_url('mine') ?>">我的</a>
-	<a class="btn btn-primary" title="首页" href="<?php echo base_url() ?>">首页</a>
+
+	<a class="btn btn-default btn-lg" title="<?php echo $this->class_name_cn ?>列表" href="<?php echo base_url($this->class_name) ?>">返回<?php echo $this->class_name_cn ?>列表</a>
+	<a class="btn btn-primary btn-lg" title="继续创建商品" href="<?php echo base_url('item/create-quick') ?>">再来一个！</a>
 </div>
