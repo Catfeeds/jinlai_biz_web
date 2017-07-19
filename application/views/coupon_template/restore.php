@@ -73,6 +73,7 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
+		<p>您仅可恢复优惠券模板以重新向用户发放，但不可恢复用户领取后被删除的优惠券。</p>
 		<p>确定要<?php echo $title ?>？</p>
 	</div>
 

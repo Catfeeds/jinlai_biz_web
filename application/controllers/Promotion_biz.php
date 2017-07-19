@@ -224,22 +224,22 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
 			$this->form_validation->set_rules('name', '名称', 'trim|required');
-			$this->form_validation->set_rules('description', '说明', 'trim|');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|');
+			$this->form_validation->set_rules('description', '说明', 'trim');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
 			$this->form_validation->set_rules('fold_allowed', '是否允许折上折', 'trim');
 			$this->form_validation->set_rules('type', '活动类型', 'trim|required');
-			$this->form_validation->set_rules('discount', '折扣率', 'trim|');
-			$this->form_validation->set_rules('present_trigger_amount', '赠品起送份数（份）', 'trim|');
-			$this->form_validation->set_rules('present', '赠品信息', 'trim|');
-			$this->form_validation->set_rules('reduction_amount', '减免金额（元）', 'trim|');
-			$this->form_validation->set_rules('reduction_discount', '减免比例', 'trim|');
-			$this->form_validation->set_rules('coupon_id', '赠送优惠券ID', 'trim|');
-			$this->form_validation->set_rules('coupon_combo_id', '赠送优惠券套餐ID', 'trim|');
-			$this->form_validation->set_rules('deposit', '订金/预付款（元）', 'trim|');
-			$this->form_validation->set_rules('balance', '尾款（元）', 'trim|');
-			$this->form_validation->set_rules('time_complete_start', '支付尾款开始时间', 'trim|');
-			$this->form_validation->set_rules('time_complete_end', '支付尾款结束时间', 'trim|');
+			$this->form_validation->set_rules('discount', '折扣率', 'trim');
+			$this->form_validation->set_rules('present_trigger_amount', '赠品起送份数（份）', 'trim');
+			$this->form_validation->set_rules('present', '赠品信息', 'trim');
+			$this->form_validation->set_rules('reduction_amount', '减免金额（元）', 'trim');
+			$this->form_validation->set_rules('reduction_discount', '减免比例', 'trim');
+			$this->form_validation->set_rules('coupon_id', '赠送优惠券ID', 'trim');
+			$this->form_validation->set_rules('coupon_combo_id', '赠送优惠券套餐ID', 'trim');
+			$this->form_validation->set_rules('deposit', '订金/预付款（元）', 'trim');
+			$this->form_validation->set_rules('balance', '尾款（元）', 'trim');
+			$this->form_validation->set_rules('time_complete_start', '支付尾款开始时间', 'trim');
+			$this->form_validation->set_rules('time_complete_end', '支付尾款结束时间', 'trim');
 			$this->form_validation->set_rules('groupbuy_order_amount', '团购成团订单数（单）', 'trim');
 			$this->form_validation->set_rules('groupbuy_quantity_max', '团购个人最高限量（份/位）', 'trim');
 
@@ -310,22 +310,22 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('name', '名称', 'trim|required');
-			$this->form_validation->set_rules('description', '说明', 'trim|');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|');
+			$this->form_validation->set_rules('description', '说明', 'trim');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
 			$this->form_validation->set_rules('fold_allowed', '是否允许折上折', 'trim');
 			$this->form_validation->set_rules('type', '活动类型', 'trim|required');
-			$this->form_validation->set_rules('discount', '折扣率', 'trim|');
-			$this->form_validation->set_rules('present_trigger_amount', '赠品起送份数（份）', 'trim|');
-			$this->form_validation->set_rules('present', '赠品信息', 'trim|');
-			$this->form_validation->set_rules('reduction_amount', '减免金额（元）', 'trim|');
-			$this->form_validation->set_rules('reduction_discount', '减免比例', 'trim|');
-			$this->form_validation->set_rules('coupon_id', '赠送优惠券ID', 'trim|');
-			$this->form_validation->set_rules('coupon_combo_id', '赠送优惠券套餐ID', 'trim|');
-			$this->form_validation->set_rules('deposit', '订金/预付款（元）', 'trim|');
-			$this->form_validation->set_rules('balance', '尾款（元）', 'trim|');
-			$this->form_validation->set_rules('time_complete_start', '支付尾款开始时间', 'trim|');
-			$this->form_validation->set_rules('time_complete_end', '支付尾款结束时间', 'trim|');
+			$this->form_validation->set_rules('discount', '折扣率', 'trim');
+			$this->form_validation->set_rules('present_trigger_amount', '赠品起送份数（份）', 'trim');
+			$this->form_validation->set_rules('present', '赠品信息', 'trim');
+			$this->form_validation->set_rules('reduction_amount', '减免金额（元）', 'trim');
+			$this->form_validation->set_rules('reduction_discount', '减免比例', 'trim');
+			$this->form_validation->set_rules('coupon_id', '赠送优惠券ID', 'trim');
+			$this->form_validation->set_rules('coupon_combo_id', '赠送优惠券套餐ID', 'trim');
+			$this->form_validation->set_rules('deposit', '订金/预付款（元）', 'trim');
+			$this->form_validation->set_rules('balance', '尾款（元）', 'trim');
+			$this->form_validation->set_rules('time_complete_start', '支付尾款开始时间', 'trim');
+			$this->form_validation->set_rules('time_complete_end', '支付尾款结束时间', 'trim');
 			$this->form_validation->set_rules('groupbuy_order_amount', '团购成团订单数（单）', 'trim');
 			$this->form_validation->set_rules('groupbuy_quantity_max', '团购个人最高限量（份/位）', 'trim');
 
@@ -352,7 +352,6 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $this->input->post('id'),
-					//'name' => $this->input->post('name')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(

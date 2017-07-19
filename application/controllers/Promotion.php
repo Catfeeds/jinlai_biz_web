@@ -158,6 +158,7 @@
 		// 平台营销活动报名
 		public function apply()
 		{
+
 		}
 
 	} // end class Promotion

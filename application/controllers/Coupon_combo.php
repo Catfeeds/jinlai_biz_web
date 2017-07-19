@@ -2,7 +2,7 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Coupon_combo 优惠券套餐类
+	 * Coupon_combo 优惠券包类
 	 *
 	 * 以我的XX列表、列表、详情、创建、单行编辑、单/多行编辑（删除、恢复）等功能提供了常见功能的APP示例代码
 	 * CodeIgniter官方网站 https://www.codeigniter.com/user_guide/
@@ -17,7 +17,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'combo_id', 'biz_id', 'name', 'template_ids', 'time_start', 'time_end',
+			'combo_id', 'biz_id', 'name', 'template_ids', 'max_amount', 'time_start', 'time_end',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -25,7 +25,7 @@
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'name', 'template_ids', 'time_start', 'time_end',
+			'name', 'template_ids', 'max_amount', 'time_start', 'time_end',
 		);
 
 		/**
@@ -67,6 +67,7 @@
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
 				'name' => '名称',
+				'max_amount' => '限量',
 			);
 		}
 		
@@ -223,10 +224,11 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('name', '名称', 'trim|');
-			$this->form_validation->set_rules('template_ids', '优惠券模板ID们', 'trim|');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
+			$this->form_validation->set_rules('name', '名称', 'trim|required');
+			$this->form_validation->set_rules('template_ids', '优惠券模板', 'trim|required');
+			$this->form_validation->set_rules('max_amount', '限量', 'trim');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -244,7 +246,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'template_ids', 'time_start', 'time_end', 
+					'name', 'template_ids', 'max_amount', 'time_start', 'time_end', 
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -294,10 +296,11 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('name', '名称', 'trim|');
-			$this->form_validation->set_rules('template_ids', '优惠券模板ID们', 'trim|');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
+			$this->form_validation->set_rules('name', '名称', 'trim|required');
+			$this->form_validation->set_rules('template_ids', '优惠券模板', 'trim|required');
+			$this->form_validation->set_rules('max_amount', '限量', 'trim');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -326,7 +329,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'template_ids', 'time_start', 'time_end', 
+					'name', 'template_ids', 'max_amount', 'time_start', 'time_end', 
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -418,8 +421,8 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+			$this->form_validation->set_rules('password', '密码', 'trim|min_length[6]|max_length[20]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -537,8 +540,8 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+			$this->form_validation->set_rules('password', '密码', 'trim|min_length[6]|max_length[20]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):

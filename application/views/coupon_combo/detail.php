@@ -43,7 +43,7 @@
 		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
-	
+
 	<ul class=list-unstyled>
 		<?php
 		// 需要特定角色和权限进行该操作
@@ -54,29 +54,20 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>优惠券套餐ID</dt>
+		<dt>优惠券套餐ID</dt>
 		<dd><?php echo $item['combo_id'] ?></dd>
-		<dt>所属商家ID</dt>
-		<dd><?php echo $item['biz_id'] ?></dd>
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>优惠券模板ID们</dt>
 		<dd><?php echo $item['template_ids'] ?></dd>
+		<dt>限量</dt>
+		<dd>
+			<?php echo $item['max_amount'] ?> 份
+		</dd>
 		<dt>开始时间</dt>
 		<dd><?php echo $item['time_start'] ?></dd>
 		<dt>结束时间</dt>
 		<dd><?php echo $item['time_end'] ?></dd>
-		<dt>创建时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
-		<dt>创建者ID</dt>
-		<dd><?php echo $item['creator_id'] ?></dd>
-		<dt>最后操作者ID</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
-
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

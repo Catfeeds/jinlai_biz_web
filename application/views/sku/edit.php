@@ -52,6 +52,8 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
+			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>
@@ -87,7 +89,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=name_first class="col-sm-2 control-label">名称第一部分</label>
+				<label for=name_first class="col-sm-2 control-label">名称第一部分※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=name_first type=text value="<?php echo $item['name_first'] ?>" placeholder="名称第一部分" required>
 				</div>
@@ -105,13 +107,13 @@
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=price class="col-sm-2 control-label">价格（元）</label>
+				<label for=price class="col-sm-2 control-label">价格（元）※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=price type=text value="<?php echo $item['price'] ?>" placeholder="价格（元）" required>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=stocks class="col-sm-2 control-label">库存量（单位）</label>
+				<label for=stocks class="col-sm-2 control-label">库存量（单位）※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=stocks type=text value="<?php echo $item['stocks'] ?>" placeholder="库存量（单位）" required>
 				</div>

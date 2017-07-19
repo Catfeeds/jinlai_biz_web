@@ -22,15 +22,32 @@
 
 <div id=content class=container>
 	<?php if ( empty($this->session->biz_id) ): ?>
-	<div>
+	<div id=recruiting-tempt>
 		<p>这一部分可以显示简单的平台介绍和招商信息，例如：</p>
 		<img alt="进来商家招商中" src="https://biz.517ybang.com/media/home/recruiting.jpg">
 		<p class=text-center>加入「进来」，让首家品控网购平台上最有消费能力的消费者在你店里疯狂买买买！</p>
 	</div>
+	
+	<div id=prerequisite>
+		<p class=helper-block>以下资料中的影印件指彩色原件的扫描件或数码照</p>
+		<p>注册前需要准备好以下资料：</p>
+		<ul>
+			<li>营业执照影印件</li>
+			<li>法人身份证影印件</li>
+			<li>对公银行账户（基本户、一般户均可）</li>
+		</ul>
+		
+		<p>如果负责业务对接的不是法人本人，则另需：</p>
+		<ul>
+			<li>经办人身份证影印件</li>
+			<li>授权书<a title="进来商城经办人授权书" href="">查看授权书模板</a></li>
+		</ul>
+	</div>
+
 	<a title="创建商家" class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('biz/create') ?>">申请入驻</a>
 
 	<?php elseif ( empty($biz) ): ?>
-	<p>商家状态异常，请<a class="btn btn-primary btn-lg" href="<?php echo base_url('logout') ?>">重新登录</a></p>
+	<p>商家状态异常，<a class="btn btn-primary btn-lg" href="<?php echo base_url('logout') ?>">重新登录</a>即可解决该异常</p>
 
 	<?php else: ?>
 	<section id=biz-info>

@@ -147,7 +147,7 @@
 			endif;
 
 			// 获取商品信息
-			$data['comodity'] = $this->get_category($data['item']['item_id']);
+			$data['comodity'] = $this->get_item($data['item']['item_id']);
 
 			// 页面信息
 			$data['title'] = $data['item']['name'];
@@ -239,7 +239,7 @@
 			$this->form_validation->set_rules('weight_volume', '体积重（KG）', 'trim');
 			
 			// 获取商品信息
-			$data['comodity'] = $this->get_category($this->input->get_post('item_id'));
+			$data['comodity'] = $this->get_item($this->input->get_post('item_id'));
 			
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -332,7 +332,7 @@
 				endif;
 				
 				// 获取商品信息
-				$data['comodity'] = $this->get_category($data['item']['item_id']);
+				$data['comodity'] = $this->get_item($data['item']['item_id']);
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/edit', $data);

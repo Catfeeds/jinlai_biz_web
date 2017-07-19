@@ -50,10 +50,10 @@
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
-			<legend>基本信息</legend>
+			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
 
 			<div class=form-group>
-				<label for=mobile class="col-sm-2 control-label">手机号</label>
+				<label for=mobile class="col-sm-2 control-label">手机号※</label>
 				<div class=col-sm-10>
 					<p class=helper-block>该手机号必须已注册过本平台的账号（即通过短信登录过）</p>
 					<input class=form-control name=mobile type=tel value="<?php echo set_value('mobile') ?>" size=11 pattern="\d{11}" placeholder="手机号" required>
@@ -61,7 +61,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=role class="col-sm-2 control-label">角色</label>
+				<label for=role class="col-sm-2 control-label">角色※</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'role' ?>
 					<select class=form-control name="<?php echo $input_name ?>" required>
@@ -77,7 +77,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=level class="col-sm-2 control-label">级别</label>
+				<label for=level class="col-sm-2 control-label">级别※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=level type=text value="<?php echo set_value('level') ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
 				</div>

@@ -22,38 +22,16 @@
 
 <base href="<?php echo base_url('uploads/') ?>">
 
-<div id=breadcrumb>
-	<ol class="breadcrumb container">
-		<li><a href="<?php echo base_url() ?>">首页</a></li>
-		<li><a href="<?php echo base_url($this->class_name) ?>"><?php echo $this->class_name_cn ?></a></li>
-		<li class=active><?php echo $title ?></li>
-	</ol>
-</div>
-
 <div id=content class=container>
-	<?php
-	// 需要特定角色和权限进行该操作
-	$current_role = $this->session->role; // 当前用户角色
-	$current_level = $this->session->level; // 当前用户级别
-	$role_allowed = array('管理员', '经理');
-	$level_allowed = 30;
-	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-	?>
-	<div class=btn-group role=group>
-		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
-	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
-	</div>
-	<?php endif ?>
 
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
+		<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+
 		<fieldset>
-			<p class="bg-info text-info text-center">带有“※”符号的为必填项</p>
-			
 			<legend>基本信息</legend>
 			
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
@@ -61,7 +39,10 @@
 			<div class=form-group>
 				<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号</label>
 				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $this->session->mobile ?></p>
+					<p class="form-control-static">
+						<?php echo $this->session->mobile ?><br>
+						您可通过专属顾问申请修改该号码
+					</p>
 				</div>
 			</div>
 			
@@ -128,114 +109,18 @@
 					<textarea class=form-control name=description rows=10 placeholder="店铺公告"><?php echo $item['notification'] ?></textarea>
 				</div>
 			</div>
+
 			<div class=form-group>
-				<label for=tel_public class="col-sm-2 control-label">消费者联系电话※</label>
+				<label for=tel_public class="col-sm-2 control-label">消费者服务电话※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=tel_public type=tel value="<?php echo $item['tel_public'] ?>" placeholder="消费者联系电话" required>
+					<input class=form-control name=tel_public type=tel value="<?php echo $item['tel_public'] ?>" placeholder="400/800、手机号、带区号的固定电话号码均可" required>
 				</div>
 			</div>
-			<div class=form-group>
-				<label for=tel_protected_fiscal class="col-sm-2 control-label">财务联系手机号</label>
-				<div class=col-sm-10>
-					<input class=form-control name=tel_protected_fiscal type=tel value="<?php echo $item['tel_protected_fiscal'] ?>" placeholder="财务联系手机号">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=tel_protected_order class="col-sm-2 control-label">订单通知手机号</label>
-				<div class=col-sm-10>
-					<input class=form-control name=tel_protected_order type=tel value="<?php echo $item['tel_protected_order'] ?>" placeholder="订单通知手机号">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=freight class="col-sm-2 control-label">每笔订单运费（元）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=freight type=text value="<?php echo $item['freight'] ?>" placeholder="每笔订单运费（元）">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=freight_free_subtotal class="col-sm-2 control-label">免邮费起始金额（元）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=freight_free_subtotal type=text value="<?php echo $item['freight_free_subtotal'] ?>" placeholder="免邮费起始金额（元）">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=freight_free_count class="col-sm-2 control-label">免邮费起始份数（份）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=freight_free_count type=text value="<?php echo $item['freight_free_count'] ?>" placeholder="免邮费起始份数（份）">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=min_order_subtotal class="col-sm-2 control-label">最低小计金额（元）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=min_order_subtotal type=text value="<?php echo $item['min_order_subtotal'] ?>" placeholder="最低小计金额（元）">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=delivery_time_start class="col-sm-2 control-label">配送起始时间</label>
-				<div class=col-sm-10>
-					<input class=form-control name=delivery_time_start type=text value="<?php echo $item['delivery_time_start'] ?>" placeholder="配送起始时间">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=delivery_time_end class="col-sm-2 control-label">配送结束时间</label>
-				<div class=col-sm-10>
-					<input class=form-control name=delivery_time_end type=text value="<?php echo $item['delivery_time_end'] ?>" placeholder="配送结束时间">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=country class="col-sm-2 control-label">国家</label>
-				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $item['country'] ?></p>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=province class="col-sm-2 control-label">省</label>
-				<div class=col-sm-10>
-					<input class=form-control name=province type=text value="<?php echo $item['province'] ?>" placeholder="省">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=city class="col-sm-2 control-label">市</label>
-				<div class=col-sm-10>
-					<input class=form-control name=city type=text value="<?php echo $item['city'] ?>" placeholder="市">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=county class="col-sm-2 control-label">区</label>
-				<div class=col-sm-10>
-					<input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=detail class="col-sm-2 control-label">详细地址</label>
-				<div class=col-sm-10>
-					<input class=form-control name=detail type=text value="<?php echo $item['detail'] ?>" placeholder="详细地址">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=longitude class="col-sm-2 control-label">经度</label>
-				<div class=col-sm-10>
-					<input class=form-control name=longitude type=text value="<?php echo $item['longitude'] ?>" placeholder="经度">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=latitude class="col-sm-2 control-label">纬度</label>
-				<div class=col-sm-10>
-					<input class=form-control name=latitude type=text value="<?php echo $item['latitude'] ?>" placeholder="纬度">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=bank_name class="col-sm-2 control-label">开户行名称</label>
-				<div class=col-sm-10>
-					<input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="须与营业执照一致">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=bank_account class="col-sm-2 control-label">开户行账号</label>
-				<div class=col-sm-10>
-					<input class=form-control name=bank_account type=number step=1 value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号">
-				</div>
-			</div>
+		</fieldset>
+		
+		<fieldset>
+			<legend>资质信息</legend>
+
 			<div class=form-group>
 				<label for=code_license class="col-sm-2 control-label">统一社会信用代码</label>
 				<div class=col-sm-10>
@@ -254,6 +139,11 @@
 					<input class=form-control name=code_ssn_auth type=text value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号">
 				</div>
 			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>资质证书及授权证明</legend>
+			<p class=helper-block>以下资料需要彩色原件的扫描件或数码照</p>
 
 			<div class=form-group>
 				<label for=url_image_license class="col-sm-2 control-label">营业执照</label>
@@ -355,6 +245,34 @@
 
 				</div>
 			</div>
+		</fieldset>
+		
+		<fieldset>
+			<legend>财务信息</legend>
+
+			<div class=form-group>
+				<label for=bank_name class="col-sm-2 control-label">对公账户开户行</label>
+				<div class=col-sm-10>
+					<input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="基本户、一般户均可">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=bank_account class="col-sm-2 control-label">对公账户账号</label>
+				<div class=col-sm-10>
+					<input class=form-control name=bank_account type=number step=1 value="<?php echo $item['bank_account'] ?>" placeholder="基本户、一般户均可">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=tel_protected_fiscal class="col-sm-2 control-label">财务联系手机号</label>
+				<div class=col-sm-10>
+					<input class=form-control name=tel_protected_fiscal type=tel size=11 value="<?php echo $item['tel_protected_fiscal'] ?>" placeholder="财务联系手机号">
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>形象展示</legend>
+			<p class=helper-block>您可根据自身业态，向平台用户展现相应的经营情况。</p>
 
 			<div class=form-group>
 				<label for=url_image_product class="col-sm-2 control-label">产品</label>
@@ -432,8 +350,100 @@
 				</div>
 			</div>
 		</fieldset>
+		
+		<fieldset>
+			<legend>物流信息</legend>
+			
+			<div class=form-group>
+				<label for=tel_protected_order class="col-sm-2 control-label">订单通知手机号</label>
+				<div class=col-sm-10>
+					<input class=form-control name=tel_protected_order type=tel size=11 value="<?php echo $item['tel_protected_order'] ?>" placeholder="订单通知手机号">
+				</div>
+			</div>
 
-		<fieldset>			
+			<div class=form-group>
+				<label for=freight class="col-sm-2 control-label">每笔订单运费（元）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=freight type=text value="<?php echo $item['freight'] ?>" placeholder="每笔订单运费（元）">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=freight_free_subtotal class="col-sm-2 control-label">免邮费起始金额（元）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=freight_free_subtotal type=text value="<?php echo $item['freight_free_subtotal'] ?>" placeholder="免邮费起始金额（元）">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=freight_free_count class="col-sm-2 control-label">免邮费起始份数（份）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=freight_free_count type=text value="<?php echo $item['freight_free_count'] ?>" placeholder="免邮费起始份数（份）">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=min_order_subtotal class="col-sm-2 control-label">最低小计金额（元）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=min_order_subtotal type=number step=0.01 min=1 max=99999.99 value="<?php echo $item['min_order_subtotal'] ?>" placeholder="最低小计金额（元）">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=delivery_time_start class="col-sm-2 control-label">配送起始时间（时）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=delivery_time_start type=number step=1 min=0 max=22 value="<?php echo $item['delivery_time_start'] ?>" placeholder="24小时制，例如上午8时请填写“8”">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=delivery_time_end class="col-sm-2 control-label">配送结束时间（时）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=delivery_time_end type=number step=1 min=1 max=23 value="<?php echo $item['delivery_time_end'] ?>" placeholder="24小时制，例如下午10时请填写“22”">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=country class="col-sm-2 control-label">国家</label>
+				<div class=col-sm-10>
+					<p class="form-control-static"><?php echo $item['country'] ?></p>
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=province class="col-sm-2 control-label">省</label>
+				<div class=col-sm-10>
+					<input class=form-control name=province type=text value="<?php echo $item['province'] ?>" placeholder="省">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=city class="col-sm-2 control-label">市</label>
+				<div class=col-sm-10>
+					<input class=form-control name=city type=text value="<?php echo $item['city'] ?>" placeholder="市">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=county class="col-sm-2 control-label">区</label>
+				<div class=col-sm-10>
+					<input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=detail class="col-sm-2 control-label">详细地址</label>
+				<div class=col-sm-10>
+					<input class=form-control name=detail type=text value="<?php echo $item['detail'] ?>" placeholder="详细地址">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=longitude class="col-sm-2 control-label">经度</label>
+				<div class=col-sm-10>
+					<input class=form-control name=longitude type=text value="<?php echo $item['longitude'] ?>" placeholder="经度">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=latitude class="col-sm-2 control-label">纬度</label>
+				<div class=col-sm-10>
+					<input class=form-control name=latitude type=text value="<?php echo $item['latitude'] ?>" placeholder="纬度">
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>更多……</legend>
+			
 			<div class=form-group>
 				<label for=url_web class="col-sm-2 control-label">官方网站</label>
 				<div class=col-sm-10>
@@ -447,15 +457,15 @@
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=url_taobao class="col-sm-2 control-label">淘宝/天猫店铺</label>
+				<label for=url_wechat class="col-sm-2 control-label">微信二维码</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_taobao type=text value="<?php echo $item['url_taobao'] ?>" placeholder="淘宝/天猫店铺">
+					<input class=form-control name=url_wechat type=text value="<?php echo $item['url_wechat'] ?>" placeholder="服务号、订阅号、个人号均可">
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=url_wechat class="col-sm-2 control-label">微信二维码</label>
+				<label for=url_taobao class="col-sm-2 control-label">淘宝/天猫店铺</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_wechat type=text value="<?php echo $item['url_wechat'] ?>" placeholder="微信二维码">
+					<input class=form-control name=url_taobao type=text value="<?php echo $item['url_taobao'] ?>" placeholder="我们将为您在商家中心定制相应链接，便于您同步管理">
 				</div>
 			</div>
 		</fieldset>

@@ -17,7 +17,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'template_id', 'biz_id', 'category_id', 'category_biz_id', 'item_id', 'name', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
+			'template_id', 'biz_id', 'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -25,7 +25,7 @@
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'category_id', 'category_biz_id', 'item_id', 'name', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end',
+			'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end',
 		);
 
 		/**
@@ -224,17 +224,16 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('template_id', '模板ID', 'trim|');
-			$this->form_validation->set_rules('biz_id', '所属商家ID', 'trim|');
-			$this->form_validation->set_rules('category_id', '限用系统级商品分类ID', 'trim|required');
-			$this->form_validation->set_rules('category_biz_id', '限用商家级商品分类ID', 'trim|required');
-			$this->form_validation->set_rules('item_id', '限用商品ID', 'trim|required');
-			$this->form_validation->set_rules('name', '名称', 'trim|');
-			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim|required');
-			$this->form_validation->set_rules('amount', '面额（元）', 'trim|');
-			$this->form_validation->set_rules('period', '自领取时起有效期（秒）', 'trim|required');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
+			$this->form_validation->set_rules('category_id', '限用系统商品分类', 'trim');
+			$this->form_validation->set_rules('category_biz_id', '限用商家商品分类', 'trim');
+			$this->form_validation->set_rules('item_id', '限用商品', 'trim');
+			$this->form_validation->set_rules('name', '名称', 'trim|required');
+			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required');
+			$this->form_validation->set_rules('max_amount', '限量', 'trim');
+			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim');
+			$this->form_validation->set_rules('period', '自领取时起有效期（秒）', 'trim');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
 			
 
 			// 若表单提交不成功
@@ -253,7 +252,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'template_id', 'biz_id', 'category_id', 'category_biz_id', 'item_id', 'name', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
+					'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -303,18 +302,16 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('template_id', '模板ID', 'trim|');
-			$this->form_validation->set_rules('biz_id', '所属商家ID', 'trim|');
-			$this->form_validation->set_rules('category_id', '限用系统级商品分类ID', 'trim|required');
-			$this->form_validation->set_rules('category_biz_id', '限用商家级商品分类ID', 'trim|required');
-			$this->form_validation->set_rules('item_id', '限用商品ID', 'trim|required');
-			$this->form_validation->set_rules('name', '名称', 'trim|');
-			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim|required');
-			$this->form_validation->set_rules('amount', '面额（元）', 'trim|');
-			$this->form_validation->set_rules('period', '自领取时起有效期（秒）', 'trim|required');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
-			
+			$this->form_validation->set_rules('category_id', '限用系统商品分类', 'trim');
+			$this->form_validation->set_rules('category_biz_id', '限用商家商品分类', 'trim');
+			$this->form_validation->set_rules('item_id', '限用商品', 'trim');
+			$this->form_validation->set_rules('name', '名称', 'trim|required');
+			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required');
+			$this->form_validation->set_rules('max_amount', '限量', 'trim');
+			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim');
+			$this->form_validation->set_rules('period', '自领取时起有效期（秒）', 'trim');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -343,7 +340,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'template_id', 'biz_id', 'category_id', 'category_biz_id', 'item_id', 'name', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
+					'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -435,8 +432,8 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+			$this->form_validation->set_rules('password', '密码', 'trim|min_length[6]|max_length[20]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -554,8 +551,8 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+			$this->form_validation->set_rules('password', '密码', 'trim|min_length[6]|max_length[20]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):

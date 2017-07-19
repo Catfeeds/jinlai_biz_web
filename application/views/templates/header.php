@@ -23,9 +23,9 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20170717">
-		<meta name=author content="刘亚杰Kamas">
-		<meta name=copyright content="青岛意帮网络科技有限公司">
+		<meta name=version content="revision20170720">
+		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
+		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
 
 		<meta name=viewport content="width=device-width,user-scalable=0">
@@ -193,7 +193,7 @@
 						<?php if ( !isset($this->session->time_expire_login) ): ?>
 						<li><a title="登录" href="<?php echo base_url('login') ?>">登录</a></li>
 						<?php else: ?>
-						<li><a title="个人中心" href="<?php echo base_url('user/mine') ?>">个人中心</a></li>
+						<li><a title="个人中心" href="<?php echo base_url('mine') ?>">个人中心</a></li>
 						<li><a title="退出" href="<?php echo base_url('logout') ?>">退出</a></li>
 						<?php endif ?>
 					</ul>

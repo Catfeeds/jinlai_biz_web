@@ -4,30 +4,31 @@
 
 	#captcha-image {padding:0;min-width:100px;}
 		#captcha-image img {width:100%;height:100%;}
-		/* 宽度在750像素以上的设备 */
-		@media only screen and (min-width:751px)
-		{
 
-		}
-	
-		/* 宽度在960像素以上的设备 */
-		@media only screen and (min-width:961px)
-		{
+	/* 宽度在750像素以上的设备 */
+	@media only screen and (min-width:751px)
+	{
 
-		}
+	}
 
-		/* 宽度在1280像素以上的设备 */
-		@media only screen and (min-width:1281px)
-		{
+	/* 宽度在960像素以上的设备 */
+	@media only screen and (min-width:961px)
+	{
 
-		}
-	</style>
+	}
+
+	/* 宽度在1280像素以上的设备 */
+	@media only screen and (min-width:1281px)
+	{
+
+	}
+</style>
 
 <script src="/js/form.js"></script>
 
 <div id=content class=container>
 	<section class="row bg-info text-info">
-		<p><em>version beta20170717</em>当前系统为beta版本，仅供技术研究及技术开发；样式将随时变动，布局将随时更改，数据将不定时清零、重置，或有可能某些数据未经创建者本身自主操作或主动授权而被他人更改且无通知；任何公告、订单、充值均无任何实际效力，任何信息均不构成合同要约或其它任何形式的承诺、侵权。</p>
+		<p><em>version beta20170720</em>当前系统为beta版本，仅供技术研究及技术开发；样式将随时变动，布局将随时更改，数据将不定时清零、重置，或有可能某些数据未经创建者本身自主操作或主动授权而被他人更改且无通知；任何公告、订单、充值均无任何实际效力，任何信息均不构成合同要约或其它任何形式的承诺、侵权。</p>
 	</section>
 
 	<div class="btn-group btn-group-justified" role=group>

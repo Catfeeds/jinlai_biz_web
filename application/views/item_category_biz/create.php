@@ -52,8 +52,10 @@
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
+			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+
 			<div class=form-group>
-				<label for=system_category_id class="col-sm-2 control-label">所属系统商品分类</label>
+				<label for=system_category_id class="col-sm-2 control-label">所属系统商品分类※</label>
 				<div class=col-sm-10>
 					<select class=form-control name=system_category_id required>
 						<option value="">请选择</option>
@@ -79,7 +81,7 @@
 			<?php endif ?>
 
 			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">名称</label>
+				<label for=name class="col-sm-2 control-label">名称※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="名称" required>
 				</div>
@@ -92,7 +94,7 @@
 
 					<?php $name_to_upload = 'url_image' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
 					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="item_category_biz/url_image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 

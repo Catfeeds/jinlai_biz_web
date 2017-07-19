@@ -54,39 +54,31 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>模板ID</dt>
+		<dt>模板ID</dt>
 		<dd><?php echo $item['template_id'] ?></dd>
-		<dt>所属商家ID</dt>
-		<dd><?php echo $item['biz_id'] ?></dd>
-		<dt>限用系统级商品分类ID</dt>
-		<dd><?php echo $item['category_id'] ?></dd>
-		<dt>限用商家级商品分类ID</dt>
-		<dd><?php echo $item['category_biz_id'] ?></dd>
-		<dt>限用商品ID</dt>
-		<dd><?php echo $item['item_id'] ?></dd>
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
-		<dt>最低订单小计（元）</dt>
-		<dd><?php echo $item['min_subtotal'] ?></dd>
-		<dt>面额（元）</dt>
-		<dd><?php echo $item['amount'] ?></dd>
+		<dt>面值</dt>
+		<dd>￥ <?php echo $item['amount'] ?></dd>
+		<dt>限量</dt>
+		<dd>
+			<?php echo $item['max_amount'] ?> 份
+			<p class=helper-block>当作为优惠券包中的优惠券进行发放时，限量以优惠券包限量为准</p>
+		</dd>
+		<dt>最低订单小计</dt>
+		<dd>￥ <?php echo $item['min_subtotal'] ?></dd>
+		<dt>限用系统商品分类</dt>
+		<dd><?php echo $item['category_id'] ?></dd>
+		<dt>限用商家商品分类</dt>
+		<dd><?php echo $item['category_biz_id'] ?></dd>
+		<dt>限用商品</dt>
+		<dd><?php echo $item['item_id'] ?></dd>
 		<dt>自领取时起有效期（秒）</dt>
 		<dd><?php echo $item['period'] ?></dd>
 		<dt>开始时间</dt>
 		<dd><?php echo $item['time_start'] ?></dd>
 		<dt>结束时间</dt>
 		<dd><?php echo $item['time_end'] ?></dd>
-		<dt>创建时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
-		<dt>创建者ID</dt>
-		<dd><?php echo $item['creator_id'] ?></dd>
-		<dt>最后操作者ID</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
-
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

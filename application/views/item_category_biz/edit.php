@@ -52,10 +52,12 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
+			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>
-				<label for=system_category_id class="col-sm-2 control-label">所属系统商品分类</label>
+				<label for=system_category_id class="col-sm-2 control-label">所属系统商品分类※</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'system_category_id' ?>
 					<select class=form-control name="<?php echo $input_name ?>" required>
@@ -88,7 +90,7 @@
 			<?php endif ?>
 
 			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">名称</label>
+				<label for=name class="col-sm-2 control-label">名称※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=name type=text value="<?php echo $item['name'] ?>" placeholder="名称" required>
 				</div>
