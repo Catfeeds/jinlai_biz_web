@@ -1,5 +1,6 @@
 <style>
 	#function-list li {text-align:center;}
+	#biz-info h2 {font-size:4rem;text-align:center;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -51,14 +52,17 @@
 
 	<?php else: ?>
 	<section id=biz-info>
-		<a title="商家详情" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">
-			<h2><?php echo $biz['brief_name'] ?></h2>
-			<ul class="row text-right">
-				<li><?php echo $biz['name'] ?></li>
-				<li>消费者服务电话 <?php echo $biz['tel_public'] ?></li>
-				<li>经营状态 <?php echo $biz['status'] ?></li>
-			</ul>
-		</a>
+		<div class="jumbotron row">
+			<a title="商家详情" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">
+				<h2><?php echo $biz['brief_name'] ?></h2>
+				<ul class=row>
+					<li><i class="fa fa-building fa-fw" aria-hidden=true></i> <?php echo $biz['name'] ?></li>
+					<li><i class="fa fa-phone fa-fw" aria-hidden=true></i> <?php echo $biz['tel_public'] ?></li>
+					<li class=text-right><i class="fa fa-info-circle fa-fw" aria-hidden=true></i>
+ <?php echo $biz['status'] ?></li>
+				</ul>
+			</a>
+		</div>
 	</section>
 
 		<?php if ($biz['status'] !== '冻结'): ?>
@@ -88,32 +92,29 @@
 	-->
 	
 	<style>
-		#function-list li {height:6rem;}
-			#function-list li>a {display:block;width:100%;height:100%;text-align:center;}
+		#function-list ul {border:1px solid #eee;border-bottom:0;}
+			#function-list li {height:8rem;margin-top:-1px;border:1px solid #eee;border-left:0;}
+				#function-list li>a {display:block;width:100%;height:100%;text-align:center;}
+					#function-list i {display:block;}
 	</style>
 
 	<section id=function-list>
 		<ul class=row>
 			<li class="col-xs-3 col-md-2">
-				<a title="员工" href="<?php echo base_url('stuff') ?>">员工管理</a>
+				<a title="商品管理" href="<?php echo base_url('item') ?>">
+					<i class="fa fa-database" aria-hidden=true></i>商品管理
+				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
-				<a title="商品" href="<?php echo base_url('item') ?>">商品管理</a>
+				<a title="订单管理" href="<?php echo base_url('order') ?>">
+					<i class="fa fa-money" aria-hidden=true></i>订单管理
+				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
-				<a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">店内分类</a>
+				<a title="平台活动" href="<?php echo base_url('promotion') ?>">平台活动</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
-				<a title="商品评价" href="<?php echo base_url('comment_item') ?>">商品评价</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<a title="订单评价" href="<?php echo base_url('comment_item') ?>">订单评价</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<a title="商家营销" href="<?php echo base_url('promotion_biz') ?>">店内营销</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<a title="平台营销" href="<?php echo base_url('promotion') ?>">平台营销</a>
+				<a title="店内活动" href="<?php echo base_url('promotion_biz') ?>">店内活动</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
 				<a title="优惠券" href="<?php echo base_url('coupon_template') ?>">优惠券</a>
@@ -122,10 +123,32 @@
 				<a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">优惠券包</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
+				<a title="团队管理" href="<?php echo base_url('stuff') ?>">团队管理</a>
+			</li>
+			<li class="col-xs-3 col-md-2">
+				<a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">分类管理</a>
+			</li>
+			<li class="col-xs-3 col-md-2">
 				<a title="运费模板" href="<?php echo base_url('freight_template') ?>">运费模板</a>
 			</li>
 		</ul>
+
+		<hr>
+
+		<p class=text-center>更多功能将与客户端同时开放</p>
+		<ul class=row>
+			<li class="col-xs-3 col-md-2">
+				<a title="退款处理" href="<?php echo base_url('refund') ?>">退款处理</a>
+			</li>
+			<li class="col-xs-3 col-md-2">
+				<a title="商品评价" href="<?php echo base_url('comment_item') ?>">商品评价</a>
+			</li>
+			<li class="col-xs-3 col-md-2">
+				<a title="订单评价" href="<?php echo base_url('comment_item') ?>">订单评价</a>
+			</li>
+		</ul>
 	</section>
-		<?php endif ?>
+		<?php endif //if ($biz['status'] !== '冻结'): ?>
+
 	<?php endif ?>
 </div>

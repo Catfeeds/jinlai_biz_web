@@ -4,7 +4,7 @@
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
-		
+
 	}
 	
 	/* 宽度在960像素以上的设备 */
@@ -44,50 +44,29 @@
 	</div>
 	<?php endif ?>
 
-	<ul class=list-unstyled>
-		<?php
-		// 需要特定角色和权限进行该操作
-		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-		?>
-		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>
-		<?php endif ?>
-	</ul>
+	<?php
+		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
+		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
+		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
+	?>
+		<fieldset>
+			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
+			<input name=name type=hidden value="<?php echo $name ?>">
 
-	<dl id=list-info class=dl-horizontal>
-		<dt>优惠券套餐ID</dt>
-		<dd><?php echo $item['combo_id'] ?></dd>
-		<dt>名称</dt>
-		<dd><?php echo $item['name'] ?></dd>
-		<dt>优惠券模板ID们</dt>
-		<dd><?php echo $item['template_ids'] ?></dd>
-		<dt>限量</dt>
-		<dd>
-			<?php echo $item['max_amount'] ?> 份
-		</dd>
-		<dt>开始时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_start']) ?></dd>
-		<dt>结束时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_end']) ?></dd>
-	</dl>
+			<div class=form-group>
+				<label for=value class="col-sm-2 control-label"><?php echo $name ?></label>
+				<div class=col-sm-10>
+					<input class=form-control name=value type=text value="<?php echo $item['name'] ?>" required>
+				</div>
+			</div>
+		</fieldset>
 
-	<dl id=list-record class=dl-horizontal>
-		<dt>创建时间</dt>
-		<dd>
-			<?php echo $item['time_create'] ?>
-			<a href="<?php echo base_url('stuff/detail?id='.$item['creator_id']) ?>" target=new>查看创建者</a>
-		</dd>
+		<div class=form-group>
+		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
+				<button class="btn btn-primary btn-lg btn-block" type=submit>确定</button>
+		    </div>
+		</div>
 
-		<?php if ( ! empty($item['time_delete']) ): ?>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<?php endif ?>
+	</form>
 
-		<?php if ( ! empty($item['operator_id']) ): ?>
-		<dt>最后操作时间</dt>
-		<dd>
-			<?php echo $item['time_edit'] ?>
-			<a href="<?php echo base_url('stuff/detail?id='.$item['operator_id']) ?>" target=new>查看最后操作者</a>
-		</dd>
-		<?php endif ?>
-	</dl>
 </div>

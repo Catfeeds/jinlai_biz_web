@@ -62,9 +62,9 @@
 			</div>
 
 			<div class=form-group>
-				<label for=fullname class="col-sm-2 control-label">姓名</label>
+				<label for=fullname class="col-sm-2 control-label">姓名※</label>
 				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $item['fullname'] ?></p>
+					<input class=form-control name=fullname type=text value="<?php echo $item['fullname'] ?>" placeholder="姓名" required>
 				</div>
 			</div>
 
@@ -74,7 +74,7 @@
 					<?php $input_name = 'role' ?>
 					<select class=form-control name="<?php echo $input_name ?>" required>
 						<?php
-							$options = array('管理员', '经理', '成员',);
+							$options = array('管理员', '经理', '成员');
 							foreach ($options as $option):
 						?>
 						<option value="<?php echo $option ?>" <?php if ($option === $item[$input_name]) echo 'selected'; ?>><?php echo $option ?></option>

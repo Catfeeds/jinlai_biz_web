@@ -93,9 +93,9 @@
 		</fieldset>
 
 		<div class="jumbotron row">
-			<p>继续完善以下资料将可优先申请入驻；仅提供上述信息则需<p>
+			<p>继续完善以下资料将可优先申请；仅提供上述信息则需<p>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
-				<button class="btn btn-default btn-lg btn-block" type=submit>排队申请入驻</button>
+				<button class="btn btn-default btn-lg btn-block" type=submit>排队申请</button>
 		    </div>
 		</div>
 

@@ -1,5 +1,5 @@
 <style>
-
+	.params {display:none;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -19,6 +19,16 @@
 
 	}
 </style>
+
+<base href="<?php echo base_url('uploads/') ?>">
+
+<script>
+	$(function(){
+		// 仅显示适用于当前营销活动类型的参数
+		var fieldset_to_show = '<?php echo $item['type'] ?>';
+		$('[date-type*="' + fieldset_to_show + '"]').show();
+	});
+</script>
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
@@ -54,59 +64,91 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>商家营销活动ID</dt>
+		<dt>商家营销活动ID</dt>
 		<dd><?php echo $item['promotion_id'] ?></dd>
-		<dt>所属商家ID</dt>
-		<dd><?php echo $item['biz_id'] ?></dd>
-		<dt>名称</dt>
-		<dd><?php echo $item['name'] ?></dd>
-		<dt>说明</dt>
-		<dd><?php echo $item['description'] ?></dd>
-		<dt>开始时间</dt>
-		<dd><?php echo $item['time_start'] ?></dd>
-		<dt>结束时间</dt>
-		<dd><?php echo $item['time_end'] ?></dd>
-		<dt>是否允许折上折</dt>
-		<dd><?php echo $item['fold_allowed'] ?></dd>
 		<dt>活动类型</dt>
 		<dd><?php echo $item['type'] ?></dd>
-		<dt>折扣率</dt>
-		<dd><?php echo $item['discount'] ?></dd>
-		<dt>赠品起送份数（份）</dt>
-		<dd><?php echo $item['present_trigger_amount'] ?></dd>
-		<dt>赠品信息</dt>
-		<dd><?php echo $item['present'] ?></dd>
-		<dt>减免金额（元）</dt>
-		<dd><?php echo $item['reduction_amount'] ?></dd>
-		<dt>减免比例</dt>
-		<dd><?php echo $item['reduction_discount'] ?></dd>
-		<dt>赠送优惠券ID</dt>
-		<dd><?php echo $item['coupon_id'] ?></dd>
-		<dt>赠送优惠券套餐ID</dt>
-		<dd><?php echo $item['coupon_combo_id'] ?></dd>
-		<dt>订金/预付款（元）</dt>
-		<dd><?php echo $item['deposit'] ?></dd>
-		<dt>尾款（元）</dt>
-		<dd><?php echo $item['balance'] ?></dd>
-		<dt>支付尾款开始时间</dt>
-		<dd><?php echo $item['time_complete_start'] ?></dd>
-		<dt>支付尾款结束时间</dt>
-		<dd><?php echo $item['time_complete_end'] ?></dd>
-		<dt>团购成团订单数（单）</dt>
-		<dd><?php echo $item['groupbuy_order_amount'] ?></dd>
-		<dt>团购个人最高限量（份/位）</dt>
-		<dd><?php echo $item['groupbuy_quantity_max'] ?></dd>
-		<dt>创建时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
-		<dt>创建者ID</dt>
-		<dd><?php echo $item['creator_id'] ?></dd>
-		<dt>最后操作者ID</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
+		<dt>名称</dt>
+		<dd><?php echo $item['name'] ?></dd>
+		<dt>开始时间</dt>
+		<dd><?php echo date('Y-m-d H:i:s', $item['time_start']) ?></dd>
+		<dt>结束时间</dt>
+		<dd><?php echo date('Y-m-d H:i:s', $item['time_end']) ?></dd>
+		<dt>说明</dt>
+		<dd><?php echo $item['description'] ?></dd>
 
+		<?php if ( !empty($item['url_image']) ): ?>
+		<dt>形象图</dt>
+		<dd class=row>
+			<figure class="col-xs-12 col-sm-6 col-md-4">
+				<img src="<?php echo $item['url_image'] ?>">
+			</figure>
+		</dd>
+		<?php endif ?>
+		
+		<?php if ( !empty($item['url_image_wide']) ): ?>
+		<dt>宽屏形象图</dt>
+		<dd class=row>
+			<figure class="col-xs-12 col-sm-6 col-md-4">
+				<img src="<?php echo $item['url_image_wide'] ?>">
+			</figure>
+		</dd>
+		<?php endif ?>
+
+		<dt>是否允许折上折</dt>
+		<dd><?php echo ($item['fold_allowed'] === '1')? '是': '否'; ?></dd>
+	</dl>
+
+	<dl date-type="单品折扣,订单折扣" class="dl-horizontal params">
+		<dt>折扣率</dt>
+		<dd><?php echo $item['discount'] * 100 ?>%</dd>
+	</dl>
+
+	<dl date-type="单品满赠,订单满赠" class="dl-horizontal params">
+		<dt>赠品触发金额</dt>
+		<dd>￥ <?php echo $item['present_trigger_amount'] ?></dd>
+		<dt>赠品触发份数</dt>
+		<dd><?php echo $item['present_trigger_count'] ?> 份</dd>
+		<dt>赠品</dt>
+		<dd><?php echo $item['present'] ?></dd>
+	</dl>
+
+	<dl date-type="单品满减,订单满减" class="dl-horizontal params">
+		<dt>满减触发金额</dt>
+		<dd>￥ <?php echo $item['reduction_trigger_amount'] ?></dd>
+		<dt>减免金额</dt>
+		<dd>￥ <?php echo $item['reduction_amount'] ?></dd>
+		<dt>减免比例</dt>
+		<dd><?php echo $item['reduction_discount'] * 100 ?>%</dd>
+	</dl>
+
+	<dl date-type="单品赠券,订单赠券" class="dl-horizontal params">
+		<dt>赠送优惠券模板</dt>
+		<dd><?php echo $item['coupon_id'] ?></dd>
+		<dt>赠送优惠券套餐</dt>
+		<dd><?php echo $item['coupon_combo_id'] ?></dd>
+	</dl>
+
+	<dl date-type="单品预售" class="dl-horizontal params">
+		<dt>订金/预付款</dt>
+		<dd>￥ <?php echo $item['deposit'] ?></dd>
+		<dt>尾款</dt>
+		<dd>￥ <?php echo $item['balance'] ?></dd>
+		<dt>支付预付款开始时间</dt>
+		<dd><?php echo date('Y-m-d H:i:s', $item['time_book_start']) ?></dd>
+		<dt>支付预付款结束时间</dt>
+		<dd><?php echo date('Y-m-d H:i:s', $item['time_book_end']) ?></dd>
+		<dt>支付尾款开始时间</dt>
+		<dd><?php echo date('Y-m-d H:i:s', $item['time_complete_start']) ?></dd>
+		<dt>支付尾款结束时间</dt>
+		<dd><?php echo date('Y-m-d H:i:s', $item['time_complete_end']) ?></dd>
+	</dl>
+
+	<dl date-type="单品团购" class="dl-horizontal params">
+		<dt>团购成团订单数</dt>
+		<dd><?php echo $item['groupbuy_order_amount'] ?> 单</dd>
+		<dt>团购个人最高限量</dt>
+		<dd><?php echo $item['groupbuy_quantity_max'] ?> 份/用户</dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

@@ -231,4 +231,136 @@
 				redirect( base_url('error/permission_level') );
 			endif;
 		}
+		
+		// 获取品牌列表
+		protected function list_brand()
+		{
+			// 从API服务器获取相应列表信息
+			$params = NULL;
+			$url = api_url('brand/index');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['items'] = $result['content'];
+			else:
+				$data['items'] = NULL;
+			endif;
+
+			return $data['items'];
+		}
+		
+		// 获取特定品牌信息
+		protected function get_brand($id)
+		{
+			// 从API服务器获取相应列表信息
+			$params['id'] = $id;
+			$url = api_url('brand/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				$data['item'] = NULL;
+			endif;
+			
+			return $data['item'];
+		}
+
+		// 获取系统分类列表
+		protected function list_category()
+		{
+			// 从API服务器获取相应列表信息
+			$params = NULL;
+			$url = api_url('item_category/index');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['items'] = $result['content'];
+			else:
+				$data['items'] = NULL;
+			endif;
+			
+			return $data['items'];
+		}
+		
+		// 获取特定系统分类信息
+		protected function get_category($id)
+		{
+			// 从API服务器获取相应列表信息
+			$params['id'] = $id;
+			$url = api_url('item_category/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				$data['item'] = NULL;
+			endif;
+			
+			return $data['item'];
+		}
+		
+		// 获取商家分类列表
+		protected function list_category_biz()
+		{
+			// 从API服务器获取相应列表信息
+			$params = array(
+				'biz_id' => $this->session->biz_id,
+			);
+			$url = api_url('item_category_biz/index');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['items'] = $result['content'];
+			else:
+				$data['items'] = NULL;
+			endif;
+			
+			return $data['items'];
+		}
+		
+		// 获取特定商家分类信息
+		protected function get_category_biz($id)
+		{
+			// 从API服务器获取相应列表信息
+			$params['id'] = $id;
+			$url = api_url('item_category_biz/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				$data['item'] = NULL;
+			endif;
+			
+			return $data['item'];
+		}
+
+		// 获取店内活动列表
+		protected function list_promotion_biz()
+		{
+			// 从API服务器获取相应列表信息
+			$params = array(
+				'biz_id' => $this->session->biz_id,
+			);
+			$url = api_url('promotion_biz/index');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['items'] = $result['content'];
+			else:
+				$data['items'] = NULL;
+			endif;
+
+			return $data['items'];
+		}
+		
+		// 获取店内活动详情
+		protected function get_promotion_biz($id)
+		{
+			// 从API服务器获取相应列表信息
+			$params['id'] = $id;
+			$url = api_url('promotion_biz/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				$data['item'] = NULL;
+			endif;
+			
+			return $data['item'];
+		}
 	}

@@ -42,7 +42,7 @@
 	<div class=btn-group role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-primary" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<a class="btn btn-primary" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create?'.$comodity['item_id']) ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
 
@@ -53,6 +53,8 @@
 	?>
 		<fieldset>
 			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+			
+			<input name=item_id type=hidden value="<?php echo $comodity['item_id'] ?>">
 
 			<div class=form-group>
 				<label for=item_id class="col-sm-2 control-label">所属商品</label>
@@ -97,31 +99,31 @@
 			<div class=form-group>
 				<label for=price class="col-sm-2 control-label">价格（元）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=price type=text value="<?php echo set_value('price') ?>" placeholder="价格（元）" required>
+					<input class=form-control name=price type=number step=0.01 min=1 max=99999.99 value="<?php echo set_value('price') ?>" placeholder="价格（元）" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=stocks class="col-sm-2 control-label">库存量（单位）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=stocks type=text value="<?php echo set_value('stocks') ?>" placeholder="库存量（单位）" required>
+					<input class=form-control name=stocks type=number step=1 max=65535 value="<?php echo set_value('stocks') ?>" placeholder="库存量（单位）" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_net type=text value="<?php echo set_value('weight_net') ?>" placeholder="净重（KG）">
+					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo set_value('weight_net') ?>" placeholder="净重（KG）">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_gross type=text value="<?php echo set_value('weight_gross') ?>" placeholder="毛重（KG）">
+					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo set_value('weight_gross') ?>" placeholder="毛重（KG）">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_volume class="col-sm-2 control-label">体积重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_volume type=text value="<?php echo set_value('weight_volume') ?>" placeholder="体积重（KG）">
+					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo set_value('weight_volume') ?>" placeholder="体积重（KG）">
 				</div>
 			</div>
 		</fieldset>

@@ -142,7 +142,19 @@
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
+				
+				// 获取系统商品分类信息
+				if ( !empty($data['item']['category_id']) ):
+					$data['category'] = $this->get_category($data['item']['category_id']);
+				endif;
+				
+				// 获取商家商品分类信息
+				if ( !empty($data['item']['category_biz_id']) ):
+					$data['category_biz'] = $this->get_category_biz($data['item']['category_biz_id']);
+				endif;
+
 			else:
+
 				$data['error'] = $result['content']['error']['message'];
 			endif;
 
@@ -220,6 +232,15 @@
 				'title' => '创建'.$this->class_name_cn,
 				'class' => $this->class_name.' create',
 			);
+			
+			// 获取品牌
+			$data['brands'] = $this->list_brand();
+
+			// 获取系统级商品分类
+			$data['categories'] = $this->list_category();
+
+			// 获取商家级商品分类
+			$data['biz_categories'] = $this->list_category_biz();
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
@@ -249,10 +270,12 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 					'biz_id' => $this->session->biz_id,
+					'time_start' => strtotime( $this->input->post('time_start') ),
+					'time_end' => strtotime( $this->input->post('time_end') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
+					'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -299,6 +322,15 @@
 				'title' => '修改'.$this->class_name_cn,
 				'class' => $this->class_name.' edit',
 			);
+			
+			// 获取品牌
+			$data['brands'] = $this->list_brand();
+
+			// 获取系统级商品分类
+			$data['categories'] = $this->list_category();
+
+			// 获取商家级商品分类
+			$data['biz_categories'] = $this->list_category_biz();
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
@@ -336,11 +368,12 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $this->input->post('id'),
-					//'name' => $this->input->post('name')),
+					'time_start' => strtotime( $this->input->post('time_start') ),
+					'time_end' => strtotime( $this->input->post('time_end') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
+					'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);

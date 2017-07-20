@@ -2,7 +2,7 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Promotion_biz 店内营销类
+	 * Promotion_biz 店内活动类
 	 *
 	 * 以我的XX列表、列表、详情、创建、单行编辑、单/多行编辑（删除、恢复）等功能提供了常见功能的APP示例代码
 	 * CodeIgniter官方网站 https://www.codeigniter.com/user_guide/
@@ -17,15 +17,31 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'promotion_id', 'biz_id', 'name', 'description', 'time_start', 'time_end', 'fold_allowed', 'type', 'discount', 'present_trigger_amount', 'present', 'reduction_amount', 'reduction_discount', 'coupon_id', 'coupon_combo_id', 'deposit', 'balance', 'time_complete_start', 'time_complete_end', 'groupbuy_order_amount', 'groupbuy_quantity_max',
+			'promotion_id', 'biz_id', 'name', 'description', 'time_start', 'time_end', 'fold_allowed', 'type', 'discount', 'present_trigger_amount', 'present', 'reduction_amount', 'reduction_discount', 'coupon_id', 'coupon_combo_id', 'deposit', 'balance', 'time_book_start', 'time_book_end', 'time_complete_start', 'time_complete_end', 'groupbuy_order_amount', 'groupbuy_quantity_max',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+		);
+
+		/*
+		 * 根据活动类型获取创建及编辑时的必要字段
+		 */
+		protected $names_required_by_type = array(
+			'单品折扣' => array('', '',),
+			'单品满赠' => array('', '',),
+			'单品满减' => array('', '',),
+			'单品赠券' => array('', '',),
+			'单品预购' => array('', '',),
+			'单品团购' => array('', '',),
+			'订单折扣' => array('', '',),
+			'订单满赠' => array('', '',),
+			'订单满减' => array('', '',),
+			'订单赠券' => array('', '',),
 		);
 
 		/**
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'name', 'description', 'time_start', 'time_end', 'fold_allowed', 'type', 'discount', 'present_trigger_amount', 'present', 'reduction_amount', 'reduction_discount', 'coupon_id', 'coupon_combo_id', 'deposit', 'balance', 'time_complete_start', 'time_complete_end', 'groupbuy_order_amount', 'groupbuy_quantity_max',
+			'name', 'description', 'time_start', 'time_end', 'fold_allowed', 'discount', 'present_trigger_amount', 'present', 'reduction_amount', 'reduction_discount', 'coupon_id', 'coupon_combo_id', 'deposit', 'balance', 'time_book_start', 'time_book_end', 'time_complete_start', 'time_complete_end', 'groupbuy_order_amount', 'groupbuy_quantity_max',
 		);
 
 		/**
@@ -33,7 +49,7 @@
 		 */
 		protected $names_edit_required = array(
 			'id',
-			'name', 'type',
+			'name', 'time_start', 'time_end',
 		);
 
 		/**
@@ -59,7 +75,7 @@
 
 			// 向类属性赋值
 			$this->class_name = strtolower(__CLASS__);
-			$this->class_name_cn = '店内营销'; // 改这里……
+			$this->class_name_cn = '店内活动'; // 改这里……
 			$this->table_name = 'promotion_biz'; // 和这里……
 			$this->id_name = 'promotion_id'; // 还有这里，OK，这就可以了
 			$this->view_root = $this->class_name;
@@ -223,21 +239,27 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('name', '名称', 'trim|required');
-			$this->form_validation->set_rules('description', '说明', 'trim');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
-			$this->form_validation->set_rules('fold_allowed', '是否允许折上折', 'trim');
 			$this->form_validation->set_rules('type', '活动类型', 'trim|required');
+			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
+			$this->form_validation->set_rules('description', '说明', 'trim');
+			$this->form_validation->set_rules('url_image', '形象图', 'trim');
+			$this->form_validation->set_rules('url_image_wide', '宽屏形象图', 'trim');
+			$this->form_validation->set_rules('fold_allowed', '是否允许折上折', 'trim|required');
 			$this->form_validation->set_rules('discount', '折扣率', 'trim');
-			$this->form_validation->set_rules('present_trigger_amount', '赠品起送份数（份）', 'trim');
-			$this->form_validation->set_rules('present', '赠品信息', 'trim');
+			$this->form_validation->set_rules('present_trigger_amount', '赠品触发金额（元）', 'trim');
+			$this->form_validation->set_rules('present_trigger_count', '赠品触发份数（份）', 'trim');
+			$this->form_validation->set_rules('present', '赠品', 'trim');
+			$this->form_validation->set_rules('reduction_trigger_amount', '满减触发金额（元）', 'trim');
 			$this->form_validation->set_rules('reduction_amount', '减免金额（元）', 'trim');
 			$this->form_validation->set_rules('reduction_discount', '减免比例', 'trim');
-			$this->form_validation->set_rules('coupon_id', '赠送优惠券ID', 'trim');
-			$this->form_validation->set_rules('coupon_combo_id', '赠送优惠券套餐ID', 'trim');
+			$this->form_validation->set_rules('coupon_id', '赠送优惠券模板', 'trim');
+			$this->form_validation->set_rules('coupon_combo_id', '赠送优惠券套餐', 'trim');
 			$this->form_validation->set_rules('deposit', '订金/预付款（元）', 'trim');
 			$this->form_validation->set_rules('balance', '尾款（元）', 'trim');
+			$this->form_validation->set_rules('time_book_start', '支付预付款开始时间', 'trim');
+			$this->form_validation->set_rules('time_book_end', '支付预付款结束时间', 'trim');
 			$this->form_validation->set_rules('time_complete_start', '支付尾款开始时间', 'trim');
 			$this->form_validation->set_rules('time_complete_end', '支付尾款结束时间', 'trim');
 			$this->form_validation->set_rules('groupbuy_order_amount', '团购成团订单数（单）', 'trim');
@@ -256,10 +278,16 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 					'biz_id' => $this->session->biz_id,
+					'time_start' => strtotime( $this->input->post('time_start') ),
+					'time_end' => strtotime( $this->input->post('time_end') ),
+					'time_book_start' => strtotime( $this->input->post('time_book_start') ),
+					'time_book_end' => strtotime( $this->input->post('time_book_end') ),
+					'time_complete_start' => strtotime( $this->input->post('time_complete_start') ),
+					'time_complete_end' => strtotime( $this->input->post('time_complete_end') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'time_start', 'time_end', 'fold_allowed', 'type', 'discount', 'present_trigger_amount', 'present', 'reduction_amount', 'reduction_discount', 'coupon_id', 'coupon_combo_id', 'deposit', 'balance', 'time_complete_start', 'time_complete_end', 'groupbuy_order_amount', 'groupbuy_quantity_max',
+					'name', 'description', 'fold_allowed', 'type', 'discount', 'present_trigger_amount', 'present', 'reduction_amount', 'reduction_discount', 'coupon_id', 'coupon_combo_id', 'deposit', 'balance', 'groupbuy_order_amount', 'groupbuy_quantity_max',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -305,25 +333,41 @@
 			$data = array(
 				'title' => '修改'.$this->class_name_cn,
 				'class' => $this->class_name.' edit',
+				'error' => '',
 			);
+			
+			// 从API服务器获取相应详情信息
+			$params['id'] = $this->input->get_post('id');
+			$url = api_url($this->class_name. '/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
+			endif;
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('name', '名称', 'trim|required');
+			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
 			$this->form_validation->set_rules('description', '说明', 'trim');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
-			$this->form_validation->set_rules('fold_allowed', '是否允许折上折', 'trim');
-			$this->form_validation->set_rules('type', '活动类型', 'trim|required');
+			$this->form_validation->set_rules('url_image', '形象图', 'trim');
+			$this->form_validation->set_rules('url_image_wide', '宽屏形象图', 'trim');
+			$this->form_validation->set_rules('fold_allowed', '是否允许折上折', 'trim|required');
 			$this->form_validation->set_rules('discount', '折扣率', 'trim');
-			$this->form_validation->set_rules('present_trigger_amount', '赠品起送份数（份）', 'trim');
-			$this->form_validation->set_rules('present', '赠品信息', 'trim');
+			$this->form_validation->set_rules('present_trigger_amount', '赠品触发金额（元）', 'trim');
+			$this->form_validation->set_rules('present_trigger_count', '赠品触发份数（份）', 'trim');
+			$this->form_validation->set_rules('present', '赠品', 'trim');
+			$this->form_validation->set_rules('reduction_trigger_amount', '满减触发金额（元）', 'trim');
 			$this->form_validation->set_rules('reduction_amount', '减免金额（元）', 'trim');
 			$this->form_validation->set_rules('reduction_discount', '减免比例', 'trim');
-			$this->form_validation->set_rules('coupon_id', '赠送优惠券ID', 'trim');
-			$this->form_validation->set_rules('coupon_combo_id', '赠送优惠券套餐ID', 'trim');
+			$this->form_validation->set_rules('coupon_id', '赠送优惠券模板', 'trim');
+			$this->form_validation->set_rules('coupon_combo_id', '赠送优惠券套餐', 'trim');
 			$this->form_validation->set_rules('deposit', '订金/预付款（元）', 'trim');
 			$this->form_validation->set_rules('balance', '尾款（元）', 'trim');
+			$this->form_validation->set_rules('time_book_start', '支付预付款开始时间', 'trim');
+			$this->form_validation->set_rules('time_book_end', '支付预付款结束时间', 'trim');
 			$this->form_validation->set_rules('time_complete_start', '支付尾款开始时间', 'trim');
 			$this->form_validation->set_rules('time_complete_end', '支付尾款结束时间', 'trim');
 			$this->form_validation->set_rules('groupbuy_order_amount', '团购成团订单数（单）', 'trim');
@@ -332,16 +376,6 @@
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
 				$data['error'] = validation_errors();
-
-				// 从API服务器获取相应详情信息
-				$params['id'] = $this->input->get_post('id');
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['item'] = $result['content'];
-				else:
-					$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
-				endif;
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/edit', $data);
@@ -352,10 +386,16 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $this->input->post('id'),
+					'time_start' => strtotime( $this->input->post('time_start') ),
+					'time_end' => strtotime( $this->input->post('time_end') ),
+					'time_book_start' => strtotime( $this->input->post('time_book_start') ),
+					'time_book_end' => strtotime( $this->input->post('time_book_end') ),
+					'time_complete_start' => strtotime( $this->input->post('time_complete_start') ),
+					'time_complete_end' => strtotime( $this->input->post('time_complete_end') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'time_start', 'time_end', 'fold_allowed', 'type', 'discount', 'present_trigger_amount', 'present', 'reduction_amount', 'reduction_discount', 'coupon_id', 'coupon_combo_id', 'deposit', 'balance', 'time_complete_start', 'time_complete_end', 'groupbuy_order_amount', 'groupbuy_quantity_max',
+					'name', 'description', 'fold_allowed', 'discount', 'present_trigger_amount', 'present', 'reduction_amount', 'reduction_discount', 'coupon_id', 'coupon_combo_id', 'deposit', 'balance', 'groupbuy_order_amount', 'groupbuy_quantity_max',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);

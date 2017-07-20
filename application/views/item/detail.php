@@ -67,7 +67,6 @@
 		<?php if ( !empty($item['figure_image_urls']) ): ?>
 		<dt>形象图</dt>
 		<dd>
-			<base href="http://s.handu.com/images/201703/goods_img/">
 			<ul class=row>
 				<?php
 					$figure_image_urls = explode(',', $item['figure_image_urls']);
@@ -95,15 +94,16 @@
 
 		<dt>商品ID</dt>
 		<dd><?php echo $item['item_id'] ?></dd>
-		<dt>所属系统商品分类</dt>
+		<dt>系统分类</dt>
 		<dd><?php echo $category['name'] ?></dd>
-		<dt>所属品牌</dt>
-		<dd><?php echo $item['brand_id'] ?></dd>
 
 		<?php if ( !empty($item['category_biz_id']) ): ?>
-		<dt>所属商家商品分类</dt>
+		<dt>店内分类</dt>
 		<dd><?php echo $category_biz['name'] ?></dd>
 		<?php endif ?>
+
+		<dt>品牌</dt>
+		<dd><?php echo !empty($item['brand_id'])? $brand['name']: '未设置'; ?></dd>
 
 		<?php if ( !empty($item['code_biz']) ): ?>
 		<dt>商家自定义货号</dt>
@@ -114,9 +114,9 @@
 		<dd><strong><?php echo $item['name'] ?></strong></dd>
 		<dt>商品宣传语/卖点</dt>
 		<dd><?php echo !empty($item['slogan'])? $item['slogan']: '未设置'; ?></dd>
-		<dt>标签价/原价（元）</dt>
-		<dd><del>￥ <?php echo !empty($item['tag_price'])? $item['tag_price']: '未设置'; ?></del></dd>
-		<dt>商城价/现价（元）</dt>
+		<dt>标签价/原价</dt>
+		<dd><del>￥ <?php echo ($item['tag_price'] !== '0.00')? $item['tag_price']: '未设置'; ?></del></dd>
+		<dt>商城价/现价</dt>
 		<dd><strong>￥ <?php echo $item['price'] ?></strong></dd>
 		
 		<?php $unit_name = !empty($item['unit_name'])? $item['unit_name']: '份（默认单位）' ?>
@@ -125,11 +125,11 @@
 		<dt>销售单位</dt>
 		<dd><?php echo $unit_name ?></dd>
 		<dt>净重</dt>
-		<dd><?php echo !empty($item['weight_net'])? $item['weight_net']: '未设置'; ?> KG</dd>
+		<dd><?php echo ($item['weight_net'] === '0.00')? $item['weight_net']: '未设置'; ?> KG</dd>
 		<dt>毛重</dt>
-		<dd><?php echo !empty($item['weight_gross'])? $item['weight_gross']: '未设置'; ?> KG</dd>
+		<dd><?php echo ($item['weight_gross'] === '0.00')? $item['weight_gross']: '未设置'; ?> KG</dd>
 		<dt>体积重</dt>
-		<dd><?php echo !empty($item['weight_volume'])? $item['weight_volume']: '未设置'; ?> KG</dd>
+		<dd><?php echo ($item['weight_volume'] === '0.00')? $item['weight_volume']: '未设置'; ?> KG</dd>
 		<dt>每单最高限量</dt>
 		<dd><?php echo !empty($item['quantity_max'])? $item['quantity_max']: '不限'; ?> 份</dd>
 		<dt>每单最低限量</dt>
@@ -153,7 +153,7 @@
 
 		<dt>店内营销活动</dt>
 		<?php if ( ! empty($item['promotion_id']) ): ?>
-		<dd><?php echo $item['promotion_id'] ?></dd>
+		<dd><strong><?php echo $promotion['name'] ?></strong></dd>
 		<?php else: ?>
 		<dd>不参与</dd>
 		<?php endif ?>

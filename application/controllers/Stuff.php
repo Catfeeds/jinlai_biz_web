@@ -25,7 +25,7 @@
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'role', 'level', 'status',
+			'fullname', 'role', 'level', 'status',
 		);
 
 		/**
@@ -33,7 +33,7 @@
 		 */
 		protected $names_edit_required = array(
 			'id',
-			'role', 'level',
+			'fullname', 'role', 'level',
 		);
 
 		/**
@@ -134,7 +134,7 @@
 			// 检查是否已传入必要参数
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
 			if ( !empty($id) ):
-				$params['id'] = $id;
+				$params['user_id'] = $id; // 以user_id进行查询
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -226,8 +226,9 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
 			$this->form_validation->set_rules('mobile', '手机号', 'trim|required');
+			$this->form_validation->set_rules('fullname', '姓名', 'trim|required');
 			$this->form_validation->set_rules('role', '角色', 'trim|required');
-			$this->form_validation->set_rules('level', '级别', 'trim|required');
+			$this->form_validation->set_rules('level', '等级', 'trim|required');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -245,7 +246,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'mobile', 'password', 'role', 'level',
+					'mobile', 'fullname', 'password', 'role', 'level',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -295,9 +296,10 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
+			$this->form_validation->set_rules('fullname', '姓名', 'trim|required');
 			$this->form_validation->set_rules('role', '角色', 'trim|required');
-			$this->form_validation->set_rules('level', '级别', 'trim|required');
-			$this->form_validation->set_rules('status', '状态', 'trim');
+			$this->form_validation->set_rules('level', '等级', 'trim|required');
+			$this->form_validation->set_rules('status', '状态', 'trim|required');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -326,7 +328,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'role', 'level', 'status',
+					'fullname', 'role', 'level', 'status',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);

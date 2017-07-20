@@ -2,7 +2,7 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Sku 商品规格类
+	 * Article 文章类
 	 *
 	 * 以我的XX列表、列表、详情、创建、单行编辑、单/多行编辑（删除、恢复）等功能提供了常见功能的APP示例代码
 	 * CodeIgniter官方网站 https://www.codeigniter.com/user_guide/
@@ -11,21 +11,20 @@
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
 	 * @copyright ICBG <www.bingshankeji.com>
 	 */
-	class Sku extends MY_Controller
+	class Article extends MY_Controller
 	{	
 		/**
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'sku_id', 'biz_id', 'item_id', 'url_image', 'name_first', 'name_second', 'name_third', 'price', 'stocks', 'weight_net', 'weight_gross', 'weight_volume',
-			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'article_id', 'category_id', 'biz_id', 'title', 'excerpt', 'content', 'url_name', 'url_images', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
 		/**
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'item_id', 'url_image', 'name_first', 'name_second', 'name_third', 'price', 'stocks', 'weight_net', 'weight_gross', 'weight_volume',
+			'category_id', 'biz_id', 'title', 'excerpt', 'content', 'url_name', 'url_images',
 		);
 
 		/**
@@ -33,9 +32,9 @@
 		 */
 		protected $names_edit_required = array(
 			'id',
-			'item_id', 'name_first', 'price', 'stocks',
+			'title', 'excerpt', 'content'
 		);
-
+		
 		/**
 		 * 编辑单行特定字段时必要的字段名
 		 */
@@ -59,19 +58,18 @@
 
 			// 向类属性赋值
 			$this->class_name = strtolower(__CLASS__);
-			$this->class_name_cn = '商品规格'; // 改这里……
-			$this->table_name = 'sku'; // 和这里……
-			$this->id_name = 'sku_id'; // 还有这里，OK，这就可以了
+			$this->class_name_cn = '文章'; // 改这里……
+			$this->table_name = 'article'; // 和这里……
+			$this->id_name = 'article_id'; // 还有这里，OK，这就可以了
 			$this->view_root = $this->class_name;
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'name_first' => '名称',
-				'price' => '商城价/现价',
-				'stocks' => '库存',
+				'name' => '标题',
+				'excerpt' => '摘要',
 			);
 		}
-
+		
 		/**
 		 * 截止3.1.3为止，CI_Controller类无析构函数，所以无需继承相应方法
 		 */
@@ -80,6 +78,43 @@
 			// 调试信息输出开关
 			// $this->output->enable_profiler(TRUE);
 		}
+		
+		/**
+		 * 我的
+		 *
+		 * 限定获取的行的user_id（示例为通过session传入的user_id值），一般用于前台
+		 */
+		public function mine()
+		{
+			// 页面信息
+			$data = array(
+				'title' => '我的'. $this->class_name_cn, // 页面标题
+				'class' => $this->class_name.' mine', // 页面body标签的class属性值
+			);
+
+			// 筛选条件
+			$condition['biz_id'] = $this->session->biz_id;
+			$condition['time_delete'] = 'NULL';
+
+			// 排序条件
+			$order_by = NULL;
+			//$order_by['name'] = 'value';
+
+			// 从API服务器获取相应列表信息
+			$params = $condition;
+			$url = api_url($this->class_name. '/index');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['items'] = $result['content'];
+			else:
+				$data['error'] = $result['content']['error']['message'];
+			endif;
+
+			// 输出视图
+			$this->load->view('templates/header', $data);
+			$this->load->view($this->view_root.'/index', $data);
+			$this->load->view('templates/footer', $data);
+		} // end mine
 
 		/**
 		 * 列表页
@@ -93,7 +128,6 @@
 			);
 
 			// 筛选条件
-			$condition['biz_id'] = $this->session->biz_id;
 			$condition['time_delete'] = 'NULL';
 			//$condition['name'] = 'value';
 			// （可选）遍历筛选条件
@@ -147,13 +181,10 @@
 				$data['error'] = $result['content']['error']['message'];
 			endif;
 
-			// 获取商品信息
-			$data['comodity'] = $this->get_item($data['item']['item_id']);
-
 			// 页面信息
-			$data['title'] = $data['item']['name_first'];
+			$data['title'] = $data['item']['name'];
 			$data['class'] = $this->class_name.' detail';
-			//$data['keywords'] = $this->class_name.','. $data['item']['name'];
+			$data['description'] = $this->class_name.','. $data['item']['exerpt'];
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -223,24 +254,18 @@
 			$data = array(
 				'title' => '创建'.$this->class_name_cn,
 				'class' => $this->class_name.' create',
+				'error' => '', // 预设错误提示
 			);
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('item_id', '所属商品', 'trim|required');
-			$this->form_validation->set_rules('url_image', '图片', 'trim');
-			$this->form_validation->set_rules('name_first', '名称第一部分', 'trim|required');
-			$this->form_validation->set_rules('name_second', '名称第二部分', 'trim');
-			$this->form_validation->set_rules('name_third', '名称第三部分', 'trim');
-			$this->form_validation->set_rules('price', '价格（元）', 'trim|required');
-			$this->form_validation->set_rules('stocks', '库存量（单位）', 'trim|required');
-			$this->form_validation->set_rules('weight_net', '净重（KG）', 'trim');
-			$this->form_validation->set_rules('weight_gross', '毛重（KG）', 'trim');
-			$this->form_validation->set_rules('weight_volume', '体积重（KG）', 'trim');
-
-			// 获取商品信息
-			$data['comodity'] = $this->get_item($this->input->get_post('item_id'));
+			$this->form_validation->set_rules('category_id', '所属分类', 'trim');
+			$this->form_validation->set_rules('title', '标题', 'trim|required');
+			$this->form_validation->set_rules('excerpt', '摘要', 'trim|required');
+			$this->form_validation->set_rules('content', '内容', 'trim|required');
+			$this->form_validation->set_rules('url_name', '自定义域名', 'trim');
+			$this->form_validation->set_rules('url_images', '形象图', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -258,7 +283,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'item_id', 'url_image', 'name_first', 'name_second', 'name_third', 'price', 'stocks', 'weight_net', 'weight_gross', 'weight_volume',
+					'category_id', 'title', 'excerpt', 'content', 'url_name', 'url_images'
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -305,8 +330,9 @@
 			$data = array(
 				'title' => '修改'.$this->class_name_cn,
 				'class' => $this->class_name.' edit',
+				'error' => '', // 预设错误提示
 			);
-
+			
 			// 从API服务器获取相应详情信息
 			$params['id'] = $this->input->get_post('id');
 			$url = api_url($this->class_name. '/detail');
@@ -317,24 +343,18 @@
 				$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
 			endif;
 
-			// 获取商品信息
-			$data['comodity'] = $this->get_item($data['item']['item_id']);
-
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('url_image', '图片', 'trim');
-			$this->form_validation->set_rules('name_first', '名称第一部分', 'trim|required');
-			$this->form_validation->set_rules('name_second', '名称第二部分', 'trim');
-			$this->form_validation->set_rules('name_third', '名称第三部分', 'trim');
-			$this->form_validation->set_rules('price', '价格（元）', 'trim|required');
-			$this->form_validation->set_rules('stocks', '库存量（单位）', 'trim|required');
-			$this->form_validation->set_rules('weight_net', '净重（KG）', 'trim');
-			$this->form_validation->set_rules('weight_gross', '毛重（KG）', 'trim');
-			$this->form_validation->set_rules('weight_volume', '体积重（KG）', 'trim');
+			$this->form_validation->set_rules('category_id', '所属分类', 'trim');
+			$this->form_validation->set_rules('title', '标题', 'trim|required');
+			$this->form_validation->set_rules('excerpt', '摘要', 'trim|required');
+			$this->form_validation->set_rules('content', '内容', 'trim|required');
+			$this->form_validation->set_rules('url_name', '自定义域名', 'trim');
+			$this->form_validation->set_rules('url_images', '形象图', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
-				$data['error'] = validation_errors();
+				$data['error'] .= validation_errors();
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/edit', $data);
@@ -345,10 +365,11 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $this->input->post('id'),
+					//'name' => $this->input->post('name')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'url_image', 'name_first', 'name_second', 'name_third', 'price', 'stocks', 'weight_net', 'weight_gross', 'weight_volume',
+					'category_id', 'title', 'excerpt', 'content', 'url_name', 'url_images'
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -380,6 +401,103 @@
 
 			endif;
 		} // end edit
+
+		/**
+		 * 修改单项
+		 */
+		public function edit_certain()
+		{
+			// 操作可能需要检查操作权限
+			// $role_allowed = array('管理员', '经理'); // 角色要求
+// 			$min_level = 30; // 级别要求
+// 			$this->basic->permission_check($role_allowed, $min_level);
+
+			// 页面信息
+			$data = array(
+				'title' => '修改'.$this->class_name_cn. $name,
+				'class' => $this->class_name.' edit-certain',
+				'error' => '', // 预设错误提示
+			);
+			
+			// 从API服务器获取相应详情信息
+			$params['id'] = $this->input->get_post('id');
+			$url = api_url($this->class_name. '/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
+			endif;
+
+			// 待验证的表单项
+			$this->form_validation->set_error_delimiters('', '；');
+			// 动态设置待验证字段名及字段值
+			$data_to_validate["{$name}"] = $value;
+			$this->form_validation->set_data($data_to_validate);
+			$this->form_validation->set_rules('category_id', '所属分类', 'trim');
+			$this->form_validation->set_rules('title', '标题', 'trim|required');
+			$this->form_validation->set_rules('excerpt', '摘要', 'trim|required');
+			$this->form_validation->set_rules('content', '内容', 'trim|required');
+			$this->form_validation->set_rules('url_name', '自定义域名', 'trim');
+			$this->form_validation->set_rules('url_images', '形象图', 'trim');
+
+			// 若表单提交不成功
+			if ($this->form_validation->run() === FALSE):
+				$data['error'] .= validation_errors();
+
+				$this->load->view('templates/header', $data);
+				$this->load->view($this->view_root.'/edit_certain', $data);
+				$this->load->view('templates/footer', $data);
+
+			else:
+				// 检查必要参数是否已传入
+				$required_params = $this->names_edit_certain_required;
+				foreach ($required_params as $param):
+					${$param} = $this->input->post($param);
+					if ( $param !== 'value' && empty( ${$param} ) ): // value 可以为空；必要字段会在字段验证中另行检查
+						$data['error'] = '必要的请求参数未全部传入';
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/'.$op_view, $data);
+						$this->load->view('templates/footer', $data);
+						exit();
+					endif;
+				endforeach;
+
+				// 需要编辑的信息
+				$data_to_edit = array(
+					'user_id' => $this->session->user_id,
+					'id' => $id,
+					'name' => $name,
+					'value' => $value,
+				);
+
+				// 向API服务器发送待创建数据
+				$params = $data_to_edit;
+				$url = api_url($this->class_name. '/edit_certain');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['title'] = $this->class_name_cn. '修改成功';
+					$data['class'] = 'success';
+					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'edit_certain';
+					$data['id'] = $this->input->post('id');
+
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/result', $data);
+					$this->load->view('templates/footer', $data);
+
+				else:
+					// 若修改失败，则进行提示
+					$data['error'] = $result['content']['error']['message'];
+
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/edit_certain', $data);
+					$this->load->view('templates/footer', $data);
+
+				endif;
+
+			endif;
+		} // end edit_certain
 
 		/**
 		 * 删除单行或多行项目
@@ -419,7 +537,7 @@
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 
 			endif;
-
+			
 			// 赋值视图中需要用到的待操作项数据
 			$data['ids'] = $ids;
 			
@@ -604,8 +722,6 @@
 					$data['title'] = $this->class_name_cn.$op_name. '成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
-					$data['operation'] = 'bulk';
-					$data['ids'] = $ids;
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -623,23 +739,7 @@
 			endif;
 		} // end restore
 
-		// 获取特定商品信息
-		private function get_item($id)
-		{
-			// 从API服务器获取相应列表信息
-			$params['id'] = $id;
-			$url = api_url('item/detail');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-				$data['item'] = NULL;
-			endif;
+	} // end class Article
 
-			return $data['item'];
-		}
-
-	} // end class Sku
-
-/* End of file Sku.php */
-/* Location: ./application/controllers/Sku.php */
+/* End of file Article.php */
+/* Location: ./application/controllers/Article.php */

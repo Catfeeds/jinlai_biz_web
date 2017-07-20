@@ -56,7 +56,7 @@
 			<p class="bg-info text-info text-center">带有“※”符号的为必填项</p>
 
 			<div class=form-group>
-				<label for=category_id class="col-sm-2 control-label">系统商品分类※</label>
+				<label for=category_id class="col-sm-2 control-label">系统分类※</label>
 				<div class=col-sm-10>
 					<select class=form-control name=category_id required>
 						<option value="">请选择</option>
@@ -67,20 +67,6 @@
 				</div>
 			</div>
 
-			<?php if ( !empty($brands) ): ?>
-			<div class=form-group>
-				<label for=brand_id class="col-sm-2 control-label">品牌</label>
-				<div class=col-sm-10>
-					<select class=form-control name=brand_id required>
-						<option value="">请选择</option>
-						<?php foreach ($categories as $option): ?>
-							<option value="<?php echo $option['brand_id'] ?>" <?php echo set_select('brand_id', $option['brand_id']) ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-			</div>
-			<?php endif ?>
-
 			<?php if ( !empty($biz_categories) ): ?>
 			<div class=form-group>
 				<label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
@@ -89,6 +75,20 @@
 						<option value="">请选择</option>
 						<?php foreach ($biz_categories as $option): ?>
 							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
+			<?php endif ?>
+
+			<?php if ( !empty($brands) ): ?>
+			<div class=form-group>
+				<label for=brand_id class="col-sm-2 control-label">品牌</label>
+				<div class=col-sm-10>
+					<select class=form-control name=brand_id required>
+						<option value="">请选择</option>
+						<?php foreach ($categories as $option): ?>
+							<option value="<?php echo $option['brand_id'] ?>" <?php echo set_select('brand_id', $option['brand_id']) ?>><?php echo $option['name'] ?></option>
 						<?php endforeach ?>
 					</select>
 				</div>
@@ -175,54 +175,63 @@
 					<input class=form-control name=tag_price type=number step=0.01 min=0.00 max=99999.99 value="<?php echo set_value('tag_price') ?>" placeholder="保留两位小数，0.00为不显示，最高99999.99">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=price class="col-sm-2 control-label">商城价/现价（元）※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=price type=number step=0.01 min=0.01 max=99999.99 value="<?php echo set_value('price') ?>" placeholder="保留两位小数，最高99999.99" required>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=unit_name class="col-sm-2 control-label">销售单位</label>
 				<div class=col-sm-10>
 					<input class=form-control name=unit_name type=text value="<?php echo set_value('unit_name') ?>" placeholder="最多10个字符，例如斤、双、头、件等，默认“份”">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=stocks class="col-sm-2 control-label">库存量（单位）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=stocks type=text value="<?php echo set_value('stocks') ?>" placeholder="库存量（份），最多65535" required>
+					<input class=form-control name=stocks type=number step=1 max=65535 value="<?php echo set_value('stocks') ?>" placeholder="库存量（份），最多65535" required>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_net type=text value="<?php echo set_value('weight_net') ?>" placeholder="净重（KG），最高999.99">
+					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo set_value('weight_net') ?>" placeholder="净重（KG），最高999.99">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_gross type=text value="<?php echo set_value('weight_gross') ?>" placeholder="毛重（KG），最高999.99">
+					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo set_value('weight_gross') ?>" placeholder="毛重（KG），最高999.99，运费计算将以此为准">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=weight_volume class="col-sm-2 control-label">体积重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_volume type=text value="<?php echo set_value('weight_volume') ?>" placeholder="体积重（KG），最高999.99">
+					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo set_value('weight_volume') ?>" placeholder="体积重（KG），最高999.99，运费计算将以此为准">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=quantity_max class="col-sm-2 control-label">每单最高限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=quantity_max type=text value="<?php echo set_value('quantity_max') ?>" placeholder="每单最高限量（份），0为不限，最高99">
+					<input class=form-control name=quantity_max type=number step=1 max=99 value="<?php echo set_value('quantity_max') ?>" placeholder="每单最高限量（份），0为不限，最高99">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=quantity_min class="col-sm-2 control-label">每单最低限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=quantity_min type=text value="<?php echo set_value('quantity_min') ?>" placeholder="每单最低限量（份），最低为1，最高99">
+					<input class=form-control name=quantity_min type=number step=1 max=99 value="<?php echo set_value('quantity_min') ?>" placeholder="每单最低限量（份），最低为1，最高99">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=coupon_allowed class="col-sm-2 control-label">是否可用优惠券※</label>
 				<div class=col-sm-10>
@@ -247,13 +256,13 @@
 			<div class=form-group>
 				<label for=time_to_publish class="col-sm-2 control-label">预定上架时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_to_publish type=text value="<?php echo set_value('time_to_publish') ?>" placeholder="最小精度为分钟；不可晚于当前时间">
+					<input class=form-control name=time_to_publish type=datetime value="<?php echo set_value('time_to_publish') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+8days')) ?>">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=time_to_suspend class="col-sm-2 control-label">预定下架时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_to_suspend type=text value="<?php echo set_value('time_to_suspend') ?>" placeholder="最小精度为分钟；不可晚于当前时间">
+					<input class=form-control name=time_to_suspend type=datetime value="<?php echo set_value('time_to_suspend') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+10days')) ?>">
 				</div>
 			</div>
 
@@ -261,7 +270,12 @@
 			<div class=form-group>
 				<label for=promotion_id class="col-sm-2 control-label">参与的营销活动</label>
 				<div class=col-sm-10>
-					<input class=form-control name=promotion_id type=text value="<?php echo set_value('promotion_id') ?>" placeholder="参与的营销活动ID">
+					<select class=form-control name=promotion_id>
+						<option value="">请选择</option>
+						<?php foreach ($biz_categories as $option): ?>
+							<option value="<?php echo $option['promotion_id'] ?>" <?php echo set_select('promotion_id', $option['promotion_id']) ?>><?php echo $option['name'] ?></option>
+						<?php endforeach ?>
+					</select>
 				</div>
 			</div>
 			<?php endif ?>

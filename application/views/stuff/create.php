@@ -55,8 +55,15 @@
 			<div class=form-group>
 				<label for=mobile class="col-sm-2 control-label">手机号※</label>
 				<div class=col-sm-10>
-					<p class=helper-block>该手机号必须已注册过本平台的账号（即通过短信登录过）</p>
+					<p class=helper-block>该手机号必须已注册过本平台的账号（即通过短信登录过），且未被其它商家绑定为员工</p>
 					<input class=form-control name=mobile type=tel value="<?php echo set_value('mobile') ?>" size=11 pattern="\d{11}" placeholder="手机号" required>
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=fullname class="col-sm-2 control-label">姓名※</label>
+				<div class=col-sm-10>
+					<input class=form-control name=fullname type=text value="<?php echo set_value('fullname') ?>" placeholder="姓名" required>
 				</div>
 			</div>
 

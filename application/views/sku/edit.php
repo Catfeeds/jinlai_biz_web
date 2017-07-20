@@ -109,31 +109,31 @@
 			<div class=form-group>
 				<label for=price class="col-sm-2 control-label">价格（元）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=price type=text value="<?php echo $item['price'] ?>" placeholder="价格（元）" required>
+					<input class=form-control name=price type=number step=0.01 max=99999.99 value="<?php echo $item['price'] ?>" placeholder="价格（元）" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=stocks class="col-sm-2 control-label">库存量（单位）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=stocks type=text value="<?php echo $item['stocks'] ?>" placeholder="库存量（单位）" required>
+					<input class=form-control name=stocks type=number step=1 max=65535 value="<?php echo $item['stocks'] ?>" placeholder="库存量（单位）" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_net type=text value="<?php echo $item['weight_net'] ?>" placeholder="净重（KG）">
+					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo $item['weight_net'] ?>" placeholder="净重（KG）">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_gross type=text value="<?php echo $item['weight_gross'] ?>" placeholder="毛重（KG）">
+					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo $item['weight_gross'] ?>" placeholder="毛重（KG）">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_volume class="col-sm-2 control-label">体积重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_volume type=text value="<?php echo $item['weight_volume'] ?>" placeholder="体积重（KG）">
+					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo $item['weight_volume'] ?>" placeholder="体积重（KG）">
 				</div>
 			</div>
 		</fieldset>

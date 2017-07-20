@@ -2,7 +2,7 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Promotion 平台营销类
+	 * Promotion 平台活动类
 	 *
 	 * 以我的XX列表、列表、详情、创建、单行编辑、单/多行编辑（删除、恢复）等功能提供了常见功能的APP示例代码
 	 * CodeIgniter官方网站 https://www.codeigniter.com/user_guide/
@@ -59,7 +59,7 @@
 
 			// 向类属性赋值
 			$this->class_name = strtolower(__CLASS__);
-			$this->class_name_cn = '平台营销'; // 改这里……
+			$this->class_name_cn = '平台活动'; // 改这里……
 			$this->table_name = 'promotion'; // 和这里……
 			$this->id_name = 'promotion_id'; // 还有这里，OK，这就可以了
 			$this->view_root = $this->class_name;
@@ -155,7 +155,7 @@
 			$this->load->view('templates/footer', $data);
 		} // end detail
 		
-		// 平台营销活动报名
+		// 平台活动报名
 		public function apply()
 		{
 

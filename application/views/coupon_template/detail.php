@@ -67,18 +67,18 @@
 		</dd>
 		<dt>最低订单小计</dt>
 		<dd>￥ <?php echo $item['min_subtotal'] ?></dd>
-		<dt>限用系统商品分类</dt>
-		<dd><?php echo $item['category_id'] ?></dd>
-		<dt>限用商家商品分类</dt>
-		<dd><?php echo $item['category_biz_id'] ?></dd>
+		<dt>限用系统分类</dt>
+		<dd><?php echo $category['name'] ?></dd>
+		<dt>限用店内分类</dt>
+		<dd><?php echo $category_biz['name'] ?></dd>
 		<dt>限用商品</dt>
 		<dd><?php echo $item['item_id'] ?></dd>
 		<dt>自领取时起有效期（秒）</dt>
 		<dd><?php echo $item['period'] ?></dd>
 		<dt>开始时间</dt>
-		<dd><?php echo $item['time_start'] ?></dd>
+		<dd><?php echo date('Y-m-d H:i:s', $item['time_start']) ?></dd>
 		<dt>结束时间</dt>
-		<dd><?php echo $item['time_end'] ?></dd>
+		<dd><?php echo date('Y-m-d H:i:s', $item['time_end']) ?></dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

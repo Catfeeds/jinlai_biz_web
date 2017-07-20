@@ -56,8 +56,6 @@
 	<dl id=list-info class=dl-horizontal>
 		<dt>员工ID</dt>
 		<dd><?php echo $item['stuff_id'] ?></dd>
-		<dt>用户ID</dt>
-		<dd><?php echo $item['user_id'] ?></dd>
 		<dt>姓名</dt>
 		<dd><?php echo $item['fullname'] ?></dd>
 		<dt>手机号</dt>

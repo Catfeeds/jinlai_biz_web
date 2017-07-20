@@ -62,7 +62,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=template_ids class="col-sm-2 control-label">优惠券模板ID们</label>
+				<label for=template_ids class="col-sm-2 control-label">优惠券模板</label>
 				<div class=col-sm-10>
 					<input class=form-control name=template_ids type=text value="<?php echo $item['template_ids'] ?>" placeholder="优惠券模板ID们" required>
 				</div>
@@ -78,13 +78,13 @@
 			<div class=form-group>
 				<label for=time_start class="col-sm-2 control-label">开始时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_start type=text value="<?php echo $item['time_start'] ?>" placeholder="开始时间">
+					<input class=form-control name=time_start type=datetime value="<?php echo date('Y-m-d H:i:s', $item['time_start']) ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+2days')) ?>">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=time_end class="col-sm-2 control-label">结束时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_end type=text value="<?php echo $item['time_end'] ?>" placeholder="结束时间">
+					<input class=form-control name=time_end type=datetime value="<?php echo date('Y-m-d H:i:s', $item['time_end']) ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+5days')) ?>">
 				</div>
 			</div>
 		</fieldset>

@@ -148,7 +148,14 @@
 				$data['category'] = $this->get_category($data['item']['category_id']);
 				
 				// 获取商家商品分类信息
-				$data['category_biz'] = $this->get_category_biz($data['item']['category_biz_id']);
+				if ( !empty($data['item']['category_biz_id']) ):
+					$data['category_biz'] = $this->get_category_biz($data['item']['category_biz_id']);
+				endif;
+				
+				// 若参与店内活动，获取店内活动详情
+				if ( !empty($data['item']['promotion_id']) ):
+					$data['promotion'] = $this->get_promotion_biz($data['item']['promotion_id']);
+				endif;
 
 			else:
 				$data['error'] = $result['content']['error']['message'];
@@ -158,7 +165,6 @@
 			// 页面信息
 			$data['title'] = $data['item']['name'];
 			$data['class'] = $this->class_name.' detail';
-			//$data['keywords'] = $this->class_name.','. $data['item']['name'];
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -213,106 +219,6 @@
 			$this->load->view($this->view_root.'/trash', $data);
 			$this->load->view('templates/footer', $data);
 		} // end trash
-		
-		// 获取品牌列表
-		private function list_brand()
-		{
-			// 从API服务器获取相应列表信息
-			$params = NULL;
-			$url = api_url('brand/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-				$data['items'] = NULL;
-			endif;
-
-			return $data['items'];
-		}
-
-		// 获取系统商品分类列表
-		private function list_category()
-		{
-			// 从API服务器获取相应列表信息
-			$params = NULL;
-			$url = api_url('item_category/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-				$data['items'] = NULL;
-			endif;
-			
-			return $data['items'];
-		}
-		
-		// 获取特定系统商品分类信息
-		private function get_category($id)
-		{
-			// 从API服务器获取相应列表信息
-			$params['id'] = $id;
-			$url = api_url('item_category/detail');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-				$data['item'] = NULL;
-			endif;
-			
-			return $data['item'];
-		}
-		
-		// 获取商家商品分类列表
-		private function list_category_biz()
-		{
-			// 从API服务器获取相应列表信息
-			$params = array(
-				'biz_id' => $this->session->biz_id,
-			);
-			$url = api_url('item_category_biz/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-				$data['items'] = NULL;
-			endif;
-			
-			return $data['items'];
-		}
-		
-		// 获取特定系统商品分类信息
-		private function get_category_biz($id)
-		{
-			// 从API服务器获取相应列表信息
-			$params['id'] = $id;
-			$url = api_url('item_category_biz/detail');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-				$data['item'] = NULL;
-			endif;
-			
-			return $data['item'];
-		}
-
-		// 获取店铺营销活动列表
-		private function list_promotion_biz()
-		{
-			// 从API服务器获取相应列表信息
-			$params = array(
-				'biz_id' => $this->session->biz_id,
-			);
-			$url = api_url('promotion_biz/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-				$data['items'] = NULL;
-			endif;
-
-			return $data['items'];
-		}
 
 		/**
 		 * 快速创建
@@ -385,6 +291,7 @@
 					$data['title'] = $this->class_name_cn. '快速创建成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message']. '；如需添加更多信息，您可在修改该商品时进行补充。';
+					$data['operation'] = 'create_quick';
 					$data['id'] = $result['content']['id']; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -459,7 +366,7 @@
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[10]');
 			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[10]');
-			$this->form_validation->set_rules('promotion_id', '参与的营销活动ID', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('promotion_id', '参与的营销活动', 'trim|is_natural_no_zero');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -474,10 +381,12 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 					'biz_id' => $this->session->biz_id,
+					'time_to_publish' => strtotime( $this->input->post('time_to_publish') ),
+					'time_to_suspend' => strtotime( $this->input->post('time_to_suspend') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'brand_id', 'category_biz_id', 'code_biz', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'stocks', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'time_to_publish', 'time_to_suspend', 'promotion_id',
+					'category_id', 'brand_id', 'category_biz_id', 'code_biz', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'stocks', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'promotion_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -490,6 +399,7 @@
 					$data['title'] = $this->class_name_cn. '创建成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'create';
 					$data['id'] = $result['content']['id']; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -523,10 +433,14 @@
 			$data = array(
 				'title' => '修改'.$this->class_name_cn,
 				'class' => $this->class_name.' edit',
+				'error' => '',
 			);
 
-			// 获取商家级商品分类
+			// 获取商家商品分类列表
 			$data['biz_categories'] = $this->list_category_biz();
+
+			// 获取店内活动列表
+			$data['biz_promotions'] = $this->list_promotion_biz();
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
@@ -552,29 +466,32 @@
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[10]');
 			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[10]');
-			$this->form_validation->set_rules('promotion_id', '参与的营销活动ID', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('promotion_id', '参与的营销活动', 'trim|is_natural_no_zero');
+			
+			// 从API服务器获取相应详情信息
+			$params['id'] = $this->input->get_post('id');
+			$url = api_url($this->class_name. '/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+				
+				// 获取系统商品分类信息
+				$data['category'] = $this->get_category($data['item']['category_id']);
+				
+				// 若参与店内活动，获取店内活动详情
+				if ( !empty($data['item']['promotion_id']) ):
+					$data['promotion'] = $this->get_promotion_biz($data['item']['promotion_id']);
+				endif;
+
+			else:
+				$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
+
+			endif;
+
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
-				$data['error'] = validation_errors();
-
-				// 从API服务器获取相应详情信息
-				$params['id'] = $this->input->get_post('id');
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['item'] = $result['content'];
-					
-					// 获取系统商品分类信息
-					$data['category'] = $this->get_category($data['item']['category_id']);
-					
-					// 获取商家商品分类信息
-					$data['category_biz'] = $this->get_category_biz($data['item']['category_biz_id']);
-
-				else:
-					$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
-
-				endif;
+				$data['error'] .= validation_errors();
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/edit', $data);
@@ -585,10 +502,12 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $this->input->post('id'),
+					'time_to_publish' => strtotime( $this->input->post('time_to_publish') ),
+					'time_to_suspend' => strtotime( $this->input->post('time_to_suspend') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_biz_id', 'code_biz', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'stocks', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'time_to_publish', 'time_to_suspend', 'promotion_id',
+					'category_biz_id', 'code_biz', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'stocks', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'promotion_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -601,6 +520,8 @@
 					$data['title'] = $this->class_name_cn. '修改成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'edit';
+					$data['id'] = $this->input->post('id');
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -712,6 +633,8 @@
 					$data['title'] = $this->class_name_cn. '修改成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'edit_certain';
+					$data['id'] = $this->input->post('id');
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -832,6 +755,8 @@
 					$data['title'] = $this->class_name_cn.$op_name. '成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'bulk';
+					$data['ids'] = $ids;
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -951,6 +876,8 @@
 					$data['title'] = $this->class_name_cn.$op_name. '成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'bulk';
+					$data['ids'] = $ids;
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -1068,6 +995,8 @@
 					$data['title'] = $this->class_name_cn.$op_name. '成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'bulk';
+					$data['ids'] = $ids;
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -1185,6 +1114,8 @@
 					$data['title'] = $this->class_name_cn.$op_name. '成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'bulk';
+					$data['ids'] = $ids;
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);

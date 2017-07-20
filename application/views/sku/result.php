@@ -35,4 +35,14 @@
 	<?php endif ?>
 	
 	<a class="btn btn-primary" title="<?php echo $this->class_name_cn ?>列表" href="<?php echo base_url($this->class_name) ?>">返回<?php echo $this->class_name_cn ?>列表</a>
+	
+	<?php if ( !empty($operation) ): ?>
+	<ul class=row>
+		<?php if ($operation === 'create'): ?>
+		<li><a class="btn btn-primary btn-lg" title="继续创建商品" href="<?php echo base_url($this->class_name.'/create') ?>">继续创建</a></li>
+		<?php elseif ($operation !== 'edit_bulk'): ?>
+		<li><a class="btn btn-primary btn-lg" title="查看<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/detail?id='.$id) ?>">确认</a></li>
+		<?php endif ?>
+	</ul>
+	<?php endif ?>
 </div>
