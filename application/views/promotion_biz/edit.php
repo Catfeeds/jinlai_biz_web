@@ -26,7 +26,7 @@
 	$(function(){
 		// 仅显示适用于当前营销活动类型的参数
 		var fieldset_to_show = '<?php echo $item['type'] ?>';
-		$('[date-type*="' + fieldset_to_show + '"]').show();
+		$('[data-type*="' + fieldset_to_show + '"]').show();
 	});
 </script>
 
@@ -159,7 +159,7 @@
 			</div>
 		</fieldset>
 
-		<fieldset class=params date-type="单品折扣,订单折扣">
+		<fieldset class=params data-type="单品折扣,订单折扣">
 			<div class=form-group>
 				<label for=discount class="col-sm-2 control-label">折扣率</label>
 				<div class=col-sm-10>
@@ -168,7 +168,7 @@
 			</div>
 		</fieldset>
 
-		<fieldset class=params date-type="单品满赠,订单满赠">
+		<fieldset class=params data-type="单品满赠,订单满赠">
 			<div class=form-group>
 				<label for=present_trigger_amount class="col-sm-2 control-label">赠品触发金额（元）</label>
 				<div class=col-sm-10>
@@ -189,7 +189,7 @@
 			</div>
 		</fieldset>
 
-		<fieldset class=params date-type="单品满减,订单满减">
+		<fieldset class=params data-type="单品满减,订单满减">
 			<div class=form-group>
 				<label for=reduction_trigger_amount class="col-sm-2 control-label">满减触发金额（元）</label>
 				<div class=col-sm-10>
@@ -210,7 +210,7 @@
 			</div>
 		</fieldset>
 
-		<fieldset class=params date-type="单品赠券,订单赠券">
+		<fieldset class=params data-type="单品赠券,订单赠券">
 			<div class=form-group>
 				<label for=coupon_id class="col-sm-2 control-label">赠送优惠券模板</label>
 				<div class=col-sm-10>
@@ -225,7 +225,7 @@
 			</div>
 		</fieldset>
 
-		<fieldset class=params date-type="单品预售">
+		<fieldset class=params data-type="单品预售">
 			<div class=form-group>
 				<label for=deposit class="col-sm-2 control-label">订金/预付款（元）</label>
 				<div class=col-sm-10>
@@ -264,7 +264,7 @@
 			</div>
 		</fieldset>
 
-		<fieldset class=params date-type="单品团购">
+		<fieldset class=params data-type="单品团购">
 			<div class=form-group>
 				<label for=groupbuy_order_amount class="col-sm-2 control-label">团购成团订单数（单）</label>
 				<div class=col-sm-10>

@@ -251,32 +251,18 @@
 			$data = array(
 				'title' => '修改'.$this->class_name_cn,
 				'class' => $this->class_name.' edit',
+				'error' => '',
 			);
 
 			// 用户仅可修改自己的资料
 			if ( $this->session->user_id !== $this->input->get_post('id') ):
-				exit();
-			endif;
+				$data['error'] .= '仅可修改自己的资料';
 
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('avatar', '头像', 'trim');
-			$this->form_validation->set_rules('nickname', '昵称', 'trim');
-			$this->form_validation->set_rules('lastname', '姓氏', 'trim');
-			$this->form_validation->set_rules('firstname', '名', 'trim');
-			$this->form_validation->set_rules('code_ssn', '身份证号', 'trim');
-			$this->form_validation->set_rules('url_image_id', '身份证照片', 'trim');
-			$this->form_validation->set_rules('gender', '性别', 'trim');
-			$this->form_validation->set_rules('dob', '出生日期', 'trim');
-			$this->form_validation->set_rules('email', '电子邮件地址', 'trim');
-			$this->form_validation->set_rules('address_id', '默认地址', 'trim');
-			$this->form_validation->set_rules('bank_name', '开户行名称', 'trim');
-			$this->form_validation->set_rules('bank_account', '开户行账号', 'trim');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] = validation_errors();
-
+				$this->load->view('templates/header', $data);
+				$this->load->view($this->view_root.'/edit', $data);
+				$this->load->view('templates/footer', $data);
+				
+			else:
 				// 从API服务器获取相应详情信息
 				$params['id'] = $this->input->get_post('id');
 				$url = api_url($this->class_name. '/detail');
@@ -287,43 +273,64 @@
 					$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
 				endif;
 
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/edit', $data);
-				$this->load->view('templates/footer', $data);
+				// 待验证的表单项
+				$this->form_validation->set_error_delimiters('', '；');
+				$this->form_validation->set_rules('avatar', '头像', 'trim');
+				$this->form_validation->set_rules('nickname', '昵称', 'trim');
+				$this->form_validation->set_rules('lastname', '姓氏', 'trim');
+				$this->form_validation->set_rules('firstname', '名', 'trim');
+				$this->form_validation->set_rules('code_ssn', '身份证号', 'trim');
+				$this->form_validation->set_rules('url_image_id', '身份证照片', 'trim');
+				$this->form_validation->set_rules('gender', '性别', 'trim');
+				$this->form_validation->set_rules('dob', '出生日期', 'trim');
+				$this->form_validation->set_rules('email', 'Email', 'trim');
+				$this->form_validation->set_rules('address_id', '默认地址', 'trim');
+				$this->form_validation->set_rules('bank_name', '开户行名称', 'trim');
+				$this->form_validation->set_rules('bank_account', '开户行账号', 'trim');
 
-			else:
-				// 需要编辑的数据；逐一赋值需特别处理的字段
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'id' => $this->input->post('id'),
-				);
-				// 自动生成无需特别处理的数据
-				$data_need_no_prepare = array(
-					'nickname', 'lastname', 'firstname', 'code_ssn', 'url_image_id', 'gender', 'dob', 'avatar', 'email', 'address_id', 'bank_name', 'bank_account',
-				);
-				foreach ($data_need_no_prepare as $name)
-					$data_to_edit[$name] = $this->input->post($name);
-
-				// 向API服务器发送待创建数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn. '修改成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若创建失败，则进行提示
-					$data['error'] = $result['content']['error']['message'];
+				// 若表单提交不成功
+				if ($this->form_validation->run() === FALSE):
+					$data['error'] .= validation_errors();
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/edit', $data);
 					$this->load->view('templates/footer', $data);
+
+				else:
+					// 需要编辑的数据；逐一赋值需特别处理的字段
+					$data_to_edit = array(
+						'user_id' => $this->session->user_id,
+						'id' => $this->input->post('id'),
+					);
+					// 自动生成无需特别处理的数据
+					$data_need_no_prepare = array(
+						'nickname', 'lastname', 'firstname', 'code_ssn', 'url_image_id', 'gender', 'dob', 'avatar', 'email', 'address_id', 'bank_name', 'bank_account',
+					);
+					foreach ($data_need_no_prepare as $name)
+						$data_to_edit[$name] = $this->input->post($name);
+
+					// 向API服务器发送待创建数据
+					$params = $data_to_edit;
+					$url = api_url($this->class_name. '/edit');
+					$result = $this->curl->go($url, $params, 'array');
+					if ($result['status'] === 200):
+						$data['title'] = $this->class_name_cn. '修改成功';
+						$data['class'] = 'success';
+						$data['content'] = $result['content']['message'];
+
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/result', $data);
+						$this->load->view('templates/footer', $data);
+
+					else:
+						// 若创建失败，则进行提示
+						$data['error'] .= $result['content']['error']['message'];
+
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/edit', $data);
+						$this->load->view('templates/footer', $data);
+
+					endif;
 
 				endif;
 

@@ -5,8 +5,8 @@
 	#captcha-image {padding:0;min-width:100px;}
 		#captcha-image img {width:100%;height:100%;}
 
-	/* 宽度在768像素以上的设备 */
-	@media only screen and (min-width:769px)
+	/* 宽度在750像素以上的设备 */
+	@media only screen and (min-width:751px)
 	{
 
 	}

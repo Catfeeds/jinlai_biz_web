@@ -4,8 +4,9 @@
 		#content li i {display:block;}
 	
 		#general-actions li {text-align:left;}
-	/* 宽度在640像素以上的设备 */
-	@media only screen and (min-width:641px)
+
+	/* 宽度在750像素以上的设备 */
+	@media only screen and (min-width:751px)
 	{
 
 	}
@@ -33,7 +34,7 @@
 
 	<section id=general-actions>
 		<ul>
-			<li><a title="资料修改" href="<?php echo base_url('user/mine') ?>">资料修改</a>
+			<li><a title="我的资料" href="<?php echo base_url('user/mine') ?>">我的资料</a>
 			<!--<li><a title="关于我们" href="<?php echo base_url('article/about-us') ?>">关于我们</a></li>-->
 			<!--<li><a title="设置" href="<?php echo base_url('setup') ?>">设置</a></li>-->
 			<li><a title="退出账户" id=logout class="btn btn-block btn-danger" href="<?php echo base_url('logout') ?>">退出</a></li>

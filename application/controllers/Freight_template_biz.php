@@ -2,7 +2,7 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Article 文章类
+	 * Freight_template_biz 商家运费模板类
 	 *
 	 * 以我的XX列表、列表、详情、创建、单行编辑、单/多行编辑（删除、恢复）等功能提供了常见功能的APP示例代码
 	 * CodeIgniter官方网站 https://www.codeigniter.com/user_guide/
@@ -11,20 +11,20 @@
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
 	 * @copyright ICBG <www.bingshankeji.com>
 	 */
-	class Article extends MY_Controller
-	{	
+	class Freight_template_biz extends MY_Controller
+	{
 		/**
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'article_id', 'category_id', 'biz_id', 'title', 'excerpt', 'content', 'url_name', 'url_images', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'template_id', 'biz_id', 'name', 'type', 'time_valid_from', 'time_valid_end', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'max_count', 'max_net', 'max_gross', 'max_volume', 'fee_count_start', 'fee_net_start', 'fee_gross_start', 'fee_volumn_start', 'fee_count_amount', 'fee_net_amount', 'fee_gross_amount', 'fee_volumn_amount', 'fee_count', 'fee_net', 'fee_gross', 'fee_volume', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
 		/**
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'category_id', 'biz_id', 'title', 'excerpt', 'content', 'url_name', 'url_images',
+			'name', 'time_valid_from', 'time_valid_end', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'max_count', 'max_net', 'max_gross', 'max_volume', 'fee_count_start', 'fee_net_start', 'fee_gross_start', 'fee_volumn_start', 'fee_count_amount', 'fee_net_amount', 'fee_gross_amount', 'fee_volumn_amount', 'fee_count', 'fee_net', 'fee_gross', 'fee_volume',
 		);
 
 		/**
@@ -32,7 +32,7 @@
 		 */
 		protected $names_edit_required = array(
 			'id',
-			'title', 'excerpt', 'content'
+			'name',
 		);
 		
 		/**
@@ -53,17 +53,20 @@
 		{
 			parent::__construct();
 
+			// （可选）未登录用户转到登录页
+			//($this->session->time_expire_login > time()) OR redirect( base_url('login') );
+
 			// 向类属性赋值
 			$this->class_name = strtolower(__CLASS__);
-			$this->class_name_cn = '文章'; // 改这里……
-			$this->table_name = 'article'; // 和这里……
-			$this->id_name = 'article_id'; // 还有这里，OK，这就可以了
+			$this->class_name_cn = '商家运费模板'; // 改这里……
+			$this->table_name = 'freight_template_biz'; // 和这里……
+			$this->id_name = 'template_id'; // 还有这里，OK，这就可以了
 			$this->view_root = $this->class_name;
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'name' => '标题',
-				'excerpt' => '摘要',
+				'name' => '名称',
+				'type' => '类型',
 			);
 		}
 		
@@ -75,7 +78,7 @@
 			// 调试信息输出开关
 			// $this->output->enable_profiler(TRUE);
 		}
-		
+
 		/**
 		 * 我的
 		 *
@@ -83,18 +86,18 @@
 		 */
 		public function mine()
 		{
-			// 未登录用户转到登录页
-			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
-
 			// 页面信息
 			$data = array(
 				'title' => '我的'. $this->class_name_cn, // 页面标题
 				'class' => $this->class_name.' mine', // 页面body标签的class属性值
+				
+				'keywords' => '关键词一,关键词二,关键词三', // （可选，后台功能可删除此行）页面关键词；每个关键词之间必须用半角逗号","分隔才能保证搜索引擎兼容性
+				'description' => '这个页面的主要内容', // （可选，后台功能可删除此行）页面内容描述
+				// 对于后台功能，一般不需要特别指定具体页面的keywords和description
 			);
 
 			// 筛选条件
-			$condition['biz_id'] = $this->session->biz_id;
-			$condition['time_delete'] = 'NULL';
+			$condition['user_id'] = $this->session->user_id;
 
 			// 排序条件
 			$order_by = NULL;
@@ -112,7 +115,7 @@
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
-			$this->load->view($this->view_root.'/index', $data);
+			$this->load->view($this->view_root.'/mine', $data);
 			$this->load->view('templates/footer', $data);
 		} // end mine
 
@@ -128,6 +131,7 @@
 			);
 
 			// 筛选条件
+			$condition['biz_id'] = $this->session->biz_id;
 			$condition['time_delete'] = 'NULL';
 			//$condition['name'] = 'value';
 			// （可选）遍历筛选条件
@@ -162,14 +166,12 @@
 		/**
 		 * 详情页
 		 */
-		public function detail($url_name)
+		public function detail()
 		{
 			// 检查是否已传入必要参数
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
 			if ( !empty($id) ):
 				$params['id'] = $id;
-			elseif ( !empty($url_name) ):
-				$params['url_name'] = $url_name;
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -179,18 +181,14 @@
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
-				// 页面信息
-				$data['title'] = $data['item']['name'];
-				$data['class'] = $this->class_name.' detail';
-				$data['description'] = $this->class_name.','. $data['item']['exerpt'];
-
 			else:
-				// 页面信息
-				$data['title'] = $this->class_name_cn. '详情';
-				$data['class'] = $this->class_name.' detail';
 				$data['error'] = $result['content']['error']['message'];
-
 			endif;
+
+			// 页面信息
+			$data['title'] = $data['item']['name'];
+			$data['class'] = $this->class_name.' detail';
+			//$data['keywords'] = $this->class_name.','. $data['item']['name'];
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -203,9 +201,6 @@
 		 */
 		public function trash()
 		{
-			// 未登录用户转到登录页
-			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
-
 			// 操作可能需要检查操作权限
 			$role_allowed = array('管理员', '经理'); // 角色要求
 			$min_level = 30; // 级别要求
@@ -254,9 +249,6 @@
 		 */
 		public function create()
 		{
-			// 未登录用户转到登录页
-			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
-
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -272,12 +264,30 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('category_id', '所属分类', 'trim');
-			$this->form_validation->set_rules('title', '标题', 'trim|required');
-			$this->form_validation->set_rules('excerpt', '摘要', 'trim|required');
-			$this->form_validation->set_rules('content', '内容', 'trim|required');
-			$this->form_validation->set_rules('url_name', '自定义域名', 'trim');
-			$this->form_validation->set_rules('url_images', '形象图', 'trim');
+			$this->form_validation->set_rules('name', '名称', 'trim|required');
+			$this->form_validation->set_rules('type', '类型', 'trim|required');
+			$this->form_validation->set_rules('time_valid_from', '有效期起始时间', 'trim');
+			$this->form_validation->set_rules('time_valid_end', '有效期结束时间', 'trim');
+			$this->form_validation->set_rules('period_valid', '有效期', 'trim');
+			$this->form_validation->set_rules('expire_refund_rate', '过期退款比例', 'trim');
+			$this->form_validation->set_rules('type_actual', '物流配送类型', 'trim');
+			$this->form_validation->set_rules('time_latest_deliver', '最晚发货时间', 'trim');
+			$this->form_validation->set_rules('max_count', '每单最高件数（件）', 'trim');
+			$this->form_validation->set_rules('max_net', '每单最高净重（KG）', 'trim');
+			$this->form_validation->set_rules('max_gross', '每单最高毛重（KG）', 'trim');
+			$this->form_validation->set_rules('max_volume', '每单最高体积重（KG）', 'trim');
+			$this->form_validation->set_rules('fee_count_start', '计件起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_net_start', '净重起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_gross_start', '毛重起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_volumn_start', '体积重起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_count_amount', '计件起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_net_amount', '净重起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_gross_amount', '毛重起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_volumn_amount', '体积重起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_count', '每件运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_net', '每KG净重运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_gross', '每KG毛重运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_volume', '每KG体积重运费（元）', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -292,10 +302,12 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 					'biz_id' => $this->session->biz_id,
+					'time_valid_from' => strtotime( $this->input->post('time_valid_from') ),
+					'time_valid_end' => strtotime( $this->input->post('time_valid_end') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'title', 'excerpt', 'content', 'url_name', 'url_images'
+					'name', 'type', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'max_count', 'max_net', 'max_gross', 'max_volume', 'fee_count_start', 'fee_net_start', 'fee_gross_start', 'fee_volumn_start', 'fee_count_amount', 'fee_net_amount', 'fee_gross_amount', 'fee_volumn_amount', 'fee_count', 'fee_net', 'fee_gross', 'fee_volume',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -333,9 +345,6 @@
 		 */
 		public function edit()
 		{
-			// 未登录用户转到登录页
-			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
-
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -360,12 +369,29 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('category_id', '所属分类', 'trim');
-			$this->form_validation->set_rules('title', '标题', 'trim|required');
-			$this->form_validation->set_rules('excerpt', '摘要', 'trim|required');
-			$this->form_validation->set_rules('content', '内容', 'trim|required');
-			$this->form_validation->set_rules('url_name', '自定义域名', 'trim');
-			$this->form_validation->set_rules('url_images', '形象图', 'trim');
+			$this->form_validation->set_rules('name', '名称', 'trim|required');
+			$this->form_validation->set_rules('time_valid_from', '有效期起始时间', 'trim');
+			$this->form_validation->set_rules('time_valid_end', '有效期结束时间', 'trim');
+			$this->form_validation->set_rules('period_valid', '有效期', 'trim');
+			$this->form_validation->set_rules('expire_refund_rate', '过期退款比例', 'trim');
+			$this->form_validation->set_rules('type_actual', '物流配送类型', 'trim');
+			$this->form_validation->set_rules('time_latest_deliver', '最晚发货时间', 'trim');
+			$this->form_validation->set_rules('max_count', '每单最高件数（件）', 'trim');
+			$this->form_validation->set_rules('max_net', '每单最高净重（KG）', 'trim');
+			$this->form_validation->set_rules('max_gross', '每单最高毛重（KG）', 'trim');
+			$this->form_validation->set_rules('max_volume', '每单最高体积重（KG）', 'trim');
+			$this->form_validation->set_rules('fee_count_start', '计件起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_net_start', '净重起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_gross_start', '毛重起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_volumn_start', '体积重起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_count_amount', '计件起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_net_amount', '净重起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_gross_amount', '毛重起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_volumn_amount', '体积重起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_count', '每件运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_net', '每KG净重运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_gross', '每KG毛重运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_volume', '每KG体积重运费（元）', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -380,11 +406,12 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $this->input->post('id'),
-					//'name' => $this->input->post('name')),
+					'time_valid_from' => strtotime( $this->input->post('time_valid_from') ),
+					'time_valid_end' => strtotime( $this->input->post('time_valid_end') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'title', 'excerpt', 'content', 'url_name', 'url_images'
+					'name', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'max_count', 'max_net', 'max_gross', 'max_volume', 'fee_count_start', 'fee_net_start', 'fee_gross_start', 'fee_volumn_start', 'fee_count_amount', 'fee_net_amount', 'fee_gross_amount', 'fee_volumn_amount', 'fee_count', 'fee_net', 'fee_gross', 'fee_volume', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -422,9 +449,6 @@
 		 */
 		public function edit_certain()
 		{
-			// 未登录用户转到登录页
-			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
-
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -452,12 +476,29 @@
 			// 动态设置待验证字段名及字段值
 			$data_to_validate["{$name}"] = $value;
 			$this->form_validation->set_data($data_to_validate);
-			$this->form_validation->set_rules('category_id', '所属分类', 'trim');
-			$this->form_validation->set_rules('title', '标题', 'trim|required');
-			$this->form_validation->set_rules('excerpt', '摘要', 'trim|required');
-			$this->form_validation->set_rules('content', '内容', 'trim|required');
-			$this->form_validation->set_rules('url_name', '自定义域名', 'trim');
-			$this->form_validation->set_rules('url_images', '形象图', 'trim');
+			$this->form_validation->set_rules('name', '名称', 'trim');
+			$this->form_validation->set_rules('time_valid_from', '有效期起始时间', 'trim');
+			$this->form_validation->set_rules('time_valid_end', '有效期结束时间', 'trim');
+			$this->form_validation->set_rules('period_valid', '有效期', 'trim');
+			$this->form_validation->set_rules('expire_refund_rate', '过期退款比例', 'trim');
+			$this->form_validation->set_rules('type_actual', '物流配送类型', 'trim');
+			$this->form_validation->set_rules('time_latest_deliver', '最晚发货时间', 'trim');
+			$this->form_validation->set_rules('max_count', '每单最高件数（件）', 'trim');
+			$this->form_validation->set_rules('max_net', '每单最高净重（KG）', 'trim');
+			$this->form_validation->set_rules('max_gross', '每单最高毛重（KG）', 'trim');
+			$this->form_validation->set_rules('max_volume', '每单最高体积重（KG）', 'trim');
+			$this->form_validation->set_rules('fee_count_start', '计件起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_net_start', '净重起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_gross_start', '毛重起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_volumn_start', '体积重起始运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_count_amount', '计件起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_net_amount', '净重起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_gross_amount', '毛重起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_volumn_amount', '体积重起始量（KG）', 'trim');
+			$this->form_validation->set_rules('fee_count', '每件运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_net', '每KG净重运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_gross', '每KG毛重运费（元）', 'trim');
+			$this->form_validation->set_rules('fee_volume', '每KG体积重运费（元）', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -524,9 +565,6 @@
 		 */
 		public function delete()
 		{
-			// 未登录用户转到登录页
-			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
-
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -648,9 +686,6 @@
 		 */
 		public function restore()
 		{
-			// 未登录用户转到登录页
-			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
-
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -763,7 +798,7 @@
 			endif;
 		} // end restore
 
-	} // end class Article
+	} // end class Freight_template_biz
 
-/* End of file Article.php */
-/* Location: ./application/controllers/Article.php */
+/* End of file Freight_template_biz.php */
+/* Location: ./application/controllers/Freight_template_biz.php */

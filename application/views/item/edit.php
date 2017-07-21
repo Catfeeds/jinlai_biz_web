@@ -271,22 +271,38 @@
 					<input class=form-control name=commission_rate type=number step=0.01 min=0.00 max=0.99 value="<?php echo $item['commission_rate'] ?>" placeholder="佣金比例/提成率">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=time_to_publish class="col-sm-2 control-label">预定上架时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_to_publish type=datetime value="<?php echo date('Y-m-d H:i:s', $item['time_to_publish']) ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+8days')) ?>">
+					<?php
+						$time_name = 'time_to_publish';
+						$time_to_display = NULL;
+						if ( !empty($item[$time_name]) ):
+							$time_to_display = date('Y-m-d H:i:s', $item[$time_name]);
+						endif;
+					?>
+					<input class=form-control name=time_to_publish type=datetime value="<?php echo $time_to_display ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+8days')) ?>">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=time_to_suspend class="col-sm-2 control-label">预定下架时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_to_suspend type=datetime value="<?php echo date('Y-m-d H:i:s', $item['time_to_suspend']) ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+10days')) ?>">
+					<?php
+						$time_name = 'time_to_suspend';
+						$time_to_display = NULL;
+						if ( !empty($item[$time_name]) ):
+							$time_to_display = date('Y-m-d H:i:s', $item[$time_name]);
+						endif;
+					?>
+					<input class=form-control name=time_to_suspend type=datetime value="<?php echo $time_to_display ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+10days')) ?>">
 				</div>
 			</div>
 			
 			<?php if ( !empty($biz_promotions) ): ?>
 			<div class=form-group>
-				<label for=promotion_id class="col-sm-2 control-label">店内营销活动</label>
+				<label for=promotion_id class="col-sm-2 control-label">店内活动</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'promotion_id' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
@@ -301,6 +317,22 @@
 				</div>
 			</div>
 			<?php endif ?>
+
+			<div class=form-group>
+				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
+				<div class=col-sm-10>
+					<?php $input_name = 'freight_template_id' ?>
+					<select class=form-control name="<?php echo $input_name ?>" required>
+						<option value="">请选择</option>
+						<?php
+							$options = $biz_freight_templates;
+							foreach ($options as $option):
+						?>
+						<option value="<?php echo $option['template_id'] ?>" <?php if ($option['template_id'] === $item['freight_template_id']) echo 'selected'; ?>><?php echo $option['name'] ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
 		</fieldset>
 
 		<div class=form-group>

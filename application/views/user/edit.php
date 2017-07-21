@@ -20,6 +20,42 @@
 	}
 </style>
 
+<?php
+	$user_agent = $_SERVER['HTTP_USER_AGENT'];
+	$is_ios = strpos($user_agent, 'iPhone')? TRUE: FALSE;
+	// 在iOS设备上使用原生日期选择器
+	if ( ! $is_ios ):
+?>
+<link href="/css/datepicker.min.css" rel="stylesheet">
+<script src="/js/datepicker.min.js"></script>
+<script>
+	$(function(){
+		// 日期选择器语言本地化
+		$.fn.datepicker.language['cn'] = {
+		    days: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+		    daysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+		    daysMin: ['日', '一', '二', '三', '四', '五', '六'],
+		    months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+		    monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+		    today: '今天',
+		    clear: '清空',
+		    dateFormat: 'yyyy-mm-dd',
+		    timeFormat: 'hh:ii:ss',
+		    firstDay: 0
+		};
+
+		// 初始化日期选择器
+		$('[type=date]').datepicker(
+			{
+			    language: 'cn',
+			    minDate: new Date("<?php echo date('Y-m-d', strtotime("-120years")) ?>"),
+				maxDate: new Date("<?php echo date('Y-m-d', strtotime("-14years")) ?>"),
+			}
+		)
+	});
+</script>
+<?php endif ?>
+
 <base href="<?php echo base_url('uploads/') ?>">
 
 <div id=breadcrumb>
@@ -146,10 +182,11 @@
 					<?php endforeach ?>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=dob class="col-sm-2 control-label">出生日期</label>
 				<div class=col-sm-10>
-					<input class=form-control name=dob type=date value="<?php echo $item['dob'] ?>" placeholder="例如：1994-07-28">
+					<input class="form-control" name=dob type=date min=<?php echo date('Y-m-d', strtotime("-120years")) ?> max=<?php echo date('Y-m-d', strtotime("-14years")) ?> value="<?php echo $item['dob'] ?>" placeholder="例如：1994-07-28">
 				</div>
 			</div>
 
@@ -159,10 +196,11 @@
 					<p class="form-control-static"><?php echo $item['mobile'] ?></p>
 				</div>
 			</div>
+
 			<div class=form-group>
-				<label for=email class="col-sm-2 control-label">电子邮件地址</label>
+				<label for=email class="col-sm-2 control-label">Email</label>
 				<div class=col-sm-10>
-					<input class=form-control name=email type=text value="<?php echo $item['email'] ?>" placeholder="电子邮件地址">
+					<input class=form-control name=email type=email value="<?php echo $item['email'] ?>" placeholder="Email">
 				</div>
 			</div>
 
@@ -181,7 +219,7 @@
 			<div class=form-group>
 				<label for=bank_account class="col-sm-2 control-label">开户行账号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=bank_account type=text value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号">
+					<input class=form-control name=bank_account type=number step=1 value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号">
 				</div>
 			</div>
 		</fieldset>

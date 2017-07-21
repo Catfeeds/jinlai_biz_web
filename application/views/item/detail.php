@@ -141,22 +141,25 @@
 		<dt>佣金比例/提成率</dt>
 		<dd><?php echo $item['commission_rate'] * 100 ?>%</dd>
 
-		<?php if ( ! empty($item['time_to_publish']) ): ?>
+		<?php if ( ! empty($item['time_suspend']) ): ?>
 		<dt>预定上架时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_to_publish']) ?></dd>
+		<dd><?php echo empty($item['time_to_publish'])? '未设置': date('Y-m-d H:i:s', $item['time_to_publish']); ?></dd>
 		<?php endif ?>
 
-		<?php if ( ! empty($item['time_to_suspend']) ): ?>
+		<?php if ( ! empty($item['time_publish']) ): ?>
 		<dt>预定下架时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_to_suspend']) ?></dd>
+		<dd><?php echo empty($item['time_to_suspend'])? '未设置': date('Y-m-d H:i:s', $item['time_to_suspend']); ?></dd>
 		<?php endif ?>
 
-		<dt>店内营销活动</dt>
+		<dt>店内活动</dt>
 		<?php if ( ! empty($item['promotion_id']) ): ?>
 		<dd><strong><?php echo $promotion['name'] ?></strong></dd>
 		<?php else: ?>
 		<dd>不参与</dd>
 		<?php endif ?>
+
+		<dt>运费模板</dt>
+		<dd><?php echo $freight_template['name'] ?></dd>
 	</dl>
 
 	<section id=description>

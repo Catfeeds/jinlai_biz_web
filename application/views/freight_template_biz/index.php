@@ -38,17 +38,14 @@
 	?>
 	<div class=btn-group role=group>
 		<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
+	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
+		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
 
-	<?php if ( empty($this->session->biz_id) ): ?>
+	<?php if ( empty($items) ): ?>
 	<blockquote>
-		<p>您需要成为已入驻企业的员工，或者提交入驻申请，才可进行订单管理</p>
-	</blockquote>
-	
-	<?php elseif ( empty($items) ): ?>
-	<blockquote>
-		<p>这里空空如也，快点推广您的店铺和产品，让进来用户下单吧</p>
+		<p>这里空空如也，快点添加<?php echo $this->class_name_cn ?>吧</p>
 	</blockquote>
 
 	<?php else: ?>

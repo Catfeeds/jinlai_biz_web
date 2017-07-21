@@ -2,8 +2,8 @@
 	#content {padding-top:2rem;}
 	form {padding-top:2rem;}
 
-	/* 宽度在768像素以上的设备 */
-	@media only screen and (min-width:769px)
+	/* 宽度在750像素以上的设备 */
+	@media only screen and (min-width:751px)
 	{
 
 	}

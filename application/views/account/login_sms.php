@@ -28,7 +28,7 @@
 
 <div id=content class=container>
 	<section class="row bg-info text-info">
-		<p><em>version beta20170721</em>当前系统为beta版本，仅供技术研究及技术开发；样式将随时变动，布局将随时更改，数据将不定时清零、重置，或有可能某些数据未经创建者本身自主操作或主动授权而被他人更改且无通知；任何公告、订单、充值均无任何实际效力，任何信息均不构成合同要约或其它任何形式的承诺、侵权。</p>
+		<p><em>RC0.1</em>当前系统为beta/RC版本，仅供技术研究及技术开发；样式将随时变动，布局将随时更改，数据将不定时清零、重置，或有可能某些数据未经创建者本身自主操作或主动授权而被他人更改且无通知；任何公告、订单、充值均无任何实际效力，任何信息均不构成合同要约或其它任何形式的承诺、侵权。</p>
 	</section>
 
 	<div class="btn-group btn-group-justified" role=group>
@@ -73,7 +73,7 @@
 			</div>
 		</fieldset>
 
-		<p class="text-center">点击“确定”，即表示您已完整阅读并同意<a title="查看用户协议详细内容" href="<?php echo base_url('article/user-agreement') ?>" target=_blank>《用户协议》</a>。</p>
+		<small class="text-center">点击“确定”，即表示您已完整阅读并同意最新版<a title="查看用户协议详细内容" href="<?php echo base_url('article/user-agreement') ?>" target=_blank>《用户协议》</a>。</small>
 		
 		<div class=row>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
@@ -82,5 +82,4 @@
 		</div>
 
 	</form>
-	
 </div>

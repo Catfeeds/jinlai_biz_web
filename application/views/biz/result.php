@@ -1,12 +1,12 @@
 <style>
 
 
-	/* 宽度在768像素以上的设备 */
-	@media only screen and (min-width:769px)
+	/* 宽度在750像素以上的设备 */
+	@media only screen and (min-width:751px)
 	{
 
 	}
-
+	
 	/* 宽度在960像素以上的设备 */
 	@media only screen and (min-width:961px)
 	{
@@ -30,8 +30,10 @@
 
 <div id=content class=container>
 	<h2><?php echo $title ?></h2>
+	<?php if ( !empty($content) ): ?>
 	<section><?php echo $content ?></section>
+	<?php endif ?>
 	
-	<a class="btn btn-default" title="个人中心" href="<?php echo base_url('mine') ?>">我的</a>
-	<a class="btn btn-primary" title="首页" href="<?php echo base_url() ?>">首页</a>
+	<ul class=row>
+		<li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="返回首页" href="<?php echo base_url() ?>">首页</a></li>
 </div>

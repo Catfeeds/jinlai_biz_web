@@ -39,8 +39,6 @@
 	?>
 	<div class=btn-group role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
-	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
 	
@@ -53,11 +51,13 @@
 		<?php endif ?>
 	</ul>
 
-	<dl id=list-info class=dl-horizontal>
-				<dt>订单ID</dt>
+	<dl id=list-brief class=dl-horizontal>
+		<dt>订单ID</dt>
 		<dd><?php echo $item['order_id'] ?></dd>
-		<dt>商户ID</dt>
-		<dd><?php echo $item['biz_id'] ?></dd>
+		<dt>用户留言</dt>
+		<dd><?php echo $item['note_user'] ?></dd>
+		<dt>员工留言</dt>
+		<dd><?php echo $item['note_stuff'] ?></dd>
 		<dt>用户ID</dt>
 		<dd><?php echo $item['user_id'] ?></dd>
 		<dt>用户下单IP地址</dt>
@@ -88,6 +88,18 @@
 		<dd><?php echo $item['total_payed'] ?></dd>
 		<dt>实际退款金额（元）</dt>
 		<dd><?php echo $item['total_refund'] ?></dd>
+	</dl>
+	
+	<dl id=list-payment class=dl-horizontal>
+		<dt>付款方式</dt>
+		<dd><?php echo $item['payment_type'] ?></dd>
+		<dt>付款账号</dt>
+		<dd><?php echo $item['payment_account'] ?></dd>
+		<dt>付款流水号</dt>
+		<dd><?php echo $item['payment_id'] ?></dd>
+	</dl>
+
+	<dl id=list-addressee class=dl-horizontal>
 		<dt>收件人全名</dt>
 		<dd><?php echo $item['addressee_fullname'] ?></dd>
 		<dt>收件人手机号</dt>
@@ -100,23 +112,23 @@
 		<dd><?php echo $item['addressee_county'] ?></dd>
 		<dt>收件人详细地址</dt>
 		<dd><?php echo $item['addressee_address'] ?></dd>
-		<dt>付款方式</dt>
-		<dd><?php echo $item['payment_type'] ?></dd>
-		<dt>付款账号</dt>
-		<dd><?php echo $item['payment_account'] ?></dd>
-		<dt>付款流水号</dt>
-		<dd><?php echo $item['payment_id'] ?></dd>
-		<dt>用户留言</dt>
-		<dd><?php echo $item['note_user'] ?></dd>
-		<dt>员工留言</dt>
-		<dd><?php echo $item['note_stuff'] ?></dd>
+	</dl>
+
+	<dl id=list-commission class=dl-horizontal>
 		<dt>佣金比例/提成率</dt>
 		<dd><?php echo $item['commission_rate'] ?></dd>
 		<dt>佣金（元）</dt>
 		<dd><?php echo $item['commission'] ?></dd>
 		<dt>推广者ID</dt>
 		<dd><?php echo $item['promoter_id'] ?></dd>
-		<dt>创建时间</dt>
+	</dl>
+	
+	<dl id=list-items class=dl-horizontal>
+		
+	</dl>
+
+	<dl id=list-time class=dl-horizontal>
+		<dt>下单时间</dt>
 		<dd><?php echo $item['time_create'] ?></dd>
 		<dt>用户取消时间</dt>
 		<dd><?php echo $item['time_cancel'] ?></dd>
@@ -136,15 +148,8 @@
 		<dd><?php echo $item['time_comment'] ?></dd>
 		<dt>商家退款时间</dt>
 		<dd><?php echo $item['time_refund'] ?></dd>
-		<dt>用户删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
-		<dt>最后操作者ID</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
 		<dt>发票状态</dt>
 		<dd><?php echo $item['invoice_status'] ?></dd>
-
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
@@ -153,11 +158,6 @@
 			<?php echo $item['time_create'] ?>
 			<a href="<?php echo base_url('stuff/detail?id='.$item['creator_id']) ?>" target=new>查看创建者</a>
 		</dd>
-
-		<?php if ( ! empty($item['time_delete']) ): ?>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<?php endif ?>
 
 		<?php if ( ! empty($item['operator_id']) ): ?>
 		<dt>最后操作时间</dt>

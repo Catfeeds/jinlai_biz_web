@@ -297,12 +297,15 @@
 		}
 		
 		// 获取商家分类列表
-		protected function list_category_biz()
+		protected function list_category_biz($id = NULL)
 		{
+			if ( !empty($this->session->biz_id) ):
+				$params['biz_id'] = $this->session->biz_id;
+			else:
+				$params['biz_id'] = $id;
+			endif;
+
 			// 从API服务器获取相应列表信息
-			$params = array(
-				'biz_id' => $this->session->biz_id,
-			);
 			$url = api_url('item_category_biz/index');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -354,6 +357,43 @@
 			// 从API服务器获取相应列表信息
 			$params['id'] = $id;
 			$url = api_url('promotion_biz/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				$data['item'] = NULL;
+			endif;
+			
+			return $data['item'];
+		}
+		
+		// 获取商家运费模板
+		protected function list_freight_template_biz($id = NULL)
+		{
+			if ( !empty($this->session->biz_id) ):
+				$params['biz_id'] = $this->session->biz_id;
+			else:
+				$params['biz_id'] = $id;
+			endif;
+
+			// 从API服务器获取相应列表信息
+			$url = api_url('freight_template_biz/index');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['items'] = $result['content'];
+			else:
+				$data['items'] = NULL;
+			endif;
+
+			return $data['items'];
+		}
+		
+		// 获取特定商家运费模板详情
+		protected function get_freight_template_biz($id)
+		{
+			// 从API服务器获取相应列表信息
+			$params['id'] = $id;
+			$url = api_url('freight_template_biz/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];

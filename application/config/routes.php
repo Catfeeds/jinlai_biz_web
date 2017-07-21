@@ -75,6 +75,7 @@ $route['article/create'] = 'article/create'; // 创建
 $route['article/delete'] = 'article/delete'; // 删除
 $route['article/restore'] = 'article/restore'; // 恢复
 $route['article/trash'] = 'article/trash'; // 回收站
+$route['article/(:any)'] = 'article/detail/$1';
 $route['article'] = 'article/index'; // 列表
 
 /* Brand 品牌 */

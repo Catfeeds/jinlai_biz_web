@@ -268,7 +268,7 @@
 
 			<?php if ( !empty($biz_promotions) ): ?>
 			<div class=form-group>
-				<label for=promotion_id class="col-sm-2 control-label">参与的营销活动</label>
+				<label for=promotion_id class="col-sm-2 control-label">店内活动</label>
 				<div class=col-sm-10>
 					<select class=form-control name=promotion_id>
 						<option value="">请选择</option>

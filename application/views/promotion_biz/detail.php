@@ -26,7 +26,7 @@
 	$(function(){
 		// 仅显示适用于当前营销活动类型的参数
 		var fieldset_to_show = '<?php echo $item['type'] ?>';
-		$('[date-type*="' + fieldset_to_show + '"]').show();
+		$('[data-type*="' + fieldset_to_show + '"]').show();
 	});
 </script>
 
@@ -99,12 +99,12 @@
 		<dd><?php echo ($item['fold_allowed'] === '1')? '是': '否'; ?></dd>
 	</dl>
 
-	<dl date-type="单品折扣,订单折扣" class="dl-horizontal params">
+	<dl data-type="单品折扣,订单折扣" class="dl-horizontal params">
 		<dt>折扣率</dt>
 		<dd><?php echo $item['discount'] * 100 ?>%</dd>
 	</dl>
 
-	<dl date-type="单品满赠,订单满赠" class="dl-horizontal params">
+	<dl data-type="单品满赠,订单满赠" class="dl-horizontal params">
 		<dt>赠品触发金额</dt>
 		<dd>￥ <?php echo $item['present_trigger_amount'] ?></dd>
 		<dt>赠品触发份数</dt>
@@ -113,7 +113,7 @@
 		<dd><?php echo $item['present'] ?></dd>
 	</dl>
 
-	<dl date-type="单品满减,订单满减" class="dl-horizontal params">
+	<dl data-type="单品满减,订单满减" class="dl-horizontal params">
 		<dt>满减触发金额</dt>
 		<dd>￥ <?php echo $item['reduction_trigger_amount'] ?></dd>
 		<dt>减免金额</dt>
@@ -122,14 +122,14 @@
 		<dd><?php echo $item['reduction_discount'] * 100 ?>%</dd>
 	</dl>
 
-	<dl date-type="单品赠券,订单赠券" class="dl-horizontal params">
+	<dl data-type="单品赠券,订单赠券" class="dl-horizontal params">
 		<dt>赠送优惠券模板</dt>
 		<dd><?php echo $item['coupon_id'] ?></dd>
 		<dt>赠送优惠券套餐</dt>
 		<dd><?php echo $item['coupon_combo_id'] ?></dd>
 	</dl>
 
-	<dl date-type="单品预售" class="dl-horizontal params">
+	<dl data-type="单品预售" class="dl-horizontal params">
 		<dt>订金/预付款</dt>
 		<dd>￥ <?php echo $item['deposit'] ?></dd>
 		<dt>尾款</dt>
@@ -144,7 +144,7 @@
 		<dd><?php echo date('Y-m-d H:i:s', $item['time_complete_end']) ?></dd>
 	</dl>
 
-	<dl date-type="单品团购" class="dl-horizontal params">
+	<dl data-type="单品团购" class="dl-horizontal params">
 		<dt>团购成团订单数</dt>
 		<dd><?php echo $item['groupbuy_order_amount'] ?> 单</dd>
 		<dt>团购个人最高限量</dt>

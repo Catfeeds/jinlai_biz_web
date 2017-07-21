@@ -129,7 +129,7 @@
 				<a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">分类管理</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
-				<a title="运费模板" href="<?php echo base_url('freight_template') ?>">运费模板</a>
+				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">运费模板</a>
 			</li>
 		</ul>
 
