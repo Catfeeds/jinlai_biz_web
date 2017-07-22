@@ -58,12 +58,13 @@
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">简介</label>
 				<div class=col-sm-10>
-					<textarea class=form-control name=description rows=5 placeholder="简介"><?php echo set_value('description') ?></textarea>
+					<textarea class=form-control name=description rows=5 placeholder="最多200个字符"><?php echo set_value('description') ?></textarea>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=tel_public class="col-sm-2 control-label">消费者服务电话※</label>
 				<div class=col-sm-10>
+					<p class=helper-block>即消费者可以联系到商家的电话号码</p>
 					<input class=form-control name=tel_public type=tel value="<?php echo set_value('tel_public') ?>" placeholder="400/800、手机号、带区号的固定电话号码均可" required>
 				</div>
 			</div>
@@ -93,14 +94,14 @@
 		</fieldset>
 
 		<div class="jumbotron row">
-			<p>继续完善以下资料将可优先申请；仅提供上述信息则需<p>
+			<p>继续完善信息将可优先申请；仅提供上述信息则需<p>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
 				<button class="btn btn-default btn-lg btn-block" type=submit>排队申请</button>
 		    </div>
 		</div>
 
 		<fieldset>
-			<legend>资质证书及授权证明</legend>
+			<legend>资质及授权证明</legend>
 			<p class=helper-block>以下资料需要彩色原件的扫描件或数码照</p>
 
 			<div class=form-group>
@@ -112,7 +113,7 @@
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
 
-					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/license" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/license" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 					<ul class="upload_preview list-inline row"></ul>
 				</div>
@@ -125,7 +126,7 @@
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
 
-					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/owner_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/owner_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 					<ul class="upload_preview list-inline row"></ul>
 				</div>
@@ -138,7 +139,7 @@
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
 
-					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/auth_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/auth_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 					<ul class="upload_preview list-inline row"></ul>
 				</div>
@@ -151,7 +152,7 @@
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
 
-					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/auth_doc" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/auth_doc" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 					<ul class="upload_preview list-inline row"></ul>
 				</div>
@@ -183,18 +184,18 @@
 
 		<fieldset>
 			<legend>形象展示</legend>
-			<p>您可根据自身业态，向平台用户展现相应的经营情况。</p>
+			<p>您可根据自身情况提供合适的照片，向消费者展现企业形象</p>
 
 			<div class=form-group>
 				<label for=url_image_product class="col-sm-2 control-label">产品</label>
 				<div class=col-sm-10>
-					<p class=help-block>最多可上传4张，选择时按住“ctrl”或“⌘”键可选多张</p>
+					<p class=help-block>最多可上传4张</p>
 
 					<?php $name_to_upload = 'url_image_product' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
-					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/product" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/product" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 					<ul class="upload_preview list-inline row"></ul>
 				</div>
@@ -207,7 +208,7 @@
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
-					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/produce" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/produce" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 					<ul class="upload_preview list-inline row"></ul>
 				</div>
@@ -220,7 +221,7 @@
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
-					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/retail" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/retail" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 					<ul class="upload_preview list-inline row"></ul>
 				</div>

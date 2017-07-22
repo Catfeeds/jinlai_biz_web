@@ -257,17 +257,16 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('category_id', '所属系统分类ID', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('brand_id', '所属品牌ID', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('category_biz_id', '所属商家分类ID', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('category_id', '系统分类', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('brand_id', '品牌', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('category_biz_id', '商家分类', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('name', '商品名称', 'trim|required|max_length[40]');
-			$this->form_validation->set_rules('description', '商品描述', 'trim|max_length[20000]');
 			$this->form_validation->set_rules('price', '商城价/现价（元）', 'trim|required|less_than_equal_to[99999.99]');
 			$this->form_validation->set_rules('stocks', '库存量（份）', 'trim|required|less_than_equal_to[65535]');
 			$this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
-			$this->form_validation->set_rules('promotion_id', '店内活动ID', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('freight_template_id', '商家运费模板ID', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|required|is_natural_no_zero');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -285,7 +284,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'brand_id', 'category_biz_id', 'url_image_main', 'name', 'description', 'price', 'stocks', 'coupon_allowed', 'promotion_id', 'freight_template_id',
+					'category_id', 'brand_id', 'category_biz_id', 'url_image_main', 'name', 'price', 'stocks', 'coupon_allowed', 'promotion_id', 'freight_template_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -297,7 +296,7 @@
 				if ($result['status'] === 200):
 					$data['title'] = $this->class_name_cn. '快速创建成功';
 					$data['class'] = 'success';
-					$data['content'] = $result['content']['message']. '；如需添加更多信息，您可在修改该商品时进行补充。';
+					$data['content'] = $result['content']['message']. '；您可在修改该商品时添加更多信息。';
 					$data['operation'] = 'create_quick';
 					$data['id'] = $result['content']['id']; // 创建后的信息ID
 
@@ -352,9 +351,9 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('category_id', '所属系统分类ID', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('brand_id', '所属品牌ID', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('category_biz_id', '所属商家分类ID', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('category_id', '系统分类', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('brand_id', '品牌', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('category_biz_id', '商家分类', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('code_biz', '商家自定义商品编码', 'trim|max_length[20]');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim|max_length[255]');
@@ -376,8 +375,8 @@
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim');
 			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim');
-			$this->form_validation->set_rules('promotion_id', '店内活动ID', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('freight_template_id', '商家运费模板ID', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -458,7 +457,7 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('category_biz_id', '所属商家分类ID', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('category_biz_id', '商家分类', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('code_biz', '商家自定义商品编码', 'trim|max_length[20]');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim|max_length[255]');
@@ -480,8 +479,8 @@
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim');
 			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim');
-			$this->form_validation->set_rules('promotion_id', '店内活动ID', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('freight_template_id', '商家运费模板ID', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 			
 			// 从API服务器获取相应详情信息
 			$params['id'] = $this->input->get_post('id');
@@ -579,7 +578,7 @@
 			// 动态设置待验证字段名及字段值
 			$data_to_validate["{$name}"] = $value;
 			$this->form_validation->set_data($data_to_validate);
-			$this->form_validation->set_rules('category_biz_id', '所属商家分类ID', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('category_biz_id', '商家分类', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('code_biz', '商家自定义商品编码', 'trim|max_length[20]');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|max_length[255]');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim|max_length[255]');
@@ -601,8 +600,8 @@
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[10]');
 			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[10]');
-			$this->form_validation->set_rules('promotion_id', '店内活动ID', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('freight_template_id', '商家运费模板ID', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -671,248 +670,6 @@
 
 			endif;
 		} // end edit_certain
-
-		/**
-		 * 删除单行或多行项目
-		 *
-		 * 一般用于发货、退款、存为草稿、上架、下架、删除、恢复等状态变化，请根据需要修改方法名，例如deliver、refund、delete、restore、draft等
-		 */
-		public function delete()
-		{
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
-			$op_name = '删除'; // 操作的名称
-			$op_view = 'delete'; // 视图文件名
-
-			// 页面信息
-			$data = array(
-				'title' => $op_name. $this->class_name_cn,
-				'class' => $this->class_name. ' '. $op_view,
-				'error' => '', // 预设错误提示
-			);
-
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-				
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
-			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
-			
-			// 获取待操作项数据
-			$data['items'] = array();
-			foreach ($ids as $id):
-				// 从API服务器获取相应详情信息
-				$params['id'] = $id;
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['items'][] = $result['content'];
-				else:
-					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
-				endif;
-			endforeach;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] .= validation_errors();
-
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/'.$op_view, $data);
-				$this->load->view('templates/footer', $data);
-
-			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_bulk_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) ):
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
-				// 需要存入数据库的信息
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'ids' => $ids,
-					'password' => $password,
-					'operation' => $op_view, // 操作名称
-				);
-
-				// 向API服务器发送待创建数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit_bulk');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn.$op_name. '成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-					$data['operation'] = 'bulk';
-					$data['ids'] = $ids;
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若创建失败，则进行提示
-					$data['error'] .= $result['content']['error']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-				endif;
-
-			endif;
-		} // end delete
-
-		/**
-		 * 恢复单行或多行项目
-		 *
-		 * 一般用于存为草稿、上架、下架、删除、恢复等状态变化，请根据需要修改方法名，例如delete、restore、draft等
-		 */
-		public function restore()
-		{
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
-			$op_name = '恢复'; // 操作的名称
-			$op_view = 'restore'; // 视图文件名
-
-			// 页面信息
-			$data = array(
-				'title' => $op_name. $this->class_name_cn,
-				'class' => $this->class_name. ' '. $op_view,
-				'error' => '', // 预设错误提示
-			);
-
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-				
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
-			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
-			
-			// 获取待操作项数据
-			$data['items'] = array();
-			foreach ($ids as $id):
-				// 从API服务器获取相应详情信息
-				$params['id'] = $id;
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['items'][] = $result['content'];
-				else:
-					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
-				endif;
-			endforeach;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] .= validation_errors();
-
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/'.$op_view, $data);
-				$this->load->view('templates/footer', $data);
-
-			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_bulk_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) ):
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
-				// 需要存入数据库的信息
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'ids' => $ids,
-					'password' => $password,
-					'operation' => $op_view, // 操作名称
-				);
-
-				// 向API服务器发送待创建数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit_bulk');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn.$op_name. '成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-					$data['operation'] = 'bulk';
-					$data['ids'] = $ids;
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若创建失败，则进行提示
-					$data['error'] .= $result['content']['error']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-				endif;
-
-			endif;
-		} // end restore
 		
 		/**
 		 * 上架单行或多行项目

@@ -58,27 +58,30 @@
 		<?php endif ?>
 	</ul>
 	
-	
 	<header>
 		<h2><?php echo $item['title'] ?></h2>
-		<div class=excerpt><?php echo $item['excerpt'] ?></div>
+		<ul class="list-horizontal row">
+			<li class="col-xs-12 col-sm-6 col-md-3"><?php echo $item['time_edit'] ?></li>
+		</ul>
+		<div class="excerpt well"><?php echo $item['excerpt'] ?></div>
 	</header>
 	<section><?php echo $item['content'] ?></section>
 
 	<dl id=list-info class=dl-horizontal>
+		<!--
 		<dt>文章ID</dt>
 		<dd><?php echo $item['article_id'] ?></dd>
-		<dt>所属分类ID</dt>
+		<dt>分类</dt>
 		<dd><?php echo $item['category_id'] ?></dd>
-		<dt>所属商家ID</dt>
-		<dd><?php echo $item['biz_id'] ?></dd>
 		<dt>自定义域名</dt>
 		<dd><?php echo $item['url_name'] ?></dd>
+		-->
+		<?php if ( !empty($item['url_images']) ): ?>
 		<dt>形象图</dt>
 		<dd>
 			<ul class=row>
 				<?php
-					$figure_image_urls = explode(',', $item['figure_image_urls']);
+					$figure_image_urls = explode(',', $item['url_images']);
 					foreach($figure_image_urls as $url):
 				?>
 				<li class="col-xs-6 col-sm-4 col-md-3">
@@ -87,8 +90,10 @@
 				<?php endforeach ?>
 			</ul>
 		</dd>
+		<?php endif ?>
 	</dl>
 
+	<!--
 	<dl id=list-record class=dl-horizontal>
 		<dt>创建时间</dt>
 		<dd>
@@ -109,6 +114,7 @@
 		</dd>
 		<?php endif ?>
 	</dl>
+	-->
 
 	<?php endif ?>
 </div>

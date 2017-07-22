@@ -106,22 +106,9 @@
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
 
-					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="item/image_main" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="item/image_main" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 					<ul class="upload_preview list-inline row"></ul>
-				</div>
-			</div>
-
-			<div class=form-group>
-				<label for=description class="col-sm-2 control-label">商品描述</label>
-				<div class=col-sm-10>
-					<textarea id=detail_editior name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo set_value('description') ?></textarea>
-
-					<!-- ueditor 1.4.3.3 -->
-					<link rel="stylesheet" media=all href="<?php echo base_url('ueditor/themes/default/css/ueditor.min.css') ?>">
-					<script src="<?php echo base_url('ueditor/ueditor.config.js') ?>"></script>
-					<script src="<?php echo base_url('ueditor/ueditor.all.min.js') ?>"></script>
-					<script>var ue = UE.getEditor('detail_editior');</script>
 				</div>
 			</div>
 
@@ -151,7 +138,7 @@
 
 			<?php if ( !empty($biz_promotions) ): ?>
 			<div class=form-group>
-				<label for=promotion_id class="col-sm-2 control-label">参与的营销活动</label>
+				<label for=promotion_id class="col-sm-2 control-label">营销活动</label>
 				<div class=col-sm-10>
 					<select class=form-control name=promotion_id>
 						<option value="">请选择</option>
@@ -162,6 +149,27 @@
 				</div>
 			</div>
 			<?php endif ?>
+			
+			<div class=form-group>
+				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
+				<div class=col-sm-10>
+					<p class="bg-danger text-danger">如果留空，消费者主动确认收货前您将无法收取货款。</p>
+					<?php if ( empty($biz_freight_templates) ): ?>
+					<p class="bg-warning text-warning row">您目前没有可用的运费模板</p>
+					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建一个</a>
+					<?php endif ?>
+					
+					<select class=form-control name=freight_template_id>
+						<option value="">请选择</option>
+						<?php
+							$options = $biz_freight_templates;
+							foreach ($options as $option):
+						?>
+							<option value="<?php echo $option['template_id'] ?>" <?php echo set_select('freight_template_id', $option['template_id']) ?>><?php echo $option['name'] ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
 		</fieldset>
 
 		<div class=form-group>

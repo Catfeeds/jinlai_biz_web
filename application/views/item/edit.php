@@ -135,7 +135,7 @@
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
 						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="item/image_main" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+						<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="item/image_main" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 						<ul class="upload_preview list-inline row"></ul>
 					</div>
@@ -166,7 +166,7 @@
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
 						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="item/image_figure" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+						<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="item/image_figure" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 						<ul class="upload_preview list-inline row"></ul>
 					</div>
@@ -186,14 +186,24 @@
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">商品描述</label>
 				<div class=col-sm-10>
-					<p class=helper-block>可留空，建议在桌面电脑上编辑此部分以使用更全面的功能</p>
-					<textarea id=detail_editior name=description rows=10 placeholder="商品描述"><?php echo $item['description'] ?></textarea>
-
+					<?php
+						$user_agent = $_SERVER['HTTP_USER_AGENT'];
+						$is_wechat = strpos($user_agent, 'MicroMessenger')? TRUE: FALSE;
+						if ( !$is_wechat):
+					?>
+					<textarea id=detail_editior name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo $item['description'] ?></textarea>
 					<!-- ueditor 1.4.3.3 -->
 					<link rel="stylesheet" media=all href="<?php echo base_url('ueditor/themes/default/css/ueditor.min.css') ?>">
 					<script src="<?php echo base_url('ueditor/ueditor.config.js') ?>"></script>
 					<script src="<?php echo base_url('ueditor/ueditor.all.min.js') ?>"></script>
 					<script>var ue = UE.getEditor('detail_editior');</script>
+
+					<?php else: ?>
+					<p class="bg-info text-info text-center">在电脑上编辑可添加更丰富内容</p>
+					<textarea class=form-control name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo set_value('description') ?></textarea>
+
+					<?php endif ?>
+					
 				</div>
 			</div>
 			<div class=form-group>
@@ -223,19 +233,19 @@
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo $item['weight_net'] ?>" placeholder="净重（KG）">
+					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo $item['weight_net'] ?>" placeholder="最高999.99，运费计算将以运费模板为准">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo $item['weight_gross'] ?>" placeholder="毛重（KG）">
+					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo $item['weight_gross'] ?>" placeholder="最高999.99，运费计算将以运费模板为准">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_volume class="col-sm-2 control-label">体积重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo $item['weight_volume'] ?>" placeholder="体积重（KG）">
+					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo $item['weight_volume'] ?>" placeholder="最高999.99，运费计算将以运费模板为准">
 				</div>
 			</div>
 			<div class=form-group>
@@ -272,34 +282,24 @@
 				</div>
 			</div>
 
+			<?php if ( ! empty($item['time_suspend']) ): ?>
 			<div class=form-group>
 				<label for=time_to_publish class="col-sm-2 control-label">预定上架时间</label>
 				<div class=col-sm-10>
-					<?php
-						$time_name = 'time_to_publish';
-						$time_to_display = NULL;
-						if ( !empty($item[$time_name]) ):
-							$time_to_display = date('Y-m-d H:i:s', $item[$time_name]);
-						endif;
-					?>
-					<input class=form-control name=time_to_publish type=datetime value="<?php echo $time_to_display ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+8days')) ?>">
+					<input class=form-control name=time_to_publish type=datetime value="<?php echo empty($item['time_to_publish'])? NULL: date('Y-m-d H:i:s', $item['time_to_publish']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+8days')) ?>">
 				</div>
 			</div>
+			<?php endif ?>
 
+			<?php if ( ! empty($item['time_publish']) ): ?>
 			<div class=form-group>
 				<label for=time_to_suspend class="col-sm-2 control-label">预定下架时间</label>
 				<div class=col-sm-10>
-					<?php
-						$time_name = 'time_to_suspend';
-						$time_to_display = NULL;
-						if ( !empty($item[$time_name]) ):
-							$time_to_display = date('Y-m-d H:i:s', $item[$time_name]);
-						endif;
-					?>
-					<input class=form-control name=time_to_suspend type=datetime value="<?php echo $time_to_display ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+10days')) ?>">
+					<input class=form-control name=time_to_suspend type=datetime value="<?php echo empty($item['time_to_suspend'])? NULL: date('Y-m-d H:i:s', $item['time_to_publish']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+10days')) ?>">
 				</div>
 			</div>
-			
+			<?php endif ?>
+
 			<?php if ( !empty($biz_promotions) ): ?>
 			<div class=form-group>
 				<label for=promotion_id class="col-sm-2 control-label">店内活动</label>
@@ -321,8 +321,14 @@
 			<div class=form-group>
 				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
 				<div class=col-sm-10>
+					<p class="bg-danger text-danger">如果留空，消费者主动确认收货前您将无法收取货款。</p>
+					<?php if ( empty($biz_freight_templates) ): ?>
+					<p class="bg-warning text-warning row">您目前没有可用的运费模板</p>
+					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建一个</a>
+					<?php endif ?>
+
 					<?php $input_name = 'freight_template_id' ?>
-					<select class=form-control name="<?php echo $input_name ?>" required>
+					<select class=form-control name="<?php echo $input_name ?>">
 						<option value="">请选择</option>
 						<?php
 							$options = $biz_freight_templates;

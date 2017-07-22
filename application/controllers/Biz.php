@@ -199,6 +199,7 @@
 						$data['title'] = $this->class_name_cn. '创建成功';
 						$data['class'] = 'success';
 						$data['content'] = $result['content']['message'];
+						$data['operation'] = 'create';
 						$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
 
 						// 更新本地商家信息
@@ -329,6 +330,7 @@
 					$data['title'] = $this->class_name_cn. '修改成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'edit';
 					$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -459,6 +461,7 @@
 					$data['title'] = $this->class_name_cn. '修改成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'edit_certain';
 					$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);

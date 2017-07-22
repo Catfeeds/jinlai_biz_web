@@ -51,7 +51,8 @@
 
 	<?php elseif ( empty($items) ): ?>
 	<blockquote>
-		<p>您的货架空空如也，快点<a class="btn btn-primary btn-lg" title="创建商品>" href="<?php echo base_url('item/create') ?>">创建商品</a>以供选购吧！</p>
+		<p>您的货架空空如也，快点创建商品以供用户选购吧！</p>
+		<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" title="创建商品>" href="<?php echo base_url('item/create') ?>">创建一个</a>
 	</blockquote>
 
 	<?php else: ?>

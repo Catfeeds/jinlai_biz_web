@@ -55,32 +55,6 @@
 			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
 
 			<div class=form-group>
-				<label for=system_category_id class="col-sm-2 control-label">所属系统商品分类※</label>
-				<div class=col-sm-10>
-					<select class=form-control name=system_category_id required>
-						<option value="">请选择</option>
-						<?php foreach ($categories as $option): ?>
-							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('system_category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-			</div>
-			
-			<?php if ( !empty($biz_categories) ): ?>
-			<div class=form-group>
-				<label for=parent_id class="col-sm-2 control-label">所属商家商品分类</label>
-				<div class=col-sm-10>
-					<select class=form-control name=parent_id required>
-						<option value="">请选择</option>
-						<?php foreach ($biz_categories as $option): ?>
-							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('parent_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-			</div>
-			<?php endif ?>
-
-			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">名称※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="名称" required>
@@ -88,7 +62,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=url_image class="col-sm-2 control-label">图片</label>
+				<label for=url_image class="col-sm-2 control-label">分类图片</label>
 				<div class=col-sm-10>
 					<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
 

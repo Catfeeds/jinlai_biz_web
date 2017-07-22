@@ -111,19 +111,19 @@
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo set_value('weight_net') ?>" placeholder="净重（KG）">
+					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo set_value('weight_net') ?>" placeholder="最高999.99，运费计算将以所属商品运费模板为准">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo set_value('weight_gross') ?>" placeholder="毛重（KG）">
+					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo set_value('weight_gross') ?>" placeholder="最高999.99，运费计算将以所属商品运费模板为准">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_volume class="col-sm-2 control-label">体积重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo set_value('weight_volume') ?>" placeholder="体积重（KG）">
+					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo set_value('weight_volume') ?>" placeholder="最高999.99，运费计算将以所属商品运费模板为准">
 				</div>
 			</div>
 		</fieldset>

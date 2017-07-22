@@ -89,8 +89,29 @@
 	<div data-type="物流配送" class="dl-horizontal params well">
 		<dt>物流配送类型</dt>
 		<dd><?php echo $item['type_actual'] ?></dd>
+		<?php
+			$options = array(
+				'1小时' => '3600',
+				'2小时' => '7200',
+				'3小时' => '10800',
+				'4小时' => '14400',
+				'6小时' => '21600',
+				'8小时' => '28800',
+				'12小时' => '43200',
+				'24小时/1天' => '86400',
+				'48小时/2天' => '172800',
+				'72小时/3天' => '259200',
+				'5天' => '432000',
+				'7天' => '604800',
+				'10天' => '864000',
+				'14天' => '1209600',
+				'30天' => '2592000',
+				'45天' => '3888000',
+			);
+			$options = array_flip($options);
+		?>
 		<dt>最晚发货时间</dt>
-		<dd><?php echo $item['time_latest_deliver'] ?></dd>
+		<dd><?php echo $options[ $item['time_latest_deliver'] ] ?></dd>
 		
 		<div data-type="计件" class="dl-horizontal params">
 			<p>件数前 <?php echo $item['fee_count_amount'] ?>件 费用 ￥<?php echo $item['fee_count_start'] ?>，超出后每件 ￥<?php echo $item['fee_count'] ?> ；每单最高 <?php echo $item['max_count'] ?> 件</p>

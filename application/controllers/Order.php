@@ -151,7 +151,7 @@
 			endif;
 
 			// 页面信息
-			$data['title'] = $data['item']['name'];
+			$data['title'] = '商品订单№'. $data['item']['order_id'];
 			$data['class'] = $this->class_name.' detail';
 			//$data['keywords'] = $this->class_name.','. $data['item']['name'];
 
@@ -160,54 +160,6 @@
 			$this->load->view($this->view_root.'/detail', $data);
 			$this->load->view('templates/footer', $data);
 		} // end detail
-
-		/**
-		 * 回收站
-		 */
-		public function trash()
-		{
-			// 操作可能需要检查操作权限
-			$role_allowed = array('管理员', '经理'); // 角色要求
-			$min_level = 30; // 级别要求
-			$this->permission_check($role_allowed, $min_level);
-
-			// 页面信息
-			$data = array(
-				'title' => $this->class_name_cn. '回收站',
-				'class' => $this->class_name.' trash',
-			);
-
-			// 筛选条件
-			$condition['biz_id'] = $this->session->biz_id;
-			$condition['time_delete'] = 'IS NOT NULL';
-			// （可选）遍历筛选条件
-			foreach ($this->names_to_sort as $sorter):
-				if ( !empty($this->input->post($sorter)) )
-					$condition[$sorter] = $this->input->post($sorter);
-			endforeach;
-
-			// 排序条件
-			$order_by['time_delete'] = 'DESC';
-			//$order_by['name'] = 'value';
-
-			// 从API服务器获取相应列表信息
-			$params = $condition;
-			$url = api_url($this->class_name. '/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-				$data['error'] = $result['content']['error']['message'];
-			endif;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
-
-			// 输出视图
-			$this->load->view('templates/header', $data);
-			$this->load->view($this->view_root.'/trash', $data);
-			$this->load->view('templates/footer', $data);
-		} // end trash
 
 		/**
 		 * 修改单项

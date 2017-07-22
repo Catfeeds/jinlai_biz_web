@@ -317,6 +317,8 @@
 						$data['title'] = $this->class_name_cn. '修改成功';
 						$data['class'] = 'success';
 						$data['content'] = $result['content']['message'];
+						$data['operation'] = 'edit';
+						$data['id'] = $this->input->post('id');
 
 						$this->load->view('templates/header', $data);
 						$this->load->view($this->view_root.'/result', $data);

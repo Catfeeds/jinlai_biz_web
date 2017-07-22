@@ -10,22 +10,8 @@
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
 	 * @copyright ICBG <www.bingshankeji.com>
 	 */
-	class Home extends CI_Controller
+	class Home extends MY_Controller
 	{
-        /* 类名称小写，应用于多处动态生成内容 */
-        public $class_name;
-        
-        /* 类名称中文，应用于多处动态生成内容 */
-        public $class_name_cn;
-        
-        /* 主要相关表名 */
-        public $table_name;
-        
-        /* 主要相关表的主键名*/
-        public $id_name;
-        
-        /* 视图文件所在目录名 */
-        public $view_root;
         
         public function __construct()
         {
@@ -40,16 +26,6 @@
             $this->table_name = 'table'; // 和这里……
             $this->id_name = 'table_id';  // 还有这里，OK，这就可以了
             $this->view_root = $this->class_name;
-            
-            // 设置并调用Basic核心库
-            $basic_configs = array(
-               'table_name' => $this->table_name,
-               'id_name' => $this->id_name,
-               'view_root' => $this->view_root,
-            );
-            
-            // 载入Basic库
-            $this->load->library('basic', $basic_configs);
         }
 
 		// 首页
@@ -73,6 +49,27 @@
 					$data['error'] = $result['content']['error']['message'];
 				endif;
 			endif;
+
+			// 获取核心数据计数
+			$data['count'] = array(
+				'item' => $this->count_table('item'),
+				'order' => $this->count_table('order'),
+				'item_category_biz' => $this->count_table('item_category_biz'),
+				'freight_template_biz' => $this->count_table('freight_template_biz'),
+				
+				'promotion' => $this->count_table('promotion'),
+				'promotion_biz' => $this->count_table('promotion_biz'),
+				'coupon_template' => $this->count_table('coupon_template'),
+				'coupon_combo' => $this->count_table('coupon_combo'),
+				'stuff' => $this->count_table('stuff'),
+
+				// 以下功能开通后可取消注释，并在视图文件中添加相应DOM
+				/*
+				'refund' => $this->count_table('refund'),
+				'comment_item' => $this->count_table('comment_item'),
+				'comment_order' => $this->count_table('comment_order'),
+				*/
+			);
 
 			// 载入视图
 			$this->load->view('templates/header', $data);

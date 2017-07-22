@@ -30,24 +30,10 @@
 <script src="/js/datepicker.min.js"></script>
 <script>
 	$(function(){
-		// 日期选择器语言本地化
-		$.fn.datepicker.language['cn'] = {
-		    days: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-		    daysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-		    daysMin: ['日', '一', '二', '三', '四', '五', '六'],
-		    months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-		    monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-		    today: '今天',
-		    clear: '清空',
-		    dateFormat: 'yyyy-mm-dd',
-		    timeFormat: 'hh:ii:ss',
-		    firstDay: 0
-		};
-
 		// 初始化日期选择器
 		$('[type=date]').datepicker(
 			{
-			    language: 'cn',
+			    language: 'cn', // 本地化语言在js/main.js中
 			    minDate: new Date("<?php echo date('Y-m-d', strtotime("-120years")) ?>"),
 				maxDate: new Date("<?php echo date('Y-m-d', strtotime("-14years")) ?>"),
 			}

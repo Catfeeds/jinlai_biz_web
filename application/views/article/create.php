@@ -50,87 +50,50 @@
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
-			<legend>基本信息</legend>
+			<div class=form-group>
+				<label for=category_id class="col-sm-2 control-label">分类</label>
+				<div class=col-sm-10>
+					<input class=form-control name=category_id type=text value="<?php echo set_value('category_id') ?>" placeholder="分类">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=title class="col-sm-2 control-label">标题</label>
+				<div class=col-sm-10>
+					<input class=form-control name=title type=text value="<?php echo set_value('title') ?>" placeholder="标题"  required>
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=excerpt class="col-sm-2 control-label">摘要</label>
+				<div class=col-sm-10>
+					<input class=form-control name=excerpt type=text value="<?php echo set_value('excerpt') ?>" placeholder="摘要"  required>
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=content class="col-sm-2 control-label">内容</label>
+				<div class=col-sm-10>
+					<input class=form-control name=content type=text value="<?php echo set_value('content') ?>" placeholder="内容"  required>
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=url_name class="col-sm-2 control-label">自定义域名</label>
+				<div class=col-sm-10>
+					<input class=form-control name=url_name type=text value="<?php echo set_value('url_name') ?>" placeholder="自定义域名">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=url_images class="col-sm-2 control-label">形象图</label>
+				<div class=col-sm-10>
+					<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
 
-									<div class=form-group>
-							<label for=article_id class="col-sm-2 control-label">文章ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=article_id type=text value="<?php echo set_value('article_id') ?>" placeholder="文章ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=category_id class="col-sm-2 control-label">所属分类ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=category_id type=text value="<?php echo set_value('category_id') ?>" placeholder="所属分类ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=biz_id class="col-sm-2 control-label">所属商家ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=biz_id type=text value="<?php echo set_value('biz_id') ?>" placeholder="所属商家ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=title class="col-sm-2 control-label">标题</label>
-							<div class=col-sm-10>
-								<input class=form-control name=title type=text value="<?php echo set_value('title') ?>" placeholder="标题" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=excerpt class="col-sm-2 control-label">摘要</label>
-							<div class=col-sm-10>
-								<input class=form-control name=excerpt type=text value="<?php echo set_value('excerpt') ?>" placeholder="摘要" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=content class="col-sm-2 control-label">内容</label>
-							<div class=col-sm-10>
-								<input class=form-control name=content type=text value="<?php echo set_value('content') ?>" placeholder="内容" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=url_name class="col-sm-2 control-label">自定义域名</label>
-							<div class=col-sm-10>
-								<input class=form-control name=url_name type=text value="<?php echo set_value('url_name') ?>" placeholder="自定义域名" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=url_images class="col-sm-2 control-label">形象图</label>
-							<div class=col-sm-10>
-								<input class=form-control name=url_images type=text value="<?php echo set_value('url_images') ?>" placeholder="形象图" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_create class="col-sm-2 control-label">创建时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_create type=text value="<?php echo set_value('time_create') ?>" placeholder="创建时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_delete class="col-sm-2 control-label">删除时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_delete type=text value="<?php echo set_value('time_delete') ?>" placeholder="删除时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_edit class="col-sm-2 control-label">最后操作时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_edit type=text value="<?php echo set_value('time_edit') ?>" placeholder="最后操作时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=creator_id class="col-sm-2 control-label">创建者ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=creator_id type=text value="<?php echo set_value('creator_id') ?>" placeholder="创建者ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=operator_id class="col-sm-2 control-label">最后操作者ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=operator_id type=text value="<?php echo set_value('operator_id') ?>" placeholder="最后操作者ID" required>
-							</div>
-						</div>
+					<?php $name_to_upload = 'url_images' ?>
+					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
+					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="article/image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+					<ul class="upload_preview list-inline row"></ul>
+				</div>
+			</div>
 		</fieldset>
 
 		<div class=form-group>

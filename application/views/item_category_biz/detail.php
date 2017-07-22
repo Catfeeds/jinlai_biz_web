@@ -59,11 +59,8 @@
 		<dt>商品分类ID</dt>
 		<dd><?php echo $item['category_id'] ?></dd>
 		
-		<dt>所属系统商品分类</dt>
-		<dd><?php echo $category['name'] ?></dd>
-		
 		<?php if ( !empty($item['parent_id']) ): ?>
-		<dt>所属商家商品分类</dt>
+		<dt>所属商品分类</dt>
 		<dd><?php echo $category_biz['name'] ?></dd>
 		<?php endif ?>
 
@@ -71,7 +68,7 @@
 		<dd><?php echo $item['name'] ?></dd>
 		
 		<?php if ( !empty($item['url_image']) ): ?>
-		<dt>图片</dt>
+		<dt>分类图片</dt>
 		<dd class=row>
 			<figure class="col-xs-12 col-sm-6 col-md-4">
 				<img src="<?php echo $item['url_image'] ?>">

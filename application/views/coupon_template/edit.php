@@ -97,6 +97,7 @@
 					</select>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=category_biz_id class="col-sm-2 control-label">限用店内分类</label>
 				<div class=col-sm-10>
@@ -118,7 +119,7 @@
 			<div class=form-group>
 				<label for=item_id class="col-sm-2 control-label">限用商品</label>
 				<div class=col-sm-10>
-					<input class=form-control name=item_id type=text value="<?php echo $item['item_id'] ?>" placeholder="如仅限部分商品可用，请输入可用商品的商品ID">
+					<input class=form-control name=item_id type=text value="<?php echo $item['item_id'] ?>" placeholder="如仅限部分商品可用，请输入可用商品的商品ID，多个ID间用一个半角逗号“,”进行分隔">
 				</div>
 			</div>
 			

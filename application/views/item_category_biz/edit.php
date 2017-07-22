@@ -56,24 +56,9 @@
 
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
-			<div class=form-group>
-				<label for=system_category_id class="col-sm-2 control-label">所属系统商品分类※</label>
-				<div class=col-sm-10>
-					<?php $input_name = 'system_category_id' ?>
-					<select class=form-control name="<?php echo $input_name ?>" required>
-						<?php
-							$options = $categories;
-							foreach ($options as $option):
-						?>
-						<option value="<?php echo $option['category_id'] ?>" <?php if ($option['category_id'] === $category['category_id']) echo 'selected'; ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-			</div>
-
 			<?php if ( !empty($biz_categories) ): ?>
 			<div class=form-group>
-				<label for=parent_id class="col-sm-2 control-label">所属商家商品分类</label>
+				<label for=parent_id class="col-sm-2 control-label">所属商品分类</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'parent_id' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
@@ -96,7 +81,7 @@
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=url_image class="col-sm-2 control-label">图片</label>
+				<label for=url_image class="col-sm-2 control-label">分类图片</label>
 				<div class=col-sm-10>
 					<?php if ( !empty($item['url_image']) ): ?>
 					<div class=row>

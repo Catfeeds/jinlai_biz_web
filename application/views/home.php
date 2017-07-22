@@ -29,26 +29,26 @@
 		<p class=text-center>加入「进来」，让首家品控网购平台上最有消费能力的消费者在你店里疯狂买买买！</p>
 	</div>
 	
-	<div id=prerequisite>
-		<p class=helper-block>以下资料中的影印件指彩色原件的扫描件或数码照</p>
-		<p>注册前需要准备好以下资料：</p>
+	<div id=prerequisite class=well>
+		<p class=helper-block>准备好以下材料即可开始入驻申请（影印件指彩色原件的扫描件或数码照）：</p>
 		<ul>
 			<li>营业执照影印件</li>
 			<li>法人身份证影印件</li>
 			<li>对公银行账户（基本户、一般户均可）</li>
 		</ul>
 		
-		<p>如果负责业务对接的不是法人本人，则另需：</p>
+		<p>如果负责日常业务对接的不是法人本人，则另需：</p>
 		<ul>
 			<li>经办人身份证影印件</li>
-			<li>授权书<a title="进来商城经办人授权书" href="">查看授权书模板</a></li>
+			<li>授权书 <small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth_doc_join_application') ?>"><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small></li>
 		</ul>
 	</div>
 
-	<a title="创建商家" class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('biz/create') ?>">申请入驻</a>
+	<a title="创建商家" class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('biz/create') ?>">开始申请</a>
 
 	<?php elseif ( empty($biz) ): ?>
-	<p>商家状态异常，<a class="btn btn-primary btn-lg" href="<?php echo base_url('logout') ?>">重新登录</a>即可解决该异常</p>
+	<p>员工关系状态异常，请尝试重新登录</p>
+	<a class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('logout') ?>">重新登录</a>
 
 	<?php else: ?>
 	<section id=biz-info>
@@ -58,8 +58,7 @@
 				<ul class=row>
 					<li><i class="fa fa-building fa-fw" aria-hidden=true></i> <?php echo $biz['name'] ?></li>
 					<li><i class="fa fa-phone fa-fw" aria-hidden=true></i> <?php echo $biz['tel_public'] ?></li>
-					<li class=text-right><i class="fa fa-info-circle fa-fw" aria-hidden=true></i>
- <?php echo $biz['status'] ?></li>
+					<li class=text-right><i class="fa fa-info-circle fa-fw" aria-hidden=true></i> <?php echo $biz['status'] ?></li>
 				</ul>
 			</a>
 		</div>
@@ -73,7 +72,7 @@
 				<a title="待付款" href="<?php echo base_url('order?status=create') ?>">待付款</a>
 			</li>
 			<li class="col-xs-4 col-md-2">
-				<a title="待确认" href="<?php echo base_url('order?status=pay') ?>">待确认</a>
+				<a title="待确认" href="<?php echo base_url('order?status=pay') ?>">待接单</a>
 			</li>
 			<li class="col-xs-4 col-md-2">
 				<a title="待发货" href="<?php echo base_url('order?status=accept') ?>">待发货</a>
@@ -92,44 +91,52 @@
 	-->
 	
 	<style>
+		.count {display:block;}
+
 		#function-list ul {border:1px solid #eee;border-bottom:0;}
 			#function-list li {height:8rem;margin-top:-1px;border:1px solid #eee;border-left:0;}
 				#function-list li>a {display:block;width:100%;height:100%;text-align:center;}
-					#function-list i {display:block;}
 	</style>
 
 	<section id=function-list>
 		<ul class=row>
 			<li class="col-xs-3 col-md-2">
 				<a title="商品管理" href="<?php echo base_url('item') ?>">
-					<i class="fa fa-database" aria-hidden=true></i>商品管理
+					<span class=count><?php echo $count['item'] ?></span>商品管理
 				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
 				<a title="订单管理" href="<?php echo base_url('order') ?>">
-					<i class="fa fa-money" aria-hidden=true></i>订单管理
+					<span class=count><?php echo $count['order'] ?></span>订单管理
 				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
+				<span class=count><?php echo $count['item_category_biz'] ?></span>
+				<a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">商品分类</a>
+			</li>
+			<li class="col-xs-3 col-md-2">
+				<span class=count><?php echo $count['freight_template_biz'] ?></span>
+				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">运费模板</a>
+			</li>
+			<li class="col-xs-3 col-md-2">
+				<span class=count><?php echo $count['promotion'] ?></span>
 				<a title="平台活动" href="<?php echo base_url('promotion') ?>">平台活动</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
+				<span class=count><?php echo $count['promotion_biz'] ?></span>
 				<a title="店内活动" href="<?php echo base_url('promotion_biz') ?>">店内活动</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
+				<span class=count><?php echo $count['coupon_template'] ?></span>
 				<a title="优惠券" href="<?php echo base_url('coupon_template') ?>">优惠券</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
+				<span class=count><?php echo $count['coupon_combo'] ?></span>
 				<a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">优惠券包</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
+				<span class=count><?php echo $count['stuff'] ?></span>
 				<a title="团队管理" href="<?php echo base_url('stuff') ?>">团队管理</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">分类管理</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">运费模板</a>
 			</li>
 		</ul>
 
@@ -144,7 +151,7 @@
 				<a title="商品评价" href="<?php echo base_url('comment_item') ?>">商品评价</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
-				<a title="订单评价" href="<?php echo base_url('comment_item') ?>">订单评价</a>
+				<a title="订单评价" href="<?php echo base_url('comment_order') ?>">订单评价</a>
 			</li>
 		</ul>
 	</section>
