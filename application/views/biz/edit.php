@@ -428,18 +428,65 @@
 					<input class=form-control name=detail type=text value="<?php echo $item['detail'] ?>" placeholder="详细地址">
 				</div>
 			</div>
+
+			<div class=row>
+				<figure class="col-sm-10 col-sm-offset-2">
+					<figcaption>
+						<p class="bg-info text-info text-center">您可拖动地图完善经纬度信息，也可以通过<a class="btn btn-default btn-lg" href="http://lbs.amap.com/console/show/picker" target=_blank>坐标拾取器</a>获取经纬度并自行填写</p>
+					</figcaption>
+					<div id=map class="col-xs-12" style="height:300px;background-color:#aaa"></div>
+				</figure>
+			</div>
+
 			<div class=form-group>
 				<label for=longitude class="col-sm-2 control-label">经度</label>
 				<div class=col-sm-10>
-					<input class=form-control name=longitude type=number value="<?php echo $item['longitude'] ?>" placeholder="经度">
+					<input id=longitude class=form-control name=longitude type=text value="<?php echo $item['longitude'] ?>" placeholder="经度">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=latitude class="col-sm-2 control-label">纬度</label>
 				<div class=col-sm-10>
-					<input class=form-control name=latitude type=number value="<?php echo $item['latitude'] ?>" placeholder="纬度">
+					<input id=latitude class=form-control name=latitude type=text value="<?php echo $item['latitude'] ?>" placeholder="纬度">
 				</div>
 			</div>
+			
+			<script src="https://webapi.amap.com/maps?v=1.3&key=d698fd0ab2d88ad11f4c6a2c0e83f6a8"></script>
+			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
+			<script>
+			    var map = new AMap.Map('map',{
+			        zoom: 16,
+		            scrollWheel: false
+			    });
+				
+				// 为BasicControl设置DomLibrary，jQuery
+				AMapUI.setDomLibrary($);
+				AMapUI.loadUI(['control/BasicControl', 'misc/PositionPicker'], function(BasicControl, PositionPicker) {
+					// 缩放控件
+				    map.addControl(new BasicControl.Zoom({
+				        position: 'rb', // 右下角
+				    }));
+
+				    var positionPicker = new PositionPicker({
+				        mode: 'dragMap',//设定为拖拽地图模式，可选'dragMap'、'dragMarker'，默认为'dragMap'
+				        map: map//依赖地图对象
+				    });
+
+				    // 获取定位点经纬度并写入相应字段
+					positionPicker.on('success', function(positionResult){
+					    document.getElementsByName('longitude')[0].value = positionResult.position.lng;
+					    document.getElementsByName('latitude')[0].value = positionResult.position.lat;
+					});
+					positionPicker.on('fail', function(positionResult) {
+					    // 海上或海外无法获得地址信息
+					    document.getElementsByName('longitude')[0].value = '';
+					    document.getElementsByName('latitude')[0].value = '';
+					});
+
+				    positionPicker.start();
+			        //map.panBy(0, 1);
+				});
+			</script>
 		</fieldset>
 
 		<fieldset>
