@@ -49,10 +49,15 @@
 		<p>您需要成为已入驻企业的员工，或者提交入驻申请，才可进行商品管理</p>
 	</blockquote>
 
+	<?php elseif ( $count['biz_freight_templates'] === 0 ): ?>
+	<blockquote class=row>
+		<p>添加商品前请设置运费计算方式</p>
+		<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建运费模板</a>
+	
 	<?php elseif ( empty($items) ): ?>
-	<blockquote>
-		<p>您的货架空空如也，快点创建商品以供用户选购吧！</p>
-		<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" title="创建商品>" href="<?php echo base_url('item/create') ?>">创建一个</a>
+	<blockquote class=row>
+		<p>您的货架空空如也，用户什么都没法买，快点添加商品吧！</p>
+		<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('item/create') ?>">创建一个</a>
 	</blockquote>
 
 	<?php else: ?>

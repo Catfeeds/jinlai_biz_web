@@ -214,12 +214,13 @@
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
+// 			$this->permission_check($role_allowed, $min_level);
 
 			// 页面信息
 			$data = array(
 				'title' => '绑定'.$this->class_name_cn,
 				'class' => $this->class_name.' create',
+				'error' => '', // 预设错误提示
 			);
 
 			// 待验证的表单项
@@ -228,11 +229,11 @@
 			$this->form_validation->set_rules('mobile', '手机号', 'trim|required');
 			$this->form_validation->set_rules('fullname', '姓名', 'trim|required');
 			$this->form_validation->set_rules('role', '角色', 'trim|required');
-			$this->form_validation->set_rules('level', '等级', 'trim|required');
+			$this->form_validation->set_rules('level', '等级', 'trim|required|greater_than_equal_to[0]|less_than_equal_to[100]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
-				$data['error'] = validation_errors();
+				$data['error'] .= validation_errors();
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/create', $data);
@@ -259,6 +260,7 @@
 					$data['title'] = $this->class_name_cn. '绑定成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'create';
 					$data['id'] = $result['content']['id']; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -267,7 +269,7 @@
 
 				else:
 					// 若创建失败，则进行提示
-					$data['error'] = $result['content']['error']['message'];
+					$data['error'] .= $result['content']['error']['message'];
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/create', $data);
@@ -284,36 +286,41 @@
 		public function edit()
 		{
 			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
+			$role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
+// 			$this->permission_check($role_allowed, $min_level);
 
 			// 页面信息
 			$data = array(
 				'title' => '修改'.$this->class_name_cn,
 				'class' => $this->class_name.' edit',
+				'error' => '', // 预设错误提示
 			);
+			
+			// 从API服务器获取相应详情信息
+			$params['id'] = $this->input->get_post('id');
+			$url = api_url($this->class_name. '/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+				
+				// 不可修改高于当前用户等级的员工
+				$min_level = $data['item']['level']; // 级别要求
+				$this->permission_check($role_allowed, $min_level);
+			else:
+				$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
+			endif;
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('fullname', '姓名', 'trim|required');
 			$this->form_validation->set_rules('role', '角色', 'trim|required');
-			$this->form_validation->set_rules('level', '等级', 'trim|required');
+			$this->form_validation->set_rules('level', '等级', 'trim|required|greater_than_equal_to[0]|less_than_equal_to[100]');
 			$this->form_validation->set_rules('status', '状态', 'trim|required');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
-				$data['error'] = validation_errors();
-
-				// 从API服务器获取相应详情信息
-				$params['id'] = $this->input->get_post('id');
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['item'] = $result['content'];
-				else:
-					$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
-				endif;
+				$data['error'] .= validation_errors();
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/edit', $data);
@@ -341,6 +348,8 @@
 					$data['title'] = $this->class_name_cn. '修改成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'edit';
+					$data['id'] = $data['item']['user_id'];
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -348,7 +357,7 @@
 
 				else:
 					// 若创建失败，则进行提示
-					$data['error'] = $result['content']['error']['message'];
+					$data['error'] .= $result['content']['error']['message'];
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/edit', $data);
@@ -358,244 +367,6 @@
 
 			endif;
 		} // end edit
-
-		/**
-		 * 删除单行或多行项目
-		 *
-		 * 一般用于发货、退款、存为草稿、上架、下架、删除、恢复等状态变化，请根据需要修改方法名，例如deliver、refund、delete、restore、draft等
-		 */
-		public function delete()
-		{
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
-			$op_name = '删除'; // 操作的名称
-			$op_view = 'delete'; // 视图文件名
-
-			// 页面信息
-			$data = array(
-				'title' => $op_name. $this->class_name_cn,
-				'class' => $this->class_name. ' '. $op_view,
-				'error' => '', // 预设错误提示
-			);
-
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
-			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
-			
-			// 获取待操作项数据
-			$data['items'] = array();
-			foreach ($ids as $id):
-				// 从API服务器获取相应详情信息
-				$params['id'] = $id;
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['items'][] = $result['content'];
-				else:
-					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
-				endif;
-			endforeach;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] .= validation_errors();
-
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/'.$op_view, $data);
-				$this->load->view('templates/footer', $data);
-
-			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_bulk_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) ):
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
-				// 需要存入数据库的信息
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'ids' => $ids,
-					'password' => $password,
-					'operation' => $op_view, // 操作名称
-				);
-
-				// 向API服务器发送待创建数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit_bulk');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn.$op_name. '成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若创建失败，则进行提示
-					$data['error'] .= $result['content']['error']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-				endif;
-
-			endif;
-		} // end delete
-
-		/**
-		 * 恢复单行或多行项目
-		 *
-		 * 一般用于存为草稿、上架、下架、删除、恢复等状态变化，请根据需要修改方法名，例如delete、restore、draft等
-		 */
-		public function restore()
-		{
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
-			$op_name = '恢复'; // 操作的名称
-			$op_view = 'restore'; // 视图文件名
-
-			// 页面信息
-			$data = array(
-				'title' => $op_name. $this->class_name_cn,
-				'class' => $this->class_name. ' '. $op_view,
-				'error' => '', // 预设错误提示
-			);
-
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
-			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
-			
-			// 获取待操作项数据
-			$data['items'] = array();
-			foreach ($ids as $id):
-				// 从API服务器获取相应详情信息
-				$params['id'] = $id;
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['items'][] = $result['content'];
-				else:
-					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
-				endif;
-			endforeach;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] .= validation_errors();
-
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/'.$op_view, $data);
-				$this->load->view('templates/footer', $data);
-
-			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_bulk_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) ):
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
-				// 需要存入数据库的信息
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'ids' => $ids,
-					'password' => $password,
-					'operation' => $op_view, // 操作名称
-				);
-
-				// 向API服务器发送待创建数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit_bulk');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn.$op_name. '成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若创建失败，则进行提示
-					$data['error'] .= $result['content']['error']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-				endif;
-
-			endif;
-		} // end restore
 
 	} // end class Stuff
 

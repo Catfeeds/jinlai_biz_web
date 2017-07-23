@@ -35,7 +35,7 @@
 			'id',
 			'name',
 		);
-		
+
 		/**
 		 * 编辑单行特定字段时必要的字段名
 		 */
@@ -141,7 +141,7 @@
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
-				
+
 				// 获取所属商品分类信息
 				$data['category_biz'] = $this->get_category_biz($data['item']['parent_id']);
 
@@ -263,6 +263,7 @@
 					$data['title'] = $this->class_name_cn. '创建成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'create';
 					$data['id'] = $result['content']['id']; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -363,6 +364,8 @@
 						$data['title'] = $this->class_name_cn. '修改成功';
 						$data['class'] = 'success';
 						$data['content'] = $result['content']['message'];
+						$data['operation'] = 'edit';
+						$data['id'] = $this->input->post('id');
 
 						$this->load->view('templates/header', $data);
 						$this->load->view($this->view_root.'/result', $data);

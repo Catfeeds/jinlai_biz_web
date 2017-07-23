@@ -22,12 +22,22 @@
 
 <script>
 	$(function(){
+		/*
 		// 仅显示适用于当前类型的参数
 		var div_to_show = '<?php echo $item['type'] ?>';
 		$('[data-type*="' + div_to_show + '"]').show();
 		
 		var fieldset_to_show = '<?php echo $item['type_actual'] ?>';
 		$('[data-type*="' + fieldset_to_show + '"]').show();
+		*/
+		
+		// 仅显示适用于当前类型的参数
+		var fieldset_to_show = '<?php echo $item['type'] ?>';
+		$('[data-type*="' + fieldset_to_show + '"]').show();
+		
+		// 显示物流配送类型
+		var type_actual = '<?php echo $item['type_actual'] ?>';
+		$('.type-actual').text(type_actual);
 	});
 </script>
 
@@ -80,54 +90,46 @@
 			<dt>有效期结束时间</dt>
 			<dd><?php echo $item['time_valid_end'] ?></dd>
 			<dt>有效期</dt>
-			<dd><?php echo $item['period_valid'] ?></dd>
+			<dd><?php echo $item['period_valid'] / 86400 ?>天</dd>
 			<dt>过期退款比例</dt>
 			<dd><?php echo $item['expire_refund_rate'] * 100?>%</dd>
 		</dl>
 	</div>
 	
 	<div data-type="物流配送" class="dl-horizontal params well">
-		<dt>物流配送类型</dt>
-		<dd><?php echo $item['type_actual'] ?></dd>
-		<?php
-			$options = array(
-				'1小时' => '3600',
-				'2小时' => '7200',
-				'3小时' => '10800',
-				'4小时' => '14400',
-				'6小时' => '21600',
-				'8小时' => '28800',
-				'12小时' => '43200',
-				'24小时/1天' => '86400',
-				'48小时/2天' => '172800',
-				'72小时/3天' => '259200',
-				'5天' => '432000',
-				'7天' => '604800',
-				'10天' => '864000',
-				'14天' => '1209600',
-				'30天' => '2592000',
-				'45天' => '3888000',
-			);
-			$options = array_flip($options);
-		?>
-		<dt>最晚发货时间</dt>
-		<dd><?php echo $options[ $item['time_latest_deliver'] ] ?></dd>
+		<dl class="dl-horizontal">
+			<dt>运费计算方式</dt>
+			<dd><?php echo $item['type_actual'] ?></dd>
+			<?php
+				$options = array(
+					'1小时' => '3600',
+					'2小时' => '7200',
+					'3小时' => '10800',
+					'4小时' => '14400',
+					'6小时' => '21600',
+					'8小时' => '28800',
+					'12小时' => '43200',
+					'24小时/1天' => '86400',
+					'48小时/2天' => '172800',
+					'72小时/3天' => '259200',
+					'5天' => '432000',
+					'7天' => '604800',
+					'10天' => '864000',
+					'14天' => '1209600',
+					'30天' => '2592000',
+					'45天' => '3888000',
+				);
+				$options = array_flip($options);
+			?>
+			<dt>最晚发货时间</dt>
+			<dd><?php echo $options[ $item['time_latest_deliver'] ] ?></dd>
+		</dl>
 		
-		<div data-type="计件" class="dl-horizontal params">
-			<p>件数前 <?php echo $item['fee_count_amount'] ?>件 费用 ￥<?php echo $item['fee_count_start'] ?>，超出后每件 ￥<?php echo $item['fee_count'] ?> ；每单最高 <?php echo $item['max_count'] ?> 件</p>
-		</div>
-
-		<div data-type="净重" class="dl-horizontal params">
-			<p>净重前 <?php echo $item['fee_net_amount'] ?>KG 费用 ￥<?php echo $item['fee_net_start'] ?>，超出后每KG ￥<?php echo $item['fee_net'] ?> ；每单最高 <?php echo $item['max_net'] ?> KG</p>
-		</div>
-		
-		<div data-type="毛重" class="dl-horizontal params">
-			<p>毛重前 <?php echo $item['fee_gross_amount'] ?>KG 费用 ￥<?php echo $item['fee_gross_start'] ?>，超出后每KG ￥<?php echo $item['fee_gross'] ?> ；每单最高 <?php echo $item['max_gross'] ?> KG</p>
-		</div>
-		
-		<div data-type="体积重" class="dl-horizontal params">
-			<p>体积重前 <?php echo $item['fee_volumn_amount'] ?>KG 费用 ￥<?php echo $item['fee_volumn_start'] ?>，超出后每KG ￥<?php echo $item['fee_volume'] ?> ；每单最高 <?php echo $item['max_volume'] ?> KG</p>
-		</div>
+		<p class="bg-info text-info text-center">计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）</p>
+		<p>
+			<span class=type-actual></span>
+			前<em><?php echo $item['start_amount'] ?></em>单位以内<em>￥<?php echo $item['fee_start'] ?></em>，超出后每单位<em>￥<?php echo $item['fee_unit'] ?></em>；每单最高<em><?php echo $item['max_amount'] ?></em>单位
+		</p>
 	</div>
 
 	<dl id=list-record class=dl-horizontal>

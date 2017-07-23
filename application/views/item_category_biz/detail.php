@@ -58,15 +58,10 @@
 	<dl id=list-info class=dl-horizontal>
 		<dt>商品分类ID</dt>
 		<dd><?php echo $item['category_id'] ?></dd>
-		
-		<?php if ( !empty($item['parent_id']) ): ?>
-		<dt>所属商品分类</dt>
-		<dd><?php echo $category_biz['name'] ?></dd>
-		<?php endif ?>
 
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
-		
+
 		<?php if ( !empty($item['url_image']) ): ?>
 		<dt>分类图片</dt>
 		<dd class=row>

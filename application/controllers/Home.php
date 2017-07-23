@@ -36,7 +36,7 @@
 				'title' => NULL, // 直接使用默认标题
 				'class' => $this->class_name, // 页面body标签的class属性值
 			);
-			
+
 			// 若当前用户是某商家员工，获取该商家信息
 			if ( !empty($this->session->biz_id) ):
 				// 从API服务器获取相应详情信息
@@ -56,7 +56,7 @@
 				'order' => $this->count_table('order'),
 				'item_category_biz' => $this->count_table('item_category_biz'),
 				'freight_template_biz' => $this->count_table('freight_template_biz'),
-				
+
 				'promotion' => $this->count_table('promotion'),
 				'promotion_biz' => $this->count_table('promotion_biz'),
 				'coupon_template' => $this->count_table('coupon_template'),

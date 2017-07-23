@@ -39,7 +39,7 @@
 	<div class=btn-group role=group>
 		<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<a class="btn btn-default" title="绑定<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 绑定<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
 
@@ -86,10 +86,10 @@
 					?>
 					<td>
 						<ul class=list-unstyled>
-							<li><a title="查看" href="<?php echo base_url($this->view_root.'/detail?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-eye"></i> 查看</a></li>
+							<li><a title="查看" href="<?php echo base_url($this->view_root.'/detail?id='.$item['user_id']) ?>" target=_blank><i class="fa fa-fw fa-eye"></i> 查看</a></li>
 							<?php
 							// 需要特定角色和权限进行该操作
-							if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+							if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) && ($this->session->level >= $item['level']) ):
 							?>
 							<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-edit"></i> 编辑</a></li>
 							<li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-trash"></i> 删除</a></li>

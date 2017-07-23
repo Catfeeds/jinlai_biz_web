@@ -56,24 +56,6 @@
 
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
-			<?php if ( !empty($biz_categories) ): ?>
-			<div class=form-group>
-				<label for=parent_id class="col-sm-2 control-label">所属商品分类</label>
-				<div class=col-sm-10>
-					<?php $input_name = 'parent_id' ?>
-					<select class=form-control name="<?php echo $input_name ?>">
-						<option value="">请选择</option>
-						<?php
-							$options = $biz_categories;
-							foreach ($options as $option):
-						?>
-						<option value="<?php echo $option['category_id'] ?>" <?php if ($option['category_id'] === $category_biz['category_id']) echo 'selected'; ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-			</div>
-			<?php endif ?>
-
 			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">名称※</label>
 				<div class=col-sm-10>
@@ -98,7 +80,7 @@
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
 						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="item_category_biz/url_image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+						<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="item_category_biz/url_image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 						<ul class="upload_preview list-inline row"></ul>
 					</div>

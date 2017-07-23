@@ -1,5 +1,6 @@
 <style>
 	.params {display:none;}
+	div.params {border-top:1px solid #aaa;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -24,16 +25,15 @@
 	$(function(){
 		// 根据所选类型显示相应参数
 		$('select[name=type]').change(function(){
-			var div_to_show = $(this).find('option:selected').attr('value');
-			$('div.params').hide();
-			$('[data-type*="' + div_to_show + '"]').show();
+			var fieldset_to_show = $(this).find('option:selected').attr('value');
+			$('fieldset.params').hide();
+			$('[data-type="' + fieldset_to_show + '"]').show();
 		});
 
+		// 显示物流配送类型
 		$('select[name=type_actual]').change(function(){
-			var fieldset_to_show = $(this).find('option:selected').attr('value');
-			//console.log(fieldset_to_show);
-			$('fieldset.params').hide();
-			$('[data-type*="' + fieldset_to_show + '"]').show();
+			var type_actual = $(this).find('option:selected').attr('value');
+			$('.type-actual').text(type_actual);
 		});
 	});
 </script>
@@ -73,7 +73,7 @@
 			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">名称※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="名称" required>
+					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="例如：全场包邮、满2件包邮、满2公斤包邮等" required>
 				</div>
 			</div>
 			<div class=form-group>
@@ -93,51 +93,40 @@
 			</div>
 		</fieldset>
 			
-		<div class=params data-type="电子凭证">
-			<fieldset>
-				<div class=form-group>
-					<label for=time_valid_from class="col-sm-2 control-label">有效期起始时间</label>
-					<div class=col-sm-10>
-						<input class=form-control name=time_valid_from type=text value="<?php echo set_value('time_valid_from') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+2days')) ?>">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=time_valid_end class="col-sm-2 control-label">有效期结束时间</label>
-					<div class=col-sm-10>
-						<input class=form-control name=time_valid_end type=text value="<?php echo set_value('time_valid_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+366days')) ?>">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=period_valid class="col-sm-2 control-label">有效期</label>
-					<div class=col-sm-10>
-						<input class=form-control name=period_valid type=text value="<?php echo set_value('period_valid') ?>" placeholder="有效期">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=expire_refund_rate class="col-sm-2 control-label">过期退款比例</label>
-					<div class=col-sm-10>
-						<input class=form-control name=expire_refund_rate type=number step=0.01 max=1 value="<?php echo set_value('expire_refund_rate') ?>" placeholder="过期退款比例">
-					</div>
-				</div>
-			<fieldset>
-		</div>
+		<fieldset class=params data-type="电子凭证">
+			<p class="bg-warning text-warning text-center">若全部留空，则电子凭证自用户付款时起366个自然日内有效，逾期全额退款</p>
 
-		<div class=params data-type="物流配送">
 			<div class=form-group>
-				<label for=type_actual class="col-sm-2 control-label">物流配送类型</label>
+				<label for=time_valid_from class="col-sm-2 control-label">有效期起始时间</label>
 				<div class=col-sm-10>
-					<?php $input_name = 'type_actual' ?>
-					<select class=form-control name="<?php echo $input_name ?>" required>
-						<option value="" <?php echo set_select($input_name, '') ?>>请选择</option>
-						<?php
-							$options = array('计件','净重','毛重','体积重');
-							foreach ($options as $option):
-						?>
-						<option value="<?php echo $option ?>" <?php echo set_select($input_name, $option) ?>><?php echo $option ?></option>
-						<?php endforeach ?>
-					</select>
+					<input class=form-control name=time_valid_from type=datetime value="<?php echo set_value('time_valid_from') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+2days')) ?>">
 				</div>
 			</div>
+			<div class=form-group>
+				<label for=time_valid_end class="col-sm-2 control-label">有效期结束时间</label>
+				<div class=col-sm-10>
+					<input class=form-control name=time_valid_end type=datetime value="<?php echo set_value('time_valid_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+366days')) ?>">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=period_valid class="col-sm-2 control-label">有效期（天）</label>
+				<div class=col-sm-10>
+					<p class="bg-info text-info">若填写了此项，则有效期将根据订单付款时间及此项数值自动计算，若超出上述“有效期结束时间”，则以“有效期结束时间”为准</p>
+					<input class=form-control name=period_valid type=number step=1 max=366 value="<?php echo set_value('period_valid') ?>" placeholder="最短3天，最长366天；留空则默认为366天">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=expire_refund_rate class="col-sm-2 control-label">过期退款比例</label>
+				<div class=col-sm-10>
+					<p class="bg-info text-info">若电子凭证逾期未使用，系统将把该比例的用户实付款项原路退回给用户</p>
+					<input class=form-control name=expire_refund_rate type=number step=0.01 max=1 value="<?php echo set_value('expire_refund_rate') ?>" placeholder="例如100%为1，80%为0.8，以此类推；留空则默认为100%">
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset class=params data-type="物流配送">
+			<p class="bg-warning text-warning text-center">若全部留空，则默认在确认接单3个自然日内发货，包邮（运费计算方式为“计件”）</p>
+
 			<div class=form-group>
 				<label for=time_latest_deliver class="col-sm-2 control-label">最晚发货时间</label>
 				<div class=col-sm-10>
@@ -170,115 +159,50 @@
 					</select>
 				</div>
 			</div>
+			
+			<div class=form-group>
+				<label for=type_actual class="col-sm-2 control-label">运费计算方式</label>
+				<div class=col-sm-10>
+					<?php $input_name = 'type_actual' ?>
+					<select class=form-control name="<?php echo $input_name ?>" required>
+						<option value="" <?php echo set_select($input_name, '') ?>>请选择</option>
+						<?php
+							$options = array('计件','净重','毛重','体积重');
+							foreach ($options as $option):
+						?>
+						<option value="<?php echo $option ?>" <?php echo set_select($input_name, $option) ?>><?php echo $option ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
 
-			<fieldset class=params data-type="计件">
-				<div class=form-group>
-					<label for=max_count class="col-sm-2 control-label">每单最高件数（件）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=max_count type=number step=1 max=9999 value="<?php echo set_value('fee_count') ?>" placeholder="最高9999">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=fee_count_start class="col-sm-2 control-label">计件起始运费（元）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_count_start type=number step=1 max=9999 value="<?php echo set_value('fee_count_start') ?>" placeholder="最高9999">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=fee_count_amount class="col-sm-2 control-label">计件起始量（KG）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_count_amount type=number step=1 max=9999 value="<?php echo set_value('fee_count_amount') ?>" placeholder="最高9999">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=fee_count class="col-sm-2 control-label">每件运费（元）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_count type=number step=1 max=9999 value="<?php echo set_value('fee_count') ?>" placeholder="最高9999">
-					</div>
-				</div>
-			</fieldset>
+			<p class="bg-info text-info text-center">计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）</p>
 
-			<fieldset class=params data-type="净重">
-				<div class=form-group>
-					<label for=max_net class="col-sm-2 control-label">每单最高净重（KG）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=max_net type=number step=1 max=9999 value="<?php echo set_value('fee_net') ?>" placeholder="最高9999">
-					</div>
+			<div class=form-group>
+				<label for=max_amount class="col-sm-2 control-label">每单最高配送<span class=type-actual></span>量（单位）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=max_amount type=number step=1 max=9999 value="<?php echo set_value('max_amount') ?>" placeholder="最高9999">
 				</div>
-				<div class=form-group>
-					<label for=fee_net_start class="col-sm-2 control-label">净重起始运费（元）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_net_start type=number step=1 max=9999 value="<?php echo set_value('fee_net_start') ?>" placeholder="最高9999">
-					</div>
+			</div>
+			<div class=form-group>
+				<label for=start_amount class="col-sm-2 control-label"><span class=type-actual></span>起始量</label>
+				<div class=col-sm-10>
+					<input class=form-control name=start_amount type=number step=1 max=9999 value="<?php echo set_value('start_amount') ?>" placeholder="最高9999">
 				</div>
-				<div class=form-group>
-					<label for=fee_net_amount class="col-sm-2 control-label">净重起始量（KG）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_net_amount type=number step=1 max=9999 value="<?php echo set_value('fee_net_amount') ?>" placeholder="最高9999">
-					</div>
+			</div>
+			<div class=form-group>
+				<label for=fee_start class="col-sm-2 control-label"><span class=type-actual></span>起始量运费</label>
+				<div class=col-sm-10>
+					<input class=form-control name=fee_start type=number step=1 max=9999 value="<?php echo set_value('fee_start') ?>" placeholder="最高9999">
 				</div>
-				<div class=form-group>
-					<label for=fee_net class="col-sm-2 control-label">每KG净重运费（元）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_net type=number step=1 max=9999 value="<?php echo set_value('fee_net') ?>" placeholder="最高9999">
-					</div>
+			</div>
+			<div class=form-group>
+				<label for=fee_unit class="col-sm-2 control-label"><span class=type-actual></span>超出后运费（元/单位）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=fee_unit type=number step=1 max=9999 value="<?php echo set_value('fee_unit') ?>" placeholder="最高9999">
 				</div>
-			</fieldset>
-
-			<fieldset class=params data-type="毛重">
-				<div class=form-group>
-					<label for=max_gross class="col-sm-2 control-label">每单最高毛重（KG）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=max_gross type=number step=1 max=9999 value="<?php echo set_value('fee_gross') ?>" placeholder="最高9999">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=fee_gross_start class="col-sm-2 control-label">毛重起始运费（元）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_gross_start type=number step=1 max=9999 value="<?php echo set_value('fee_gross_start') ?>" placeholder="最高9999">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=fee_gross_amount class="col-sm-2 control-label">毛重起始量（KG）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_gross_amount type=number step=1 max=9999 value="<?php echo set_value('fee_gross_amount') ?>" placeholder="最高9999">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=fee_gross class="col-sm-2 control-label">每KG毛重运费（元）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_gross type=number step=1 max=9999 value="<?php echo set_value('fee_gross') ?>" placeholder="最高9999">
-					</div>
-				</div>
-			</fieldset>
-
-			<fieldset class=params data-type="体积重">
-				<div class=form-group>
-					<label for=max_volume class="col-sm-2 control-label">每单最高体积重（KG）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=max_volume type=number step=1 max=9999 value="<?php echo set_value('fee_volume') ?>" placeholder="最高9999">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=fee_volumn_start class="col-sm-2 control-label">体积重起始运费（元）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_volumn_start type=number step=1 max=9999 value="<?php echo set_value('fee_volumn_start') ?>" placeholder="最高9999">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=fee_volumn_amount class="col-sm-2 control-label">体积重起始量（KG）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_volumn_amount type=number step=1 max=9999 value="<?php echo set_value('fee_volumn_amount') ?>" placeholder="最高9999">
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=fee_volume class="col-sm-2 control-label">每KG体积重运费（元）</label>
-					<div class=col-sm-10>
-						<input class=form-control name=fee_volume type=number step=1 max=9999 value="<?php echo set_value('fee_volume') ?>" placeholder="最高9999">
-					</div>
-				</div>
-			</fieldset>
-		</div>
+			</div>
+		</fieldset>
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">

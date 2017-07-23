@@ -91,32 +91,41 @@
 				'title' => $this->class_name_cn. '列表',
 				'class' => $this->class_name.' index',
 			);
+			
+			// 获取信息计数
+			$data['count'] = array(
+				'item' => $this->count_table('item'),
+				'biz_freight_templates' => $this->count_table('freight_template_biz'),
+			);
+			
+			// 若存在商品，则获取商品列表
+			if ($data['count']['item'] !== 0):
+				// 筛选条件
+				$condition['biz_id'] = $this->session->biz_id;
+				$condition['time_delete'] = 'NULL';
+				// （可选）遍历筛选条件
+				foreach ($this->names_to_sort as $sorter):
+					if ( !empty($this->input->post($sorter)) )
+						$condition[$sorter] = $this->input->post($sorter);
+				endforeach;
 
-			// 筛选条件
-			$condition['biz_id'] = $this->session->biz_id;
-			$condition['time_delete'] = 'NULL';
-			// （可选）遍历筛选条件
-			foreach ($this->names_to_sort as $sorter):
-				if ( !empty($this->input->post($sorter)) )
-					$condition[$sorter] = $this->input->post($sorter);
-			endforeach;
+				// 排序条件
+				$order_by = NULL;
+				//$order_by['name'] = 'value';
 
-			// 排序条件
-			$order_by = NULL;
-			//$order_by['name'] = 'value';
+				// 从API服务器获取相应列表信息
+				$params = $condition;
+				$url = api_url($this->class_name. '/index');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['items'] = $result['content'];
+				else:
+					$data['error'] = $result['content']['error']['message'];
+				endif;
 
-			// 从API服务器获取相应列表信息
-			$params = $condition;
-			$url = api_url($this->class_name. '/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-				$data['error'] = $result['content']['error']['message'];
+				// 将需要显示的数据传到视图以备使用
+				$data['data_to_display'] = $this->data_to_display;
 			endif;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -266,7 +275,7 @@
 			$this->form_validation->set_rules('stocks', '库存量（份）', 'trim|required|less_than_equal_to[65535]');
 			$this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):

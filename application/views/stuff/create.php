@@ -40,7 +40,7 @@
 	<div class=btn-group role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-primary" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<a class="btn btn-primary" title="绑定<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 绑定<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
 
@@ -56,7 +56,7 @@
 				<label for=mobile class="col-sm-2 control-label">手机号※</label>
 				<div class=col-sm-10>
 					<p class=helper-block>该手机号必须已注册过本平台的账号（即通过短信登录过），且未被其它商家绑定为员工</p>
-					<input class=form-control name=mobile type=tel value="<?php echo set_value('mobile') ?>" size=11 pattern="\d{11}" placeholder="手机号" required>
+					<input class=form-control name=mobile type=tel size=11 value="<?php echo set_value('mobile') ?>" size=11 pattern="\d{11}" placeholder="手机号" required>
 				</div>
 			</div>
 
@@ -86,7 +86,7 @@
 			<div class=form-group>
 				<label for=level class="col-sm-2 control-label">级别※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=level type=text value="<?php echo set_value('level') ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
+					<input class=form-control name=level type=number step=1 max=30 value="<?php echo set_value('level') ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
 				</div>
 			</div>
 		</fieldset>

@@ -154,6 +154,7 @@
 				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
 				<div class=col-sm-10>
 					<p class="bg-danger text-danger">如果留空，消费者主动确认收货前您将无法收取货款。</p>
+
 					<?php if ( empty($biz_freight_templates) ): ?>
 					<p class="bg-warning text-warning row">您目前没有可用的运费模板</p>
 					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建一个</a>

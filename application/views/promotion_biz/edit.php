@@ -190,6 +190,8 @@
 		</fieldset>
 
 		<fieldset class=params data-type="单品满减,订单满减">
+			<p class="bg-warning text-warning text-center">“减免金额”及“减免比例”只可填写一项；若两项都填写，将按“减免金额”优惠</p>
+
 			<div class=form-group>
 				<label for=reduction_trigger_amount class="col-sm-2 control-label">满减触发金额（元）</label>
 				<div class=col-sm-10>

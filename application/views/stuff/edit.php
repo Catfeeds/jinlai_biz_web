@@ -40,7 +40,7 @@
 	<div class=btn-group role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<a class="btn btn-default" title="绑定<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 绑定<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
 
@@ -70,6 +70,7 @@
 
 			<div class=form-group>
 				<label for=role class="col-sm-2 control-label">角色※</label>
+				<?php if ($item['user_id'] !== $this->session->user_id): ?>
 				<div class=col-sm-10>
 					<?php $input_name = 'role' ?>
 					<select class=form-control name="<?php echo $input_name ?>" required>
@@ -81,12 +82,25 @@
 						<?php endforeach ?>
 					</select>
 				</div>
+
+				<?php else: ?>
+				<div class=col-sm-10>
+					<p class="form-control-static">不可修改自己的角色</p>
+					<input name=role type=hidden value="<?php echo $item['role'] ?>" required>
+				</div>
+
+				<?php endif ?>
 			</div>
 
 			<div class=form-group>
 				<label for=level class="col-sm-2 control-label">级别※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=level type=text value="<?php echo $item['level'] ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
+					<?php if ($item['user_id'] !== $this->session->user_id): ?>
+					<input class=form-control name=level type=number step=1 max=30 value="<?php echo $item['level'] ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
+					<?php else: ?>
+					<p class="form-control-static">不可修改自己的级别</p>
+					<input name=level type=hidden value="<?php echo $item['level'] ?>" required>
+					<?php endif ?>
 				</div>
 			</div>
 
