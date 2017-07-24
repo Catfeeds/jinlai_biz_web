@@ -102,12 +102,7 @@
 		<ul class=row>
 			<li class="col-xs-3 col-md-2">
 				<a title="商品管理" href="<?php echo base_url('item') ?>">
-					<span class=count><?php echo $count['item'] ?></span>商品管理
-				</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<a title="订单管理" href="<?php echo base_url('order') ?>">
-					<span class=count><?php echo $count['order'] ?></span>订单管理
+					<span class=count><?php echo $count['item'] ?></span>商品
 				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
@@ -138,12 +133,21 @@
 				<span class=count><?php echo $count['stuff'] ?></span>
 				<a title="团队管理" href="<?php echo base_url('stuff') ?>">团队管理</a>
 			</li>
+			<li class="col-xs-3 col-md-2">
+				<span class=count><?php echo $count['branch'] ?></span>
+				<a title="门店管理" href="<?php echo base_url('branch') ?>">门店管理</a>
+			</li>
 		</ul>
 
 		<hr>
 
-		<p class=text-center>更多功能将与客户端同时开放</p>
+		<p class=text-center>更多功能将随客户端正式开放</p>
 		<ul class=row>
+			<li class="col-xs-3 col-md-2">
+				<a title="订单管理" href="<?php echo base_url('order') ?>">
+					<span class=count><?php echo $count['order'] ?></span>订单
+				</a>
+			</li>
 			<li class="col-xs-3 col-md-2">
 				<a title="退款处理" href="<?php echo base_url('refund') ?>">退款处理</a>
 			</li>

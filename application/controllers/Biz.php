@@ -200,7 +200,7 @@
 						$data['class'] = 'success';
 						$data['content'] = $result['content']['message'];
 						$data['operation'] = 'create';
-						$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
+						$data['id'] = $result['content']['id']; // 创建后的信息ID
 
 						// 更新本地商家信息
 						$this->session->biz_id = $data['id'];
@@ -240,7 +240,18 @@
 			$data = array(
 				'title' => '修改'.$this->class_name_cn,
 				'class' => $this->class_name.' edit',
+				'error' => '', // 预设错误提示
 			);
+			
+			// 从API服务器获取相应详情信息
+			$params['id'] = $this->input->get_post('id');
+			$url = api_url($this->class_name. '/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
+			endif;
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
@@ -257,8 +268,8 @@
 			$this->form_validation->set_rules('code_ssn_owner', '法人身份证号', 'trim|required|exact_length[18]');
 			$this->form_validation->set_rules('code_ssn_auth', '经办人身份证号', 'trim|exact_length[18]');
 
-			$this->form_validation->set_rules('url_image_license', '营业执照正/副本', 'trim|required|max_length[255]');
-			$this->form_validation->set_rules('url_image_owner_id', '法人身份证', 'trim|required|max_length[255]');
+			$this->form_validation->set_rules('url_image_license', '营业执照正/副本', 'trim|max_length[255]');
+			$this->form_validation->set_rules('url_image_owner_id', '法人身份证', 'trim|max_length[255]');
 			$this->form_validation->set_rules('url_image_auth_id', '经办人身份证', 'trim|max_length[255]');
 			$this->form_validation->set_rules('url_image_auth_doc', '授权书', 'trim|max_length[255]');
 			$this->form_validation->set_rules('url_image_product', '产品', 'trim|max_length[255]');
@@ -268,19 +279,16 @@
 			$this->form_validation->set_rules('bank_name', '开户行名称', 'trim|min_length[3]|max_length[20]');
 			$this->form_validation->set_rules('bank_account', '开户行账号', 'trim|max_length[30]');
 
-			$this->form_validation->set_rules('freight', '每笔订单运费', 'trim|decimal|greater_than_equal_to[0.00]|less_than_equal_to[99.99]');
-			$this->form_validation->set_rules('freight_free_subtotal', '免邮费起始金额', 'trim|decimal|greater_than_equal_to[0.00]|less_than_equal_to[99.99]');
-			$this->form_validation->set_rules('freight_free_count', '免邮费起始份数', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[100]');
 			$this->form_validation->set_rules('min_order_subtotal', '订单最低金额', 'trim|decimal|greater_than_equal_to[1.00]|less_than_equal_to[99.99]');
 			$this->form_validation->set_rules('delivery_time_start', '配送起始时间', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[23]');
 			$this->form_validation->set_rules('delivery_time_end', '配送结束时间', 'trim|is_natural_no_zero|greater_than_equal_to[0]|less_than_equal_to[23]');
 
-			$this->form_validation->set_rules('province', '省级行政区', 'trim|max_length[10]');
-			$this->form_validation->set_rules('city', '地市级行政区', 'trim|max_length[10]');
-			$this->form_validation->set_rules('county', '区县级行政区', 'trim|max_length[10]');
+			$this->form_validation->set_rules('province', '省', 'trim|max_length[10]');
+			$this->form_validation->set_rules('city', '市', 'trim|max_length[10]');
+			$this->form_validation->set_rules('county', '区/县', 'trim|max_length[10]');
 			$this->form_validation->set_rules('detail', '详细地址；小区名、路名、门牌号等', 'trim|max_length[50]');
-			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|decimal');
-			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|decimal');
+			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
+			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');
 			
 			$this->form_validation->set_rules('url_web', '官方网站', 'trim|max_length[255]|valid_url');
 			$this->form_validation->set_rules('url_weibo', '官方微博', 'trim|max_length[255]|valid_url');
@@ -290,16 +298,6 @@
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
 				$data['error'] = validation_errors();
-
-				// 从API服务器获取相应详情信息
-				$params['id'] = $this->input->get_post('id');
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['item'] = $result['content'];
-				else:
-					$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
-				endif;
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/edit', $data);
@@ -317,7 +315,7 @@
 					'tel_public', 'tel_protected_fiscal', 'tel_protected_order',
 					'code_license', 'code_ssn_owner',  'code_ssn_auth',
 					'bank_name', 'bank_account', 'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_image_product', 'url_image_produce', 'url_image_retail',
-					'freight', 'freight_free_subtotal', 'freight_free_count', 'min_order_subtotal', 'delivery_time_start', 'delivery_time_end', 'longitude', 'latitude', 'province', 'city', 'county', 'detail', 'url_web', 'url_weibo', 'url_taobao', 'url_wechat',
+					'min_order_subtotal', 'delivery_time_start', 'delivery_time_end', 'longitude', 'latitude', 'province', 'city', 'county', 'detail', 'url_web', 'url_weibo', 'url_taobao', 'url_wechat',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -331,7 +329,7 @@
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
 					$data['operation'] = 'edit';
-					$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
+					$data['id'] = $this->input->post('id');
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -462,7 +460,7 @@
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
 					$data['operation'] = 'edit_certain';
-					$data['id'] = $result['content'][$this->id_name]; // 创建后的信息ID
+					$data['id'] = $this->input->post('id');
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);

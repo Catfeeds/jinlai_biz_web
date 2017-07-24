@@ -56,9 +56,11 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
+		<dt>状态</dt>
+		<dd><?php echo $item['status'] ?></dd>
 		<dt>商家ID</dt>
 		<dd><?php echo $item['biz_id'] ?></dd>
-		<dt>商家名称</dt>
+		<dt>商家全称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>简称</dt>
 		<dd><?php echo $item['brief_name'] ?></dd>
@@ -78,20 +80,12 @@
 		<dd><?php echo $item['tel_protected_biz'] ?></dd>
 		<dt>订单通知手机号</dt>
 		<dd><?php echo $item['tel_protected_order'] ?></dd>
-		<dt>每笔订单运费（元）</dt>
-		<dd><?php echo $item['freight'] ?></dd>
-		<dt>免邮费起始金额（元）</dt>
-		<dd><?php echo $item['freight_free_subtotal'] ?></dd>
-		<dt>免邮费起始份数（份）</dt>
-		<dd><?php echo $item['freight_free_count'] ?></dd>
-		<dt>最低小计金额（元）</dt>
-		<dd><?php echo $item['min_order_subtotal'] ?></dd>
+		<dt>最低小计金额</dt>
+		<dd>￥ <?php echo $item['min_order_subtotal'] ?></dd>
 		<dt>官方网站</dt>
 		<dd><?php echo $item['url_web'] ?></dd>
 		<dt>官方微博</dt>
 		<dd><?php echo $item['url_weibo'] ?></dd>
-		<dt>淘宝/天猫店铺</dt>
-		<dd><?php echo $item['url_taobao'] ?></dd>
 		<dt>微信二维码</dt>
 		<dd><?php echo $item['url_wechat'] ?></dd>
 		<dt>产品</dt>
@@ -100,13 +94,11 @@
 		<dd><?php echo $item['url_image_produce'] ?></dd>
 		<dt>门店/柜台</dt>
 		<dd><?php echo $item['url_image_retail'] ?></dd>
-		<dt>状态</dt>
-		<dd><?php echo $item['status'] ?></dd>
 	</dl>
 	
 	<h2>资质信息</h2>
 	<dl class=dl-horizontal>
-		<dt>统一社会信用代码</dt>
+		<dt>统一社会信用代码/营业执照号</dt>
 		<dd><?php echo $item['code_license'] ?></dd>
 		<dt>法人身份证号</dt>
 		<dd><?php echo $item['code_ssn_owner'] ?></dd>
@@ -147,11 +139,45 @@
 		<dt>区</dt>
 		<dd><?php echo $item['county'] ?></dd>
 		<dt>详细地址</dt>
-		<dd><?php echo $item['detail'] ?></dd>
-		<dt>经度</dt>
-		<dd><?php echo $item['longitude'] ?></dd>
-		<dt>纬度</dt>
-		<dd><?php echo $item['latitude'] ?></dd>
+		<dd>
+			<p><?php echo $item['detail'] ?></p>
+
+			<?php if ( !empty($item['longitude']) && !empty($item['latitude']) ): ?>
+			<figure class="row">
+				<figcaption>
+					<p class="bg-info text-info text-center">
+						经纬度 <?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>
+					</p>
+				</figcaption>
+				<div id=map style="height:300px;background-color:#aaa"></div>
+			</figure>
+			
+			<script src="https://webapi.amap.com/maps?v=1.3&key=d698fd0ab2d88ad11f4c6a2c0e83f6a8"></script>
+			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
+			<script>
+				var lnglat = [<?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>];
+			    var map = new AMap.Map('map',{
+					center: lnglat,
+			        zoom: 16,
+		            scrollWheel: false,
+					mapStyle: 'amap://styles/2daddd87cfd0fa58d0bc932eed31b9d8', // 自定义样式
+			    });
+				marker = new AMap.Marker({
+		            position: lnglat,
+		        });
+		        marker.setMap(map);
+
+				// 为BasicControl设置DomLibrary，jQuery
+				AMapUI.setDomLibrary($);
+				AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+					// 缩放控件
+				    map.addControl(new BasicControl.Zoom({
+				        position: 'rb', // 右下角
+				    }));
+				});
+			</script>
+			<?php endif ?>
+		</dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

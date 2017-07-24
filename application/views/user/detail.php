@@ -47,7 +47,7 @@
 	
 	<ul class=list-unstyled>
 		<?php
-		// 需要特定角色和权限进行该操作
+		// 仅可修改自己的信息
 		if ( $item['user_id'] === $this->session->user_id ):
 		?>
 		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>

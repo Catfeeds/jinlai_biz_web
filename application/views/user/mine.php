@@ -41,14 +41,13 @@
 	?>
 	<div class=btn-group role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
-	  	<!--<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>-->
 	</div>
 	<?php endif ?>
-	
+
 	<ul class=list-unstyled>
 		<?php
-		// 需要特定角色和权限进行该操作
-		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+		// 仅可修改自己的信息
+		if ( $item['user_id'] === $this->session->user_id ):
 		?>
 		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>
 		<?php endif ?>
@@ -70,22 +69,28 @@
 		<dd><?php echo $item['user_id'] ?></dd>
 		<dt>昵称</dt>
 		<dd><?php echo $item['nickname'] ?></dd>
-		<dt>姓氏</dt>
-		<dd><?php echo $item['lastname'] ?></dd>
-		<dt>名</dt>
-		<dd><?php echo $item['firstname'] ?></dd>
+		<dt>姓名</dt>
+		<dd><?php echo $item['lastname'].$item['firstname'] ?></dd>
 		<dt>身份证号</dt>
 		<dd><?php echo $item['code_ssn'] ?></dd>
 		<dt>身份证照片</dt>
-		<dd><?php echo $item['url_image_id'] ?></dd>
+		<?php if ( !empty($item['url_image_id']) ): ?>
+		<dd class=row>
+			<figure class="col-xs-12 col-sm-6 col-md-4">
+				<img src="<?php echo $item['url_image_id'] ?>">
+			</figure>
+		</dd>
+		<?php else: ?>
+		<dd>未上传</dd>
+		<?php endif ?>
 		<dt>性别</dt>
 		<dd><?php echo $item['gender'] ?></dd>
-		<dt>出生日期</dt>
+		<dt>生日</dt>
 		<dd><?php echo $item['dob'] ?></dd>
 		
 		<dt>手机号</dt>
 		<dd><?php echo $item['mobile'] ?></dd>
-		<dt>电子邮件地址</dt>
+		<dt>Email</dt>
 		<dd><?php echo $item['email'] ?></dd>
 		<dt>默认地址</dt>
 		<dd><?php echo $item['address_id'] ?></dd>
@@ -93,15 +98,16 @@
 		<dd><?php echo $item['bank_name'] ?></dd>
 		<dt>开户行账号</dt>
 		<dd><?php echo $item['bank_account'] ?></dd>
-		<dt>注册时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>最后登录时间</dt>
-		<dd><?php echo $item['last_login_timestamp'] ?></dd>
-		<dt>最后登录IP地址</dt>
-		<dd><?php echo $item['last_login_ip'] ?></dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
+		<dt>注册时间</dt>
+		<dd><?php echo $item['time_create'] ?></dd>
+		<dt>最后登录时间</dt>
+		<dd><?php echo date('Y-m-d H:i:s', $item['last_login_timestamp']) ?></dd>
+		<dt>最后登录IP地址</dt>
+		<dd><?php echo $item['last_login_ip'] ?></dd>
+
 		<?php if ( ! empty($item['time_delete']) ): ?>
 		<dt>删除时间</dt>
 		<dd><?php echo $item['time_delete'] ?></dd>

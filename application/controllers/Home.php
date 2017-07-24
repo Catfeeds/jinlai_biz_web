@@ -62,6 +62,7 @@
 				'coupon_template' => $this->count_table('coupon_template'),
 				'coupon_combo' => $this->count_table('coupon_combo'),
 				'stuff' => $this->count_table('stuff'),
+				'branch' => $this->count_table('branch'),
 
 				// 以下功能开通后可取消注释，并在视图文件中添加相应DOM
 				/*
