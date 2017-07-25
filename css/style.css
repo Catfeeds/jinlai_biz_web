@@ -14,6 +14,8 @@ h1 {font-size:42px;}
 body {color:#333;background-color:#fff;z-index:100;margin-top:54px;margin-bottom:8rem;}
 .container {padding:0;/* 去掉BootStrap默认的左右内边距 */}
 
+video {width:100%;max-width:100%;}
+
 ul>li>a {width:100%;height:100%;display:block;}
 
 a {color:#333;text-decoration:none;/* 清理BootStrap样式 */}

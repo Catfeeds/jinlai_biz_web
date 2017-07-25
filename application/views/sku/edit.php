@@ -42,7 +42,9 @@
 	<div class=btn-group role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<?php if ( !empty($comodity) ): ?>
+		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create?item_id='.$comodity['item_id']) ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<?php endif ?>
 	</div>
 	<?php endif ?>
 
@@ -56,10 +58,15 @@
 
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
-			<div class=form-group>
+			<div class="form-group well">
 				<label for=item_id class="col-sm-2 control-label">所属商品</label>
 				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $comodity['name'] ?></p>
+					<section id=item-info class=row>
+						<figcaption><?php echo $comodity['name'] ?></figcaption>
+						<figure class="col-xs-12 col-sm-6 col-md-4">
+							<img src="<?php echo $comodity['url_image_main'] ?>">
+						</figure>
+					</section>
 				</div>
 			</div>
 
@@ -118,22 +125,27 @@
 					<input class=form-control name=stocks type=number step=1 max=65535 value="<?php echo $item['stocks'] ?>" placeholder="库存量（单位）" required>
 				</div>
 			</div>
+		</fieldset>
+	
+		<fieldset>
+			<p class="bg-info text-info text-center">以下择一填写即可；若填写多项，将以毛重为准进行运费计算</p>
+		
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo $item['weight_net'] ?>" placeholder="最高999.99，运费计算将以所属商品运费模板为准">
+					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo $item['weight_net'] ?>" placeholder="最高999.99">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo $item['weight_gross'] ?>" placeholder="最高999.99，运费计算将以所属商品运费模板为准">
+					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo $item['weight_gross'] ?>" placeholder="最高999.99">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=weight_volume class="col-sm-2 control-label">体积重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo $item['weight_volume'] ?>" placeholder="最高999.99，运费计算将以所属商品运费模板为准">
+					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo $item['weight_volume'] ?>" placeholder="最高999.99">
 				</div>
 			</div>
 		</fieldset>

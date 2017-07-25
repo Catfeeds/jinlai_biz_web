@@ -82,7 +82,17 @@
 
 		<?php if ( !empty($item['figure_video_urls']) ): ?>
 		<dt>形象视频</dt>
-		<dd><?php echo $item['figure_video_urls'] ?></dd>
+		<dd>
+			<ul class=row>
+				<?php
+					$figure_video_urls = explode(',', $item['figure_video_urls']);
+					foreach($figure_video_urls as $url):
+				?>
+				<li class="col-xs-6 col-sm-4 col-md-3">
+					<video src="<?php echo $url ?>" controls="controls">您的浏览器不支持视频播放</video>
+				</li>
+				<?php endforeach ?>
+			</ul>
 		<?php endif ?>
 
 		<dt>状态</dt>
@@ -118,12 +128,9 @@
 		<dd><del>￥ <?php echo ($item['tag_price'] !== '0.00')? $item['tag_price']: '未设置'; ?></del></dd>
 		<dt>商城价/现价</dt>
 		<dd><strong>￥ <?php echo $item['price'] ?></strong></dd>
-		
 		<?php $unit_name = !empty($item['unit_name'])? $item['unit_name']: '份（默认单位）' ?>
 		<dt>库存量</dt>
-		<dd><strong><?php echo $item['stocks'].' '. $unit_name ?></strong></dd>
-		<dt>销售单位</dt>
-		<dd><?php echo $unit_name ?></dd>
+		<dd><strong><?php echo $item['stocks'].' '. $unit_name ?></strong> <?php echo $unit_name ?></dd>
 		<dt>净重</dt>
 		<dd><?php echo ($item['weight_net'] === '0.00')? $item['weight_net']: '未设置'; ?> KG</dd>
 		<dt>毛重</dt>
@@ -162,18 +169,41 @@
 		<dd><?php echo $freight_template['name'] ?></dd>
 	</dl>
 
-	<section id=description>
-	<h2>商品描述</h2>
-	<?php if ( !empty($item['description']) ): ?>
-		<div class="bg-info text-info">
-			<p class="text-center">以下仅为内容及格式预览，实际样式请以前台相应页面为准。</p>
-		</div>
-		<div id=description-content class=row>
-			<?php echo $item['description'] ?>
-		</div>
-	<?php else: ?>
-		<p>该商品尚未填写商品描述。</p>
+	<?php if ( !empty($skus) ): ?>
+	<section id=skus>
+		<h2>SKU（规格）</h2>
+		<a class="btn btn-info btn-lg" href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>管理SKU</a>
+		
+		<ul class=row>
+			<?php foreach ($skus as $sku): ?>
+			<li class="col-xs-6 col-sm-4 col-md-3">
+				<a href="<?php echo base_url('sku/detail?id='.$sku['sku_id']) ?>">
+					<h3><?php echo $sku['name_first'].$sku['name_second'].$sku['name_third'] ?></h3>
+					<small>￥ <?php echo $sku['price'] ?></small>
+					<?php if ( !empty($sku['url_image']) ): ?>
+					<figure>
+						<img src="<?php echo $sku['url_image'] ?>">
+					</figure>
+					<?php endif ?>
+				</a>
+			</li>
+			<?php endforeach ?>
+		</ul>
+	</section>
 	<?php endif ?>
+
+	<section id=description>
+		<h2>商品描述</h2>
+		<?php if ( !empty($item['description']) ): ?>
+			<div class="bg-info text-info">
+				<p class="text-center">以下仅为内容及格式预览，实际样式请以前台相应页面为准。</p>
+			</div>
+			<div id=description-content class=row>
+				<?php echo $item['description'] ?>
+			</div>
+		<?php else: ?>
+			<p>该商品尚未填写商品描述。</p>
+		<?php endif ?>
 	</section>
 
 	<dl id=list-record class=dl-horizontal>

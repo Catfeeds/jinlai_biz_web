@@ -153,6 +153,8 @@
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
 				
+				$data['skus'] = $this->list_sku($data['item']['item_id']);
+
 				// 获取系统商品分类信息
 				$data['category'] = $this->get_category($data['item']['category_id']);
 				

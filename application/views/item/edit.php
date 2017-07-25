@@ -218,6 +218,9 @@
 					<input class=form-control name=price type=number step=0.01 max=99999.99 value="<?php echo $item['price'] ?>" placeholder="商城价/现价（元）" required>
 				</div>
 			</div>
+		</fieldset>
+
+		<fieldset>
 			<div class=form-group>
 				<label for=stocks class="col-sm-2 control-label">库存量（份）※</label>
 				<div class=col-sm-10>
@@ -230,6 +233,8 @@
 					<input class=form-control name=unit_name type=text value="<?php echo $item['unit_name'] ?>" placeholder="销售单位">
 				</div>
 			</div>
+
+			<p class="bg-info text-info text-center">以下择一填写即可；若填写多项，将以毛重为准进行运费计算</p>
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
@@ -248,6 +253,9 @@
 					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo $item['weight_volume'] ?>" placeholder="最高999.99，运费计算将以运费模板为准">
 				</div>
 			</div>
+		</fieldset>
+
+		<fieldset>
 			<div class=form-group>
 				<label for=quantity_max class="col-sm-2 control-label">每单最高限量（份）</label>
 				<div class=col-sm-10>

@@ -231,7 +231,7 @@
 				redirect( base_url('error/permission_level') );
 			endif;
 		}
-		
+
 		/**
 		 * 删除单行或多行项目
 		 *
@@ -469,6 +469,84 @@
 
 			endif;
 		} // end restore
+
+		// 获取商品列表
+		protected function list_item()
+		{
+			// 仅可获取当前商家的商品
+			$params['biz_id'] = $this->session->biz_id;
+
+			// 从API服务器获取相应列表信息
+			$url = api_url('item/index');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['items'] = $result['content'];
+			else:
+				$data['items'] = NULL;
+			endif;
+			
+			return $data['items'];
+		}
+
+		// 获取特定商品信息
+		protected function get_item($id)
+		{
+			// 仅可获取当前商家的商品
+			$params['biz_id'] = $this->session->biz_id;
+
+			// 从API服务器获取相应列表信息
+			$params['id'] = $id;
+			$url = api_url('item/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				$data['item'] = NULL;
+			endif;
+			
+			return $data['item'];
+		}
+		
+		// 获取商品列表
+		protected function list_sku($item_id = NULL)
+		{
+			// 仅可获取当前商家的商品
+			$params['biz_id'] = $this->session->biz_id;
+			
+			if ( !empty($item_id) ):
+				$params['item_id'] = $item_id;
+			endif;
+
+			// 从API服务器获取相应列表信息
+			$url = api_url('sku/index');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['items'] = $result['content'];
+			else:
+				$data['items'] = NULL;
+			endif;
+			
+			return $data['items'];
+		}
+
+		// 获取特定商品信息
+		protected function get_sku($id)
+		{
+			// 仅可获取当前商家的商品
+			$params['biz_id'] = $this->session->biz_id;
+
+			// 从API服务器获取相应列表信息
+			$params['id'] = $id;
+			$url = api_url('sku/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				$data['item'] = NULL;
+			endif;
+			
+			return $data['item'];
+		}
 		
 		// 获取品牌列表
 		protected function list_brand()

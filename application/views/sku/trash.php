@@ -20,6 +20,8 @@
 	}
 </style>
 
+<base href="<?php echo base_url('uploads/') ?>">
+
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
 		<li><a href="<?php echo base_url() ?>">首页</a></li>
@@ -40,13 +42,24 @@
 	<div class=btn-group role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
 	  	<a class="btn btn-primary" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<?php if ( !empty($comodity) ): ?>
+		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create?item_id='.$comodity['item_id']) ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<?php endif ?>
 	</div>
+	<?php endif ?>
+	
+	<?php if ( !empty($comodity) ): ?>
+	<section id=item-info class="row well">
+		<figcaption><?php echo $comodity['name'] ?></figcaption>
+		<figure class="col-xs-12 col-sm-6 col-md-4">
+			<img src="<?php echo $comodity['url_image_main'] ?>">
+		</figure>
+	</section>
 	<?php endif ?>
 
 	<?php if ( empty($items) ): ?>
 	<blockquote>
-		<p>没有任何<?php echo $this->class_name_cn ?>曾经被删除。</p>
+		<p>该商品没有任何<?php echo $this->class_name_cn ?>曾经被删除。</p>
 	</blockquote>
 
 	<?php else: ?>
