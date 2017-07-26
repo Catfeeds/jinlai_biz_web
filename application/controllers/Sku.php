@@ -66,7 +66,9 @@
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'name_first' => '名称',
+				'name_first' => '一级规格',
+				'name_second' => '二级规格',
+				'name_third' => '三级规格',
 				'price' => '商城价/现价',
 				'stocks' => '库存',
 			);
@@ -92,11 +94,12 @@
 				'class' => $this->class_name.' index',
 			);
 
-			// 如已限定所属商品，获取商品信息
+			// 如已限定所属商品，获取商品信息并限定筛选条件
 			$item_id = $this->input->get_post('item_id')? $this->input->get_post('item_id'): NULL;
 			if ( !empty($item_id) ):
-				// 获取商品信息
 				$data['comodity'] = $this->get_item($item_id);
+
+				$condition['item_id'] = $item_id;
 			endif;
 
 			// 筛选条件
@@ -184,11 +187,12 @@
 				'class' => $this->class_name.' trash',
 			);
 
-			// 如已限定所属商品，获取商品信息
+			// 如已限定所属商品，获取商品信息并限定筛选条件
 			$item_id = $this->input->get_post('item_id')? $this->input->get_post('item_id'): NULL;
 			if ( !empty($item_id) ):
-				// 获取商品信息
 				$data['comodity'] = $this->get_item($item_id);
+
+				$condition['item_id'] = $item_id;
 			endif;
 
 			// 筛选条件

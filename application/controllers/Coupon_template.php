@@ -17,7 +17,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'template_id', 'biz_id', 'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
+			'template_id', 'biz_id', 'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -25,7 +25,7 @@
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end',
+			'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end',
 		);
 
 		/**
@@ -68,6 +68,7 @@
 			$this->data_to_display = array(
 				'name' => '名称',
 				'amount' => '面值',
+				'description' => '说明',
 			);
 		}
 		
@@ -248,14 +249,16 @@
 			$this->form_validation->set_rules('category_id', '限用系统商品分类', 'trim');
 			$this->form_validation->set_rules('category_biz_id', '限用商家商品分类', 'trim');
 			$this->form_validation->set_rules('item_id', '限用商品', 'trim');
-			$this->form_validation->set_rules('name', '名称', 'trim|required');
-			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required');
-			$this->form_validation->set_rules('max_amount', '限量', 'trim');
-			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim');
-			$this->form_validation->set_rules('period', '自领取时起有效期（秒）', 'trim');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
-			
+			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
+			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
+			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|less_than_equal_to[999]');
+			$this->form_validation->set_rules('max_amount', '限量', 'trim|less_than_equal_to[999999]');
+			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim|less_than_equal_to[9999]');
+			$this->form_validation->set_rules('period', '有效期', 'trim');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -288,6 +291,7 @@
 					$data['title'] = $this->class_name_cn. '创建成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'create';
 					$data['id'] = $result['content']['id']; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -337,13 +341,16 @@
 			$this->form_validation->set_rules('category_id', '限用系统商品分类', 'trim');
 			$this->form_validation->set_rules('category_biz_id', '限用商家商品分类', 'trim');
 			$this->form_validation->set_rules('item_id', '限用商品', 'trim');
-			$this->form_validation->set_rules('name', '名称', 'trim|required');
-			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required');
-			$this->form_validation->set_rules('max_amount', '限量', 'trim');
-			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim');
-			$this->form_validation->set_rules('period', '自领取时起有效期（秒）', 'trim');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
+			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
+			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
+			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|less_than_equal_to[999]');
+			$this->form_validation->set_rules('max_amount', '限量', 'trim|less_than_equal_to[999999]');
+			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim|less_than_equal_to[9999]');
+			$this->form_validation->set_rules('period', '有效期', 'trim');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -386,6 +393,8 @@
 					$data['title'] = $this->class_name_cn. '修改成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'edit';
+					$data['id'] = $this->input->post('id');
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -403,6 +412,58 @@
 
 			endif;
 		} // end edit
+		
+		// 检查起始时间
+		public function time_start($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+				else:
+					return true;
+				endif;
+
+			endif;
+		} // end time_start
+
+		// 检查结束时间
+		public function time_end($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+
+				// 若已设置开始时间，不可早于开始时间一分钟以内
+				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check <= strtotime($this->input->post('time_to_publish')) + 60):
+					return false;
+
+				else:
+					return true;
+
+				endif;
+
+			endif;
+		} // end time_end
 
 	} // end class Coupon_template
 

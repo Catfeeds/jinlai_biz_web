@@ -21,8 +21,7 @@
 </style>
 
 <?php
-	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$is_ios = strpos($user_agent, 'iPhone')? TRUE: FALSE;
+	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
 	// 在iOS设备上使用原生日期选择器
 	if ( ! $is_ios ):
 ?>
@@ -83,7 +82,7 @@
 					<?php if ( !empty($item['avatar']) ): ?>
 					<div class=row>
 						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['avatar'] ?>">
+							<img class=img-circle src="<?php echo $item['avatar'] ?>">
 						</figure>
 					</div>
 					<?php endif ?>

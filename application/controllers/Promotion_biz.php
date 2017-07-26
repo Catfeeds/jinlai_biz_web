@@ -300,6 +300,7 @@
 					$data['title'] = $this->class_name_cn. '创建成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'create';
 					$data['id'] = $result['content']['id']; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -349,8 +350,10 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_rules('description', '说明', 'trim');
 			$this->form_validation->set_rules('url_image', '形象图', 'trim');
 			$this->form_validation->set_rules('url_image_wide', '宽屏形象图', 'trim');
@@ -366,12 +369,18 @@
 			$this->form_validation->set_rules('coupon_combo_id', '赠送优惠券套餐', 'trim');
 			$this->form_validation->set_rules('deposit', '订金/预付款（元）', 'trim');
 			$this->form_validation->set_rules('balance', '尾款（元）', 'trim');
-			$this->form_validation->set_rules('time_book_start', '支付预付款开始时间', 'trim');
-			$this->form_validation->set_rules('time_book_end', '支付预付款结束时间', 'trim');
-			$this->form_validation->set_rules('time_complete_start', '支付尾款开始时间', 'trim');
-			$this->form_validation->set_rules('time_complete_end', '支付尾款结束时间', 'trim');
 			$this->form_validation->set_rules('groupbuy_order_amount', '团购成团订单数（单）', 'trim');
 			$this->form_validation->set_rules('groupbuy_quantity_max', '团购个人最高限量（份/位）', 'trim');
+			
+			$this->form_validation->set_rules('time_book_start', '支付预付款开始时间', 'trim|exact_length[16]|callback_time_book_start');
+			$this->form_validation->set_rules('time_book_end', '支付预付款结束时间', 'trim|exact_length[16]|callback_time_book_end');
+			$this->form_validation->set_message('time_book_start', '开始时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_book_end', '结束时间需详细到分，且晚于当前时间1分钟后');
+			
+			$this->form_validation->set_rules('time_complete_start', '支付尾款开始时间', 'trim|exact_length[16]|callback_time_complete_start');
+			$this->form_validation->set_rules('time_complete_end', '支付尾款结束时间', 'trim|exact_length[16]|callback_time_complete_end');
+			$this->form_validation->set_message('time_complete_start', '开始时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_complete_end', '结束时间需详细到分，且晚于当前时间1分钟后');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -408,6 +417,8 @@
 					$data['title'] = $this->class_name_cn. '修改成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'edit';
+					$data['id'] = $this->input->post('id');
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -427,9 +438,9 @@
 		} // end edit
 		
 		/**
-		 * 开始活动
+		 * 激活
 		 */
-		public function publish()
+		public function active()
 		{
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
@@ -546,9 +557,9 @@
 		} // end publish
 		
 		/**
-		 * 暂停活动
+		 * 禁用
 		 */
-		public function suspend()
+		public function deactive()
 		{
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
@@ -663,6 +674,162 @@
 
 			endif;
 		} // end suspend
+		
+		// 检查起始时间
+		public function time_start($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+				else:
+					return true;
+				endif;
+
+			endif;
+		} // end time_start
+
+		// 检查结束时间
+		public function time_end($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+
+				// 若已设置开始时间，不可早于开始时间一分钟以内
+				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check <= strtotime($this->input->post('time_to_publish')) + 60):
+					return false;
+
+				else:
+					return true;
+
+				endif;
+
+			endif;
+		} // end time_end
+		
+		// 检查起始时间
+		public function time_book_start($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+				else:
+					return true;
+				endif;
+
+			endif;
+		} // end time_book_start
+
+		// 检查结束时间
+		public function time_book_end($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+
+				// 若已设置开始时间，不可早于开始时间一分钟以内
+				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check <= strtotime($this->input->post('time_to_publish')) + 60):
+					return false;
+
+				else:
+					return true;
+
+				endif;
+
+			endif;
+		} // end time_book_end
+		
+		// 检查起始时间
+		public function time_complete_start($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+				else:
+					return true;
+				endif;
+
+			endif;
+		} // end time_complete_start
+
+		// 检查结束时间
+		public function time_complete_end($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+
+				// 若已设置开始时间，不可早于开始时间一分钟以内
+				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check <= strtotime($this->input->post('time_to_publish')) + 60):
+					return false;
+
+				else:
+					return true;
+
+				endif;
+
+			endif;
+		} // end time_complete_end
 
 	} // end class Promotion_biz
 

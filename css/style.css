@@ -9,6 +9,8 @@
 /* Flat-UI清理 */
 h1,h2,h3 {margin:0;}
 h1 {font-size:42px;}
+h2 {font-size:28px;}
+h3 {font-size:22px;}
 .login {color:#111;background:none;padding:0;margin-bottom:0;}
 
 body {color:#333;background-color:#fff;z-index:100;margin-top:54px;margin-bottom:8rem;}

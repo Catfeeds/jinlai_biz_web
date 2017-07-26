@@ -20,6 +20,29 @@
 	}
 </style>
 
+<?php
+	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
+	// 在iOS设备上使用原生日期选择器
+	if ( ! $is_ios ):
+?>
+<link href="/css/datepicker.min.css" rel="stylesheet">
+<script src="/js/datepicker.min.js"></script>
+<script>
+	$(function(){
+		// 初始化日期选择器
+		$('[type=datetime]').datepicker(
+			{
+			    language: 'cn', // 本地化语言在js/main.js中
+			    minDate: new Date("<?php echo date('Y-m-d H:i') ?>"),
+				maxDate: new Date("<?php echo date('Y-m-d H:i', strtotime("+31 days")) ?>"),
+				timepicker: true, // 时间选择器
+				timeFormat: "hh:ii"
+			}
+		)
+	});
+</script>
+<?php endif ?>
+
 <base href="<?php echo base_url('uploads/') ?>">
 
 <script>
@@ -90,13 +113,13 @@
 			<div class=form-group>
 				<label for=time_start class="col-sm-2 control-label">开始时间※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_start type=datetime value="<?php echo set_value('time_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+2days')) ?>" required>
+					<input class=form-control name=time_start type=datetime value="<?php echo set_value('time_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=time_end class="col-sm-2 control-label">结束时间※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_end type=datetime value="<?php echo set_value('time_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+5days')) ?>" required>
+					<input class=form-control name=time_end type=datetime value="<?php echo set_value('time_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>" required>
 				</div>
 			</div>
 			<div class=form-group>
@@ -228,25 +251,25 @@
 			<div class=form-group>
 				<label for=time_book_start class="col-sm-2 control-label">支付预付款开始时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_book_start type=datetime value="<?php echo set_value('time_book_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+2days')) ?>">
+					<input class=form-control name=time_book_start type=datetime value="<?php echo set_value('time_book_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=time_book_end class="col-sm-2 control-label">支付预付款结束时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_book_end type=datetime value="<?php echo set_value('time_book_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+5days')) ?>">
+					<input class=form-control name=time_book_end type=datetime value="<?php echo set_value('time_book_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=time_complete_start class="col-sm-2 control-label">支付尾款开始时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_complete_start type=datetime value="<?php echo set_value('time_complete_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+10days')) ?>">
+					<input class=form-control name=time_complete_start type=datetime value="<?php echo set_value('time_complete_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+10days')) ?>">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=time_complete_end class="col-sm-2 control-label">支付尾款结束时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_complete_end type=datetime value="<?php echo set_value('time_complete_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+15days')) ?>">
+					<input class=form-control name=time_complete_end type=datetime value="<?php echo set_value('time_complete_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+15days')) ?>">
 				</div>
 			</div>
 		</fieldset>

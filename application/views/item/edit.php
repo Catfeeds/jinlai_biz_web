@@ -20,6 +20,29 @@
 	}
 </style>
 
+<?php
+	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
+	// 在iOS设备上使用原生日期选择器
+	if ( ! $is_ios ):
+?>
+<link href="/css/datepicker.min.css" rel="stylesheet">
+<script src="/js/datepicker.min.js"></script>
+<script>
+	$(function(){
+		// 初始化日期选择器
+		$('[type=datetime]').datepicker(
+			{
+			    language: 'cn', // 本地化语言在js/main.js中
+			    minDate: new Date("<?php echo date('Y-m-d H:i') ?>"),
+				maxDate: new Date("<?php echo date('Y-m-d H:i', strtotime("+31 days")) ?>"),
+				timepicker: true, // 时间选择器
+				timeFormat: "hh:ii"
+			}
+		)
+	});
+</script>
+<?php endif ?>
+
 <base href="<?php echo base_url('uploads/') ?>">
 
 <div id=breadcrumb>
@@ -234,7 +257,7 @@
 				</div>
 			</div>
 
-			<p class="bg-info text-info text-center">以下择一填写即可；若填写多项，将以毛重为准进行运费计算</p>
+			<p class="bg-info text-info text-center">以下3项择一填写即可；若填写多项，将以毛重为准进行运费计算</p>
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
@@ -271,12 +294,16 @@
 			<div class=form-group>
 				<label for=coupon_allowed class="col-sm-2 control-label">是否可用优惠券※</label>
 				<div class=col-sm-10>
-					<select class=form-control name=coupon_allowed required>
-						<option value=1 <?php echo ($item['coupon_allowed'] === '1')? 'selected': NULL; ?>>允许</option>
-						<option value=0 <?php echo ($item['coupon_allowed'] === '0')? 'selected': NULL; ?>>不允许</option>
-					</select>
+					<?php $input_name = 'coupon_allowed' ?>
+					<label class=radio-inline>
+						<input type=radio name="<?php echo $input_name ?>" value="1" required <?php if ($item[$input_name] === '1') echo 'checked'; ?>> 是
+					</label>
+					<label class=radio-inline>
+						<input type=radio name="<?php echo $input_name ?>" value="0" required <?php if ($item[$input_name] === '0') echo 'checked'; ?>> 否
+					</label>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=discount_credit class="col-sm-2 control-label">积分抵扣率</label>
 				<div class=col-sm-10>
@@ -294,7 +321,7 @@
 			<div class=form-group>
 				<label for=time_to_publish class="col-sm-2 control-label">预定上架时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_to_publish type=datetime value="<?php echo empty($item['time_to_publish'])? NULL: date('Y-m-d H:i:s', $item['time_to_publish']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+8days')) ?>">
+					<input class=form-control name=time_to_publish type=datetime value="<?php echo empty($item['time_to_publish'])? NULL: date('Y-m-d H:i:s', $item['time_to_publish']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+8days')) ?>">
 				</div>
 			</div>
 			<?php endif ?>
@@ -303,7 +330,7 @@
 			<div class=form-group>
 				<label for=time_to_suspend class="col-sm-2 control-label">预定下架时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_to_suspend type=datetime value="<?php echo empty($item['time_to_suspend'])? NULL: date('Y-m-d H:i:s', $item['time_to_publish']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+10days')) ?>">
+					<input class=form-control name=time_to_suspend type=datetime value="<?php echo empty($item['time_to_suspend'])? NULL: date('Y-m-d H:i', $item['time_to_suspend']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+10days')) ?>">
 				</div>
 			</div>
 			<?php endif ?>
@@ -329,7 +356,6 @@
 			<div class=form-group>
 				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
 				<div class=col-sm-10>
-					<p class="bg-danger text-danger">如果留空，消费者主动确认收货前您将无法收取货款。</p>
 					<?php if ( empty($biz_freight_templates) ): ?>
 					<p class="bg-warning text-warning row">您目前没有可用的运费模板</p>
 					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建一个</a>
@@ -337,7 +363,7 @@
 
 					<?php $input_name = 'freight_template_id' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
-						<option value="">请选择</option>
+						<option value="">包邮</option>
 						<?php
 							$options = $biz_freight_templates;
 							foreach ($options as $option):

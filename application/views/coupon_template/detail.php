@@ -58,27 +58,56 @@
 		<dd><?php echo $item['template_id'] ?></dd>
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
+		<dt>说明</dt>
+		<dd><?php echo $item['description'] ?></dd>
 		<dt>面值</dt>
 		<dd>￥ <?php echo $item['amount'] ?></dd>
 		<dt>限量</dt>
 		<dd>
-			<?php echo $item['max_amount'] ?> 份
+			<?php echo empty($item['max_amount'])? '不限量': $item['max_amount'].'份'; ?>
 			<p class=helper-block>当作为优惠券包中的优惠券进行发放时，限量以优惠券包限量为准</p>
 		</dd>
 		<dt>最低订单小计</dt>
 		<dd>￥ <?php echo $item['min_subtotal'] ?></dd>
 		<dt>限用系统分类</dt>
-		<dd><?php echo $category['name'] ?></dd>
+		<dd><?php echo empty($item['category_id'])? '不限': $category['name']; ?></dd>
 		<dt>限用店内分类</dt>
-		<dd><?php echo $category_biz['name'] ?></dd>
+		<dd><?php echo empty($item['category_biz_id'])? '不限': $category_biz['name']; ?></dd>
 		<dt>限用商品</dt>
-		<dd><?php echo $item['item_id'] ?></dd>
-		<dt>自领取时起有效期（秒）</dt>
-		<dd><?php echo $item['period'] ?></dd>
+		<dd><?php echo empty($item['item_id'])? '不限': $item['item_id']; ?></dd>
+		
+		<?php
+			$options = array(
+				'1小时' => '3600',
+				'2小时' => '7200',
+				'3小时' => '10800',
+				'4小时' => '14400',
+				'6小时' => '21600',
+				'8小时' => '28800',
+				'12小时' => '43200',
+				'24小时/1天' => '86400',
+				'2天' => '172800',
+				'3天' => '259200',
+				'7天' => '604800',
+				'10天' => '864000',
+				'14天' => '1209600',
+				'30天' => '2592000',
+				'45天' => '3888000',
+				'90天' => '7776000',
+				'120天' => '10368000',
+				'180天/半年' => '15552000',
+				'366天/1年' => '31622400',
+				'2年' => '63244800',
+				'3年' => '94867200',
+			);
+			$options = array_flip($options);
+		?>
+		<dt>有效期</dt>
+		<dd><?php echo $options[ $item['period'] ] ?></dd>
 		<dt>开始时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_start']) ?></dd>
+		<dd><?php echo empty($item['time_start'])? '自领取时起': date('Y-m-d H:i:s', $item['time_start']); ?></dd>
 		<dt>结束时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_end']) ?></dd>
+		<dd><?php echo empty($item['time_end'])? '见有效期': date('Y-m-d H:i:s', $item['time_end']); ?></dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

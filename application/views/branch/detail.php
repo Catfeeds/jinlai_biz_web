@@ -20,8 +20,6 @@
 	}
 </style>
 
-<base href="<?php echo base_url('uploads/') ?>">
-
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
 		<li><a href="<?php echo base_url() ?>">首页</a></li>
@@ -42,9 +40,7 @@
 	<div class=btn-group role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<?php if ( !empty($comodity) ): ?>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create?item_id='.$comodity['item_id']) ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
-		<?php endif ?>
+		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
 	
@@ -58,41 +54,65 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-		<dt>SKU ID</dt>
-		<dd><?php echo $item['sku_id'] ?></dd>
-		<dt>所属商品</dt>
-		<dd><?php echo $comodity['name'] ?></dd>
+				<dt>门店ID</dt>
+		<dd><?php echo $item['branch_id'] ?></dd>
+		<dt>所属商家ID</dt>
+		<dd><?php echo $item['biz_id'] ?></dd>
+		<dt>名称</dt>
+		<dd><?php echo $item['name'] ?></dd>
+		<dt>说明</dt>
+		<dd><?php echo $item['description'] ?></dd>
+		<dt>消费者联系电话</dt>
+		<dd><?php echo $item['tel_public'] ?></dd>
+		<dt>商务联系手机号</dt>
+		<dd><?php echo $item['tel_protected_biz'] ?></dd>
+		<dt>订单通知手机号</dt>
+		<dd><?php echo $item['tel_protected_order'] ?></dd>
+		<dt>休息日</dt>
+		<dd><?php echo $item['day_rest'] ?></dd>
+		<dt>开放时间</dt>
+		<dd><?php echo $item['time_open'] ?></dd>
+		<dt>结束时间</dt>
+		<dd><?php echo $item['time_close'] ?></dd>
+		<dt>主图</dt>
+		<dd><?php echo $item['url_image_main'] ?></dd>
+		<dt>形象图</dt>
+		<dd><?php echo $item['figure_image_urls'] ?></dd>
+		<dt>国别</dt>
+		<dd><?php echo $item['nation'] ?></dd>
+		<dt>省</dt>
+		<dd><?php echo $item['province'] ?></dd>
+		<dt>市</dt>
+		<dd><?php echo $item['city'] ?></dd>
+		<dt>区/县</dt>
+		<dd><?php echo $item['county'] ?></dd>
+		<dt>具体地址</dt>
+		<dd><?php echo $item['street'] ?></dd>
+		<dt>地区ID</dt>
+		<dd><?php echo $item['region_id'] ?></dd>
+		<dt>地区</dt>
+		<dd><?php echo $item['region'] ?></dd>
+		<dt>兴趣点ID</dt>
+		<dd><?php echo $item['poi_id'] ?></dd>
+		<dt>兴趣点</dt>
+		<dd><?php echo $item['poi'] ?></dd>
+		<dt>经度</dt>
+		<dd><?php echo $item['longitude'] ?></dd>
+		<dt>纬度</dt>
+		<dd><?php echo $item['latitude'] ?></dd>
+		<dt>状态</dt>
+		<dd><?php echo $item['status'] ?></dd>
+		<dt>创建时间</dt>
+		<dd><?php echo $item['time_create'] ?></dd>
+		<dt>删除时间</dt>
+		<dd><?php echo $item['time_delete'] ?></dd>
+		<dt>最后操作时间</dt>
+		<dd><?php echo $item['time_edit'] ?></dd>
+		<dt>创建者ID</dt>
+		<dd><?php echo $item['creator_id'] ?></dd>
+		<dt>最后操作时间</dt>
+		<dd><?php echo $item['operator_id'] ?></dd>
 
-		<dt>图片</dt>
-		<?php if ( !empty($item['url_image']) ): ?>
-		<dd class=row>
-			<figure class="col-xs-12 col-sm-6 col-md-4">
-				<img src="<?php echo $item['url_image'] ?>">
-			</figure>
-		</dd>
-		<?php else: ?>
-		<dd>未上传</dd>
-		<?php endif ?>
-
-		<dt>一级规格</dt>
-		<dd><?php echo $item['name_first'] ?></dd>
-		<dt>二级规格</dt>
-		<dd><?php echo $item['name_second'] ?></dd>
-		<dt>三级规格</dt>
-		<dd><?php echo $item['name_third'] ?></dd>
-		<dt>价格</dt>
-		<dd>￥ <?php echo $item['price'] ?></dd>
-		<dt>库存量</dt>
-		<dd><?php echo $item['stocks'] ?></dd>
-		<dt>物流信息</dt>
-		<dd>
-			<p class="bg-info text-info text-center">以下3项中若填写了多项，将以毛重为准进行运费计算</p>
-			<ul class="list-horizontal row">
-				<li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net']: '-'; ?> KG</li>
-				<li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross']: '-'; ?> KG</li>
-				<li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume']: '-'; ?> KG</li>
-			</ul>
-		</dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

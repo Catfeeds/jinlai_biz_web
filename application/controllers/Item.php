@@ -384,8 +384,10 @@
 			$this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
 			$this->form_validation->set_rules('discount_credit', '积分抵扣率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
-			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim');
-			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim');
+			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_message('time_start', '预定上架时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 
@@ -402,8 +404,8 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 					'biz_id' => $this->session->biz_id,
-					'time_to_publish' => strtotime( $this->input->post('time_to_publish') ),
-					'time_to_suspend' => strtotime( $this->input->post('time_to_suspend') ),
+					'time_to_publish' => strtotime( $this->input->post('time_to_publish').':00' ),
+					'time_to_suspend' => strtotime( $this->input->post('time_to_suspend').':00' ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -488,8 +490,10 @@
 			$this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
 			$this->form_validation->set_rules('discount_credit', '积分抵扣率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
-			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim');
-			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim');
+			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_message('time_start', '预定上架时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 			
@@ -530,8 +534,8 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $this->input->post('id'),
-					'time_to_publish' => strtotime( $this->input->post('time_to_publish') ),
-					'time_to_suspend' => strtotime( $this->input->post('time_to_suspend') ),
+					'time_to_publish' => strtotime( $this->input->post('time_to_publish').':00' ),
+					'time_to_suspend' => strtotime( $this->input->post('time_to_suspend').':00' ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -609,8 +613,10 @@
 			$this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
 			$this->form_validation->set_rules('discount_credit', '积分抵扣率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
-			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[10]');
-			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[10]');
+			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_message('time_start', '预定上架时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 
@@ -919,6 +925,58 @@
 
 			endif;
 		} // end suspend
+
+		// 检查起始时间
+		public function time_start($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+				else:
+					return true;
+				endif;
+
+			endif;
+		} // end time_start
+
+		// 检查结束时间
+		public function time_end($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+
+				// 若已设置开始时间，不可早于开始时间一分钟以内
+				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check <= strtotime($this->input->post('time_to_publish')) + 60):
+					return false;
+
+				else:
+					return true;
+
+				endif;
+
+			endif;
+		} // end time_end
 
 	} // end class Item
 

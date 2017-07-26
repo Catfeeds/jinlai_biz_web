@@ -292,7 +292,6 @@
 			
 			$this->form_validation->set_rules('url_web', '官方网站', 'trim|max_length[255]|valid_url');
 			$this->form_validation->set_rules('url_weibo', '官方微博', 'trim|max_length[255]|valid_url');
-			$this->form_validation->set_rules('url_taobao', '淘宝/天猫店铺', 'trim|max_length[255]|valid_url');
 			$this->form_validation->set_rules('url_wechat', '微信二维码', 'trim|max_length[255]');
 
 			// 若表单提交不成功
@@ -315,7 +314,7 @@
 					'tel_public', 'tel_protected_fiscal', 'tel_protected_order',
 					'code_license', 'code_ssn_owner',  'code_ssn_auth',
 					'bank_name', 'bank_account', 'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_image_product', 'url_image_produce', 'url_image_retail',
-					'min_order_subtotal', 'delivery_time_start', 'delivery_time_end', 'longitude', 'latitude', 'province', 'city', 'county', 'detail', 'url_web', 'url_weibo', 'url_taobao', 'url_wechat',
+					'min_order_subtotal', 'delivery_time_start', 'delivery_time_end', 'longitude', 'latitude', 'province', 'city', 'county', 'detail', 'url_web', 'url_weibo', 'url_wechat',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -375,7 +374,6 @@
 			$this->form_validation->set_rules('notification', '公告', 'trim|max_length[100]');
 			$this->form_validation->set_rules('url_web', '官方网站', 'trim|max_length[255]|valid_url');
 			$this->form_validation->set_rules('url_weibo', '官方微博', 'trim|max_length[255]|valid_url');
-			$this->form_validation->set_rules('url_taobao', '淘宝/天猫店铺', 'trim|max_length[255]|valid_url');
 			$this->form_validation->set_rules('url_wechat', '微信二维码', 'trim|max_length[255]');
 
 			$this->form_validation->set_rules('tel_public', '消费者联系电话', 'trim|min_length[10]|max_length[13]');

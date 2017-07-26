@@ -128,15 +128,11 @@
 		<dd><del>￥ <?php echo ($item['tag_price'] !== '0.00')? $item['tag_price']: '未设置'; ?></del></dd>
 		<dt>商城价/现价</dt>
 		<dd><strong>￥ <?php echo $item['price'] ?></strong></dd>
+
 		<?php $unit_name = !empty($item['unit_name'])? $item['unit_name']: '份（默认单位）' ?>
 		<dt>库存量</dt>
-		<dd><strong><?php echo $item['stocks'].' '. $unit_name ?></strong> <?php echo $unit_name ?></dd>
-		<dt>净重</dt>
-		<dd><?php echo ($item['weight_net'] === '0.00')? $item['weight_net']: '未设置'; ?> KG</dd>
-		<dt>毛重</dt>
-		<dd><?php echo ($item['weight_gross'] === '0.00')? $item['weight_gross']: '未设置'; ?> KG</dd>
-		<dt>体积重</dt>
-		<dd><?php echo ($item['weight_volume'] === '0.00')? $item['weight_volume']: '未设置'; ?> KG</dd>
+		<dd><strong><?php echo $item['stocks'].' '. $unit_name ?></strong></dd>
+
 		<dt>每单最高限量</dt>
 		<dd><?php echo !empty($item['quantity_max'])? $item['quantity_max']: '不限'; ?> 份</dd>
 		<dt>每单最低限量</dt>
@@ -158,28 +154,46 @@
 		<dd><?php echo empty($item['time_to_suspend'])? '未设置': date('Y-m-d H:i:s', $item['time_to_suspend']); ?></dd>
 		<?php endif ?>
 
+		<dt>物流信息</dt>
+		<dd>
+			<p class="bg-info text-info text-center">以下3项中若填写了多项，将以毛重为准进行运费计算</p>
+			<ul class="list-horizontal row">
+				<li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net']: '-'; ?> KG</li>
+				<li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross']: '-'; ?> KG</li>
+				<li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume']: '-'; ?> KG</li>
+			</ul>
+		</dd>
+		
+		<dt>运费模板</dt>
+		<dd>
+			<?php
+				if ( !empty($item['freight_template_id']) ):
+					echo $freight_template['name']
+				else:
+			?>
+			包邮（免运费）
+			<?php endif ?>
+		</dd>
+
 		<dt>店内活动</dt>
 		<?php if ( ! empty($item['promotion_id']) ): ?>
 		<dd><strong><?php echo $promotion['name'] ?></strong></dd>
 		<?php else: ?>
 		<dd>不参与</dd>
 		<?php endif ?>
-
-		<dt>运费模板</dt>
-		<dd><?php echo $freight_template['name'] ?></dd>
 	</dl>
 
 	<?php if ( !empty($skus) ): ?>
-	<section id=skus>
-		<h2>SKU（规格）</h2>
-		<a class="btn btn-info btn-lg" href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>管理SKU</a>
+	<section id=skus class=well>
+		<h2>商品规格</h2>
+		<a class="btn btn-info btn-lg" href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>管理规格</a>
 		
 		<ul class=row>
 			<?php foreach ($skus as $sku): ?>
 			<li class="col-xs-6 col-sm-4 col-md-3">
 				<a href="<?php echo base_url('sku/detail?id='.$sku['sku_id']) ?>">
 					<h3><?php echo $sku['name_first'].$sku['name_second'].$sku['name_third'] ?></h3>
-					<small>￥ <?php echo $sku['price'] ?></small>
+					<small>￥<?php echo $sku['price'] ?> / 库存<?php echo $sku['stocks'] ?></small>
 					<?php if ( !empty($sku['url_image']) ): ?>
 					<figure>
 						<img src="<?php echo $sku['url_image'] ?>">
@@ -192,7 +206,7 @@
 	</section>
 	<?php endif ?>
 
-	<section id=description>
+	<section id=description class=well>
 		<h2>商品描述</h2>
 		<?php if ( !empty($item['description']) ): ?>
 			<div class="bg-info text-info">

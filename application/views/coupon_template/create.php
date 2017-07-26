@@ -20,6 +20,29 @@
 	}
 </style>
 
+<?php
+	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
+	// 在iOS设备上使用原生日期选择器
+	if ( ! $is_ios ):
+?>
+<link href="/css/datepicker.min.css" rel="stylesheet">
+<script src="/js/datepicker.min.js"></script>
+<script>
+	$(function(){
+		// 初始化日期选择器
+		$('[type=datetime]').datepicker(
+			{
+			    language: 'cn', // 本地化语言在js/main.js中
+			    minDate: new Date("<?php echo date('Y-m-d H:i') ?>"),
+				maxDate: new Date("<?php echo date('Y-m-d H:i', strtotime("+31 days")) ?>"),
+				timepicker: true, // 时间选择器
+				timeFormat: "hh:ii"
+			}
+		)
+	});
+</script>
+<?php endif ?>
+
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
 		<li><a href="<?php echo base_url() ?>">首页</a></li>
@@ -55,7 +78,14 @@
 			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">名称※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="名称" required>
+					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="最多20个字符" required>
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=description class="col-sm-2 control-label">说明</label>
+				<div class=col-sm-10>
+					<input class=form-control name=description type=text value="<?php echo set_value('description') ?>" placeholder="最多30个字符">
 				</div>
 			</div>
 
@@ -69,14 +99,14 @@
 			<div class=form-group>
 				<label for=max_amount class="col-sm-2 control-label">限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=max_amount type=number step=1 min=1 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="最高999999">
+					<input class=form-control name=max_amount type=number step=1 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="留空则不限，最高999999">
 				</div>
 			</div>
 
 			<div class=form-group>
 				<label for=min_subtotal class="col-sm-2 control-label">最低订单小计（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=min_subtotal type=number step=1 min=1 max=999 value="<?php echo set_value('min_subtotal') ?>" placeholder="最高999">
+					<input class=form-control name=min_subtotal type=number step=1 max=9999 value="<?php echo set_value('min_subtotal') ?>" placeholder="留空则不限，最高9999">
 				</div>
 			</div>
 
@@ -84,7 +114,7 @@
 				<label for=category_id class="col-sm-2 control-label">限用系统分类</label>
 				<div class=col-sm-10>
 					<select class=form-control name=category_id>
-						<option value="">请选择</option>
+						<option value="">不限</option>
 						<?php foreach ($categories as $option): ?>
 							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
 						<?php endforeach ?>
@@ -96,7 +126,7 @@
 				<label for=category_biz_id class="col-sm-2 control-label">限用店内分类</label>
 				<div class=col-sm-10>
 					<select class=form-control name=category_biz_id>
-						<option value="">请选择</option>
+						<option value="">不限</option>
 						<?php foreach ($biz_categories as $option): ?>
 							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
 						<?php endforeach ?>
@@ -112,21 +142,54 @@
 			</div>
 
 			<div class=form-group>
-				<label for=period class="col-sm-2 control-label">自领取时起有效期（秒）</label>
+				<label for=period class="col-sm-2 control-label">有效期</label>
 				<div class=col-sm-10>
-					<input class=form-control name=period type=number step=1 size=10 value="<?php echo set_value('period') ?>" placeholder="自领取时起有效期（秒）">
+					<?php $input_name = 'period' ?>
+					<select class=form-control name="<?php echo $input_name ?>">
+						<option value="" <?php echo set_select($input_name, '') ?>>请选择</option>
+						<?php
+							$options = array(
+								'1小时' => '3600',
+								'2小时' => '7200',
+								'3小时' => '10800',
+								'4小时' => '14400',
+								'6小时' => '21600',
+								'8小时' => '28800',
+								'12小时' => '43200',
+								'24小时/1天' => '86400',
+								'2天' => '172800',
+								'3天' => '259200',
+								'7天' => '604800',
+								'10天' => '864000',
+								'14天' => '1209600',
+								'30天' => '2592000',
+								'45天' => '3888000',
+								'90天' => '7776000',
+								'120天' => '10368000',
+								'180天/半年' => '15552000',
+								'366天/1年' => '31622400',
+								'2年' => '63244800',
+								'3年' => '94867200',
+							);
+							foreach ($options as $name => $value):
+						?>
+						<option value="<?php echo $value ?>" <?php echo set_select($input_name, $value) ?>><?php echo $name ?></option>
+						<?php endforeach ?>
+					</select>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=time_start class="col-sm-2 control-label">开始时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_start type=datetime value="<?php echo set_value('time_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+2days')) ?>">
+					<input class=form-control name=time_start type=datetime value="<?php echo set_value('time_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=time_end class="col-sm-2 control-label">结束时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_end type=datetime value="<?php echo set_value('time_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i:s', strtotime('+5days')) ?>">
+					<input class=form-control name=time_end type=datetime value="<?php echo set_value('time_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>">
 				</div>
 			</div>
 		</fieldset>

@@ -17,7 +17,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'combo_id', 'biz_id', 'name', 'template_ids', 'max_amount', 'time_start', 'time_end',
+			'combo_id', 'biz_id', 'name', 'description', 'template_ids', 'max_amount', 'time_start', 'time_end',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -25,7 +25,7 @@
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'name', 'template_ids', 'max_amount', 'time_start', 'time_end',
+			'name', 'description', 'template_ids', 'max_amount', 'time_start', 'time_end',
 		);
 
 		/**
@@ -59,7 +59,7 @@
 
 			// 向类属性赋值
 			$this->class_name = strtolower(__CLASS__);
-			$this->class_name_cn = '优惠券套餐'; // 改这里……
+			$this->class_name_cn = '优惠券包'; // 改这里……
 			$this->table_name = 'coupon_combo'; // 和这里……
 			$this->id_name = 'combo_id'; // 还有这里，OK，这就可以了
 			$this->view_root = $this->class_name;
@@ -67,10 +67,10 @@
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
 				'name' => '名称',
-				'max_amount' => '限量',
+				'description' => '说明',
 			);
 		}
-		
+
 		/**
 		 * 截止3.1.3为止，CI_Controller类无析构函数，所以无需继承相应方法
 		 */
@@ -224,11 +224,14 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('name', '名称', 'trim|required');
+			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
+			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
 			$this->form_validation->set_rules('template_ids', '优惠券模板', 'trim|required');
 			$this->form_validation->set_rules('max_amount', '限量', 'trim');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -246,7 +249,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'template_ids', 'max_amount', 'time_start', 'time_end', 
+					'name', 'description', 'template_ids', 'max_amount', 'time_start', 'time_end', 
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -259,6 +262,7 @@
 					$data['title'] = $this->class_name_cn. '创建成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'create';
 					$data['id'] = $result['content']['id']; // 创建后的信息ID
 
 					$this->load->view('templates/header', $data);
@@ -296,11 +300,14 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('name', '名称', 'trim|required');
+			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
+			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
 			$this->form_validation->set_rules('template_ids', '优惠券模板', 'trim|required');
 			$this->form_validation->set_rules('max_amount', '限量', 'trim');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -329,7 +336,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'template_ids', 'max_amount', 'time_start', 'time_end', 
+					'name', 'description', 'template_ids', 'max_amount', 'time_start', 'time_end', 
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -342,6 +349,8 @@
 					$data['title'] = $this->class_name_cn. '修改成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+					$data['operation'] = 'edit';
+					$data['id'] = $this->input->post('id');
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -359,6 +368,58 @@
 
 			endif;
 		} // end edit
+		
+		// 检查起始时间
+		public function time_start($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+				else:
+					return true;
+				endif;
+
+			endif;
+		} // end time_start
+
+		// 检查结束时间
+		public function time_end($value)
+		{
+			if ( empty($value) ):
+				return true;
+
+			elseif (strlen($value) !== 16):
+				return false;
+
+			else:
+				// 将精确到分的输入值拼合上秒值
+				$time_to_check = strtotime($value.':00');
+
+				// 该时间不可早于当前时间一分钟以内
+				if ($time_to_check <= time() + 60):
+					return false;
+
+				// 若已设置开始时间，不可早于开始时间一分钟以内
+				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check <= strtotime($this->input->post('time_to_publish')) + 60):
+					return false;
+
+				else:
+					return true;
+
+				endif;
+
+			endif;
+		} // end time_end
 
 	} // end class Coupon_combo
 

@@ -748,6 +748,17 @@
 
 			return $count;
 		}
+		
+		// 输出POST参数
+		protected function echo_param($param)
+		{
+			$result = '';
+			foreach ($param as $name => $value):
+				$result .= $name. ':'. $value. "\n";
+			endforeach;
+			
+			echo $result;
+		}
 
 	} // end class MY_Controller
 	

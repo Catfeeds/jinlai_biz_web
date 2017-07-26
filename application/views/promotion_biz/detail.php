@@ -71,9 +71,9 @@
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>开始时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_start']) ?></dd>
+		<dd><?php echo empty($item['time_start'])? '自领取时起': substr(date('Y-m-d H:i:s', $item['time_start']), 0,16); ?></dd>
 		<dt>结束时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_end']) ?></dd>
+		<dd><?php echo empty($item['time_end'])? '见有效期': substr(date('Y-m-d H:i:s', $item['time_end']), 0,16); ?></dd>
 		<dt>说明</dt>
 		<dd><?php echo $item['description'] ?></dd>
 
@@ -135,13 +135,13 @@
 		<dt>尾款</dt>
 		<dd>￥ <?php echo $item['balance'] ?></dd>
 		<dt>支付预付款开始时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_book_start']) ?></dd>
+		<dd><?php echo empty($item['time_book_start'])? '未设置': date('Y-m-d H:i:s', $item['time_book_start']); ?></dd>
 		<dt>支付预付款结束时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_book_end']) ?></dd>
+		<dd><?php echo empty($item['time_book_end'])? '未设置': date('Y-m-d H:i:s', $item['time_book_end']); ?></dd>
 		<dt>支付尾款开始时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_complete_start']) ?></dd>
+		<dd><?php echo empty($item['time_complete_start'])? '未设置': date('Y-m-d H:i:s', $item['time_complete_start']); ?></dd>
 		<dt>支付尾款结束时间</dt>
-		<dd><?php echo date('Y-m-d H:i:s', $item['time_complete_end']) ?></dd>
+		<dd><?php echo empty($item['time_complete_end'])? '未设置': date('Y-m-d H:i:s', $item['time_complete_end']); ?></dd>
 	</dl>
 
 	<dl data-type="单品团购" class="dl-horizontal params">

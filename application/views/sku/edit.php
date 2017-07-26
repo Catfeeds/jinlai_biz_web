@@ -96,21 +96,21 @@
 			</div>
 
 			<div class=form-group>
-				<label for=name_first class="col-sm-2 control-label">名称第一部分※</label>
+				<label for=name_first class="col-sm-2 control-label">一级规格※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=name_first type=text value="<?php echo $item['name_first'] ?>" placeholder="名称第一部分" required>
+					<input class=form-control name=name_first type=text value="<?php echo $item['name_first'] ?>" placeholder="一级规格" required>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=name_second class="col-sm-2 control-label">名称第二部分</label>
+				<label for=name_second class="col-sm-2 control-label">二级规格</label>
 				<div class=col-sm-10>
-					<input class=form-control name=name_second type=text value="<?php echo $item['name_second'] ?>" placeholder="名称第二部分">
+					<input class=form-control name=name_second type=text value="<?php echo $item['name_second'] ?>" placeholder="二级规格">
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=name_third class="col-sm-2 control-label">名称第三部分</label>
+				<label for=name_third class="col-sm-2 control-label">三级规格</label>
 				<div class=col-sm-10>
-					<input class=form-control name=name_third type=text value="<?php echo $item['name_third'] ?>" placeholder="名称第三部分">
+					<input class=form-control name=name_third type=text value="<?php echo $item['name_third'] ?>" placeholder="三级规格">
 				</div>
 			</div>
 			<div class=form-group>
