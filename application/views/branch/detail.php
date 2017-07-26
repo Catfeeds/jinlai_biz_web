@@ -54,10 +54,6 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>门店ID</dt>
-		<dd><?php echo $item['branch_id'] ?></dd>
-		<dt>所属商家ID</dt>
-		<dd><?php echo $item['biz_id'] ?></dd>
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>说明</dt>
@@ -71,9 +67,9 @@
 		<dt>休息日</dt>
 		<dd><?php echo $item['day_rest'] ?></dd>
 		<dt>开放时间</dt>
-		<dd><?php echo $item['time_open'] ?></dd>
+		<dd><?php echo $item['time_open'] ?>:00</dd>
 		<dt>结束时间</dt>
-		<dd><?php echo $item['time_close'] ?></dd>
+		<dd><?php echo $item['time_close'] ?>:00</dd>
 		<dt>主图</dt>
 		<dd><?php echo $item['url_image_main'] ?></dd>
 		<dt>形象图</dt>
@@ -96,23 +92,8 @@
 		<dd><?php echo $item['poi_id'] ?></dd>
 		<dt>兴趣点</dt>
 		<dd><?php echo $item['poi'] ?></dd>
-		<dt>经度</dt>
-		<dd><?php echo $item['longitude'] ?></dd>
-		<dt>纬度</dt>
-		<dd><?php echo $item['latitude'] ?></dd>
 		<dt>状态</dt>
 		<dd><?php echo $item['status'] ?></dd>
-		<dt>创建时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
-		<dt>创建者ID</dt>
-		<dd><?php echo $item['creator_id'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
-
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
