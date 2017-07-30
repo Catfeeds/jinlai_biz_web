@@ -29,7 +29,7 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
-		<p class="bg-info text-info text-center">必填项以“※”符号标示；部分需通过品类管理员修改的信息以“✪”符号标示</p>
+		<p class="bg-info text-info text-center">必填项以“※”符号标示；部分需通过专属顾问修改的信息以“✪”符号标示</p>
 
 		<fieldset>
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
@@ -358,9 +358,9 @@
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=country class="col-sm-2 control-label">国家</label>
+				<label for=nation class="col-sm-2 control-label">国家</label>
 				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $item['country'] ?></p>
+					<p class="form-control-static"><?php echo $item['nation'] ?></p>
 				</div>
 			</div>
 			<div class=form-group>
@@ -385,7 +385,7 @@
 			<div class=form-group>
 				<label for=street class="col-sm-2 control-label">具体地址</label>
 				<div class=col-sm-10>
-					<input class=form-control name=street type=text value="<?php echo $item['detail'] ?>" placeholder="详细地址">
+					<input class=form-control name=street type=text value="<?php echo $item['street'] ?>" placeholder="详细地址">
 				</div>
 			</div>
 

@@ -20,6 +20,8 @@
 	}
 </style>
 
+<script src="/js/jquery.qrcode.min.js"></script>
+
 <base href="<?php echo base_url('uploads/') ?>">
 
 <div id=breadcrumb>
@@ -57,11 +59,17 @@
 
 	<dl id=list-info class=dl-horizontal>
 		<dt>LOGO</dt>
-		<dd class=row>
-			<figure class="col-xs-12 col-sm-6 col-md-4">
-				<img src="<?php echo $item['url_logo'] ?>">
+		<dd>
+			<?php if ( ! empty($item['url_logo']) ): ?>
+			<figure class=row>
+				<img class="col-xs-12 col-sm-6 col-md-3" src="<?php echo $item['url_logo'] ?>">
 			</figure>
+
+			<?php else: ?>
+			未上传
+			<?php endif ?>
 		</dd>
+		
 		
 		<dt>状态</dt>
 		<dd><?php echo $item['status'] ?></dd>
@@ -86,12 +94,27 @@
 		<dd><?php echo $item['tel_protected_biz'] ?></dd>
 		<dt>订单通知手机号</dt>
 		<dd><?php echo $item['tel_protected_order'] ?></dd>
+		<dt>财务联系手机号</dt>
+		<dd><?php echo $item['tel_protected_fiscal'] ?></dd>
 		<dt>官方网站</dt>
 		<dd><?php echo $item['url_web'] ?></dd>
 		<dt>官方微博</dt>
 		<dd><?php echo $item['url_weibo'] ?></dd>
+
 		<dt>微信二维码</dt>
-		<dd><?php echo $item['url_wechat'] ?></dd>
+		<dd>
+			<?php if ( !empty($item['url_wechat']) ): ?>
+			<figure id=qrcode class="col-xs-12 col-sm-6 col-md-3"></figure>
+			<script>
+			$(function(){
+				$('#qrcode').qrcode("<?php echo $item['url_wechat'] ?>");
+			})
+			</script>
+
+			<?php else: ?>
+			未上传
+			<?php endif ?>
+		</dd>
 
 		<dt>产品</dt>
 		<dd>
@@ -106,6 +129,7 @@
 				</li>
 				<?php endforeach ?>
 			</ul>
+
 			<?php else: ?>
 			未上传
 			<?php endif ?>
@@ -124,6 +148,7 @@
 				</li>
 				<?php endforeach ?>
 			</ul>
+
 			<?php else: ?>
 			未上传
 			<?php endif ?>
@@ -142,6 +167,7 @@
 				</li>
 				<?php endforeach ?>
 			</ul>
+
 			<?php else: ?>
 			未上传
 			<?php endif ?>
@@ -159,53 +185,52 @@
 
 		<dt>营业执照</dt>
 		<dd>
-		<?php if ( ! empty($item['url_image_license']) ): ?>
+			<?php if ( ! empty($item['url_image_license']) ): ?>
 			<figure class=row>
 				<img class="col-xs-12 col-sm-6 col-md-4" src="<?php echo $item['url_image_license'] ?>">
 			</figure>
-		<?php else: ?>
-		未上传
-		<?php endif ?>
+
+			<?php else: ?>
+			未上传
+			<?php endif ?>
 		</dd>
 		
 		<dt>法人身份证</dt>
 		<dd>
-		<?php if ( ! empty($item['url_image_owner_id']) ): ?>
+			<?php if ( ! empty($item['url_image_owner_id']) ): ?>
 			<figure class=row>
 				<img class="col-xs-12 col-sm-6 col-md-4" src="<?php echo $item['url_image_owner_id'] ?>">
 			</figure>
-		<?php else: ?>
-		未上传
-		<?php endif ?>
+			<?php else: ?>
+			未上传
+			<?php endif ?>
 		</dd>
 
 		<dt>经办人身份证</dt>
 		<dd>
-		<?php if ( ! empty($item['url_image_auth_id']) ): ?>
+			<?php if ( ! empty($item['url_image_auth_id']) ): ?>
 			<figure class=row>
 				<img class="col-xs-12 col-sm-6 col-md-4" src="<?php echo $item['url_image_auth_id'] ?>">
 			</figure>
-		<?php else: ?>
-		未上传
-		<?php endif ?>
+			<?php else: ?>
+			未上传
+			<?php endif ?>
 		</dd>
 
 		<dt>经办人授权书</dt>
 		<dd>
-		<?php if ( ! empty($item['url_image_auth_doc']) ): ?>
+			<?php if ( ! empty($item['url_image_auth_doc']) ): ?>
 			<figure class=row>
 				<img class="col-xs-12 col-sm-6 col-md-4" src="<?php echo $item['url_image_auth_doc'] ?>">
 			</figure>
-		<?php else: ?>
-		未上传
-		<?php endif ?>
+			<?php else: ?>
+			未上传
+			<?php endif ?>
 		</dd>
 	</dl>
 	
 	<h2>财务信息</h2>
 	<dl class=dl-horizontal>
-		<dt>财务联系手机号</dt>
-		<dd><?php echo $item['tel_protected_fiscal'] ?></dd>
 		<dt>开户行名称</dt>
 		<dd><?php echo $item['bank_name'] ?></dd>
 		<dt>开户行账号</dt>
