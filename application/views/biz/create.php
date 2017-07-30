@@ -146,7 +146,10 @@
 			</div>
 
 			<div class=form-group>
-				<label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书</label>
+				<label for=url_image_auth_doc class="col-sm-2 control-label">
+					经办人授权书
+					<small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>"><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small>
+				</label>
 				<div class=col-sm-10>
 					<?php $name_to_upload = 'url_image_auth_doc' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>

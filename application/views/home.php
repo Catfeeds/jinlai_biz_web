@@ -25,7 +25,7 @@
 	<?php if ( empty($this->session->biz_id) ): ?>
 	<div id=recruiting-tempt>
 		<p>这一部分可以显示简单的平台介绍和招商信息，例如：</p>
-		<img alt="进来商家招商中" src="https://biz.517ybang.com/media/home/recruiting.jpg">
+		<img alt="进来商家招商中" src="<?php echo base_url('/media/home/recruiting.jpg') ?>">
 		<p class=text-center>加入「进来」，让首家品控网购平台上最有消费能力的消费者在你店里疯狂买买买！</p>
 	</div>
 	
@@ -40,7 +40,7 @@
 		<p>如果负责日常业务对接的不是法人本人，则另需：</p>
 		<ul>
 			<li>经办人身份证影印件</li>
-			<li>授权书 <small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth_doc_join_application') ?>"><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small></li>
+			<li>授权书 <small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>"><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small></li>
 		</ul>
 	</div>
 
