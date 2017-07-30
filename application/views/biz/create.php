@@ -74,7 +74,7 @@
 			<legend>资质信息</legend>
 
 			<div class=form-group>
-				<label for=code_license class="col-sm-2 control-label">统一社会信用代码※</label>
+				<label for=code_license class="col-sm-2 control-label">统一社会信用代码/营业执照号※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=code_license type=number step=1 size=18 value="<?php echo set_value('code_license') ?>" placeholder="请输入三证合一后的营业执照编号" required>
 				</div>
@@ -111,7 +111,7 @@
 
 					<?php $name_to_upload = 'url_image_license' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
 					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/license" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
@@ -124,7 +124,7 @@
 				<div class=col-sm-10>
 					<?php $name_to_upload = 'url_image_owner_id' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
 					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/owner_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
@@ -137,7 +137,7 @@
 				<div class=col-sm-10>
 					<?php $name_to_upload = 'url_image_auth_id' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
 					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/auth_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
@@ -146,11 +146,11 @@
 			</div>
 
 			<div class=form-group>
-				<label for=url_image_auth_doc class="col-sm-2 control-label">授权书</label>
+				<label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书</label>
 				<div class=col-sm-10>
 					<?php $name_to_upload = 'url_image_auth_doc' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
 					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/auth_doc" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 

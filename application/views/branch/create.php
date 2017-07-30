@@ -20,6 +20,8 @@
 	}
 </style>
 
+<base href="<?php echo base_url('uploads/') ?>">
+
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
 		<li><a href="<?php echo base_url() ?>">首页</a></li>
@@ -52,127 +54,139 @@
 		<p class="bg-info text-info text-center">必填项以“※”符号标识</p>
 
 		<fieldset>
-			<legend>基本信息</legend>
-
-			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">名称</label>
-				<div class=col-sm-10>
-					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="名称" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=description class="col-sm-2 control-label">说明</label>
-				<div class=col-sm-10>
-					<input class=form-control name=description type=text value="<?php echo set_value('description') ?>" placeholder="说明" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=tel_public class="col-sm-2 control-label">消费者联系电话</label>
-				<div class=col-sm-10>
-					<input class=form-control name=tel_public type=tel value="<?php echo set_value('tel_public') ?>" placeholder="消费者联系电话" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号</label>
-				<div class=col-sm-10>
-					<input class=form-control name=tel_protected_biz type=tel value="<?php echo set_value('tel_protected_biz') ?>" placeholder="商务联系手机号" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=tel_protected_order class="col-sm-2 control-label">订单通知手机号</label>
-				<div class=col-sm-10>
-					<input class=form-control name=tel_protected_order type=tel value="<?php echo set_value('tel_protected_order') ?>" placeholder="订单通知手机号" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=day_rest class="col-sm-2 control-label">休息日</label>
-				<div class=col-sm-10>
-					<input class=form-control name=day_rest type=text value="<?php echo set_value('day_rest') ?>" placeholder="休息日" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=time_open class="col-sm-2 control-label">开放时间</label>
-				<div class=col-sm-10>
-					<input class=form-control name=time_open type=text value="<?php echo set_value('time_open') ?>" placeholder="开放时间" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=time_close class="col-sm-2 control-label">结束时间</label>
-				<div class=col-sm-10>
-					<input class=form-control name=time_close type=text value="<?php echo set_value('time_close') ?>" placeholder="结束时间" required>
-				</div>
-			</div>
 			<div class=form-group>
 				<label for=url_image_main class="col-sm-2 control-label">主图</label>
 				<div class=col-sm-10>
-					<input class=form-control name=url_image_main type=text value="<?php echo set_value('url_image_main') ?>" placeholder="主图" required>
+					<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+
+					<?php $name_to_upload = 'url_image_main' ?>
+					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
+
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="branch/main" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+					<ul class="upload_preview list-inline row"></ul>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=figure_image_urls class="col-sm-2 control-label">形象图</label>
 				<div class=col-sm-10>
-					<input class=form-control name=figure_image_urls type=text value="<?php echo set_value('figure_image_urls') ?>" placeholder="形象图" required>
+					<p class=help-block>最多可上传4张</p>
+
+					<?php $name_to_upload = 'figure_image_urls' ?>
+					<input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
+
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="branch/figure_image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+					<ul class="upload_preview list-inline row"></ul>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset>
+			<legend>基本信息</legend>
+
+			<div class=form-group>
+				<label for=name class="col-sm-2 control-label">名称</label>
+				<div class=col-sm-10>
+					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="名称"  required>
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=description class="col-sm-2 control-label">说明</label>
+				<div class=col-sm-10>
+					<input class=form-control name=description type=text value="<?php echo set_value('description') ?>" placeholder="说明">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=tel_public class="col-sm-2 control-label">消费者联系电话</label>
+				<div class=col-sm-10>
+					<input class=form-control name=tel_public type=tel value="<?php echo set_value('tel_public') ?>" placeholder="消费者联系电话">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号</label>
+				<div class=col-sm-10>
+					<input class=form-control name=tel_protected_biz type=tel value="<?php echo set_value('tel_protected_biz') ?>" placeholder="商务联系手机号">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=tel_protected_order class="col-sm-2 control-label">订单通知手机号</label>
+				<div class=col-sm-10>
+					<input class=form-control name=tel_protected_order type=tel value="<?php echo set_value('tel_protected_order') ?>" placeholder="订单通知手机号">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=day_rest class="col-sm-2 control-label">休息日</label>
+				<div class=col-sm-10>
+					<input class=form-control name=day_rest type=text value="<?php echo set_value('day_rest') ?>" placeholder="休息日">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=time_open class="col-sm-2 control-label">营业/配送开始时间</label>
+				<div class=col-sm-10>
+					<input class=form-control name=time_open type=text value="<?php echo set_value('time_open') ?>" placeholder="开放时间">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=time_close class="col-sm-2 control-label">营业/配送结束时间</label>
+				<div class=col-sm-10>
+					<input class=form-control name=time_close type=text value="<?php echo set_value('time_close') ?>" placeholder="结束时间">
 				</div>
 			</div>
 		</fieldset>
 			
 		<fieldset>
+			<legend>地址</legend>
+
 			<div class=form-group>
 				<label for=nation class="col-sm-2 control-label">国别</label>
 				<div class=col-sm-10>
-					<input class=form-control name=nation type=text value="<?php echo set_value('nation') ?>" placeholder="国别" required>
+					<input class=form-control name=nation type=text value="<?php echo set_value('nation') ?>" placeholder="可留空，默认中国">
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=province class="col-sm-2 control-label">省</label>
+				<label for=province class="col-sm-2 control-label">省※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=province type=text value="<?php echo set_value('province') ?>" placeholder="省" required>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=city class="col-sm-2 control-label">市</label>
+				<label for=city class="col-sm-2 control-label">市※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=city type=text value="<?php echo set_value('city') ?>" placeholder="市" required>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=county class="col-sm-2 control-label">区/县</label>
+				<label for=county class="col-sm-2 control-label">区/县※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=county type=text value="<?php echo set_value('county') ?>" placeholder="区/县" required>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=street class="col-sm-2 control-label">具体地址</label>
+				<label for=street class="col-sm-2 control-label">具体地址※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=street type=text value="<?php echo set_value('street') ?>" placeholder="具体地址" required>
 					<input name=longitude type=hidden value="<?php echo set_value('longitude') ?>">
 					<input name=latitude type=hidden value="<?php echo set_value('latitude') ?>">
 				</div>
 			</div>
+
+			<!--
 			<div class=form-group>
-				<label for=region_id class="col-sm-2 control-label">地区ID</label>
+				<label for=region_id class="col-sm-2 control-label">商圈</label>
 				<div class=col-sm-10>
-					<input class=form-control name=region_id type=text value="<?php echo set_value('region_id') ?>" placeholder="地区ID" required>
+					<input class=form-control name=region_id type=text value="<?php echo set_value('region_id') ?>" placeholder="商圈">
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=region class="col-sm-2 control-label">地区</label>
+				<label for=poi_id class="col-sm-2 control-label">子商圈</label>
 				<div class=col-sm-10>
-					<input class=form-control name=region type=text value="<?php echo set_value('region') ?>" placeholder="地区" required>
+					<input class=form-control name=poi_id type=text value="<?php echo set_value('poi_id') ?>" placeholder="子商圈">
 				</div>
 			</div>
-			<div class=form-group>
-				<label for=poi_id class="col-sm-2 control-label">兴趣点ID</label>
-				<div class=col-sm-10>
-					<input class=form-control name=poi_id type=text value="<?php echo set_value('poi_id') ?>" placeholder="兴趣点ID" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=poi class="col-sm-2 control-label">兴趣点</label>
-				<div class=col-sm-10>
-					<input class=form-control name=poi type=text value="<?php echo set_value('poi') ?>" placeholder="兴趣点" required>
-				</div>
-			</div>
+			-->
 		</fieldset>
 
 		<div class=form-group>

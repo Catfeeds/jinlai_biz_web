@@ -32,7 +32,7 @@
 		 */
 		protected $names_edit_required = array(
 			'id',
-			'name', 'time_open', 'time_close', 'province', 'city', 'county', 'street',
+			'name', 'province', 'city', 'county', 'street',
 		);
 		
 		/**
@@ -230,19 +230,17 @@
 			$this->form_validation->set_rules('tel_protected_biz', '商务联系手机号', 'trim');
 			$this->form_validation->set_rules('tel_protected_order', '订单通知手机号', 'trim');
 			$this->form_validation->set_rules('day_rest', '休息日', 'trim');
-			$this->form_validation->set_rules('time_open', '开放时间', 'trim|required');
-			$this->form_validation->set_rules('time_close', '结束时间', 'trim|required');
+			$this->form_validation->set_rules('time_open', '开放时间', 'trim');
+			$this->form_validation->set_rules('time_close', '结束时间', 'trim');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim');
-			$this->form_validation->set_rules('nation', '国别', 'trim|required');
+			$this->form_validation->set_rules('nation', '国别', 'trim');
 			$this->form_validation->set_rules('province', '省', 'trim|required');
 			$this->form_validation->set_rules('city', '市', 'trim|required');
 			$this->form_validation->set_rules('county', '区/县', 'trim|required');
 			$this->form_validation->set_rules('street', '具体地址', 'trim|required');
-			$this->form_validation->set_rules('region_id', '地区ID', 'trim');
-			$this->form_validation->set_rules('region', '地区', 'trim');
-			$this->form_validation->set_rules('poi_id', '兴趣点ID', 'trim');
-			$this->form_validation->set_rules('poi', '兴趣点', 'trim');
+			$this->form_validation->set_rules('region_id', '商圈', 'trim');
+			$this->form_validation->set_rules('poi_id', '子商圈', 'trim');
 			$this->form_validation->set_rules('longitude', '经度', 'trim');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim');
 
@@ -262,7 +260,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'tel_public', 'tel_protected_biz', 'tel_protected_order', 'day_rest', 'time_open', 'time_close', 'url_image_main', 'figure_image_urls', 'nation', 'province', 'city', 'county', 'street', 'region_id', 'region', 'poi_id', 'poi', 'longitude', 'latitude',
+					'name', 'description', 'tel_public', 'tel_protected_biz', 'tel_protected_order', 'day_rest', 'time_open', 'time_close', 'url_image_main', 'figure_image_urls', 'nation', 'province', 'city', 'county', 'street', 'region_id', 'poi_id', 'longitude', 'latitude',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -330,19 +328,17 @@
 			$this->form_validation->set_rules('tel_protected_biz', '商务联系手机号', 'trim');
 			$this->form_validation->set_rules('tel_protected_order', '订单通知手机号', 'trim');
 			$this->form_validation->set_rules('day_rest', '休息日', 'trim');
-			$this->form_validation->set_rules('time_open', '开放时间', 'trim|required');
-			$this->form_validation->set_rules('time_close', '结束时间', 'trim|required');
+			$this->form_validation->set_rules('time_open', '开放时间', 'trim');
+			$this->form_validation->set_rules('time_close', '结束时间', 'trim');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim');
-			$this->form_validation->set_rules('nation', '国别', 'trim|required');
+			$this->form_validation->set_rules('nation', '国别', 'trim');
 			$this->form_validation->set_rules('province', '省', 'trim|required');
 			$this->form_validation->set_rules('city', '市', 'trim|required');
 			$this->form_validation->set_rules('county', '区/县', 'trim|required');
 			$this->form_validation->set_rules('street', '具体地址', 'trim|required');
-			$this->form_validation->set_rules('region_id', '地区ID', 'trim');
-			$this->form_validation->set_rules('region', '地区', 'trim');
-			$this->form_validation->set_rules('poi_id', '兴趣点ID', 'trim');
-			$this->form_validation->set_rules('poi', '兴趣点', 'trim');
+			$this->form_validation->set_rules('region_id', '商圈', 'trim');
+			$this->form_validation->set_rules('poi_id', '子商圈', 'trim');
 			$this->form_validation->set_rules('longitude', '经度', 'trim');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim');
 
@@ -363,7 +359,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'tel_public', 'tel_protected_biz', 'tel_protected_order', 'day_rest', 'time_open', 'time_close', 'url_image_main', 'figure_image_urls', 'nation', 'province', 'city', 'county', 'street', 'region_id', 'region', 'poi_id', 'poi', 'longitude', 'latitude',
+					'name', 'description', 'tel_public', 'tel_protected_biz', 'tel_protected_order', 'day_rest', 'time_open', 'time_close', 'url_image_main', 'figure_image_urls', 'nation', 'province', 'city', 'county', 'street', 'region_id', 'poi_id', 'longitude', 'latitude',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);

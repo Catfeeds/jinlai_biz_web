@@ -64,9 +64,9 @@
 			</figure>
 		</dd>
 
-		<?php if ( !empty($item['figure_image_urls']) ): ?>
 		<dt>形象图</dt>
 		<dd>
+			<?php if ( !empty($item['figure_image_urls']) ): ?>
 			<ul class=row>
 				<?php
 					$figure_image_urls = explode(',', $item['figure_image_urls']);
@@ -77,12 +77,14 @@
 				</li>
 				<?php endforeach ?>
 			</ul>
+			<?php else: ?>
+			未上传
+			<?php endif ?>
 		</dd>
-		<?php endif ?>
 
-		<?php if ( !empty($item['figure_video_urls']) ): ?>
 		<dt>形象视频</dt>
 		<dd>
+			<?php if ( !empty($item['figure_video_urls']) ): ?>
 			<ul class=row>
 				<?php
 					$figure_video_urls = explode(',', $item['figure_video_urls']);
@@ -93,7 +95,10 @@
 				</li>
 				<?php endforeach ?>
 			</ul>
-		<?php endif ?>
+			<?php else: ?>
+			未上传
+			<?php endif ?>
+		</dd>
 
 		<dt>状态</dt>
 		<dd><?php echo $item['status'] ?></dd>
@@ -163,12 +168,12 @@
 				<li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume']: '-'; ?> KG</li>
 			</ul>
 		</dd>
-		
+
 		<dt>运费模板</dt>
 		<dd>
 			<?php
 				if ( !empty($item['freight_template_id']) ):
-					echo $freight_template['name']
+					echo $freight_template['name'];
 				else:
 			?>
 			包邮（免运费）

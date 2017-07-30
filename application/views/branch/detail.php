@@ -20,6 +20,8 @@
 	}
 </style>
 
+<base href="<?php echo base_url('uploads/') ?>">
+
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
 		<li><a href="<?php echo base_url() ?>">首页</a></li>
@@ -54,6 +56,39 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
+		<dt>主图</dt>
+		<dd class=row>
+			<?php if ( !empty($item['url_image_main']) ): ?>
+			<figure class="col-xs-12 col-sm-6 col-md-4">
+				<img src="<?php echo $item['url_image_main'] ?>">
+			</figure>
+			<?php else: ?>
+			未上传
+			<?php endif ?>
+		</dd>
+
+		<dt>形象图</dt>
+		<dd>
+			<?php if ( !empty($item['figure_image_urls']) ): ?>
+			<ul class=row>
+				<?php
+					$figure_image_urls = explode(',', $item['figure_image_urls']);
+					foreach($figure_image_urls as $url):
+				?>
+				<li class="col-xs-6 col-sm-4 col-md-3">
+					<img src="<?php echo $url ?>">
+				</li>
+				<?php endforeach ?>
+			</ul>
+			<?php else: ?>
+			未上传
+			<?php endif ?>
+		</dd>
+
+		<dt>状态</dt>
+		<dd><?php echo $item['status'] ?></dd>
+		<dt>门店ID</dt>
+		<dd><?php echo $item['branch_id'] ?></dd>
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>说明</dt>
@@ -66,34 +101,57 @@
 		<dd><?php echo $item['tel_protected_order'] ?></dd>
 		<dt>休息日</dt>
 		<dd><?php echo $item['day_rest'] ?></dd>
-		<dt>开放时间</dt>
-		<dd><?php echo $item['time_open'] ?>:00</dd>
-		<dt>结束时间</dt>
-		<dd><?php echo $item['time_close'] ?>:00</dd>
-		<dt>主图</dt>
-		<dd><?php echo $item['url_image_main'] ?></dd>
-		<dt>形象图</dt>
-		<dd><?php echo $item['figure_image_urls'] ?></dd>
-		<dt>国别</dt>
-		<dd><?php echo $item['nation'] ?></dd>
-		<dt>省</dt>
-		<dd><?php echo $item['province'] ?></dd>
-		<dt>市</dt>
-		<dd><?php echo $item['city'] ?></dd>
-		<dt>区/县</dt>
-		<dd><?php echo $item['county'] ?></dd>
-		<dt>具体地址</dt>
-		<dd><?php echo $item['street'] ?></dd>
-		<dt>地区ID</dt>
-		<dd><?php echo $item['region_id'] ?></dd>
-		<dt>地区</dt>
+		<dt>营业/配送时间</dt>
+		<dd><?php echo $item['time_open'] ?>:00 - <?php echo $item['time_close'] ?>:00</dd>
+		<dt>地址</dt>
+		<dd>
+			<p>
+				<?php echo $item['nation'] ?> <?php echo $item['province'] ?>省 <?php echo $item['city'] ?>市 <?php echo $item['county'] ?>区/县<br>
+				<?php echo $item['street'] ?>
+			</p>
+			
+			<?php if ( !empty($item['longitude']) && !empty($item['latitude']) ): ?>
+			<figure class="row">
+				<figcaption>
+					<p class="bg-info text-info text-center">
+						经纬度 <?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>
+					</p>
+				</figcaption>
+				<div id=map style="height:300px;background-color:#aaa"></div>
+			</figure>
+			
+			<script src="https://webapi.amap.com/maps?v=1.3&key=d698fd0ab2d88ad11f4c6a2c0e83f6a8"></script>
+			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
+			<script>
+				var lnglat = [<?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>];
+			    var map = new AMap.Map('map',{
+					center: lnglat,
+			        zoom: 16,
+		            scrollWheel: false,
+					mapStyle: 'amap://styles/2daddd87cfd0fa58d0bc932eed31b9d8', // 自定义样式
+			    });
+				marker = new AMap.Marker({
+		            position: lnglat,
+		        });
+		        marker.setMap(map);
+
+				// 为BasicControl设置DomLibrary，jQuery
+				AMapUI.setDomLibrary($);
+				AMapUI.loadUI(['control/BasicControl'], function(BasicControl) {
+					// 缩放控件
+				    map.addControl(new BasicControl.Zoom({
+				        position: 'rb', // 右下角
+				    }));
+				});
+			</script>
+			<?php endif ?>
+		</dd>
+		<!--
+		<dt>商圈</dt>
 		<dd><?php echo $item['region'] ?></dd>
-		<dt>兴趣点ID</dt>
-		<dd><?php echo $item['poi_id'] ?></dd>
-		<dt>兴趣点</dt>
+		<dt>子商圈</dt>
 		<dd><?php echo $item['poi'] ?></dd>
-		<dt>状态</dt>
-		<dd><?php echo $item['status'] ?></dd>
+		-->
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

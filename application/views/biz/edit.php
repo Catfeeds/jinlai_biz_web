@@ -119,13 +119,13 @@
 			<legend>资质信息</legend>
 
 			<div class=form-group>
-				<label for=code_license class="col-sm-2 control-label">统一社会信用代码</label>
+				<label for=code_license class="col-sm-2 control-label">统一社会信用代码/营业执照号※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=code_license type=number step=1 size=18 value="<?php echo $item['code_license'] ?>" placeholder="统一社会信用代码" required>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号</label>
+				<label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=code_ssn_owner type=text value="<?php echo $item['code_ssn_owner'] ?>" placeholder="法人身份证号" required>
 				</div>
@@ -143,7 +143,7 @@
 			<p class=helper-block>以下资料需要彩色原件的扫描件或数码照</p>
 
 			<div class=form-group>
-				<label for=url_image_license class="col-sm-2 control-label">营业执照</label>
+				<label for=url_image_license class="col-sm-2 control-label">营业执照※</label>
 				<div class=col-sm-10>
 					<?php if ( !empty($item['url_image_license']) ): ?>
 					<div class=row>
@@ -169,7 +169,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=url_image_owner_id class="col-sm-2 control-label">法人身份证</label>
+				<label for=url_image_owner_id class="col-sm-2 control-label">法人身份证※</label>
 				<div class=col-sm-10>
 					<?php if ( !empty($item['url_image_owner_id']) ): ?>
 					<div class=row>
@@ -219,7 +219,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=url_image_auth_doc class="col-sm-2 control-label">授权书</label>
+				<label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书</label>
 				<div class=col-sm-10>
 					<?php if ( !empty($item['url_image_auth_doc']) ): ?>
 					<div class=row>
@@ -349,30 +349,12 @@
 		</fieldset>
 		
 		<fieldset>
-			<legend>物流信息</legend>
+			<legend>地址信息</legend>
 			
 			<div class=form-group>
 				<label for=tel_protected_order class="col-sm-2 control-label">订单通知手机号</label>
 				<div class=col-sm-10>
 					<input class=form-control name=tel_protected_order type=tel size=11 value="<?php echo $item['tel_protected_order'] ?>" placeholder="订单通知手机号">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=min_order_subtotal class="col-sm-2 control-label">最低小计金额（元）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=min_order_subtotal type=number step=0.01 min=1 max=99999.99 value="<?php echo $item['min_order_subtotal'] ?>" placeholder="最低小计金额（元）">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=delivery_time_start class="col-sm-2 control-label">配送起始时间（时）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=delivery_time_start type=number step=1 min=0 max=22 value="<?php echo $item['delivery_time_start'] ?>" placeholder="24小时制，例如上午8时请填写“8”">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=delivery_time_end class="col-sm-2 control-label">配送结束时间（时）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=delivery_time_end type=number step=1 min=1 max=23 value="<?php echo $item['delivery_time_end'] ?>" placeholder="24小时制，例如下午10时请填写“22”">
 				</div>
 			</div>
 			<div class=form-group>
@@ -401,9 +383,9 @@
 			</div>
 
 			<div class=form-group>
-				<label for=detail class="col-sm-2 control-label">详细地址</label>
+				<label for=street class="col-sm-2 control-label">具体地址</label>
 				<div class=col-sm-10>
-					<input class=form-control name=detail type=text value="<?php echo $item['detail'] ?>" placeholder="详细地址">
+					<input class=form-control name=street type=text value="<?php echo $item['detail'] ?>" placeholder="详细地址">
 				</div>
 			</div>
 
