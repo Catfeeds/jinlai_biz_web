@@ -66,9 +66,9 @@
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'name' => '商品名称',
+				'name' => '名称',
 				'price' => '商城价/现价（元）',
-				'status' => '商品状态',
+				'status' => '状态',
 			);
 		}
 
@@ -387,7 +387,7 @@
 			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '预定上架时间需详细到分，且晚于当前时间1分钟后');
-			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后，亦不可早于预订上架时间（若有）');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 
@@ -493,7 +493,7 @@
 			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '预定上架时间需详细到分，且晚于当前时间1分钟后');
-			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后，亦不可早于预订上架时间（若有）');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 			
@@ -747,7 +747,7 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+			$this->form_validation->set_rules('ids', '待操作数据', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
 
 			// 若表单提交不成功
@@ -840,13 +840,16 @@
 				$ids = $this->input->post('ids[]');
 
 			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+				var_dump($_POST);
+				echo '<br>';
+				var_dump($_GET);
+				//redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 
 			endif;
-			
+
 			// 赋值视图中需要用到的待操作项数据
 			$data['ids'] = $ids;
-			
+
 			// 获取待操作项数据
 			$data['items'] = array();
 			foreach ($ids as $id):
@@ -866,7 +869,7 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+			$this->form_validation->set_rules('ids', '待操作数据', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
 
 			// 若表单提交不成功

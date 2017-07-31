@@ -152,7 +152,7 @@
 					<?php endif ?>
 
 					<div>
-						<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+						<p class=help-block>推荐上传正方形图片以达到最佳视觉效果</p>
 						<?php $name_to_upload = 'url_image_main' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>

@@ -52,7 +52,7 @@
 	</blockquote>
 
 	<?php else: ?>
-	<form method=post target=_blank>
+	<form method=get target=_blank>
 		<fieldset>
 			<div class=btn-group role=group>
 				<button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit class="btn btn-default">删除</button>
@@ -64,6 +64,7 @@
 				<tr>
 					<th>&nbsp;</th>
 					<th><?php echo $this->class_name_cn ?>ID</th>
+					<th>下单时间</th>
 					<?php
 						$thead = array_values($data_to_display);
 						foreach ($thead as $th):
@@ -81,6 +82,7 @@
 						<input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
 					</td>
 					<td><?php echo $item[$this->id_name] ?></td>
+					<td><?php echo date('Y-m-d H:i:s', $item['time_create']) ?></td>
 					<?php
 						$tr = array_keys($data_to_display);
 						foreach ($tr as $td):
@@ -94,8 +96,15 @@
 							// 需要特定角色和权限进行该操作
 							if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 							?>
-							<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-edit"></i> 编辑</a></li>
-							<li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-trash"></i> 删除</a></li>
+							<li><a title="备注" href="<?php echo base_url($this->class_name.'/memo?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-comment"></i> 备注</a></li>
+
+							<li><a title="改价" href="<?php echo base_url($this->class_name.'/reprice?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-tags"></i> 改价</a></li>
+
+							<li><a title="退单" href="<?php echo base_url($this->class_name.'/refuse?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-reply"></i> 退单</a></li>
+
+							<li><a title="接单" href="<?php echo base_url($this->class_name.'/accept?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-share"></i> 接单</a></li>
+
+							<li><a title="发货" href="<?php echo base_url($this->class_name.'/deliver?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-truck"></i> 发货</a></li>
 							<?php endif ?>
 						</ul>
 					</td>

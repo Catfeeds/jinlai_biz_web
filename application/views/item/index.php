@@ -61,12 +61,12 @@
 	</blockquote>
 
 	<?php else: ?>
-	<form method=post target=_blank>
+	<form method=get target=_blank>
 		<fieldset>
 			<div class=btn-group role=group>
-				<button formaction="<?php echo base_url($this->class_name.'/publish') ?>" type=submit class="btn btn-default">上架</button>
-				<button formaction="<?php echo base_url($this->class_name.'/suspend') ?>" type=submit class="btn btn-default">下架</button>
-				<button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit class="btn btn-default">删除</button>
+				<button formaction="<?php echo base_url($this->class_name.'/publish') ?>" type=submit class="btn btn-warning">上架</button>
+				<button formaction="<?php echo base_url($this->class_name.'/suspend') ?>" type=submit class="btn btn-warning">下架</button>
+				<button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit class="btn btn-danger">删除</button>
 			</div>
 		</fieldset>
 
@@ -81,7 +81,7 @@
 							echo '<th>' .$th. '</th>';
 						endforeach;
 					?>
-					<th>商品规格（SKU）</th>
+					<th>商品规格/SKU</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -101,8 +101,8 @@
 					?>
 					<td>
 						<ul class=list-unstyled>
-							<li><a title="SKU列表" href="<?php echo base_url('sku/index?item_id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-eye"></i> SKU列表</a></li>
-							<li><a title="创建SKU" href="<?php echo base_url('sku/create?item_id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-plus"></i> 创建SKU</a></li>
+							<li><a title="SKU列表" href="<?php echo base_url('sku/index?item_id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-eye"></i> 规格列表</a></li>
+							<li><a title="创建SKU" href="<?php echo base_url('sku/create?item_id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-plus"></i> 创建规格</a></li>
 						</ul>
 					</td>
 					<td>

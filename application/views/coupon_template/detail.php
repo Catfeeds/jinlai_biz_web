@@ -43,7 +43,7 @@
 		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
-	
+
 	<ul class=list-unstyled>
 		<?php
 		// 需要特定角色和权限进行该操作
@@ -62,20 +62,21 @@
 		<dd><?php echo $item['description'] ?></dd>
 		<dt>面值</dt>
 		<dd>￥ <?php echo $item['amount'] ?></dd>
+		<dt>起用金额/订单小计</dt>
+		<dd>￥ <?php echo $item['min_subtotal'] ?></dd>
+
 		<dt>限量</dt>
 		<dd>
-			<?php echo empty($item['max_amount'])? '不限量': $item['max_amount'].'份'; ?>
+			<?php echo empty($item['max_amount'])? '否': $item['max_amount'].'份'; ?>
 			<p class=helper-block>当作为优惠券包中的优惠券进行发放时，限量以优惠券包限量为准</p>
 		</dd>
-		<dt>最低订单小计</dt>
-		<dd>￥ <?php echo $item['min_subtotal'] ?></dd>
 		<dt>限用系统分类</dt>
 		<dd><?php echo empty($item['category_id'])? '不限': $category['name']; ?></dd>
 		<dt>限用店内分类</dt>
 		<dd><?php echo empty($item['category_biz_id'])? '不限': $category_biz['name']; ?></dd>
 		<dt>限用商品</dt>
 		<dd><?php echo empty($item['item_id'])? '不限': $item['item_id']; ?></dd>
-		
+
 		<?php
 			$options = array(
 				'1小时' => '3600',
@@ -104,10 +105,11 @@
 		?>
 		<dt>有效期</dt>
 		<dd><?php echo $options[ $item['period'] ] ?></dd>
-		<dt>开始时间</dt>
-		<dd><?php echo empty($item['time_start'])? '自领取时起': date('Y-m-d H:i:s', $item['time_start']); ?></dd>
-		<dt>结束时间</dt>
-		<dd><?php echo empty($item['time_end'])? '见有效期': date('Y-m-d H:i:s', $item['time_end']); ?></dd>
+		<dt>有效时间</dt>
+		<dd>
+			<p class="bg-info text-info text-center">若未指定结束时间但已指定了有效期，则结束时间以有效期为准</p>
+			<?php echo empty($item['time_start'])? '自领取时起': date('Y-m-d H:i:s', $item['time_start']); ?> <?php echo empty($item['time_end'])? '至 有效期结束': '至 '.date('Y-m-d H:i:s', $item['time_end']); ?>
+		</dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

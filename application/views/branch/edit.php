@@ -51,7 +51,7 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
-		<p class="bg-info text-info text-center">必填项以“※”符号标识</p>
+		<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
 
 		<fieldset>
 			<div class=form-group>
@@ -66,7 +66,7 @@
 					<?php endif ?>
 
 					<div>
-						<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+						<p class=help-block>推荐上传正方形图片以达到最佳视觉效果</p>
 						<?php $name_to_upload = 'url_image_main' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -155,24 +155,24 @@
 			<div class=form-group>
 				<label for=time_open class="col-sm-2 control-label">营业/配送开始时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_open type=text value="<?php echo $item['time_open'] ?>" placeholder="开放时间">
+					<input class=form-control name=time_open type=number min=0 step=1 max=22 value="<?php echo $item['time_open'] ?>" placeholder="开放时间">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=time_close class="col-sm-2 control-label">营业/配送结束时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_close type=text value="<?php echo $item['time_close'] ?>" placeholder="结束时间">
+					<input class=form-control name=time_close type=number min=1 step=1 max=23 value="<?php echo $item['time_close'] ?>" placeholder="结束时间">
 				</div>
 			</div>
 		</fieldset>
-			
+
 		<fieldset>
 			<legend>地址</legend>
 
 			<div class=form-group>
 				<label for=nation class="col-sm-2 control-label">国别</label>
 				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $item['country'] ?></p>
+					<p class="form-control-static"><?php echo $item['nation'] ?></p>
 				</div>
 			</div>
 			<div class=form-group>
@@ -197,10 +197,143 @@
 				<label for=street class="col-sm-2 control-label">具体地址※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=street type=text value="<?php echo $item['street'] ?>" placeholder="具体地址" required>
-					<input name=longitude type=hidden value="<?php echo $item['longitude'] ?>">
-					<input name=latitude type=hidden value="<?php echo $item['latitude'] ?>">
 				</div>
 			</div>
+			
+			<div class=form-group>
+				<figure class="col-sm-10 col-sm-offset-2">
+					<figcaption>
+						<p class=help-block>拖动地图可完善位置信息</p>
+					</figcaption>
+					<div id=map class="col-xs-12" style="height:300px;background-color:#aaa"></div>
+				</figure>
+				<input name=longitude type=hidden value="<?php echo $item['longitude'] ?>">
+				<input name=latitude type=hidden value="<?php echo $item['latitude'] ?>">
+			</div>
+
+			<script src="https://webapi.amap.com/maps?v=1.3&key=d698fd0ab2d88ad11f4c6a2c0e83f6a8"></script>
+			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
+			<script>
+			    var map = new AMap.Map('map',{
+					<?php if ( !empty($item['longitude']) && !empty($item['latitude']) ): ?>
+					center: [<?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>],
+					<?php endif ?>
+					zoom: 16,
+		            scrollWheel: false,
+					mapStyle: 'amap://styles/2daddd87cfd0fa58d0bc932eed31b9d8', // 自定义样式，通过高德地图控制台管理
+			    });
+
+				<?php if ( empty($item['longitude']) || empty($item['latitude']) ): ?>
+				// 若未设置过经纬度信息，默认获取并定位到当前位置
+				map.plugin('AMap.Geolocation', function() {
+			        var geolocation = new AMap.Geolocation({
+			            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+			            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+			            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+			            zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+			            buttonPosition:'RB'
+			        });
+			        map.addControl(geolocation);
+			        geolocation.getCurrentPosition();
+			        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+			        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+			    });
+			    //解析定位结果
+			    function onComplete(data)
+				{
+					// 提示用户确定修改
+					var user_confirm = confirm("是否修改位置为图中地点");
+				    if (user_confirm == true)
+				    {
+						document.getElementsByName('longitude')[0].value = data.position.getLng();
+						document.getElementsByName('latitude')[0].value = data.position.getLat();
+					}
+			    }
+				//解析定位错误信息
+			    function onError(data)
+				{
+			        alert('定位失败');
+			    }
+				<?php endif ?>
+
+				// 为BasicControl设置DomLibrary，jQuery
+				AMapUI.setDomLibrary($);
+				AMapUI.loadUI(['control/BasicControl', 'misc/PositionPicker'], function(BasicControl, PositionPicker) {
+					// 缩放控件
+				    map.addControl(new BasicControl.Zoom({
+				        position: 'rb', // 右下角
+				    }));
+
+				    var positionPicker = new PositionPicker({
+				        mode: 'dragMap',//设定为拖拽地图模式，可选'dragMap'、'dragMarker'，默认为'dragMap'
+				        map: map//依赖地图对象
+				    });
+
+				    // 获取定位点经纬度并写入相应字段
+					positionPicker.on('success', function(positionResult){
+						// 忽略首次拖拽选址（即防止页面载入时提示修改定位点）
+						if (times_picked != 0){
+							// 提示用户确定修改
+							var user_confirm = confirm("是否修改位置为图中地点");
+						    if (user_confirm == true)
+						    {
+								document.getElementsByName('longitude')[0].value = positionResult.position.lng;
+								document.getElementsByName('latitude')[0].value = positionResult.position.lat;
+							}
+						}
+
+						times_picked++;
+					});
+					positionPicker.on('fail', function(positionResult) {
+					    // 海上或海外无法获得地址信息
+					    document.getElementsByName('longitude')[0].value = '';
+					    document.getElementsByName('latitude')[0].value = '';
+					});
+
+					// 忽略首次拖拽选址（即防止页面载入时提示修改定位点）
+			    	times_picked = 0;
+
+			        positionPicker.start();
+			        //map.panBy(0, 1);
+
+					// 根据详细地址获取经纬度
+					document.getElementsByName('street')[0].onchange =
+						function(){
+							// 忽略首次拖拽选址（即防止页面载入时提示修改定位点）
+							times_picked = 0;
+
+							var address_text =
+								document.getElementsByName('province')[0].value +
+								document.getElementsByName('city')[0].value +
+								document.getElementsByName('county')[0].value +
+								document.getElementsByName('street')[0].value;
+							address_to_lnglat(address_text);
+						};
+
+					function address_to_lnglat(address_text){
+
+						AMap.service('AMap.Geocoder',function(){//回调函数
+					        var geocoder = new AMap.Geocoder({
+					            radius: 1000 //范围，默认：500
+					        });
+
+					        // 返回经纬度，并将地图中心重置
+							geocoder.getLocation(address_text, function(status, result){
+							    if (status === 'complete' && result.info === 'OK') {
+									console.log(result.geocodes[0].formattedAddress);
+									document.getElementsByName('longitude')[0].value = result.geocodes[0].location.lng;
+									document.getElementsByName('latitude')[0].value = result.geocodes[0].location.lat;
+									//map.setFitView();
+									map.setCenter(
+										[result.geocodes[0].location.lng, result.geocodes[0].location.lat]
+									);
+							    }
+							});
+						});
+						
+				    }
+				});
+			</script>
 			<!--
 			<div class=form-group>
 				<label for=region_id class="col-sm-2 control-label">商圈</label>

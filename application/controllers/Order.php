@@ -66,14 +66,13 @@
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'user_id' => '用户ID',
 				'subtotal' => '小计（元）',
 				'total' => '应支付金额（元）',
 				'total_payed' => '实际支付金额（元）',
 				'status' => '状态',
 			);
 		}
-		
+
 		/**
 		 * 截止3.1.3为止，CI_Controller类无析构函数，所以无需继承相应方法
 		 */

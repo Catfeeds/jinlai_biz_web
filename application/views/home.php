@@ -28,7 +28,7 @@
 		<img alt="进来商家招商中" src="<?php echo base_url('/media/home/recruiting.jpg') ?>">
 		<p class=text-center>加入「进来」，让首家品控网购平台上最有消费能力的消费者在你店里疯狂买买买！</p>
 	</div>
-	
+
 	<div id=prerequisite class=well>
 		<p class=helper-block>准备好以下材料即可开始入驻申请（影印件指彩色原件的扫描件或数码照）：</p>
 		<ul>
@@ -110,9 +110,14 @@
 				<a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">商品分类</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['freight_template_biz'] ?></span>
-				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">运费模板</a>
+				<span class=count><?php echo $count['stuff'] ?></span>
+				<a title="团队管理" href="<?php echo base_url('stuff') ?>">团队</a>
 			</li>
+			<li class="col-xs-3 col-md-2">
+				<span class=count><?php echo $count['branch'] ?></span>
+				<a title="门店管理" href="<?php echo base_url('branch') ?>">门店/仓库</a>
+			</li>
+			
 			<li class="col-xs-3 col-md-2">
 				<span class=count><?php echo $count['promotion'] ?></span>
 				<a title="平台活动" href="<?php echo base_url('promotion') ?>">平台活动</a>
@@ -129,13 +134,10 @@
 				<span class=count><?php echo $count['coupon_combo'] ?></span>
 				<a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">优惠券包</a>
 			</li>
+			
 			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['stuff'] ?></span>
-				<a title="团队管理" href="<?php echo base_url('stuff') ?>">团队管理</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['branch'] ?></span>
-				<a title="门店管理" href="<?php echo base_url('branch') ?>">门店管理</a>
+				<span class=count><?php echo $count['freight_template_biz'] ?></span>
+				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">运费模板</a>
 			</li>
 		</ul>
 
@@ -149,7 +151,7 @@
 				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
-				<a title="退款处理" href="<?php echo base_url('refund') ?>">退款处理</a>
+				<a title="退款处理" href="<?php echo base_url('refund') ?>">退款/售后</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
 				<a title="商品评价" href="<?php echo base_url('comment_item') ?>">商品评价</a>

@@ -385,15 +385,14 @@
 			<div class=form-group>
 				<label for=street class="col-sm-2 control-label">具体地址</label>
 				<div class=col-sm-10>
-					<input class=form-control name=street type=text value="<?php echo $item['street'] ?>" placeholder="详细地址">
+					<input class=form-control name=street type=text value="<?php echo $item['street'] ?>" placeholder="具体地址">
 				</div>
 			</div>
 
 			<div class=form-group>
 				<figure class="col-sm-10 col-sm-offset-2">
 					<figcaption>
-						<p class="bg-info text-info text-center">您可拖动地图完善位置信息</p>
-						<div id="tip"></div>
+						<p class=help-block>拖动地图可完善位置信息</p>
 					</figcaption>
 					<div id=map class="col-xs-12" style="height:300px;background-color:#aaa"></div>
 				</figure>
@@ -487,7 +486,7 @@
 			        //map.panBy(0, 1);
 
 					// 根据详细地址获取经纬度
-					document.getElementsByName('detail')[0].onchange =
+					document.getElementsByName('street')[0].onchange =
 						function(){
 							// 忽略首次拖拽选址（即防止页面载入时提示修改定位点）
 							times_picked = 0;
@@ -496,7 +495,7 @@
 								document.getElementsByName('province')[0].value +
 								document.getElementsByName('city')[0].value +
 								document.getElementsByName('county')[0].value +
-								document.getElementsByName('detail')[0].value;
+								document.getElementsByName('street')[0].value;
 							address_to_lnglat(address_text);
 						};
 

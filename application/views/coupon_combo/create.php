@@ -83,29 +83,65 @@
 			</div>
 
 			<div class=form-group>
-				<label for=template_ids class="col-sm-2 control-label">优惠券模板※</label>
+				<label for=template_ids class="col-sm-2 control-label">所含优惠券※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=template_ids type=text value="<?php echo set_value('template_ids') ?>" placeholder="优惠券模板ID们" required>
+					<input class=form-control name=template_ids type=text value="<?php echo set_value('template_ids') ?>" placeholder="请输入所含优惠券ID，多个ID间以一个半角逗号“,”分隔" required>
+
+					<script>
+						$(function(){
+							$('[name="ids[]"]').change(function(){
+								// 获取选项ID
+								var item_id = $(this).val();
+								console.log(item_id + ' selected');
+
+								// 获取当前字段及字段值
+								var input = $('[name=ids]');
+								var origin_ids = input.val();
+
+								// 若所选项值在当前值中不存在，则追加所选项值到当前值末尾，否则删除当前值中的所选值
+								var value_to_check = origin_ids + ',';
+								console.log(value_to_check);
+								if (value_to_check.indexOf(','+item_id+',') == -1)
+								{
+									var current_ids = origin_ids + ',' + item_id;
+									input.val(current_ids);
+									console.log(current_ids + ' after appended');
+								}
+								else
+								{
+									var current_ids = value_to_check.replace(','+item_id+',', ',');
+									current_ids = current_ids.slice(0, -1); // 去掉末尾的冗余半角逗号
+									input.val(current_ids);
+									console.log(current_ids + ' after deleted');
+								}
+							});
+
+							$('form').submit(function(){
+								var value = $('[name="ids"]').val();
+								alert(value);
+							});
+						});
+					</script>
 				</div>
 			</div>
 			
 			<div class=form-group>
 				<label for=max_amount class="col-sm-2 control-label">限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=max_amount type=number step=1 min=1 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="最高999999">
+					<input class=form-control name=max_amount type=number step=1 min=1 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="最高999999，不限量请填0">
 				</div>
 			</div>
 
 			<div class=form-group>
-				<label for=time_start class="col-sm-2 control-label">开始时间</label>
+				<label for=time_start class="col-sm-2 control-label">开始领取时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_start type=datetime value="<?php echo set_value('time_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>">
+					<input class=form-control name=time_start type=datetime value="<?php echo set_value('time_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>；留空则马上开放领取">
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=time_end class="col-sm-2 control-label">结束时间</label>
+				<label for=time_end class="col-sm-2 control-label">结束领取时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_end type=datetime value="<?php echo set_value('time_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>">
+					<input class=form-control name=time_end type=datetime value="<?php echo set_value('time_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>；留空则长期有效">
 				</div>
 			</div>
 		</fieldset>

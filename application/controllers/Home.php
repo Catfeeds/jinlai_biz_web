@@ -56,13 +56,14 @@
 				'order' => $this->count_table('order'),
 				'item_category_biz' => $this->count_table('item_category_biz'),
 				'freight_template_biz' => $this->count_table('freight_template_biz'),
+				'stuff' => $this->count_table('stuff'),
+				'branch' => $this->count_table('branch'),
 
 				'promotion' => $this->count_table('promotion'),
 				'promotion_biz' => $this->count_table('promotion_biz'),
 				'coupon_template' => $this->count_table('coupon_template'),
 				'coupon_combo' => $this->count_table('coupon_combo'),
-				'stuff' => $this->count_table('stuff'),
-				'branch' => $this->count_table('branch'),
+				
 
 				// 以下功能开通后可取消注释，并在视图文件中添加相应DOM
 				/*

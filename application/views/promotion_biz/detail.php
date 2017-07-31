@@ -116,8 +116,12 @@
 	<dl data-type="单品满减,订单满减" class="dl-horizontal params">
 		<dt>满减触发金额</dt>
 		<dd>￥ <?php echo $item['reduction_trigger_amount'] ?></dd>
+		<dt>满减触发件数</dt>
+		<dd><?php echo $item['reduction_trigger_count'] ?></dd>
 		<dt>减免金额</dt>
 		<dd>￥ <?php echo $item['reduction_amount'] ?></dd>
+		<dt>最高减免次数</dt>
+		<dd><?php echo $item['reduction_amount_time'] ?> 次</dd>
 		<dt>减免比例</dt>
 		<dd><?php echo $item['reduction_discount'] * 100 ?>%</dd>
 	</dl>

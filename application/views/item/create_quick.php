@@ -100,7 +100,7 @@
 			<div class=form-group>
 				<label for=url_image_main class="col-sm-2 control-label">主图※</label>
 				<div class=col-sm-10>
-					<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+					<p class=help-block>推荐上传正方形图片以达到最佳视觉效果</p>
 
 					<?php $name_to_upload = 'url_image_main' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -130,8 +130,8 @@
 				<label for=coupon_allowed class="col-sm-2 control-label">是否可用优惠券※</label>
 				<div class=col-sm-10>
 					<select class=form-control name=coupon_allowed required>
-						<option value=1 <?php echo set_select('coupon_allowed', 1) ?>>允许</option>
-						<option value=0 <?php echo set_select('coupon_allowed', 0) ?>>不允许</option>
+						<option value=1 <?php echo set_select('coupon_allowed', 1) ?>>是</option>
+						<option value=0 <?php echo set_select('coupon_allowed', 0) ?>>否</option>
 					</select>
 				</div>
 			</div>

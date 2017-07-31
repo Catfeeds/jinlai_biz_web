@@ -42,7 +42,6 @@
 	</blockquote>
 
 	<?php else: ?>
-
 	<table class="table table-condensed table-responsive table-striped sortable">
 		<thead>
 			<tr>

@@ -66,7 +66,9 @@
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
 				'name' => '名称',
-				'description' => '描述',
+				'province' => '省',
+				'city' => '市',
+				'county' => '区/县',
 			);
 		}
 		

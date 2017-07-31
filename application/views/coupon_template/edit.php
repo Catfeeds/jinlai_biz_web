@@ -97,18 +97,18 @@
 					<input class=form-control name=amount type=number step=1 min=1 max=999 value="<?php echo $item['amount'] ?>" placeholder="最高999" required>
 				</div>
 			</div>
+			
+			<div class=form-group>
+				<label for=min_subtotal class="col-sm-2 control-label">起用金额/订单小计（元）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=min_subtotal type=number step=1 max=9999 value="<?php echo $item['min_subtotal'] ?>" placeholder="留空则不限，最高9999">
+				</div>
+			</div>
 
 			<div class=form-group>
 				<label for=max_amount class="col-sm-2 control-label">限量（份）</label>
 				<div class=col-sm-10>
 					<input class=form-control name=max_amount type=number step=1 max=999999 value="<?php echo $item['max_amount'] ?>" placeholder="留空则不限，最高999999">
-				</div>
-			</div>
-			
-			<div class=form-group>
-				<label for=min_subtotal class="col-sm-2 control-label">最低订单小计（元）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=min_subtotal type=number step=1 max=9999 value="<?php echo $item['min_subtotal'] ?>" placeholder="留空则不限，最高9999">
 				</div>
 			</div>
 

@@ -222,9 +222,21 @@
 				</div>
 			</div>
 			<div class=form-group>
+				<label for=reduction_trigger_count class="col-sm-2 control-label">满减触发件数（件）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=reduction_trigger_count type=number step=1 max=99 value="<?php echo $item['reduction_trigger_count'] ?>" placeholder="最高99">
+				</div>
+			</div>
+			<div class=form-group>
 				<label for=reduction_amount class="col-sm-2 control-label">减免金额（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=reduction_amount type=number step=1 max=99999 value="<?php echo $item['reduction_amount'] ?>" placeholder="最高99999">
+					<input class=form-control name=reduction_amount type=number step=1 max=999 value="<?php echo $item['reduction_amount'] ?>" placeholder="最高999">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=reduction_amount_time class="col-sm-2 control-label">最高减免次数（次）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=reduction_amount_time type=number min=0 step=1 max=99 value="<?php echo $item['reduction_amount_time'] ?>" placeholder="最高99，留空即默认1，填0则不限">
 				</div>
 			</div>
 			<div class=form-group>

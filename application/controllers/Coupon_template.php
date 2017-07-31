@@ -68,7 +68,7 @@
 			$this->data_to_display = array(
 				'name' => '名称',
 				'amount' => '面值',
-				'description' => '说明',
+				'min_subtotal' => '起用金额',
 			);
 		}
 		
@@ -252,13 +252,13 @@
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
 			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|less_than_equal_to[999]');
-			$this->form_validation->set_rules('max_amount', '限量', 'trim|less_than_equal_to[999999]');
 			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim|less_than_equal_to[9999]');
+			$this->form_validation->set_rules('max_amount', '限量', 'trim|less_than_equal_to[999999]');
 			$this->form_validation->set_rules('period', '有效期', 'trim');
 			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
-			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -344,13 +344,13 @@
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
 			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|less_than_equal_to[999]');
-			$this->form_validation->set_rules('max_amount', '限量', 'trim|less_than_equal_to[999999]');
 			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim|less_than_equal_to[9999]');
+			$this->form_validation->set_rules('max_amount', '限量', 'trim|less_than_equal_to[999999]');
 			$this->form_validation->set_rules('period', '有效期', 'trim');
 			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
-			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -454,7 +454,7 @@
 					return false;
 
 				// 若已设置开始时间，不可早于开始时间一分钟以内
-				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check <= strtotime($this->input->post('time_to_publish')) + 60):
+				elseif ( !empty($this->input->post('time_start')) && $time_to_check <= strtotime($this->input->post('time_start')) + 60):
 					return false;
 
 				else:
