@@ -36,10 +36,8 @@
 			<div class=form-group>
 				<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号</label>
 				<div class=col-sm-10>
-					<p class="form-control-static">
-						<?php echo $this->session->mobile ?><br>
-						我们将通过该号码与您取得联系；您可在入驻申请通过后申请修改该号码。
-					</p>
+					<p class=help-block>我们将通过该号码与您取得联系，您可在入驻申请通过后通过专属顾问修改该信息。</p>
+					<p class="form-control-static"><?php echo $this->session->mobile ?></p>
 				</div>
 			</div>
 
@@ -58,18 +56,17 @@
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">简介</label>
 				<div class=col-sm-10>
-					<textarea class=form-control name=description rows=5 placeholder="最多200个字符"><?php echo set_value('description') ?></textarea>
+					<textarea class=form-control name=description rows=5 placeholder="最多200个字符，请简述企业主要经营范围、主营产品等信息"><?php echo set_value('description') ?></textarea>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=tel_public class="col-sm-2 control-label">消费者服务电话※</label>
 				<div class=col-sm-10>
-					<p class=helper-block>即消费者可以联系到商家的电话号码</p>
-					<input class=form-control name=tel_public type=tel value="<?php echo set_value('tel_public') ?>" placeholder="400/800、手机号、带区号的固定电话号码均可" required>
+					<input class=form-control name=tel_public type=tel value="<?php echo set_value('tel_public') ?>" placeholder="即客服电话，400/800、手机号、带区号的固定电话号码均可" required>
 				</div>
 			</div>
 		</fieldset>
-		
+
 		<fieldset>
 			<legend>资质信息</legend>
 
@@ -88,13 +85,14 @@
 			<div class=form-group>
 				<label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=code_ssn_auth type=text size=18 value="<?php echo set_value('code_ssn_auth') ?>" placeholder="如果负责业务对接的不是法人本人，请填写此项">
+					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项并在后续相应位置上传身份证</p>
+					<input class=form-control name=code_ssn_auth type=text size=18 value="<?php echo set_value('code_ssn_auth') ?>" placeholder="请输入有效身份证号">
 				</div>
 			</div>
 		</fieldset>
 
 		<div class="jumbotron row">
-			<p>继续完善信息将可优先申请；仅提供上述信息则需<p>
+			<p>继续完善更多信息将可优先申请；仅提供上述信息则需<p>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
 				<button class="btn btn-default btn-lg btn-block" type=submit>排队申请</button>
 		    </div>
@@ -102,13 +100,11 @@
 
 		<fieldset>
 			<legend>资质及授权证明</legend>
-			<p class=helper-block>以下资料需要彩色原件的扫描件或数码照</p>
+			<p class=help-block>以下资料需要彩色原件的扫描件或数码照</p>
 
 			<div class=form-group>
 				<label for=url_image_license class="col-sm-2 control-label">营业执照</label>
 				<div class=col-sm-10>
-					<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
-
 					<?php $name_to_upload = 'url_image_license' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
@@ -187,7 +183,7 @@
 
 		<fieldset>
 			<legend>形象展示</legend>
-			<p>您可根据自身情况提供合适的照片，向消费者展现企业形象</p>
+			<p class=help-block>您可根据自身情况提供合适的照片，向消费者展现企业形象</p>
 
 			<div class=form-group>
 				<label for=url_image_product class="col-sm-2 control-label">产品</label>

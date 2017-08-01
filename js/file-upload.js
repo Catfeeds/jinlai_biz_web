@@ -17,6 +17,15 @@ var uploads_url = '//biz.517ybang.com/uploads/';
 // 最大文件数量，默认为4
 var max_count = 4;
 
+// 预览区主容器样式
+var css_preview_wrapper =
+{
+	'clear' : 'both',
+	'background-color' : '#eee',
+	'padding' : '12px 15px',
+	'border-radius' : '6px'
+};
+
 /* 从此处起请谨慎修改 */
 $(function(){
 	// 文件上传主处理方法
@@ -24,18 +33,29 @@ $(function(){
 		// 检查当前浏览器是否支持AJAX文件上传
 		check_support_formdata();
 
-		// 禁用上传按钮
-		$(this).attr('disabled', 'disabled');
-		$(this).html('<i class="fa fa-refresh" aria-hidden=true></i> 上传中……');
+		var button = $(this);
+
+		button_disable(button); // 禁用上传按钮
 
 		// 处理上传
-		var button = $(this);
 		file_upload( button );
+	});
 
-		// 激活上传按钮
+	// 禁用上传按钮
+	function button_disable(button)
+	{
+		button.attr('disabled', 'disabled');
+		button.html('<i class="fa fa-refresh" aria-hidden=true></i> 正在上传');
+		console.log('正在上传');
+	}
+
+	// 激活上传按钮
+	function button_restore(button)
+	{
 		button.removeAttr('disabled');
 		button.html('<i class="fa fa-upload" aria-hidden=true></i> 上传');
-	});
+		console.log('结束上传');
+	}
 
 	// 检查浏览器是否支持完成文件上传必须的XHR2（FormData）功能
 	function check_support_formdata()
@@ -69,6 +89,7 @@ $(function(){
 		if (file_count == 0)
 		{
 			alert('请选择文件');
+			button_restore(button); // 激活上传按钮
 			return;
 		}
 		
@@ -76,6 +97,7 @@ $(function(){
 		if (file_count > max_count)
 		{
 			alert('最多可选'+ max_count +'个文件');
+			button_restore(button); // 激活上传按钮
 			return;
 		}
 
@@ -104,21 +126,23 @@ $(function(){
 			// 进行总体提示
 			if (data.status == 200)
 			{
-				alert('成功上传');
+				alert('上传成功');
 			}
 			else // 若上传失败，进行提示
 			{
-				alert(data.content.error.message);
+				alert('上传失败：' + data.content.error.message);
 				console.log(data.content.error.message);
 			}
+			
+			button_restore(button); // 激活上传按钮
 
 			// 初始化表单值
 			var input_value = '';
 
 			// 初始化预览区
 			var file_previewer = button.siblings('.upload_preview');
-			file_previewer.html('');
-			
+			file_previewer.html('').css( css_preview_wrapper );
+
 			// 轮番显示上传结果
 			$.each(
 				data.content.items,
@@ -129,8 +153,9 @@ $(function(){
 					{
 						// 更新预览区
 						var item_content =
-						'<li class="col-xs-12 col-sm-4 col-md-3">' +
-						'	<figure class="thumbnail">' +
+						'<li class="col-xs-6 col-sm-4 col-md-3" data-item-url="'+ item.content +'">' +
+						'	<i class="fa fa-times"></i>' +
+						'	<figure class=thumbnail>' +
 						'		<img alt="'+ item.content +'" src="' + uploads_url + item.content +'">' +
 						'	</figure>' +
 						'</li>';
@@ -169,7 +194,32 @@ $(function(){
 				$('[name=' + button.attr('data-input-name') + ']').val(input_value);
 			}
 	    });
+		
+		// 可从预览区删除图片
+		$('.upload_preview').on(
+			{
+				click: function(){
+					delete_single($(this), button.attr('data-input-name'));
+				}
+			},
+			'.fa-times'
+		);
 
 	} //end file_upload
+
+	// 点击叉号可删除相应图片
+	function delete_single(item, input_name)
+	{
+		var item_url = item.closest('li').attr('data-item-url');
+
+		// 删除相应字段值(替换相应值为空字符串)
+		var current_value = $('[name='+ input_name +']').val();
+		current_value = current_value.replace(item_url, '');
+		$('[name='+ input_name +']').val(current_value);
+
+		// 删除相应dom
+		item.closest('li').remove();
+		console.log('deleted a item, of which value is '+ item_url);
+	}
 
 });

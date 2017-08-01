@@ -31,7 +31,7 @@
 
 <div id=content class=container>
 	<section class="row bg-info text-info">
-		<p><em>RC0.6</em>当前系统为beta/RC版本，仅供技术研究及技术开发；样式将随时变动，布局将随时更改，数据将不定时清零、重置，或有可能某些数据未经创建者本身自主操作或主动授权而被他人更改且无通知；任何公告、订单、充值均无任何实际效力，任何信息均不构成合同要约或其它任何形式的承诺、侵权。</p>
+		<p><em>RC0.61</em>当前系统为beta/RC版本，仅供技术研究及技术开发；样式将随时变动，布局将随时更改，数据将不定时清零、重置，或有可能某些数据未经创建者本身自主操作或主动授权而被他人更改且无通知；任何公告、订单、充值均无任何实际效力，任何信息均不构成合同要约或其它任何形式的承诺、侵权。</p>
 	</section>
 	
 	<div class="btn-group btn-group-justified" role=group>
@@ -56,7 +56,7 @@
 			<div class=form-group>
 				<label for=captcha_verify>图片验证码</label>
 				<div class=input-group>
-					<input id=captcha-verify class=form-control name=captcha_verify type=number max=9999 min=0001 step=1 size=4 placeholder="请输入图片验证码" required>
+					<input id=captcha-verify class=form-control name=captcha_verify type=number max=9999 step=1 size=4 placeholder="请输入图片验证码" required>
 					<span id=captcha-image class="input-group-addon">
 						<img src="<?php echo base_url('captcha') ?>">
 					</span>

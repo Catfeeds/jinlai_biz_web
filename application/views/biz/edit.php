@@ -32,32 +32,34 @@
 		<p class="bg-info text-info text-center">必填项以“※”符号标示；部分需通过专属顾问修改的信息以“✪”符号标示</p>
 
 		<fieldset>
+			<legend>基本资料</legend>
+
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 			
-			<div class=form-group>
-				<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号✪</label>
-				<div class=col-sm-10>
-					<p class="form-control-static">
-						<?php echo $this->session->mobile ?>
-					</p>
+			<div class="jumbotron row">
+				<div class=form-group>
+					<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号✪</label>
+					<div class=col-sm-10>
+						<p class="form-control-static"><?php echo $this->session->mobile ?></p>
+					</div>
 				</div>
-			</div>
-			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">商家名称✪</label>
-				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $item['name'] ?></p>
+				<div class=form-group>
+					<label for=name class="col-sm-2 control-label">商家名称✪</label>
+					<div class=col-sm-10>
+						<p class="form-control-static"><?php echo $item['name'] ?></p>
+					</div>
 				</div>
-			</div>
-			<div class=form-group>
-				<label for=brief_name class="col-sm-2 control-label">简称✪</label>
-				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $item['brief_name'] ?></p>
+				<div class=form-group>
+					<label for=brief_name class="col-sm-2 control-label">简称✪</label>
+					<div class=col-sm-10>
+						<p class="form-control-static"><?php echo $item['brief_name'] ?></p>
+					</div>
 				</div>
-			</div>
-			<div class=form-group>
-				<label for=url_name class="col-sm-2 control-label">店铺域名✪</label>
-				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo !empty($item['url_name'])? $item['url_name']: '未设置' ?></p>
+				<div class=form-group>
+					<label for=url_name class="col-sm-2 control-label">店铺域名✪</label>
+					<div class=col-sm-10>
+						<p class="form-control-static"><?php echo !empty($item['url_name'])? $item['url_name']: '未设置' ?></p>
+					</div>
 				</div>
 			</div>
 
@@ -73,7 +75,6 @@
 					<?php endif ?>
 
 					<div>
-						<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
 						<?php $name_to_upload = 'url_logo' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -109,8 +110,14 @@
 			<div class=form-group>
 				<label for=tel_public class="col-sm-2 control-label">消费者服务电话※</label>
 				<div class=col-sm-10>
-					<p class=helper-block>即消费者可以联系到商家的电话号码</p>
-					<input class=form-control name=tel_public type=tel value="<?php echo $item['tel_public'] ?>" placeholder="400/800、手机号、带区号的固定电话号码均可" required>
+					<input class=form-control name=tel_public type=tel value="<?php echo $item['tel_public'] ?>" placeholder="即客服电话，400/800、手机号、带区号的固定电话号码均可" required>
+				</div>
+			</div>
+			
+			<div class=form-group>
+				<label for=tel_protected_order class="col-sm-2 control-label">订单通知手机号</label>
+				<div class=col-sm-10>
+					<input class=form-control name=tel_protected_order type=tel size=11 value="<?php echo $item['tel_protected_order'] ?>" placeholder="订单通知手机号">
 				</div>
 			</div>
 		</fieldset>
@@ -133,6 +140,7 @@
 			<div class=form-group>
 				<label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号</label>
 				<div class=col-sm-10>
+					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项并在后续相应位置上传身份证</p>
 					<input class=form-control name=code_ssn_auth type=text value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号">
 				</div>
 			</div>
@@ -140,7 +148,7 @@
 
 		<fieldset>
 			<legend>资质及授权证明</legend>
-			<p class=helper-block>以下资料需要彩色原件的扫描件或数码照</p>
+			<p class=help-block>以下资料需要彩色原件的扫描件或数码照</p>
 
 			<div class=form-group>
 				<label for=url_image_license class="col-sm-2 control-label">营业执照※</label>
@@ -154,7 +162,6 @@
 					<?php endif ?>
 
 					<div>
-						<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
 						<?php $name_to_upload = 'url_image_license' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -269,7 +276,7 @@
 
 		<fieldset>
 			<legend>形象展示</legend>
-			<p class=helper-block>您可根据自身情况提供合适的照片，向消费者展现企业形象</p>
+			<p class=help-block>您可根据自身情况提供合适的照片，向消费者展现企业形象</p>
 
 			<div class=form-group>
 				<label for=url_image_product class="col-sm-2 control-label">产品</label>
@@ -350,13 +357,6 @@
 		
 		<fieldset>
 			<legend>地址信息</legend>
-			
-			<div class=form-group>
-				<label for=tel_protected_order class="col-sm-2 control-label">订单通知手机号</label>
-				<div class=col-sm-10>
-					<input class=form-control name=tel_protected_order type=tel size=11 value="<?php echo $item['tel_protected_order'] ?>" placeholder="订单通知手机号">
-				</div>
-			</div>
 			<div class=form-group>
 				<label for=nation class="col-sm-2 control-label">国家</label>
 				<div class=col-sm-10>
@@ -381,7 +381,6 @@
 					<input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区">
 				</div>
 			</div>
-
 			<div class=form-group>
 				<label for=street class="col-sm-2 control-label">具体地址</label>
 				<div class=col-sm-10>

@@ -110,6 +110,7 @@
 				$data_to_search = array(
 					'mobile' => $this->input->post('mobile'),
 					'password' => $this->input->post('password'),
+					'user_ip' => $this->input->ip_address(),
 				);
 
 				// 从API服务器获取相应详情信息
@@ -179,6 +180,7 @@
 					'mobile' => $this->input->post('mobile'),
 					'sms_id' => $this->input->post('sms_id'),
 					'captcha' => $this->input->post('captcha'),
+					'user_ip' => $this->input->ip_address(),
 				);
 
 				// 从API服务器获取相应详情信息
