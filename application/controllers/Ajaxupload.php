@@ -94,7 +94,7 @@
 						// 若存在上传失败的文件，在总体结果中进行体现
 						if ( $upload_result['status'] === 400 ):
 							$this->result['status'] = 400;
-							$this->result['content']['error']['message'] = '文件上传失败';
+							$this->result['content']['error']['message'] = $upload_result['content']['error']['message'];
 						endif;
 						$this->result['content']['items'][] = $upload_result;
 
@@ -144,6 +144,8 @@
 			$config['max_height'] = 4096; // 图片高度不得超过4096px
 			$config['max_size'] = 4096; // 文件大小不得超过4M
 
+			//TODO 预处理图片
+
 			// 载入CodeIgniter的上传库并尝试上传文件
 			// https://www.codeigniter.com/user_guide/libraries/file_uploading.html
 			$this->load->library('upload', $config);
@@ -159,5 +161,25 @@
 			endif;
 
 			return $data;
+		}
+		
+		private function prepare_image()
+		{
+			// 等比例缩放到最长边小于等于2048px
+			$config['image_library'] = 'gd2';
+			$config['source_image'] = $field_index;
+			$config['maintain_ratio'] = TRUE;
+			$config['width']         = 2048;
+			$config['height']       = 2048;
+
+			// 载入CodeIgniter的上传库并尝试处理文件
+			$this->load->library('image_lib', $config);
+			if ( ! $this->image_lib->resize() ):
+				echo $this->image_lib->display_errors();
+
+			else:
+				return TRUE;
+
+			endif;
 		}
 	}
