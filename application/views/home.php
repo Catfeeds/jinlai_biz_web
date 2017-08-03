@@ -24,27 +24,31 @@
 <div id=content class=container>
 	<?php if ( empty($this->session->biz_id) ): ?>
 	<div id=recruiting-tempt>
-		<p>这一部分可以显示简单的平台介绍和招商信息，例如：</p>
-		<img alt="进来商家招商中" src="<?php echo base_url('/media/home/recruiting.jpg') ?>">
-		<p class=text-center>加入「进来」，让首家品控网购平台上最有消费能力的消费者在你店里疯狂买买买！</p>
+		<p class=help-block>这一部分将展示简单的平台介绍和招商信息，例如：</p>
+		<section>
+			<figure>
+				<img alt="进来商家招商中" src="<?php echo base_url('/media/home/recruiting.jpg') ?>">
+			</figure>
+			<p class="text-center">加入「进来」，让首家品控网购平台上最有消费能力的消费者在你店里疯狂买买买！</p>
+		</section>
 	</div>
 
 	<div id=prerequisite class=well>
-		<p class=helper-block>准备好以下材料即可开始入驻申请（影印件指彩色原件的扫描件或数码照）：</p>
+		<p class=helper-block>准备好以下材料即可开始入驻申请：</p>
 		<ul>
-			<li>营业执照影印件</li>
+			<li>营业执照影印件（彩色原件的扫描件或数码照，下同）</li>
 			<li>法人身份证影印件</li>
 			<li>对公银行账户（基本户、一般户均可）</li>
 		</ul>
-		
+
 		<p>如果负责日常业务对接的不是法人本人，则另需：</p>
 		<ul>
 			<li>经办人身份证影印件</li>
-			<li>授权书 <small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>"><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small></li>
+			<li>授权书 <small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small></li>
 		</ul>
 	</div>
 
-	<a title="创建商家" class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('biz/create') ?>">开始申请</a>
+	<a title="创建商家" class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('biz/create') ?>">准备好了</a>
 
 	<?php elseif ( empty($biz) ): ?>
 	<p>员工关系状态异常，请尝试重新登录</p>

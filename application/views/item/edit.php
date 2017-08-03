@@ -76,7 +76,7 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">带有“※”符号的为必填项</p>
+			<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
 
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
@@ -232,13 +232,13 @@
 			<div class=form-group>
 				<label for=tag_price class="col-sm-2 control-label">标签价/原价（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=tag_price type=number step=0.01 max=99999.99 value="<?php echo $item['tag_price'] ?>" placeholder="标签价/原价（元）">
+					<input class=form-control name=tag_price type=number step=0.01 max=99999.99 value="<?php echo $item['tag_price'] ?>" placeholder="留空则不显示，最高99999.99">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=price class="col-sm-2 control-label">商城价/现价（元）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=price type=number step=0.01 max=99999.99 value="<?php echo $item['price'] ?>" placeholder="商城价/现价（元）" required>
+					<input class=form-control name=price type=number step=0.01 max=99999.99 value="<?php echo $item['price'] ?>" placeholder="最高99999.99" required>
 				</div>
 			</div>
 		</fieldset>
@@ -257,7 +257,8 @@
 				</div>
 			</div>
 
-			<p class="bg-info text-info text-center">以下3项择一填写即可；若填写多项，将以毛重为准进行运费计算</p>
+			<p class="help-block">以下3项择一填写即可；若填写多项，将按毛重、净重、体积重的顺序为准进行运费计算。</p>
+
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
@@ -357,7 +358,7 @@
 				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
 				<div class=col-sm-10>
 					<?php if ( empty($biz_freight_templates) ): ?>
-					<p class="bg-warning text-warning row">您目前没有可用的运费模板</p>
+					<p class="help-block">您目前没有可用的运费模板</p>
 					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建一个</a>
 					<?php endif ?>
 

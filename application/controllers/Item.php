@@ -503,10 +503,10 @@
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
-				
+
 				// 获取系统商品分类信息
 				$data['category'] = $this->get_category($data['item']['category_id']);
-				
+
 				// 若参与店内活动，获取店内活动详情
 				if ( !empty($data['item']['promotion_id']) ):
 					$data['promotion'] = $this->get_promotion_biz($data['item']['promotion_id']);
@@ -519,7 +519,6 @@
 				$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
 
 			endif;
-
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):

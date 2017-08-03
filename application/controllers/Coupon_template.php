@@ -17,7 +17,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'template_id', 'biz_id', 'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
+			'template_id', 'biz_id', 'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'max_amount_user', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -25,7 +25,7 @@
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end',
+			'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'max_amount_user', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end',
 		);
 
 		/**
@@ -35,7 +35,7 @@
 			'id',
 			'name', 'amount',
 		);
-		
+
 		/**
 		 * 编辑单行特定字段时必要的字段名
 		 */
@@ -251,9 +251,10 @@
 			$this->form_validation->set_rules('item_id', '限用商品', 'trim');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
-			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|less_than_equal_to[999]');
-			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim|less_than_equal_to[9999]');
-			$this->form_validation->set_rules('max_amount', '限量', 'trim|less_than_equal_to[999999]');
+			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|greater_than_equal_to[1]|less_than_equal_to[999]');
+			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim|greater_than_equal_to[1]|less_than_equal_to[9999]');
+			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
+			$this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[99]');
 			$this->form_validation->set_rules('period', '有效期', 'trim');
 			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
@@ -278,7 +279,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period',
+					'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'max_amount_user', 'min_subtotal', 'amount', 'period',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -343,9 +344,10 @@
 			$this->form_validation->set_rules('item_id', '限用商品', 'trim');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
-			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|less_than_equal_to[999]');
-			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim|less_than_equal_to[9999]');
-			$this->form_validation->set_rules('max_amount', '限量', 'trim|less_than_equal_to[999999]');
+			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|greater_than_equal_to[1]|less_than_equal_to[999]');
+			$this->form_validation->set_rules('min_subtotal', '最低订单小计（元）', 'trim|greater_than_equal_to[1]|less_than_equal_to[9999]');
+			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
+			$this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[99]');
 			$this->form_validation->set_rules('period', '有效期', 'trim');
 			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
@@ -380,7 +382,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'min_subtotal', 'amount', 'period',
+					'category_id', 'category_biz_id', 'item_id', 'name', 'max_amount', 'max_amount_user', 'min_subtotal', 'amount', 'period',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);

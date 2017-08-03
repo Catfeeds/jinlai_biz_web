@@ -53,7 +53,7 @@
 		echo form_open_multipart($this->class_name.'/create_quick', $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">带有“※”符号的为必填项</p>
+			<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
 
 			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">系统分类※</label>
@@ -115,7 +115,7 @@
 			<div class=form-group>
 				<label for=price class="col-sm-2 control-label">商城价/现价（元）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=price type=number step=0.01 min=0.01 max=99999.99 value="<?php echo set_value('price') ?>" placeholder="保留两位小数，最高99999.99" required>
+					<input class=form-control name=price type=number step=0.01 min=0.01 max=99999.99 value="<?php echo set_value('price') ?>" placeholder="最高99999.99" required>
 				</div>
 			</div>
 
@@ -154,7 +154,7 @@
 				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
 				<div class=col-sm-10>
 					<?php if ( empty($biz_freight_templates) ): ?>
-					<p class="bg-warning text-warning row">您目前没有可用的运费模板</p>
+					<p class="help-block">您目前没有可用的运费模板</p>
 					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建一个</a>
 					<?php endif ?>
 					

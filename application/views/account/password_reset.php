@@ -69,7 +69,7 @@
 				<label for=password>新密码</label>
 				<div class=input-group>
 					<span class=input-group-addon><i class="fa fa-key fa-fw" aria-hidden=true></i></span>
-					<input class=form-control name=password type=password placeholder="新密码" required>
+					<input class=form-control name=password type=password placeholder="可设置6-20位密码" required>
 				</div>
 			</div>
 
@@ -77,7 +77,7 @@
 				<label for=password_confirm>确认密码</label>
 				<div class=input-group>
 					<span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden=true></i></span>
-					<input class=form-control name=password_confirm type=password placeholder="确认新密码" required>
+					<input class=form-control name=password_confirm type=password placeholder="请再次输入密码进行确认" required>
 				</div>
 			</div>
 		</fieldset>

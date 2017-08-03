@@ -22,7 +22,7 @@
 </style>
 
 <div id=content class=container>
-	<p class="bg-info text-center">请设置您的账户密码</p>
+	<p class="bg-info text-info text-center">请设置您的账户密码</p>
 	
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>'; // 若有错误提示信息则显示
@@ -34,7 +34,7 @@
 				<label for=password>密码</label>
 				<div class=input-group>
 					<span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden=true></i></span>
-					<input class=form-control name=password type=password placeholder="密码" autofocus required>
+					<input class=form-control name=password type=password placeholder="可设置6-20位密码" autofocus required>
 				</div>
 			</div>
 
@@ -42,7 +42,7 @@
 				<label for=password_confirm>确认密码</label>
 				<div class=input-group>
 					<span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden=true></i></span>
-					<input class=form-control name=password_confirm type=password placeholder="确认密码" required>
+					<input class=form-control name=password_confirm type=password placeholder="请再次输入密码进行确认" required>
 				</div>
 			</div>
 		</fieldset>

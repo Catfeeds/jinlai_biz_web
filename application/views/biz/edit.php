@@ -121,27 +121,63 @@
 				</div>
 			</div>
 		</fieldset>
-		
+
 		<fieldset>
 			<legend>资质信息</legend>
 
 			<div class=form-group>
 				<label for=code_license class="col-sm-2 control-label">统一社会信用代码/营业执照号※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=code_license type=number step=1 size=18 value="<?php echo $item['code_license'] ?>" placeholder="统一社会信用代码" required>
+					<input class=form-control name=code_license type=text size=18 value="<?php echo $item['code_license'] ?>" placeholder="统一社会信用代码" required>
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=fullname_owner class="col-sm-2 control-label">法人姓名※</label>
+				<div class=col-sm-10>
+					<input class=form-control name=fullname_owner type=text size=15 value="<?php echo $item['fullname_owner'] ?>" placeholder="需与身份证一致" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=code_ssn_owner type=text value="<?php echo $item['code_ssn_owner'] ?>" placeholder="法人身份证号" required>
+					<input class=form-control name=code_ssn_owner type=text size=18 value="<?php echo $item['code_ssn_owner'] ?>" placeholder="法人身份证号" required>
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=fullname_auth class="col-sm-2 control-label">经办人姓名</label>
+				<div class=col-sm-10>
+					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
+					<input class=form-control name=fullname_auth type=text size=15 value="<?php echo $item['fullname_auth'] ?>" placeholder="需与身份证一致">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号</label>
 				<div class=col-sm-10>
-					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项并在后续相应位置上传身份证</p>
-					<input class=form-control name=code_ssn_auth type=text value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号">
+					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
+					<input class=form-control name=code_ssn_auth type=text size=18 value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号">
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>财务信息</legend>
+
+			<div class=form-group>
+				<label for=bank_name class="col-sm-2 control-label">对公账户开户行</label>
+				<div class=col-sm-10>
+					<input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="基本户、一般户均可">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=bank_account class="col-sm-2 control-label">对公账户账号</label>
+				<div class=col-sm-10>
+					<input class=form-control name=bank_account type=number step=1 value="<?php echo $item['bank_account'] ?>" placeholder="基本户、一般户均可">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=tel_protected_fiscal class="col-sm-2 control-label">财务联系手机号</label>
+				<div class=col-sm-10>
+					<input class=form-control name=tel_protected_fiscal type=tel size=11 value="<?php echo $item['tel_protected_fiscal'] ?>" placeholder="财务联系手机号">
 				</div>
 			</div>
 		</fieldset>
@@ -203,6 +239,8 @@
 			<div class=form-group>
 				<label for=url_image_auth_id class="col-sm-2 control-label">经办人身份证</label>
 				<div class=col-sm-10>
+					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
+					
 					<?php if ( !empty($item['url_image_auth_id']) ): ?>
 					<div class=row>
 						<figure class="col-xs-12 col-sm-6 col-md-4">
@@ -228,6 +266,11 @@
 			<div class=form-group>
 				<label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书</label>
 				<div class=col-sm-10>
+					<p class=help-block>
+						如果负责业务对接的不是法人本人，请填写此项
+						<small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small>
+					</p>
+					
 					<?php if ( !empty($item['url_image_auth_doc']) ): ?>
 					<div class=row>
 						<figure class="col-xs-12 col-sm-6 col-md-4">
@@ -247,29 +290,6 @@
 						<ul class="upload_preview list-inline row"></ul>
 					</div>
 
-				</div>
-			</div>
-		</fieldset>
-		
-		<fieldset>
-			<legend>财务信息</legend>
-
-			<div class=form-group>
-				<label for=bank_name class="col-sm-2 control-label">对公账户开户行</label>
-				<div class=col-sm-10>
-					<input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="基本户、一般户均可">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=bank_account class="col-sm-2 control-label">对公账户账号</label>
-				<div class=col-sm-10>
-					<input class=form-control name=bank_account type=number step=1 value="<?php echo $item['bank_account'] ?>" placeholder="基本户、一般户均可">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=tel_protected_fiscal class="col-sm-2 control-label">财务联系手机号</label>
-				<div class=col-sm-10>
-					<input class=form-control name=tel_protected_fiscal type=tel size=11 value="<?php echo $item['tel_protected_fiscal'] ?>" placeholder="财务联系手机号">
 				</div>
 			</div>
 		</fieldset>

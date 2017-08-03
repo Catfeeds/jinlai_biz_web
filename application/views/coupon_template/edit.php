@@ -106,9 +106,16 @@
 			</div>
 
 			<div class=form-group>
-				<label for=max_amount class="col-sm-2 control-label">限量（份）</label>
+				<label for=max_amount class="col-sm-2 control-label">总限量（份）</label>
 				<div class=col-sm-10>
 					<input class=form-control name=max_amount type=number step=1 max=999999 value="<?php echo $item['max_amount'] ?>" placeholder="留空则不限，最高999999">
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=max_amount_user class="col-sm-2 control-label">单个用户限量（份）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=max_amount_user type=number step=1 max=99 value="<?php echo $item['max_amount_user'] ?>" placeholder="留空则不限，最高99">
 				</div>
 			</div>
 

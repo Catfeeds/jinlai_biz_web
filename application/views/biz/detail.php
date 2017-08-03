@@ -47,8 +47,12 @@
 		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
-	
-	<ul class=list-unstyled>
+
+	<?php if ( empty($item) ): ?>
+	<p><?php echo $error ?></p>
+
+	<?php else: ?>
+	<ul class="list-unstyled row">
 		<?php
 		// 需要特定角色和权限进行该操作
 		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
@@ -56,6 +60,27 @@
 		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>
 		<?php endif ?>
 	</ul>
+
+	<div class="jumbotron row">
+		<dl id=core-info class=dl-horizontal>
+			<dt>状态</dt>
+			<dd><?php echo $item['status'] ?></dd>
+			<dt>商家ID</dt>
+			<dd><?php echo $item['biz_id'] ?></dd>
+			<dt>商家全称</dt>
+			<dd><?php echo $item['name'] ?></dd>
+			<dt>简称</dt>
+			<dd><?php echo $item['brief_name'] ?></dd>
+			<dt>店铺域名</dt>
+			<dd><?php echo !empty($item['url_name'])? $item['url_name']: '未分配' ?></dd>
+			<dt>消费者联系电话</dt>
+			<dd><?php echo $item['tel_public'] ?></dd>
+			<dt>商务联系手机号</dt>
+			<dd><?php echo $item['tel_protected_biz'] ?></dd>
+			<dt>订单通知手机号</dt>
+			<dd><?php echo !empty($item['tel_protected_order'])? $item['tel_protected_order']: '未设置' ?></dd>
+		</dl>
+	</div>
 
 	<dl id=list-info class=dl-horizontal>
 		<dt>LOGO</dt>
@@ -69,37 +94,17 @@
 			未上传
 			<?php endif ?>
 		</dd>
-		
-		
-		<dt>状态</dt>
-		<dd><?php echo $item['status'] ?></dd>
-		<dt>商家ID</dt>
-		<dd><?php echo $item['biz_id'] ?></dd>
-		<dt>商家全称</dt>
-		<dd><?php echo $item['name'] ?></dd>
-		<dt>简称</dt>
-		<dd><?php echo $item['brief_name'] ?></dd>
-		<dt>店铺域名</dt>
-		<dd><?php echo $item['url_name'] ?></dd>
 
 		<dt>宣传语</dt>
-		<dd><?php echo $item['slogan'] ?></dd>
+		<dd><?php echo empty($item['slogan'])? '未填写': $item['slogan'] ?></dd>
 		<dt>简介</dt>
-		<dd><?php echo $item['description'] ?></dd>
+		<dd><?php echo empty($item['description'])? '未填写': $item['description'] ?></dd>
 		<dt>店铺公告</dt>
-		<dd><?php echo $item['notification'] ?></dd>
-		<dt>消费者联系电话</dt>
-		<dd><?php echo $item['tel_public'] ?></dd>
-		<dt>商务联系手机号</dt>
-		<dd><?php echo $item['tel_protected_biz'] ?></dd>
-		<dt>订单通知手机号</dt>
-		<dd><?php echo $item['tel_protected_order'] ?></dd>
-		<dt>财务联系手机号</dt>
-		<dd><?php echo $item['tel_protected_fiscal'] ?></dd>
+		<dd><?php echo empty($item['notification'])? '未填写': $item['notification'] ?></dd>
 		<dt>官方网站</dt>
-		<dd><?php echo $item['url_web'] ?></dd>
+		<dd><?php echo empty($item['url_web'])? '未填写': $item['url_web'] ?></dd>
 		<dt>官方微博</dt>
-		<dd><?php echo $item['url_weibo'] ?></dd>
+		<dd><?php echo empty($item['url_weibo'])? '未填写': $item['url_weibo'] ?></dd>
 
 		<dt>微信二维码</dt>
 		<dd>
@@ -173,15 +178,31 @@
 			<?php endif ?>
 		</dd>
 	</dl>
-	
+
+	<h2>财务信息</h2>
+	<dl class=dl-horizontal>
+		<dt>开户行名称</dt>
+		<dd><?php echo empty($item['bank_name'])? '未填写': $item['bank_name'] ?></dd>
+		<dt>开户行账号</dt>
+		<dd><?php echo empty($item['bank_account'])? '未填写': $item['bank_account'] ?></dd>
+		<dt>财务联系手机号</dt>
+		<dd><?php echo empty($item['tel_protected_fiscal'])? '未填写': $item['tel_protected_fiscal'] ?></dd>
+	</dl>
+
 	<h2>资质信息</h2>
 	<dl class=dl-horizontal>
 		<dt>统一社会信用代码/营业执照号</dt>
 		<dd><?php echo $item['code_license'] ?></dd>
-		<dt>法人身份证号</dt>
-		<dd><?php echo $item['code_ssn_owner'] ?></dd>
-		<dt>经办人身份证号</dt>
-		<dd><?php echo $item['code_ssn_auth'] ?></dd>
+		<dt>法人</dt>
+		<dd>
+			姓名 <?php echo $item['fullname_owner'] ?>，<br>
+			身份证号码 <?php echo substr_replace($item['code_ssn_owner'], '****', -4) ?>
+		</dd>
+		<dt>经办人</dt>
+		<dd>
+			姓名 <?php echo empty($item['fullname_auth'])? '未填写': $item['fullname_auth'] ?>，<br>
+			身份证号码 <?php echo empty($item['code_ssn_auth'])? '未填写': substr_replace($item['code_ssn_auth'], '****', -4) ?>
+		</dd>
 
 		<dt>营业执照</dt>
 		<dd>
@@ -194,7 +215,7 @@
 			未上传
 			<?php endif ?>
 		</dd>
-		
+
 		<dt>法人身份证</dt>
 		<dd>
 			<?php if ( ! empty($item['url_image_owner_id']) ): ?>
@@ -228,16 +249,8 @@
 			<?php endif ?>
 		</dd>
 	</dl>
-	
-	<h2>财务信息</h2>
-	<dl class=dl-horizontal>
-		<dt>开户行名称</dt>
-		<dd><?php echo $item['bank_name'] ?></dd>
-		<dt>开户行账号</dt>
-		<dd><?php echo $item['bank_account'] ?></dd>
-	</dl>
-	
-	<h2>地址信息</h2>
+
+	<h2>联系地址</h2>
 	<dl class=dl-horizontal>
 		<dt>地址</dt>
 		<dd>
@@ -304,4 +317,6 @@
 		</dd>
 		<?php endif ?>
 	</dl>
+	
+	<?php endif ?>
 </div>
