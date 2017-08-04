@@ -71,9 +71,9 @@
 			<legend>资质信息</legend>
 
 			<div class=form-group>
-				<label for=code_license class="col-sm-2 control-label">统一社会信用代码/营业执照号※</label>
+				<label for=code_license class="col-sm-2 control-label">营业执照号※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=code_license type=text size=18 value="<?php echo set_value('code_license') ?>" placeholder="请输入三证合一后的营业执照编号" required>
+					<input class=form-control name=code_license type=text value="<?php echo set_value('code_license') ?>" placeholder="如为三证合一，请填写统一社会信用代码" required>
 				</div>
 			</div>
 			<div class=form-group>

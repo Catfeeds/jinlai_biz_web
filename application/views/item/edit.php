@@ -89,7 +89,8 @@
 			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">系统分类</label>
 				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $category['name'] ?> *系统商品分类不可修改</p>
+					<p class=help-block>系统分类仅可在创建商品时指定</p>
+					<p class="form-control-static"><?php echo $category['name'] ?></p>
 				</div>
 			</div>
 			
@@ -99,7 +100,7 @@
 				<div class=col-sm-10>
 					<?php $input_name = 'category_biz_id' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
-						<option value="">请选择</option>
+						<option value="">可选</option>
 						<?php
 							$options = $biz_categories;
 							foreach ($options as $option):
@@ -152,7 +153,7 @@
 					<?php endif ?>
 
 					<div>
-						<p class=help-block>推荐上传正方形图片以达到最佳视觉效果</p>
+						<p class=help-block>正方形图片视觉效果最佳</p>
 						<?php $name_to_upload = 'url_image_main' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -222,7 +223,7 @@
 					<script>var ue = UE.getEditor('detail_editior');</script>
 
 					<?php else: ?>
-					<p class="bg-info text-info text-center">在电脑上编辑可添加更丰富内容</p>
+					<p class="help-block">在电脑上编辑可添加更丰富内容</p>
 					<textarea class=form-control name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo set_value('description') ?></textarea>
 
 					<?php endif ?>
@@ -245,19 +246,33 @@
 
 		<fieldset>
 			<div class=form-group>
-				<label for=stocks class="col-sm-2 control-label">库存量（份）※</label>
+				<label for=unit_name class="col-sm-2 control-label">销售单位</label>
 				<div class=col-sm-10>
-					<input class=form-control name=stocks type=number step=1 max=65535 value="<?php echo $item['stocks'] ?>" placeholder="库存量（份）" required>
+					<input class=form-control name=unit_name type=text value="<?php echo $item['unit_name'] ?>" placeholder="最多10个字符，例如斤、双、头、件等，默认“份”">
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=unit_name class="col-sm-2 control-label">销售单位</label>
+				<label for=stocks class="col-sm-2 control-label">库存量※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=unit_name type=text value="<?php echo $item['unit_name'] ?>" placeholder="销售单位">
+					<input class=form-control name=stocks type=number step=1 max=65535 value="<?php echo $item['stocks'] ?>" placeholder="最多65535，仅在用户支付后会减少库存" required>
 				</div>
 			</div>
+			<div class=form-group>
+				<label for=quantity_max class="col-sm-2 control-label">每单最高限量（份）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=quantity_max type=number min=1 step=1 max=99 value="<?php echo $item['quantity_max'] ?>" placeholder="留空则默认为99，最高99">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=quantity_min class="col-sm-2 control-label">每单最低限量（份）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=quantity_min type=number min=1 step=1 max=99 value="<?php echo $item['quantity_min'] ?>" placeholder="留空则默认为1，最高99">
+				</div>
+			</div>
+		</fieldset>
 
-			<p class="help-block">以下3项择一填写即可；若填写多项，将按毛重、净重、体积重的顺序为准进行运费计算。</p>
+		<fieldset>
+			<p class=help-block>以下3项择一填写即可；若填写多项，将按毛重、净重、体积重的顺序取首个有效值计算运费。</p>
 
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
@@ -281,18 +296,6 @@
 
 		<fieldset>
 			<div class=form-group>
-				<label for=quantity_max class="col-sm-2 control-label">每单最高限量（份）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=quantity_max type=number step=1 max=99 value="<?php echo $item['quantity_max'] ?>" placeholder="每单最高限量（份）">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=quantity_min class="col-sm-2 control-label">每单最低限量（份）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=quantity_min type=number step=1 max=99 value="<?php echo $item['quantity_min'] ?>" placeholder="每单最低限量（份）">
-				</div>
-			</div>
-			<div class=form-group>
 				<label for=coupon_allowed class="col-sm-2 control-label">是否可用优惠券※</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'coupon_allowed' ?>
@@ -308,13 +311,15 @@
 			<div class=form-group>
 				<label for=discount_credit class="col-sm-2 control-label">积分抵扣率</label>
 				<div class=col-sm-10>
-					<input class=form-control name=discount_credit type=number step=0.01 min=0.00 max=0.99 value="<?php echo $item['discount_credit'] ?>" placeholder="积分抵扣率">
+					<p class=help-block>若允许使用积分抵扣，则需填写此项；例如允许5%的金额使用积分抵扣则为0.05，10%为0.1，最高0.5</p>
+					<input class=form-control name=discount_credit type=number step=0.01 min=0.00 max=0.99 value="<?php echo $item['discount_credit'] ?>" placeholder="留空则默认为0">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=commission_rate class="col-sm-2 control-label">佣金比例/提成率</label>
 				<div class=col-sm-10>
-					<input class=form-control name=commission_rate type=number step=0.01 min=0.00 max=0.99 value="<?php echo $item['commission_rate'] ?>" placeholder="佣金比例/提成率">
+					<p class=help-block>若需向推广者返还佣金，则需填写此项；例如提成实际支付金额的5%则为0.05，10%为0.1，最高0.5</p>
+					<input class=form-control name=commission_rate type=number step=0.01 min=0.00 max=0.99 value="<?php echo $item['commission_rate'] ?>" placeholder="留空则默认为0">
 				</div>
 			</div>
 
@@ -322,6 +327,7 @@
 			<div class=form-group>
 				<label for=time_to_publish class="col-sm-2 control-label">预定上架时间</label>
 				<div class=col-sm-10>
+					<p class=help-block>最小可限定到分钟级别；若填写了此项，则商品在创建后将处于下架状态</p>
 					<input class=form-control name=time_to_publish type=datetime value="<?php echo empty($item['time_to_publish'])? NULL: date('Y-m-d H:i:s', $item['time_to_publish']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+8days')) ?>">
 				</div>
 			</div>
@@ -342,7 +348,7 @@
 				<div class=col-sm-10>
 					<?php $input_name = 'promotion_id' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
-						<option value="">请选择</option>
+						<option value="">不参加</option>
 						<?php
 							$options = $biz_promotions;
 							foreach ($options as $option):
@@ -358,13 +364,13 @@
 				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
 				<div class=col-sm-10>
 					<?php if ( empty($biz_freight_templates) ): ?>
-					<p class="help-block">您目前没有可用的运费模板</p>
+					<p class="help-block">您目前没有可用的运费模板，仅可包邮</p>
 					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建一个</a>
 					<?php endif ?>
 
 					<?php $input_name = 'freight_template_id' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
-						<option value="">包邮</option>
+						<option value="">默认包邮</option>
 						<?php
 							$options = $biz_freight_templates;
 							foreach ($options as $option):

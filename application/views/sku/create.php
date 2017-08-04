@@ -73,7 +73,7 @@
 			<div class=form-group>
 				<label for=url_image class="col-sm-2 control-label">图片</label>
 				<div class=col-sm-10>
-					<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+					<p class=help-block>正方形图片视觉效果最佳</p>
 
 					<?php $name_to_upload = 'url_image' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -118,7 +118,7 @@
 		</fieldset>
 		
 		<fieldset>
-			<p class="bg-info text-info text-center">以下择一填写即可；若填写多项，将以毛重为准进行运费计算</p>
+			<p class=help-block>以下3项择一填写即可；若填写多项，将按毛重、净重、体积重的顺序取首个有效值计算运费。</p>
 			
 			<div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>

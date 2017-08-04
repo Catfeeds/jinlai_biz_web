@@ -103,6 +103,9 @@
 		<dd><?php echo $item['day_rest'] ?></dd>
 		<dt>营业/配送时间</dt>
 		<dd><?php echo $item['time_open'] ?>:00 - <?php echo $item['time_close'] ?>:00</dd>
+		<dt>配送范围</dt>
+		<dd><?php echo !empty($item['range_deliver'])? $item['range_deliver']. ' 公里': '不支持本地配送' ?></dd>
+
 		<dt>地址</dt>
 		<dd>
 			<p>
@@ -113,9 +116,7 @@
 			<?php if ( !empty($item['longitude']) && !empty($item['latitude']) ): ?>
 			<figure class="row">
 				<figcaption>
-					<p class="bg-info text-info text-center">
-						经纬度 <?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>
-					</p>
+					<p class=help-block>经纬度 <?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?></p>
 				</figcaption>
 				<div id=map style="height:300px;background-color:#aaa"></div>
 			</figure>

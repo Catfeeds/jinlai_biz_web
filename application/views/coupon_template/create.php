@@ -118,37 +118,6 @@
 			</div>
 
 			<div class=form-group>
-				<label for=category_id class="col-sm-2 control-label">限用系统分类</label>
-				<div class=col-sm-10>
-					<select class=form-control name=category_id>
-						<option value="">不限</option>
-						<?php foreach ($categories as $option): ?>
-							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-			</div>
-
-			<div class=form-group>
-				<label for=category_biz_id class="col-sm-2 control-label">限用店内分类</label>
-				<div class=col-sm-10>
-					<select class=form-control name=category_biz_id>
-						<option value="">不限</option>
-						<?php foreach ($biz_categories as $option): ?>
-							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-			</div>
-
-			<div class=form-group>
-				<label for=item_id class="col-sm-2 control-label">限用商品</label>
-				<div class=col-sm-10>
-					<input class=form-control name=item_id type=text value="<?php echo set_value('item_id') ?>" placeholder="如仅限部分商品可用，请输入可用商品的商品ID，多个ID间用一个半角逗号“,”进行分隔">
-				</div>
-			</div>
-
-			<div class=form-group>
 				<label for=period class="col-sm-2 control-label">有效期</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'period' ?>
@@ -175,8 +144,6 @@
 								'120天' => '10368000',
 								'180天/半年' => '15552000',
 								'366天/1年' => '31622400',
-								'2年' => '63244800',
-								'3年' => '94867200',
 							);
 							foreach ($options as $name => $value):
 						?>
@@ -197,6 +164,40 @@
 				<label for=time_end class="col-sm-2 control-label">结束时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_end type=datetime value="<?php echo set_value('time_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>">
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<div class=form-group>
+				<label for=category_id class="col-sm-2 control-label">限用系统分类</label>
+				<div class=col-sm-10>
+					<select class=form-control name=category_id>
+						<option value="">不限</option>
+						<?php foreach ($categories as $option): ?>
+							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=category_biz_id class="col-sm-2 control-label">限用店内分类</label>
+				<div class=col-sm-10>
+					<select class=form-control name=category_biz_id>
+						<option value="">不限</option>
+						<?php foreach ($biz_categories as $option): ?>
+							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=item_id class="col-sm-2 control-label">限用商品</label>
+				<div class=col-sm-10>
+					<p class=help-block>如仅限部分商品可用，请输入可用商品的商品ID</p>
+					<input class=form-control name=item_id type=text value="<?php echo set_value('item_id') ?>" placeholder="多个ID间用一个半角逗号“,”进行分隔">
 				</div>
 			</div>
 		</fieldset>

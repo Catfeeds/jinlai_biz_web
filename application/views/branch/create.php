@@ -123,16 +123,25 @@
 					<input class=form-control name=day_rest type=text value="<?php echo set_value('day_rest') ?>" placeholder="休息日">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=time_open class="col-sm-2 control-label">营业/配送开始时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_open type=number min=0 step=1 max=22 value="<?php echo set_value('time_open') ?>" placeholder="开放时间">
+					<input class=form-control name=time_open type=number min=0 step=1 max=22 value="<?php echo set_value('time_open') ?>" placeholder="请填写整点，例如上午8点为8">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=time_close class="col-sm-2 control-label">营业/配送结束时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_close type=number min=1 step=1 max=23 value="<?php echo set_value('time_close') ?>" placeholder="结束时间">
+					<input class=form-control name=time_close type=number min=1 step=1 max=23 value="<?php echo set_value('time_close') ?>" placeholder="请填写整点，例如下午10点为22">
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=range_deliver class="col-sm-2 control-label">配送范围（公里）</label>
+				<div class=col-sm-10>
+					<p class=help-block>若提供本地配送，可填写此项</p>
+					<input class=form-control name=range_deliver type=number min=0 step=1 max=99 value="<?php echo set_value('range_deliver') ?>" placeholder="最高99">
 				</div>
 			</div>
 		</fieldset>

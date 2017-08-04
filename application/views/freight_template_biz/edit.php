@@ -152,7 +152,7 @@
 				<label for=type_actual class="col-sm-2 control-label">运费计算方式</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'type_actual' ?>
-					<select class=form-control name="<?php echo $input_name ?>" required>
+					<select class=form-control name="<?php echo $input_name ?>">
 						<option value="" <?php if ( empty($item[$input_name]) ) echo 'selected'; ?>>请选择</option>
 						<?php
 							$options = array('计件','净重','毛重','体积重');

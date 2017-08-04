@@ -126,9 +126,9 @@
 			</div>
 			
 			<div class=form-group>
-				<label for=max_amount class="col-sm-2 control-label">限量（份）</label>
+				<label for=max_amount class="col-sm-2 control-label">总限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=max_amount type=number step=1 min=1 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="最高999999，不限量请填0">
+					<input class=form-control name=max_amount type=number step=1 min=0 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="最高999999，0为不限，留空默认为0">
 				</div>
 			</div>
 
@@ -138,6 +138,7 @@
 					<input class=form-control name=time_start type=datetime value="<?php echo set_value('time_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>；留空则马上开放领取">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=time_end class="col-sm-2 control-label">结束领取时间</label>
 				<div class=col-sm-10>

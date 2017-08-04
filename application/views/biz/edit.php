@@ -29,7 +29,7 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
-		<p class="bg-info text-info text-center">必填项以“※”符号标示；部分需通过专属顾问修改的信息以“✪”符号标示</p>
+		<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
 
 		<fieldset>
 			<legend>基本资料</legend>
@@ -37,26 +37,28 @@
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 			
 			<div class="jumbotron row">
+				<p class=help-block>该部分信息需通过您的专属顾问进行修改或分配</p>
+				
 				<div class=form-group>
-					<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号✪</label>
+					<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号</label>
 					<div class=col-sm-10>
 						<p class="form-control-static"><?php echo $this->session->mobile ?></p>
 					</div>
 				</div>
 				<div class=form-group>
-					<label for=name class="col-sm-2 control-label">商家名称✪</label>
+					<label for=name class="col-sm-2 control-label">商家名称</label>
 					<div class=col-sm-10>
 						<p class="form-control-static"><?php echo $item['name'] ?></p>
 					</div>
 				</div>
 				<div class=form-group>
-					<label for=brief_name class="col-sm-2 control-label">简称✪</label>
+					<label for=brief_name class="col-sm-2 control-label">简称</label>
 					<div class=col-sm-10>
 						<p class="form-control-static"><?php echo $item['brief_name'] ?></p>
 					</div>
 				</div>
 				<div class=form-group>
-					<label for=url_name class="col-sm-2 control-label">店铺域名✪</label>
+					<label for=url_name class="col-sm-2 control-label">店铺域名</label>
 					<div class=col-sm-10>
 						<p class="form-control-static"><?php echo !empty($item['url_name'])? $item['url_name']: '未设置' ?></p>
 					</div>
@@ -126,9 +128,9 @@
 			<legend>资质信息</legend>
 
 			<div class=form-group>
-				<label for=code_license class="col-sm-2 control-label">统一社会信用代码/营业执照号※</label>
+				<label for=code_license class="col-sm-2 control-label">营业执照号※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=code_license type=text size=18 value="<?php echo $item['code_license'] ?>" placeholder="统一社会信用代码" required>
+					<input class=form-control name=code_license type=text value="<?php echo $item['code_license'] ?>" placeholder="如为三证合一，请填写统一社会信用代码" required>
 				</div>
 			</div>
 			<div class=form-group>
@@ -449,8 +451,10 @@
 			    //解析定位结果
 			    function onComplete(data)
 				{
+					times_picked = 0;
+
 					// 提示用户确定修改
-					var user_confirm = confirm("是否修改位置为图中地点");
+					var user_confirm = confirm("是否设置联系地址位置为当前地点");
 				    if (user_confirm == true)
 				    {
 						document.getElementsByName('longitude')[0].value = data.position.getLng();

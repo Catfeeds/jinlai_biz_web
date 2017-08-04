@@ -72,7 +72,7 @@
 				<label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
 				<div class=col-sm-10>
 					<select class=form-control name=category_biz_id>
-						<option value="">请选择</option>
+						<option value="">可选</option>
 						<?php foreach ($biz_categories as $option): ?>
 							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
 						<?php endforeach ?>
@@ -100,7 +100,7 @@
 			<div class=form-group>
 				<label for=url_image_main class="col-sm-2 control-label">主图※</label>
 				<div class=col-sm-10>
-					<p class=help-block>推荐上传正方形图片以达到最佳视觉效果</p>
+					<p class=help-block>正方形图片视觉效果最佳</p>
 
 					<?php $name_to_upload = 'url_image_main' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -138,10 +138,10 @@
 
 			<?php if ( !empty($biz_promotions) ): ?>
 			<div class=form-group>
-				<label for=promotion_id class="col-sm-2 control-label">营销活动</label>
+				<label for=promotion_id class="col-sm-2 control-label">店内活动</label>
 				<div class=col-sm-10>
 					<select class=form-control name=promotion_id>
-						<option value="">请选择</option>
+						<option value="">不参加</option>
 						<?php foreach ($biz_categories as $option): ?>
 							<option value="<?php echo $option['promotion_id'] ?>" <?php echo set_select('promotion_id', $option['promotion_id']) ?>><?php echo $option['name'] ?></option>
 						<?php endforeach ?>
@@ -149,17 +149,17 @@
 				</div>
 			</div>
 			<?php endif ?>
-			
+
 			<div class=form-group>
 				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
 				<div class=col-sm-10>
 					<?php if ( empty($biz_freight_templates) ): ?>
-					<p class="help-block">您目前没有可用的运费模板</p>
+					<p class="help-block">您目前没有可用的运费模板，仅可包邮</p>
 					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建一个</a>
 					<?php endif ?>
-					
+
 					<select class=form-control name=freight_template_id>
-						<option value="">包邮</option>
+						<option value="">默认包邮</option>
 						<?php
 							$options = $biz_freight_templates;
 							foreach ($options as $option):

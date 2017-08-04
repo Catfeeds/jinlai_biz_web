@@ -161,7 +161,7 @@
 
 		<dt>物流信息</dt>
 		<dd>
-			<p class="bg-info text-info text-center">以下3项中若填写了多项，将以毛重为准进行运费计算</p>
+			<p class=help-block>以下3项择一填写即可；若填写多项，将按毛重、净重、体积重的顺序取首个有效值计算运费。</p>
 			<ul class="list-horizontal row">
 				<li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net']: '-'; ?> KG</li>
 				<li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross']: '-'; ?> KG</li>
@@ -181,11 +181,13 @@
 		</dd>
 
 		<dt>店内活动</dt>
-		<?php if ( ! empty($item['promotion_id']) ): ?>
-		<dd><strong><?php echo $promotion['name'] ?></strong></dd>
-		<?php else: ?>
-		<dd>不参与</dd>
-		<?php endif ?>
+		<dd>
+			<?php if ( ! empty($item['promotion_id']) ): ?>
+			<strong><?php echo $promotion['name'] ?></strong>
+			<?php else: ?>
+			不参加
+			<?php endif ?>
+		</dd>
 	</dl>
 
 	<?php if ( !empty($skus) ): ?>

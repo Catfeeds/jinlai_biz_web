@@ -60,13 +60,13 @@
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>所含优惠券</dt>
 		<dd><?php echo $item['template_ids'] ?></dd>
-		<dt>限量</dt>
+		<dt>总限量</dt>
 		<dd>
 			<?php echo empty($item['max_amount'])? '否': $item['max_amount'].'份'; ?>
 		</dd>
 		<dt>开放领取时间</dt>
 		<dd>
-			<?php echo empty($item['time_start'])? '自即日起': date('Y-m-d H:i:s', $item['time_start']); ?> <?php echo empty($item['time_end'])? '长期有效': '至 '.date('Y-m-d H:i:s', $item['time_end']); ?>
+			<?php echo empty($item['time_start'])? '自即日起': date('Y-m-d H:i:s', $item['time_start']); ?> <?php echo empty($item['time_end'])? '始终开放': '至 '.date('Y-m-d H:i:s', $item['time_end']); ?>
 		</dd>
 	</dl>
 

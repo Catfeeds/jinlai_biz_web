@@ -101,7 +101,7 @@
 			<div class=form-group>
 				<label for=min_subtotal class="col-sm-2 control-label">起用金额/订单小计（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=min_subtotal type=number step=1 max=9999 value="<?php echo $item['min_subtotal'] ?>" placeholder="留空则不限，最高9999">
+					<input class=form-control name=min_subtotal type=number min=0 step=1 max=9999 value="<?php echo $item['min_subtotal'] ?>" placeholder="留空则不限，最高9999">
 				</div>
 			</div>
 
@@ -154,7 +154,8 @@
 			<div class=form-group>
 				<label for=item_id class="col-sm-2 control-label">限用商品</label>
 				<div class=col-sm-10>
-					<input class=form-control name=item_id type=text value="<?php echo $item['item_id'] ?>" placeholder="如仅限部分商品可用，请输入可用商品的商品ID，多个ID间用一个半角逗号“,”进行分隔">
+					<p class=help-block>如仅限部分商品可用，请输入可用商品的商品ID</p>
+					<input class=form-control name=item_id type=text value="<?php echo $item['item_id'] ?>" placeholder="多个ID间用一个半角逗号“,”进行分隔">
 				</div>
 			</div>
 
@@ -185,8 +186,6 @@
 								'120天' => '10368000',
 								'180天/半年' => '15552000',
 								'366天/1年' => '31622400',
-								'2年' => '63244800',
-								'3年' => '94867200',
 							);
 							foreach ($options as $name => $value):
 						?>

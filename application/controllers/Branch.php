@@ -237,14 +237,15 @@
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim');
 			$this->form_validation->set_rules('nation', '国别', 'trim');
-			$this->form_validation->set_rules('province', '省', 'trim|required');
-			$this->form_validation->set_rules('city', '市', 'trim|required');
-			$this->form_validation->set_rules('county', '区/县', 'trim|required');
-			$this->form_validation->set_rules('street', '具体地址', 'trim|required');
+			$this->form_validation->set_rules('province', '省', 'trim|required|max_length[10]');
+			$this->form_validation->set_rules('city', '市', 'trim|required|max_length[10]');
+			$this->form_validation->set_rules('county', '区/县', 'trim|required|max_length[10]');
+			$this->form_validation->set_rules('street', '具体地址；小区名、路名、门牌号等', 'trim|required|max_length[50]');
+			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
+			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');
 			$this->form_validation->set_rules('region_id', '商圈', 'trim');
 			$this->form_validation->set_rules('poi_id', '子商圈', 'trim');
-			$this->form_validation->set_rules('longitude', '经度', 'trim');
-			$this->form_validation->set_rules('latitude', '纬度', 'trim');
+			$this->form_validation->set_rules('range_deliver', '配送范围', 'trim|greater_than_equal_to[0]|less_than_equal_to[99]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -262,7 +263,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'tel_public', 'tel_protected_biz', 'tel_protected_order', 'day_rest', 'time_open', 'time_close', 'url_image_main', 'figure_image_urls', 'nation', 'province', 'city', 'county', 'street', 'region_id', 'poi_id', 'longitude', 'latitude',
+					'name', 'description', 'tel_public', 'tel_protected_biz', 'tel_protected_order', 'day_rest', 'time_open', 'time_close', 'url_image_main', 'figure_image_urls', 'nation', 'province', 'city', 'county', 'street', 'region_id', 'poi_id', 'longitude', 'latitude', 'range_deliver',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -335,14 +336,15 @@
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim');
 			$this->form_validation->set_rules('nation', '国别', 'trim');
-			$this->form_validation->set_rules('province', '省', 'trim|required');
-			$this->form_validation->set_rules('city', '市', 'trim|required');
-			$this->form_validation->set_rules('county', '区/县', 'trim|required');
-			$this->form_validation->set_rules('street', '具体地址', 'trim|required');
+			$this->form_validation->set_rules('province', '省', 'trim|required|max_length[10]');
+			$this->form_validation->set_rules('city', '市', 'trim|required|max_length[10]');
+			$this->form_validation->set_rules('county', '区/县', 'trim|required|max_length[10]');
+			$this->form_validation->set_rules('street', '具体地址；小区名、路名、门牌号等', 'trim|required|max_length[50]');
+			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
+			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');
 			$this->form_validation->set_rules('region_id', '商圈', 'trim');
 			$this->form_validation->set_rules('poi_id', '子商圈', 'trim');
-			$this->form_validation->set_rules('longitude', '经度', 'trim');
-			$this->form_validation->set_rules('latitude', '纬度', 'trim');
+			$this->form_validation->set_rules('range_deliver', '配送范围', 'trim|greater_than_equal_to[0]|less_than_equal_to[99]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -361,7 +363,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'tel_public', 'tel_protected_biz', 'tel_protected_order', 'day_rest', 'time_open', 'time_close', 'url_image_main', 'figure_image_urls', 'nation', 'province', 'city', 'county', 'street', 'region_id', 'poi_id', 'longitude', 'latitude',
+					'name', 'description', 'tel_public', 'tel_protected_biz', 'tel_protected_order', 'day_rest', 'time_open', 'time_close', 'url_image_main', 'figure_image_urls', 'nation', 'province', 'city', 'county', 'street', 'region_id', 'poi_id', 'longitude', 'latitude', 'range_deliver',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
