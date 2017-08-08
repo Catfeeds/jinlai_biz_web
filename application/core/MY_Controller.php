@@ -97,7 +97,7 @@
 			$this->sign_check_string();
 		}
 
-		// TODO 检查签名是否传入
+		// 检查签名是否传入
 		public function sign_check_exits()
 		{
 			$this->sign = $this->input->post('sign');
@@ -109,7 +109,7 @@
 			endif;
 		}
 
-		// TODO 签名时间检查
+		// 签名时间检查
 		public function sign_check_time()
 		{
 			$timestamp_sign = $this->input->post('timestamp');
@@ -137,7 +137,7 @@
 			endif;
 		}
 
-		// TODO 签名参数检查
+		// 签名参数检查
 		public function sign_check_params()
 		{
 			// 检查需要参与签名的必要参数；
@@ -162,7 +162,7 @@
 			endif;
 		}
 
-		// TODO 签名正确性检查
+		// 签名正确性检查
 		public function sign_check_string()
 		{
 			// 获取传入的参数们

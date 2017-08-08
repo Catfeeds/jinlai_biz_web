@@ -28,7 +28,7 @@
 
 <div id=content class=container>
 	<section class="row bg-info text-info">
-		<p><em>RC0.6.3</em>当前系统为beta/RC版本，仅供技术研究及技术开发；样式将随时变动，布局将随时更改，数据将不定时清零、重置、非主动性变更；任何公告、订单、充值均无实际效力，任何信息均不构成合同要约或其它任何责任。</p>
+		<p><em>RC0.6.4</em>当前系统为beta/RC版本，仅供技术研究及技术开发；样式将随时变动，布局将随时更改，数据将不定时清零、重置、非主动性变更；任何公告、订单、充值均无实际效力，任何信息均不构成合同要约或其它任何责任。</p>
 	</section>
 
 	<div class="btn-group btn-group-justified" role=group>

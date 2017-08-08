@@ -32,7 +32,7 @@
 		 */
 		protected $names_edit_required = array(
 			'id',
-			'name', 'province', 'city', 'county', 'street',
+			'name', 'province', 'city', 'street',
 		);
 		
 		/**
@@ -239,7 +239,7 @@
 			$this->form_validation->set_rules('nation', '国别', 'trim');
 			$this->form_validation->set_rules('province', '省', 'trim|required|max_length[10]');
 			$this->form_validation->set_rules('city', '市', 'trim|required|max_length[10]');
-			$this->form_validation->set_rules('county', '区/县', 'trim|required|max_length[10]');
+			$this->form_validation->set_rules('county', '区/县', 'trim|max_length[10]');
 			$this->form_validation->set_rules('street', '具体地址；小区名、路名、门牌号等', 'trim|required|max_length[50]');
 			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');
@@ -338,7 +338,7 @@
 			$this->form_validation->set_rules('nation', '国别', 'trim');
 			$this->form_validation->set_rules('province', '省', 'trim|required|max_length[10]');
 			$this->form_validation->set_rules('city', '市', 'trim|required|max_length[10]');
-			$this->form_validation->set_rules('county', '区/县', 'trim|required|max_length[10]');
+			$this->form_validation->set_rules('county', '区/县', 'trim|max_length[10]');
 			$this->form_validation->set_rules('street', '具体地址；小区名、路名、门牌号等', 'trim|required|max_length[50]');
 			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');

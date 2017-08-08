@@ -275,17 +275,17 @@
 
 				// 待验证的表单项
 				$this->form_validation->set_error_delimiters('', '；');
-				$this->form_validation->set_rules('avatar', '头像', 'trim');
-				$this->form_validation->set_rules('nickname', '昵称', 'trim');
-				$this->form_validation->set_rules('lastname', '姓氏', 'trim');
-				$this->form_validation->set_rules('firstname', '名', 'trim');
-				$this->form_validation->set_rules('code_ssn', '身份证号', 'trim');
+				$this->form_validation->set_rules('nickname', '昵称', 'trim|max_length[12]');
+				$this->form_validation->set_rules('lastname', '姓氏', 'trim|max_length[9]');
+				$this->form_validation->set_rules('firstname', '名', 'trim|max_length[6]');
+				$this->form_validation->set_rules('code_ssn', '身份证号', 'trim|exact_length[18]');
 				$this->form_validation->set_rules('url_image_id', '身份证照片', 'trim');
 				$this->form_validation->set_rules('gender', '性别', 'trim');
 				$this->form_validation->set_rules('dob', '出生日期', 'trim');
-				$this->form_validation->set_rules('email', 'Email', 'trim');
-				$this->form_validation->set_rules('address_id', '默认地址', 'trim');
-				$this->form_validation->set_rules('bank_name', '开户行名称', 'trim');
+				$this->form_validation->set_rules('avatar', '头像', 'trim');
+				$this->form_validation->set_rules('email', '电子邮件地址', 'trim');
+				$this->form_validation->set_rules('address_id', '默认地址', 'trim|is_natural_no_zero');
+				$this->form_validation->set_rules('bank_name', '开户行名称', 'trim|min_length[3]');
 				$this->form_validation->set_rules('bank_account', '开户行账号', 'trim');
 
 				// 若表单提交不成功

@@ -177,12 +177,14 @@
 		<fieldset>
 			<legend>地址</legend>
 
+			<!--
 			<div class=form-group>
 				<label for=nation class="col-sm-2 control-label">国别</label>
 				<div class=col-sm-10>
 					<p class="form-control-static"><?php echo $item['nation'] ?></p>
 				</div>
 			</div>
+			-->
 			<div class=form-group>
 				<label for=province class="col-sm-2 control-label">省※</label>
 				<div class=col-sm-10>
@@ -196,9 +198,9 @@
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=county class="col-sm-2 control-label">区/县※</label>
+				<label for=county class="col-sm-2 control-label">区/县</label>
 				<div class=col-sm-10>
-					<input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区/县" required>
+					<input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区/县">
 				</div>
 			</div>
 			<div class=form-group>

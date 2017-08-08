@@ -23,7 +23,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20170804">
+		<meta name=version content="revision20170808">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -42,8 +42,10 @@
 		<link rel=stylesheet media=all href="https://cdn.key2all.com/font-awesome/css/font-awesome.min.css">
 		<link rel=stylesheet media=all href="/css/style.css">
 
+		<!--
 		<link rel="shortcut icon" href="//images.ybslux.com/logos/logo_32x32.png">
 		<link rel=apple-touch-icon href="//images.ybslux.com/logos/logo_120x120.png">
+		-->
 
 		<link rel=canonical href="<?php echo current_url() ?>">
 
