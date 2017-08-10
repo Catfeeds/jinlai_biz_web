@@ -112,7 +112,27 @@
 			<figure id=qrcode class="col-xs-12 col-sm-6 col-md-3"></figure>
 			<script>
 			$(function(){
+				// 创建二维码并转换为图片格式，以使微信能识别该二维码
 				$('#qrcode').qrcode("<?php echo $item['url_wechat'] ?>");
+				
+				// 将canvas转换为Base64格式的图片内容
+				function convertCanvasToImage(canvas)
+				{
+					// 新Image对象，可以理解为DOM 
+					var image = new Image();
+					// canvas.toDataURL 返回的是一串Base64编码的URL，当然,浏览器自己肯定支持 
+					// 指定格式 PNG 
+					image.src = canvas.toDataURL("image/png"); 
+					return image; 
+				} 
+
+				//获取网页中的canvas对象 
+				var mycanvas = document.getElementsByTagName('canvas')[0];
+
+				//将转换后的img标签插入到html中 
+				var img = convertCanvasToImage(mycanvas); 
+				$('#qrcode').append(img);
+				$('#qrcode canvas').remove(); // 移除canvas格式的二维码
 			})
 			</script>
 
