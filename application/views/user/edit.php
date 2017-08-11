@@ -53,27 +53,13 @@
 
 <div id=content class=container>
 	<?php
-	// 需要特定角色和权限进行该操作
-	$current_role = $this->session->role; // 当前用户角色
-	$current_level = $this->session->level; // 当前用户级别
-	$role_allowed = array('管理员', '经理');
-	$level_allowed = 30;
-	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-	?>
-	<div class=btn-group role=group>
-		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
-	  	<!--<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>-->
-	</div>
-	<?php endif ?>
-
-	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
 			<legend>基本信息</legend>
-			
+
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 			
 			<div class=form-group>
@@ -88,7 +74,6 @@
 					<?php endif ?>
 
 					<div>
-						<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
 						<?php $name_to_upload = 'avatar' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -139,7 +124,6 @@
 					<?php endif ?>
 
 					<div>
-						<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
 						<?php $name_to_upload = 'url_image_id' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>

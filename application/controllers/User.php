@@ -242,11 +242,6 @@
 		 */
 		public function edit()
 		{
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
 			// 页面信息
 			$data = array(
 				'title' => '修改'.$this->class_name_cn,
