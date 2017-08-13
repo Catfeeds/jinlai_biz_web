@@ -40,7 +40,7 @@
 		
 		/* 视图文件所在目录名 */
 		public $view_root;
-		
+
 		/* 媒体文件（非样式图片、视频、音频等）所在目录名 */
 		public $media_root;
 		

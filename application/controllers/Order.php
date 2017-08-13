@@ -62,7 +62,8 @@
 			$this->class_name_cn = '商品订单'; // 改这里……
 			$this->table_name = 'order'; // 和这里……
 			$this->id_name = 'order_id'; // 还有这里，OK，这就可以了
-			$this->view_root = $this->class_name;
+			$this->view_root = $this->class_name; // 视图文件所在目录
+			$this->media_root = MEDIA_URL. 'item/'; // 媒体文件所在目录
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
@@ -183,34 +184,8 @@
 			$data_to_validate["{$name}"] = $value;
 			$this->form_validation->set_data($data_to_validate);
 			$this->form_validation->set_rules('id', '待修改项ID', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('subtotal', '小计（元）', 'trim|');
-			$this->form_validation->set_rules('promotion_id', '营销活动ID', 'trim|required');
-			$this->form_validation->set_rules('discount_promotion', '优惠活动折抵金额（元）', 'trim|required');
-			$this->form_validation->set_rules('coupon_id', '优惠券ID', 'trim|required');
-			$this->form_validation->set_rules('discount_coupon', '优惠券折抵金额（元）', 'trim|required');
-			$this->form_validation->set_rules('credit_id', '积分流水ID', 'trim|required');
-			$this->form_validation->set_rules('discount_credit', '积分折抵金额（元）', 'trim|required');
-			$this->form_validation->set_rules('freight', '运费（元）', 'trim|required');
-			$this->form_validation->set_rules('total', '应支付金额（元）', 'trim|');
-			$this->form_validation->set_rules('discount_teller', '改价折抵金额（元）', 'trim|required');
-			$this->form_validation->set_rules('teller_id', '改价操作者ID', 'trim|required');
-			$this->form_validation->set_rules('total_payed', '实际支付金额（元）', 'trim|required');
-			$this->form_validation->set_rules('total_refund', '实际退款金额（元）', 'trim|required');
-			$this->form_validation->set_rules('addressee_fullname', '收件人全名', 'trim|');
-			$this->form_validation->set_rules('addressee_mobile', '收件人手机号', 'trim|');
-			$this->form_validation->set_rules('addressee_province', '收件人省份', 'trim|');
-			$this->form_validation->set_rules('addressee_city', '收件人城市', 'trim|');
-			$this->form_validation->set_rules('addressee_county', '收件人区/县', 'trim|');
-			$this->form_validation->set_rules('addressee_address', '收件人详细地址', 'trim|');
-			$this->form_validation->set_rules('payment_type', '付款方式', 'trim|required');
-			$this->form_validation->set_rules('payment_account', '付款账号', 'trim|required');
-			$this->form_validation->set_rules('payment_id', '付款流水号', 'trim|required');
-			$this->form_validation->set_rules('note_user', '用户留言', 'trim|required');
-			$this->form_validation->set_rules('note_stuff', '员工留言', 'trim|required');
-			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|required');
-			$this->form_validation->set_rules('commission', '佣金（元）', 'trim|required');
-			$this->form_validation->set_rules('promoter_id', '推广者ID', 'trim|required');
-			$this->form_validation->set_rules('invoice_status', '发票状态', 'trim|');
+			$this->form_validation->set_rules('total', '应支付金额（元）', 'trim');
+			$this->form_validation->set_rules('note_stuff', '员工留言', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):

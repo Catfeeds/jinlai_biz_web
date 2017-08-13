@@ -61,7 +61,8 @@
 			$this->class_name_cn = '用户'; // 改这里……
 			$this->table_name = 'user'; // 和这里……
 			$this->id_name = 'user_id'; // 还有这里，OK，这就可以了
-			$this->view_root = $this->class_name;
+			$this->view_root = $this->class_name; // 视图文件所在目录
+			$this->media_root = MEDIA_URL. $this->class_name.'/'; // 媒体文件所在目录
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(

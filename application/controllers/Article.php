@@ -58,7 +58,8 @@
 			$this->class_name_cn = '文章'; // 改这里……
 			$this->table_name = 'article'; // 和这里……
 			$this->id_name = 'article_id'; // 还有这里，OK，这就可以了
-			$this->view_root = $this->class_name;
+			$this->view_root = $this->class_name; // 视图文件所在目录
+			$this->media_root = MEDIA_URL. $this->class_name.'/'; // 媒体文件所在目录
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
@@ -335,6 +336,14 @@
 		{
 			// 未登录用户转到登录页
 			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
+			
+			// 检查是否已传入必要参数
+			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
+			if ( !empty($id) ):
+				$params['id'] = $id;
+			else:
+				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+			endif;
 
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
@@ -347,13 +356,17 @@
 				'class' => $this->class_name.' edit',
 				'error' => '', // 预设错误提示
 			);
-			
+
 			// 从API服务器获取相应详情信息
 			$params['id'] = $this->input->get_post('id');
 			$url = api_url($this->class_name. '/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
+				if ( $result['content']['biz_id'] === $this->session->biz_id ):
+					$data['item'] = $result['content'];
+				else:
+					redirect( base_url('error/not_yours') ); // 若不是当前商家所属，转到相应提示页
+				endif;
 			else:
 				$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
 			endif;
@@ -416,106 +429,6 @@
 
 			endif;
 		} // end edit
-
-		/**
-		 * 修改单项
-		 */
-		public function edit_certain()
-		{
-			// 未登录用户转到登录页
-			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
-
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
-			// 页面信息
-			$data = array(
-				'title' => '修改'.$this->class_name_cn. $name,
-				'class' => $this->class_name.' edit-certain',
-				'error' => '', // 预设错误提示
-			);
-			
-			// 从API服务器获取相应详情信息
-			$params['id'] = $this->input->get_post('id');
-			$url = api_url($this->class_name. '/detail');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-				$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
-			endif;
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			// 动态设置待验证字段名及字段值
-			$data_to_validate["{$name}"] = $value;
-			$this->form_validation->set_data($data_to_validate);
-			$this->form_validation->set_rules('category_id', '所属分类', 'trim');
-			$this->form_validation->set_rules('title', '标题', 'trim|required');
-			$this->form_validation->set_rules('excerpt', '摘要', 'trim|required');
-			$this->form_validation->set_rules('content', '内容', 'trim|required');
-			$this->form_validation->set_rules('url_name', '自定义域名', 'trim');
-			$this->form_validation->set_rules('url_images', '形象图', 'trim');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] .= validation_errors();
-
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/edit_certain', $data);
-				$this->load->view('templates/footer', $data);
-
-			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_certain_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( $param !== 'value' && empty( ${$param} ) ): // value 可以为空；必要字段会在字段验证中另行检查
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
-				// 需要编辑的信息
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'id' => $id,
-					'name' => $name,
-					'value' => $value,
-				);
-
-				// 向API服务器发送待创建数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit_certain');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn. '修改成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-					$data['operation'] = 'edit_certain';
-					$data['id'] = $this->input->post('id');
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若修改失败，则进行提示
-					$data['error'] = $result['content']['error']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/edit_certain', $data);
-					$this->load->view('templates/footer', $data);
-
-				endif;
-
-			endif;
-		} // end edit_certain
 
 	} // end class Article
 

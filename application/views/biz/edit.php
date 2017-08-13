@@ -20,7 +20,7 @@
 	}
 </style>
 
-<base href="<?php echo base_url('uploads/') ?>">
+<base href="<?php echo $this->media_root ?>">
 
 <div id=content class=container>
 

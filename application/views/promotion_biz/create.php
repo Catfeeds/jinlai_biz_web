@@ -20,6 +20,8 @@
 	}
 </style>
 
+<base href="<?php echo $this->media_root ?>">
+
 <?php
 	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
 	// 在iOS设备上使用原生日期选择器
@@ -42,8 +44,6 @@
 	});
 </script>
 <?php endif ?>
-
-<base href="<?php echo base_url('uploads/') ?>">
 
 <script>
 	$(function(){

@@ -11,9 +11,6 @@
 // AJAX文件上传服务器端URL；上传目标文件夹名稍后通过上传按钮的相关属性获取
 var api_url = '//biz.517ybang.com/ajaxupload?target=';
 
-// 图片存储根路径
-var uploads_url = '//biz.517ybang.com/uploads/';
-
 // 最大文件数量，默认为4
 var max_count = 4;
 
@@ -156,7 +153,7 @@ $(function(){
 						'<li class="col-xs-6 col-sm-4 col-md-3" data-item-url="'+ item.content +'">' +
 						'	<i class="fa fa-times"></i>' +
 						'	<figure class=thumbnail>' +
-						'		<img alt="'+ item.content +'" src="' + uploads_url + item.content +'">' +
+						'		<img alt="'+ item.content +'" src="' + item.content +'">' +
 						'	</figure>' +
 						'</li>';
 

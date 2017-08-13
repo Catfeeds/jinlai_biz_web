@@ -22,7 +22,7 @@
 
 <script src="/js/jquery.qrcode.min.js"></script>
 
-<base href="<?php echo base_url('uploads/') ?>">
+<base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
