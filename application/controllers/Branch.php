@@ -302,6 +302,14 @@
 		 */
 		public function edit()
 		{
+			// 检查是否已传入必要参数
+			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
+			if ( !empty($id) ):
+				$params['id'] = $id;
+			else:
+				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+			endif;
+
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -315,13 +323,19 @@
 			);
 			
 			// 从API服务器获取相应详情信息
-			$params['id'] = $this->input->get_post('id');
+			$params['id'] = $id;
+			$params['biz_id'] = $this->session->biz_id;
 			$url = api_url($this->class_name. '/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
+				// 若不是当前商家所属，转到相应提示页
+				if ( $result['content']['biz_id'] === $this->session->biz_id ):
+					$data['item'] = $result['content'];
+				else:
+					redirect( base_url('error/not_yours') );
+				endif;
 			else:
-				$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
+				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
 			endif;
 
 			// 待验证的表单项
@@ -359,7 +373,7 @@
 				// 需要编辑的数据；逐一赋值需特别处理的字段
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
-					'id' => $this->input->post('id'),
+					'id' => $id,
 					//'name' => $this->input->post('name')),
 				);
 				// 自动生成无需特别处理的数据
@@ -378,7 +392,7 @@
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
 					$data['operation'] = 'edit';
-					$data['id'] = $this->input->post('id');
+					$data['id'] = $id;
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);

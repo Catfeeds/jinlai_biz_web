@@ -243,6 +243,14 @@
 		 */
 		public function edit()
 		{
+			// 检查是否已传入必要参数
+			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
+			if ( !empty($id) ):
+				$params['id'] = $id;
+			else:
+				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+			endif;
+
 			// 页面信息
 			$data = array(
 				'title' => '修改'.$this->class_name_cn,
@@ -251,22 +259,22 @@
 			);
 
 			// 用户仅可修改自己的资料
-			if ( $this->session->user_id !== $this->input->get_post('id') ):
+			if ( $this->session->user_id !== $id ):
 				$data['error'] .= '仅可修改自己的资料';
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/edit', $data);
 				$this->load->view('templates/footer', $data);
-				
+
 			else:
 				// 从API服务器获取相应详情信息
-				$params['id'] = $this->input->get_post('id');
+				$params['id'] = $id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
 					$data['item'] = $result['content'];
 				else:
-					$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
+					redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
 				endif;
 
 				// 待验证的表单项
@@ -275,14 +283,14 @@
 				$this->form_validation->set_rules('lastname', '姓氏', 'trim|max_length[9]');
 				$this->form_validation->set_rules('firstname', '名', 'trim|max_length[6]');
 				$this->form_validation->set_rules('code_ssn', '身份证号', 'trim|exact_length[18]');
-				$this->form_validation->set_rules('url_image_id', '身份证照片', 'trim');
-				$this->form_validation->set_rules('gender', '性别', 'trim');
-				$this->form_validation->set_rules('dob', '出生日期', 'trim');
-				$this->form_validation->set_rules('avatar', '头像', 'trim');
-				$this->form_validation->set_rules('email', '电子邮件地址', 'trim');
+				$this->form_validation->set_rules('url_image_id', '身份证照片', 'trim|max_length[255]');
+				$this->form_validation->set_rules('gender', '性别', 'trim|in_list[男,女]');
+				$this->form_validation->set_rules('dob', '出生日期', 'trim|exact_length[10]');
+				$this->form_validation->set_rules('avatar', '头像', 'trim|max_length[255]');
+				$this->form_validation->set_rules('email', '电子邮件地址', 'trim|max_length[40]|valid_email');
 				$this->form_validation->set_rules('address_id', '默认地址', 'trim|is_natural_no_zero');
-				$this->form_validation->set_rules('bank_name', '开户行名称', 'trim|min_length[3]');
-				$this->form_validation->set_rules('bank_account', '开户行账号', 'trim');
+				$this->form_validation->set_rules('bank_name', '开户行名称', 'trim|min_length[3]|max_length[20]');
+				$this->form_validation->set_rules('bank_account', '开户行账号', 'trim|max_length[30]');
 
 				// 若表单提交不成功
 				if ($this->form_validation->run() === FALSE):
@@ -296,7 +304,7 @@
 					// 需要编辑的数据；逐一赋值需特别处理的字段
 					$data_to_edit = array(
 						'user_id' => $this->session->user_id,
-						'id' => $this->input->post('id'),
+						'id' => $id,
 					);
 					// 自动生成无需特别处理的数据
 					$data_need_no_prepare = array(
@@ -314,7 +322,7 @@
 						$data['class'] = 'success';
 						$data['content'] = $result['content']['message'];
 						$data['operation'] = 'edit';
-						$data['id'] = $this->input->post('id');
+						$data['id'] = $id;
 
 						$this->load->view('templates/header', $data);
 						$this->load->view($this->view_root.'/result', $data);

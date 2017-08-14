@@ -156,7 +156,9 @@
 			$this->load->view('templates/footer', $data);
 		} // end detail
 		
-		// 平台活动报名
+		/**
+		 * 平台活动报名
+		 */
 		public function apply()
 		{
 

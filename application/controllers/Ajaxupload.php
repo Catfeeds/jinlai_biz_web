@@ -50,7 +50,7 @@
 			// 获取并设置类属性信息
 			$dir_until = strpos($this->input->post_get('target'), '/'); // 获取一级目录名结束位置（含斜杠）
 			$this->top_directory = '/'.substr( $this->input->post_get('target'), 0, $dir_until ).'/';
-			$this->path_to_file = $this->input->post_get('target').'/'. date('Ym').'/'. date('md').'/'. date('Hi').'/'; // 按上传时间进行分组，最小分组单位为分
+			$this->path_to_file = $this->input->post_get('target').'/'. date('Ym').'/'. date('md').'/'; // 按上传时间进行分组，最小分组单位为分
 			$this->target_directory = 'uploads/'. $this->path_to_file;
 
 			// 检查目标路径是否存在
@@ -157,9 +157,9 @@
 		{
 			// 设置上传限制
 			$config['upload_path'] = $this->target_url;
-			$config['file_name'] = date('Ymd_His');
+			$config['file_name'] = date('His');
 			$config['file_ext_tolower'] = TRUE; // 文件名后缀转换为小写
-			$config['allowed_types'] = 'webp|jpg|jpeg|png';
+			$config['allowed_types'] = 'webp|jpg|jpeg|png|gif';
 			$config['max_width'] = 4096; // 图片宽度不得超过4096px
 			$config['max_height'] = 4096; // 图片高度不得超过4096px
 			$config['max_size'] = 4096; // 文件大小不得超过4M
