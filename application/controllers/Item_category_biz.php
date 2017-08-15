@@ -308,6 +308,20 @@
 				'class' => $this->class_name.' edit',
 			);
 			
+			// 从API服务器获取相应详情信息
+			$params['id'] = $id;
+			$params['biz_id'] = $this->session->biz_id;
+			$url = api_url($this->class_name. '/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+				
+				// 获取所属商品分类信息
+				$data['category_biz'] = $this->get_category_biz($data['item']['parent_id']);
+			else:
+				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
+			endif;
+
 			// 获取系统级商品分类
 			$data['categories'] = $this->list_category();
 
@@ -319,25 +333,6 @@
 			$this->form_validation->set_rules('parent_id', '所属店内分类', 'trim');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('url_image', '图片', 'trim');
-			
-			// 从API服务器获取相应详情信息
-			$params['id'] = $id;
-			$params['biz_id'] = $this->session->biz_id;
-			$url = api_url($this->class_name. '/detail');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				// 若不是当前商家所属，转到相应提示页
-				if ( $result['content']['biz_id'] === $this->session->biz_id ):
-					$data['item'] = $result['content'];
-				else:
-					redirect( base_url('error/not_yours') );
-				endif;
-				
-				// 获取所属商品分类信息
-				$data['category_biz'] = $this->get_category_biz($data['item']['parent_id']);
-			else:
-				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
-			endif;
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):

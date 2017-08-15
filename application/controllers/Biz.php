@@ -390,12 +390,10 @@
 			endforeach;
 			
 			// 若不是当前商家所属，转到相应提示页
-			if ( $id !== $this->session->biz_id ):
-				$data['item'] = $result['content'];
-			else:
+			if ( $id != $this->session->biz_id ):
 				redirect( base_url('error/not_yours') );
 			endif;
-			
+
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -465,14 +463,9 @@
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
-					// 若不是当前商家所属，转到相应提示页
-					if ( $result['content']['biz_id'] == $this->session->biz_id ):
-						$data['item'] = $result['content'];
-					else:
-						redirect( base_url('error/not_yours') );
-					endif;
+					$data['item'] = $result['content'];
 				else:
-					$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
+					redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
 				endif;
 
 				$this->load->view('templates/header', $data);

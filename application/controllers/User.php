@@ -259,7 +259,7 @@
 			);
 
 			// 用户仅可修改自己的资料
-			if ( $this->session->user_id !== $id ):
+			if ( $this->session->user_id != $id ):
 				$data['error'] .= '仅可修改自己的资料';
 
 				$this->load->view('templates/header', $data);

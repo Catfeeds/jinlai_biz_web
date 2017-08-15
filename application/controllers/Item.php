@@ -505,18 +505,14 @@
 			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后，亦不可早于预订上架时间（若有）');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
-
+			
 			// 从API服务器获取相应详情信息
 			$params['id'] = $id;
+			$params['biz_id'] = $this->session->biz_id;
 			$url = api_url($this->class_name. '/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
-				// 若不是当前商家所属，转到相应提示页
-				if ( $result['content']['biz_id'] == $this->session->biz_id ):
-					$data['item'] = $result['content'];
-				else:
-					redirect( base_url('error/not_yours') );
-				endif;
+				$data['item'] = $result['content'];
 
 				// 获取系统商品分类信息
 				$data['category'] = $this->get_category($data['item']['category_id']);

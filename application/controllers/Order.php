@@ -190,6 +190,17 @@
 				'title' => '修改'.$this->class_name_cn. $name,
 				'class' => $this->class_name.' edit-certain',
 			);
+			
+			// 从API服务器获取相应详情信息
+			$params['id'] = $id;
+			$params['biz_id'] = $this->session->biz_id;
+			$url = api_url($this->class_name. '/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
+			endif;
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
@@ -203,22 +214,6 @@
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
 				$data['error'] = validation_errors();
-				
-				// 从API服务器获取相应详情信息
-				$params['id'] = $id;
-				$params['biz_id'] = $this->session->biz_id;
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					// 若不是当前商家所属，转到相应提示页
-					if ( $result['content']['biz_id'] === $this->session->biz_id ):
-						$data['item'] = $result['content'];
-					else:
-						redirect( base_url('error/not_yours') );
-					endif;
-				else:
-					redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
-				endif;
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/edit_certain', $data);

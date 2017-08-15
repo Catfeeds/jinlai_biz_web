@@ -373,12 +373,7 @@
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
-					// 若不是当前商家所属，转到相应提示页
-					if ( $result['content']['biz_id'] === $this->session->biz_id ):
-						$data['item'] = $result['content'];
-					else:
-						redirect( base_url('error/not_yours') );
-					endif;
+					$data['item'] = $result['content'];
 				else:
 					redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
 				endif;
