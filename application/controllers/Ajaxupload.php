@@ -176,8 +176,7 @@
 				$data['content'] = $this->path_to_file. $this->upload->data('file_name'); // 返回上传后的文件路径
 
 				// 上传到CDN
-				$upload_data = $this->upload->data();
-				@$this->upload_to_cdn($upload_data);
+				@$this->upload_to_cdn();
 
 			else:
 				$data['status'] = 400;
@@ -188,15 +187,11 @@
 			return $data;
 		}
 
-		//TODO 上传到CDN；目前采用的是又拍云
-		private function upload_to_cdn($upload_data)
+		// 上传到CDN；目前采用的是又拍云
+		private function upload_to_cdn()
 		{
 			$upyun_config = new Config('jinlaisandbox-images', 'jinlaisandbox', 'jinlaisandbox');
 			$upyun = new Upyun($upyun_config);
-			
-			// 所属子目录名（及待上传到又拍云的子目录名）
-			$folder_name = $this->top_directory;
-			//echo $folder_name;
  
 			// 待上传到的又拍云URL
 			$target_path =  $this->path_to_file. $this->upload->data('file_name');

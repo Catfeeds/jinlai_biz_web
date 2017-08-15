@@ -68,7 +68,7 @@
 			<div class=form-group>
 				<label for=url_logo class="col-sm-2 control-label">LOGO</label>
 				<div class=col-sm-10>
-					<?php if ( !empty($item['url_image_main']) ): ?>
+					<?php if ( !empty($item['url_logo']) ): ?>
 					<div class=row>
 						<figure class="col-xs-12 col-sm-6 col-md-4">
 							<img src="<?php echo $item['url_logo'] ?>">
@@ -78,7 +78,7 @@
 
 					<div>
 						<?php $name_to_upload = 'url_logo' ?>
-					
+
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
 						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
@@ -445,14 +445,12 @@
 			        });
 			        map.addControl(geolocation);
 			        geolocation.getCurrentPosition();
-			        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+			        AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
 			        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
 			    });
-			    //解析定位结果
+			    // 解析定位结果
 			    function onComplete(data)
 				{
-					times_picked = 0;
-
 					// 提示用户确定修改
 					var user_confirm = confirm("是否设置联系地址位置为当前地点");
 				    if (user_confirm == true)

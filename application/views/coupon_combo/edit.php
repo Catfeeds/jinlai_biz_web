@@ -75,7 +75,7 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+			<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
 			
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 

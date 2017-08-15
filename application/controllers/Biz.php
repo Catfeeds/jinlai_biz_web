@@ -244,11 +244,9 @@
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
-			
+
 			// 若不是当前商家所属，转到相应提示页
-			if ( $id !== $this->session->biz_id ):
-				$data['item'] = $result['content'];
-			else:
+			if ( $id != $this->session->biz_id ):
 				redirect( base_url('error/not_yours') );
 			endif;
 
@@ -340,7 +338,7 @@
 					'code_license', 'code_ssn_owner',  'code_ssn_auth',
 					'bank_name', 'bank_account',
 					'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_image_product', 'url_image_produce', 'url_image_retail',
-					'min_order_subtotal', 'delivery_time_start', 'delivery_time_end', 'longitude', 'latitude', 'province', 'city', 'county', 'detail', 'url_web', 'url_weibo', 'url_wechat',
+					'min_order_subtotal', 'delivery_time_start', 'delivery_time_end', 'longitude', 'latitude', 'province', 'city', 'county', 'street', 'url_web', 'url_weibo', 'url_wechat',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -467,7 +465,12 @@
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
-					$data['item'] = $result['content'];
+					// 若不是当前商家所属，转到相应提示页
+					if ( $result['content']['biz_id'] == $this->session->biz_id ):
+						$data['item'] = $result['content'];
+					else:
+						redirect( base_url('error/not_yours') );
+					endif;
 				else:
 					$data['error'] .= $result['content']['error']['message']; // 若未成功获取信息，则转到错误页
 				endif;

@@ -7,6 +7,15 @@
  * Time: 上午11: 32
  * UEditor编辑器通用上传类
  */
+
+// 载入又拍云相关类
+//require_once './sdk/upyun/vendor/autoload.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/sdk/upyun/vendor/autoload.php';
+
+// 填写又拍云类的基础配置
+use Upyun\Upyun;
+use Upyun\Config;
+
 class Uploader
 {
     private $fileField; //文件域名
@@ -66,6 +75,31 @@ class Uploader
         $this->stateMap['ERROR_TYPE_NOT_ALLOWED'] = iconv('unicode', 'utf-8', $this->stateMap['ERROR_TYPE_NOT_ALLOWED']);
     }
 
+	//TODO 获取上传结果并相应改变文件名 上传到CDN；目前采用的是又拍云
+	private function upload_to_cdn($upload_data)
+	{
+		$upyun_config = new Config('jinlaisandbox-images', 'jinlaisandbox', 'jinlaisandbox');
+		$upyun = new Upyun($upyun_config);
+
+		// 待上传到的又拍云URL
+		$target_path = '/item/'. substr($upload_data['url'], strlen('/uploads/'));
+		//$target_path = $upload_data['url'];
+
+		// 待上传文件的本地相对路径 注意，只能是相对路径！！！
+		$source_file_url = $_SERVER['DOCUMENT_ROOT'].$upload_data['url'];
+
+		// 获取待上传文件
+		$file = fopen($source_file_url, 'rb'); // 打开文件流
+
+		// 添加作图参数
+		// 最长边2048px，短边自适应
+		$tasks = array('x-gmkerl-thumb' => '/max/2048');
+
+		// 进行上传
+		$result_upyun = $upyun->write($target_path, $file, $tasks);
+		fclose($file); // 关闭文件流
+	}
+
     /**
      * 上传文件的主处理方法
      * @return mixed
@@ -122,6 +156,12 @@ class Uploader
             $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
         } else { //移动成功
             $this->stateInfo = $this->stateMap[0];
+			
+			// 获取文件信息
+			$file_info = $this->getFileInfo();
+			
+			// 上传到又拍云
+			$this->upload_to_cdn($file_info);
         }
     }
 
@@ -283,7 +323,7 @@ class Uploader
      */
     private function getFullName()
     {
-        //替换日期事件
+        //替换日期时间
         $t = time();
         $d = explode('-', date("Y-y-m-d-H-i-s"));
         $format = $this->config["pathFormat"];
@@ -296,7 +336,7 @@ class Uploader
         $format = str_replace("{ss}", $d[6], $format);
         $format = str_replace("{time}", $t, $format);
 
-        //过滤文件名的非法自负,并替换文件名
+        //过滤文件名的非法字符,并替换文件名
         $oriName = substr($this->oriName, 0, strrpos($this->oriName, '.'));
         $oriName = preg_replace("/[\|\?\"\<\>\/\*\\\\]+/", '', $oriName);
         $format = str_replace("{filename}", $oriName, $format);
@@ -348,7 +388,7 @@ class Uploader
      * 文件大小检测
      * @return bool
      */
-    private function  checkSize()
+    private function checkSize()
     {
         return $this->fileSize <= ($this->config["maxSize"]);
     }

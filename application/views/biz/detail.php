@@ -33,20 +33,6 @@
 </div>
 
 <div id=content class=container>
-	<?php
-	// 需要特定角色和权限进行该操作
-	$current_role = $this->session->role; // 当前用户角色
-	$current_level = $this->session->level; // 当前用户级别
-	$role_allowed = array('管理员', '经理');
-	$level_allowed = 30;
-	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-	?>
-	<div class=btn-group role=group>
-		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
-	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
-	</div>
-	<?php endif ?>
 
 	<?php if ( empty($item) ): ?>
 	<p><?php echo $error ?></p>
@@ -55,6 +41,10 @@
 	<ul class="list-unstyled row">
 		<?php
 		// 需要特定角色和权限进行该操作
+		$current_role = $this->session->role; // 当前用户角色
+		$current_level = $this->session->level; // 当前用户级别
+		$role_allowed = array('管理员', '经理');
+		$level_allowed = 30;
 		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 		?>
 		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>
@@ -275,7 +265,7 @@
 		<dt>地址</dt>
 		<dd>
 			<p>
-				<?php echo $item['nation'] ?> <?php echo $item['province'] ?>省 <?php echo $item['city'] ?>市 <?php echo $item['county'] ?>区/县<br>
+				<?php echo $item['nation'] ?> <?php echo $item['province'] ?> <?php echo $item['city'] ?> <?php echo $item['county'] ?><br>
 				<?php echo $item['street'] ?>
 			</p>
 

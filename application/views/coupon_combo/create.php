@@ -75,7 +75,7 @@
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+			<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
 
 			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">名称※</label>
