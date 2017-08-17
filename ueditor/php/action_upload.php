@@ -7,12 +7,15 @@
  */
 include "Uploader.class.php";
 
+// 检查是否已指定了待上传到的路径
+$target = isset($_GET['target'])? '/'.$_GET['target']: NULL;
+
 /* 上传配置 */
 $base64 = "upload";
 switch (htmlspecialchars($_GET['action'])) {
     case 'uploadimage':
         $config = array(
-            "pathFormat" => $CONFIG['imagePathFormat'],
+            "pathFormat" => '/uploads'. $target. $CONFIG['imagePathFormat'],
             "maxSize" => $CONFIG['imageMaxSize'],
             "allowFiles" => $CONFIG['imageAllowFiles']
         );
@@ -20,7 +23,7 @@ switch (htmlspecialchars($_GET['action'])) {
         break;
     case 'uploadscrawl':
         $config = array(
-            "pathFormat" => $CONFIG['scrawlPathFormat'],
+            "pathFormat" => '/uploads'. $target. $CONFIG['scrawlPathFormat'],
             "maxSize" => $CONFIG['scrawlMaxSize'],
             "allowFiles" => $CONFIG['scrawlAllowFiles'],
             "oriName" => "scrawl.png"
@@ -30,7 +33,7 @@ switch (htmlspecialchars($_GET['action'])) {
         break;
     case 'uploadvideo':
         $config = array(
-            "pathFormat" => $CONFIG['videoPathFormat'],
+            "pathFormat" => '/uploads'. $target. $CONFIG['videoPathFormat'],
             "maxSize" => $CONFIG['videoMaxSize'],
             "allowFiles" => $CONFIG['videoAllowFiles']
         );
@@ -39,7 +42,7 @@ switch (htmlspecialchars($_GET['action'])) {
     case 'uploadfile':
     default:
         $config = array(
-            "pathFormat" => $CONFIG['filePathFormat'],
+            "pathFormat" => '/uploads'. $target. $CONFIG['filePathFormat'],
             "maxSize" => $CONFIG['fileMaxSize'],
             "allowFiles" => $CONFIG['fileAllowFiles']
         );
@@ -62,5 +65,11 @@ $up = new Uploader($fieldName, $config, $base64);
  * )
  */
 
+// 将存储在本地的相对路径修改为存储在CDN的相对路径
+$upload_data = $up->getFileInfo();
+$cdn_path = substr($upload_data['url'], strlen('/uploads'));
+$upload_data['url'] = $cdn_path;
+
 /* 返回数据 */
-return json_encode($up->getFileInfo());
+return json_encode($upload_data); // 直接返回存储在CDN（又拍云）的文件路径
+//return json_encode($up->getFileInfo());

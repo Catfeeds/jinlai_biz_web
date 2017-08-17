@@ -130,7 +130,7 @@
 		<dt>商品宣传语/卖点</dt>
 		<dd><?php echo !empty($item['slogan'])? $item['slogan']: '未设置'; ?></dd>
 		<dt>标签价/原价</dt>
-		<dd><del>￥ <?php echo ($item['tag_price'] !== '0.00')? $item['tag_price']: '未设置'; ?></del></dd>
+		<dd><?php echo ($item['tag_price'] !== '0.00')? '<del>￥ '.$item['tag_price'].'</del>': '未设置'; ?></dd>
 		<dt>商城价/现价</dt>
 		<dd><strong>￥ <?php echo $item['price'] ?></strong></dd>
 
@@ -139,9 +139,9 @@
 		<dd><strong><?php echo $item['stocks'].' '. $unit_name ?></strong></dd>
 
 		<dt>每单最高限量</dt>
-		<dd><?php echo !empty($item['quantity_max'])? $item['quantity_max']: '不限'; ?> 份</dd>
+		<dd><?php echo !empty($item['quantity_max'])? $item['quantity_max'].' 份': '不限'; ?></dd>
 		<dt>每单最低限量</dt>
-		<dd><?php echo !empty($item['quantity_min'])? $item['quantity_min']: 1; ?> 份</dd>
+		<dd><?php echo !empty($item['quantity_min'])? $item['quantity_min'].' 份': 1; ?></dd>
 		<dt>是否可用优惠券</dt>
 		<dd><?php echo ($item['coupon_allowed'] === '1')? '是': '否'; ?></dd>
 		<dt>积分抵扣率</dt>

@@ -55,7 +55,7 @@
 
 		<?php if ( $count['biz_freight_templates'] === 0 ): ?>
 		<blockquote class=row>
-			<p class=help-block>您目前没有运费模板，将为买家包邮。</p>
+			<p>您目前没有运费模板，将为买家包邮。</p>
 			<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建运费模板</a>
 		</blockquote>
 		<?php endif ?>

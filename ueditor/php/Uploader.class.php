@@ -75,14 +75,14 @@ class Uploader
         $this->stateMap['ERROR_TYPE_NOT_ALLOWED'] = iconv('unicode', 'utf-8', $this->stateMap['ERROR_TYPE_NOT_ALLOWED']);
     }
 
-	//TODO 获取上传结果并相应改变文件名 上传到CDN；目前采用的是又拍云
+	// 获取上传结果并相应改变文件名 上传到CDN；目前采用的是又拍云
 	private function upload_to_cdn($upload_data)
 	{
 		$upyun_config = new Config('jinlaisandbox-images', 'jinlaisandbox', 'jinlaisandbox');
 		$upyun = new Upyun($upyun_config);
 
 		// 待上传到的又拍云URL
-		$target_path = '/item/'. substr($upload_data['url'], strlen('/uploads/'));
+		$target_path = substr($upload_data['url'], strlen('/uploads/'));
 		//$target_path = $upload_data['url'];
 
 		// 待上传文件的本地相对路径 注意，只能是相对路径！！！

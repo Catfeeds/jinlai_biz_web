@@ -94,7 +94,7 @@
 
         //,readonly : false //编辑器初始化结束后,编辑区域是否是只读的，默认是false
 
-        //,autoClearEmptyNode : true //getContent时，是否删除空的inlineElement节点（包括嵌套的情况）
+        ,autoClearEmptyNode : true //getContent时，是否删除空的inlineElement节点（包括嵌套的情况）
 
         //启用自动保存
         ,enableAutoSave: true
@@ -180,7 +180,7 @@
         ,'fontfamily':[
         //    { label:'',name:'songti',val:'宋体,SimSun'},
         //    { label:'',name:'kaiti',val:'楷体,楷体_GB2312, SimKai'},
-            { label:'',name:'yahei',val:'微软雅黑,Microsoft YaHei'},
+			{ label:'',name:'yahei',val:'微软雅黑,Microsoft YaHei'},
         //    { label:'',name:'heiti',val:'黑体, SimHei'},
         //    { label:'',name:'lishu',val:'隶书, SimLi'},
         //    { label:'',name:'andaleMono',val:'andale mono'},
@@ -251,7 +251,7 @@
 
         //wordCount
         ,wordCount:true          //是否开启字数统计
-        ,maximumWords:5000       //允许的最大字符数
+        ,maximumWords:20000       //允许的最大字符数
         //字数统计提示，{#count}代表当前字数，{#leave}代表还可以输入多少字符数,留空支持多语言自动切换，否则按此配置显示
         //,wordCountMsg:''   //当前已输入 {#count} 个字符，您还可以输入{#leave} 个字符
         //超出字数限制提示  留空支持多语言自动切换，否则按此配置显示
@@ -310,7 +310,7 @@
             imageBlockLine: 'center',       //图片的浮动方式，独占一行剧中,左右浮动，默认: center,left,right,none 去掉这个属性表示不执行排版
         //    pasteFilter: false,             //根据规则过滤没事粘贴进来的内容
         //    clearFontSize: false,           //去掉所有的内嵌字号，使用编辑器默认的字号
-        //    clearFontFamily: false,         //去掉所有的内嵌字体，使用编辑器默认的字体
+        	clearFontFamily: false,         //去掉所有的内嵌字体，使用编辑器默认的字体
             removeEmptyNode: false,         // 去掉空节点
         //    //可以去掉的标签
         //    removeTagNames: {标签名字:1},

@@ -220,7 +220,14 @@
 					<link rel="stylesheet" media=all href="<?php echo base_url('ueditor/themes/default/css/ueditor.min.css') ?>">
 					<script src="<?php echo base_url('ueditor/ueditor.config.js') ?>"></script>
 					<script src="<?php echo base_url('ueditor/ueditor.all.min.js') ?>"></script>
-					<script>var ue = UE.getEditor('detail_editior');</script>
+					<script>
+						var ue = UE.getEditor(
+							'detail_editior',
+							{
+								serverUrl: '<?php echo base_url('ueditor/php/controller.php?target='.$this->class_name) ?>',
+							}
+						);
+					</script>
 
 					<?php else: ?>
 					<p class="help-block">在电脑上编辑可添加更丰富内容</p>
@@ -260,7 +267,7 @@
 			<div class=form-group>
 				<label for=quantity_max class="col-sm-2 control-label">每单最高限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=quantity_max type=number min=1 step=1 max=99 value="<?php echo $item['quantity_max'] ?>" placeholder="留空则默认为99，最高99">
+					<input class=form-control name=quantity_max type=number min=0 step=1 max=99 value="<?php echo $item['quantity_max'] ?>" placeholder="留空则默认为99，最高99">
 				</div>
 			</div>
 			<div class=form-group>
