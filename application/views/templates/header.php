@@ -23,7 +23,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20170818">
+		<meta name=version content="revision20170820">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -31,6 +31,150 @@
 		<meta name=viewport content="width=device-width,user-scalable=0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+		<?php //if ($is_wechat): ?>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<script>
+			<?php
+				function curl($url, $params = NULL, $return = 'array', $method = 'get')
+				{
+				    $curl = curl_init();
+				    curl_setopt($curl, CURLOPT_URL, $url);
+
+				    // 设置cURL参数，要求结果保存到字符串中还是输出到屏幕上。
+				    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+				    curl_setopt($curl, CURLOPT_ENCODING, 'UTF-8');
+			
+					// 需要通过POST方式发送的数据
+					if ($method === 'post'):
+						$params['app_type'] = 'biz'; // 应用类型默认为biz
+						curl_setopt($curl, CURLOPT_POST, count($params));
+						curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
+					endif;
+			
+				    // 运行cURL，请求API
+					$result = curl_exec($curl);
+			
+					// 输出CURL请求头以便调试
+					//var_dump(curl_getinfo($curl));
+
+					// 关闭URL请求
+				    curl_close($curl);
+
+					// 转换返回的json数据为相应格式并返回
+					if ($return === 'object'):
+						$result = json_decode($result);
+					elseif ($return === 'array'):
+						$result = json_decode($result, TRUE);
+					endif;
+
+					return $result;
+				}
+
+				// 获取access_token
+				function get_access_token()
+				{
+					$params = NULL;
+					$url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.WECHAT_APP_ID.'&secret='.WECHAT_APP_SECRET;
+					$result = curl($url, $params, 'array');
+					return $result['access_token'];
+				}
+
+				// 获取jsapi_ticket
+				function get_jsapi_ticket($access_token)
+				{
+					$params = NULL;
+					$url = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='.$access_token.'&type=jsapi';
+					$result = curl($url, $params, 'array');
+					return $result['ticket'];
+				}
+
+				$access_token = get_access_token();
+				$wesign['timestamp'] = time();
+				$wesign['noncestr'] = 'Wm3WZYTPz0wzccnW';
+				$wesign['jsapi_ticket'] = get_jsapi_ticket($access_token);
+				$current_url = 'https://'. $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+				if (strpos($current_url, '#') !== FALSE) $current_url = substr($current_url, 0, strpos($current_url, '#'));
+				$wesign['url'] = $current_url;
+
+				// 微信JSAPI签名过程
+				function wechat_sign_generate($params)
+				{
+					// 对参与签名的参数进行排序
+					ksort($params);
+
+					// 拼接字符串
+					$param_string = '';
+					foreach ($params as $key => $value)
+						$param_string .= '&'. $key.'='.$value;
+					$param_string = trim($param_string, '&'); // 清除开头的“&”
+				
+					// 计算字符串SHA1值
+					$sign = SHA1($param_string);
+					return $sign;
+				}
+			?>
+
+			wx.config({
+			    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			    appId: '<?php echo WECHAT_APP_ID ?>', // 必填，公众号的唯一标识
+			    timestamp: <?php echo $wesign['timestamp'] ?>, // 必填，生成签名的时间戳
+			    nonceStr: '<?php echo $wesign['noncestr'] ?>', // 必填，生成签名的随机串
+			    signature: '<?php echo wechat_sign_generate($wesign) ?>',// 必填，签名，见附录1
+			    jsApiList: [
+					'onMenuShareTimeline',
+					'onMenuShareAppMessage',
+					'hideMenuItems',
+				] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+
+			});
+
+			wx.ready(function(){
+				// 隐藏部分按钮
+				wx.hideMenuItems({
+				    menuList:[
+				    	'menuItem:share:qq', 'menuItem:share:QZone', 'menuItem:share:facebook', 'menuItem:copyUrl', 'menuItem:readMode', 'menuItem:openWithQQBrowser', 'menuItem:openWithSafari', 'menuItem:share:email',
+				    ] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+				});
+
+				// 分享到朋友圈
+				wx.onMenuShareTimeline({
+				    title: '分享一个好平台 <?php echo $title ?>', // 分享标题
+				    link: '<?php echo 'https://'. $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] ?>', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+				    imgUrl: null, // 分享图标
+				    success: function () {
+				        // 用户确认分享后执行的回调函数
+						alert('谢谢分享');
+				    },
+				    cancel: function () {
+				        // 用户取消分享后执行的回调函数
+						alert('您未完成分享');
+				    }
+				});
+
+				// 分享给朋友
+				wx.onMenuShareAppMessage({
+				    title: '分享一个好平台 <?php echo $title ?>', // 分享标题
+				    desc: '<?php echo $description ?>', // 分享描述
+				    link: '<?php echo 'https://'. $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'] ?>', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+				    imgUrl: null, // 分享图标
+				    type: '', // 分享类型,music、video或link，不填默认为link
+				    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+				    success: function () {
+				        // 用户确认分享后执行的回调函数
+						alert('谢谢分享');
+				    },
+				    cancel: function () {
+				        // 用户取消分享后执行的回调函数
+						alert('您未完成分享');
+				    }
+				});
+
+			});
+			
+			
+		</script>
+		<?php //endif ?>
+		
 		<script src="https://cdn.key2all.com/js/jquery/new.js"></script>
 		<script defer src="https://cdn.key2all.com/js/jquery/jquery.cookie.js"></script>
 		<script defer src="https://cdn.key2all.com/bootstrap/js/bootstrap-3_3_7.min.js"></script>

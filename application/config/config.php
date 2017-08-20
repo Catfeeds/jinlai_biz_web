@@ -42,8 +42,8 @@ function api_url($api_name)
 
 /* 以下是为下一个版本将要增加的功能预留的参数 */
 // 微信公众平台参数
-define('WECHAT_APP_ID', '');
-define('WECHAT_APP_SECRET', '');
+define('WECHAT_APP_ID', 'wxc79bcec5d7183cce');
+define('WECHAT_APP_SECRET', '1e0529df8e006e4b415bd7c84fe240fa');
 define('WECHAT_TOKEN', '');
 define('AES_KEY', '');
 

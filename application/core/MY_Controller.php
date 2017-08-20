@@ -86,7 +86,7 @@
 		}
 		
 		// 将数组输出为key:value格式，主要用于在postman等工具中进行api测试
-		public function key_value($params)
+		protected function key_value($params)
 		{
 			foreach ($params as $key => $value):
 				echo $key .':' .$value ."\n";
@@ -100,7 +100,7 @@
 		 *
 		 * @params array sign_to_check 待检查的签名数据
 		 */
-		public function sign_check($sign_to_check)
+		protected function sign_check($sign_to_check)
 		{
 			$this->sign_check_exits();
 			$this->sign_check_time();
@@ -109,7 +109,7 @@
 		}
 
 		// 检查签名是否传入
-		public function sign_check_exits()
+		protected function sign_check_exits()
 		{
 			$this->sign = $this->input->post('sign');
 
@@ -121,7 +121,7 @@
 		}
 
 		// 签名时间检查
-		public function sign_check_time()
+		protected function sign_check_time()
 		{
 			$timestamp_sign = $this->input->post('timestamp');
 
@@ -149,7 +149,7 @@
 		}
 
 		// 签名参数检查
-		public function sign_check_params()
+		protected function sign_check_params()
 		{
 			// 检查需要参与签名的必要参数；
 			$params_required = array(
@@ -174,7 +174,7 @@
 		}
 
 		// 签名正确性检查
-		public function sign_check_string()
+		protected function sign_check_string()
 		{
 			// 获取传入的参数们
 			$params = $_POST;
@@ -200,7 +200,7 @@
 		/**
 		 * 生成签名
 		 */
-		public function sign_generate($params)
+		protected function sign_generate($params)
 		{
 			// 对参与签名的参数进行排序
 			ksort($params);
