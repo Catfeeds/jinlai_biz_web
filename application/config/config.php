@@ -22,6 +22,7 @@ define('ICP_NUMBER', NULL); // ICP备案号码，没有请留空
 define('BASE_URL', 'https://'. $_SERVER['SERVER_NAME']); // 可对外使用的站点URL；在本地测试时须替换为类似“localhost/BasicCodeigniter”形式
 
  // （可选）媒体文件，即非样式图片、视频、音频存储的根目录所在URL，可用于配合又拍云等第三方存储
+define('DEFAULT_IMAGE', NULL); // 默认图片URL
 //define('MEDIA_URL', 'https://medias.517ybang.com/'); // 生产环境
 define('MEDIA_URL', 'https://jinlaisandbox-images.b0.upaiyun.com/'); // 测试环境
 
@@ -40,7 +41,6 @@ function api_url($api_name)
 	return API_URL. $api_name;
 }
 
-/* 以下是为下一个版本将要增加的功能预留的参数 */
 // 微信公众平台参数
 define('WECHAT_APP_ID', 'wxc79bcec5d7183cce');
 define('WECHAT_APP_SECRET', '1e0529df8e006e4b415bd7c84fe240fa');

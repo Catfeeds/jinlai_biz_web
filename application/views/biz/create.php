@@ -71,15 +71,17 @@
 			<legend>资质信息</legend>
 
 			<div class=form-group>
-				<label for=code_license class="col-sm-2 control-label">营业执照号※</label>
+				<label for=code_license class="col-sm-2 control-label">工商执照注册号※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=code_license type=text value="<?php echo set_value('code_license') ?>" placeholder="如为三证合一，请填写统一社会信用代码" required>
+					<p class=help-block>请填写营业执照上的工商注册号；或三证合一后18位的统一社会信用代码。</p>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=fullname_owner class="col-sm-2 control-label">法人姓名※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=fullname_owner type=text size=15 value="<?php echo set_value('fullname_owner') ?>" placeholder="需与身份证一致" required>
+					<p class=help-block>按照营业执照上填写。如果属于分公司则填写工商营业执照上明确的负责人，个体工商户请填写经营者姓名，合伙企业请填写合伙人姓名，个人独资企业请填写投资人姓名，企业法人的非法人分支机构填写负责人姓名。 </p>
 				</div>
 			</div>
 			<div class=form-group>
