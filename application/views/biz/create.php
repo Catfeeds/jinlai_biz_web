@@ -45,6 +45,7 @@
 				<label for=name class="col-sm-2 control-label">商家名称※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="请与营业执照保持一致" required>
+					<p class=help-block>只支持中国大陆工商局或市场监督管理局登记的企业。请填写工商营业执照上的企业全称，该名称将作为后续所有费用的发票抬头。</p>
 				</div>
 			</div>
 			<div class=form-group>
@@ -74,7 +75,7 @@
 				<label for=code_license class="col-sm-2 control-label">工商执照注册号※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=code_license type=text value="<?php echo set_value('code_license') ?>" placeholder="如为三证合一，请填写统一社会信用代码" required>
-					<p class=help-block>请填写营业执照上的工商注册号；或三证合一后18位的统一社会信用代码。</p>
+					<p class=help-block>请填写营业执照上的15位工商注册号；或三证合一后18位的统一社会信用代码。</p>
 				</div>
 			</div>
 			<div class=form-group>
@@ -87,7 +88,7 @@
 			<div class=form-group>
 				<label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=code_ssn_owner type=text size=18 value="<?php echo set_value('code_ssn_owner') ?>" placeholder="请输入有效身份证号" required>
+					<input class=form-control name=code_ssn_owner type=text size=18 value="<?php echo set_value('code_ssn_owner') ?>" placeholder="请输入18位有效身份证号" required>
 				</div>
 			</div>
 			<div class=form-group>
@@ -101,11 +102,11 @@
 				<label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号</label>
 				<div class=col-sm-10>
 					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
-					<input class=form-control name=code_ssn_auth type=text size=18 value="<?php echo set_value('code_ssn_auth') ?>" placeholder="请输入有效身份证号">
+					<input class=form-control name=code_ssn_auth type=text size=18 value="<?php echo set_value('code_ssn_auth') ?>" placeholder="请输入18位有效身份证号">
 				</div>
 			</div>
 		</fieldset>
-		
+
 		<fieldset>
 			<legend>财务信息</legend>
 
@@ -119,6 +120,7 @@
 				<label for=bank_account class="col-sm-2 control-label">对公账户账号</label>
 				<div class=col-sm-10>
 					<input class=form-control name=bank_account type=number step=1 value="<?php echo set_value('bank_account') ?>" placeholder="基本户、一般户均可">
+					<p class=help-block>我们会向该对公帐户汇入一笔非常小的金额和备注信息，需要您后续与审核人员确认。 </p>
 				</div>
 			</div>
 			<div class=form-group>
