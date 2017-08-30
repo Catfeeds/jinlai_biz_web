@@ -76,7 +76,7 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
+			<p class=help-block>必填项以“※”符号标示</p>
 
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
@@ -89,8 +89,8 @@
 			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">系统分类</label>
 				<div class=col-sm-10>
-					<p class=help-block>系统分类仅可在创建商品时指定</p>
 					<p class="form-control-static"><?php echo $category['name'] ?></p>
+					<p class=help-block>系统分类仅可在创建商品时指定</p>
 				</div>
 			</div>
 			
@@ -318,15 +318,15 @@
 			<div class=form-group>
 				<label for=discount_credit class="col-sm-2 control-label">积分抵扣率</label>
 				<div class=col-sm-10>
-					<p class=help-block>若允许使用积分抵扣，则需填写此项；例如允许5%的金额使用积分抵扣则为0.05，10%为0.1，最高0.5</p>
 					<input class=form-control name=discount_credit type=number step=0.01 min=0.00 max=0.99 value="<?php echo $item['discount_credit'] ?>" placeholder="留空则默认为0">
+					<p class=help-block>若允许使用积分抵扣，则需填写此项；例如允许5%的金额使用积分抵扣则为0.05，10%为0.1，最高0.5</p>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=commission_rate class="col-sm-2 control-label">佣金比例/提成率</label>
 				<div class=col-sm-10>
-					<p class=help-block>若需向推广者返还佣金，则需填写此项；例如提成实际支付金额的5%则为0.05，10%为0.1，最高0.5</p>
 					<input class=form-control name=commission_rate type=number step=0.01 min=0.00 max=0.99 value="<?php echo $item['commission_rate'] ?>" placeholder="留空则默认为0">
+					<p class=help-block>若需向推广者返还佣金，则需填写此项；例如提成实际支付金额的5%则为0.05，10%为0.1，最高0.5</p>
 				</div>
 			</div>
 
@@ -334,8 +334,8 @@
 			<div class=form-group>
 				<label for=time_to_publish class="col-sm-2 control-label">预定上架时间</label>
 				<div class=col-sm-10>
-					<p class=help-block>最小可限定到分钟级别；若填写了此项，则商品在创建后将处于下架状态</p>
 					<input class=form-control name=time_to_publish type=datetime value="<?php echo empty($item['time_to_publish'])? NULL: date('Y-m-d H:i:s', $item['time_to_publish']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+8days')) ?>">
+					<p class=help-block>最小可限定到分钟级别；若填写了此项，则商品在保存后将处于下架状态</p>
 				</div>
 			</div>
 			<?php endif ?>
@@ -345,6 +345,7 @@
 				<label for=time_to_suspend class="col-sm-2 control-label">预定下架时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_to_suspend type=datetime value="<?php echo empty($item['time_to_suspend'])? NULL: date('Y-m-d H:i', $item['time_to_suspend']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+10days')) ?>">
+					<p class=help-block>最小可限定到分钟级别；若填写了此项，则商品在保存后将处于上架状态</p>
 				</div>
 			</div>
 			<?php endif ?>

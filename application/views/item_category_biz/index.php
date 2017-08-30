@@ -63,12 +63,8 @@
 				<tr>
 					<th>&nbsp;</th>
 					<th><?php echo $this->class_name_cn ?>ID</th>
-					<?php
-						$thead = array_values($data_to_display);
-						foreach ($thead as $th):
-							echo '<th>' .$th. '</th>';
-						endforeach;
-					?>
+					<th>形象图</th>
+					<th>名称</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -80,12 +76,14 @@
 						<input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
 					</td>
 					<td><?php echo $item[$this->id_name] ?></td>
-					<?php
-						$tr = array_keys($data_to_display);
-						foreach ($tr as $td):
-							echo '<td>' .$item[$td]. '</td>';
-						endforeach;
-					?>
+					<td>
+						<?php if ( empty($item['url_image']) ): ?>
+						未上传
+						<?php else: ?>
+						<img class=img-rounded src="<?php echo $item['url_image'] ?>">
+						<?php endif ?>
+					</td>
+					<td><?php echo $item['name'] ?></td>
 					<td>
 						<ul class=list-unstyled>
 							<li><a title="查看" href="<?php echo base_url($this->view_root.'/detail?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-eye"></i> 查看</a></li>

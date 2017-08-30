@@ -36,8 +36,8 @@
 			<div class=form-group>
 				<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号</label>
 				<div class=col-sm-10>
-					<p class=help-block>我们将通过该号码与您取得联系，您可在入驻申请通过后通过专属顾问修改该信息。</p>
 					<p class="form-control-static"><?php echo $this->session->mobile ?></p>
+					<p class=help-block>我们将通过该号码与您取得联系，您可在入驻申请通过后通过专属顾问修改该信息。</p>
 				</div>
 			</div>
 
@@ -48,22 +48,26 @@
 					<p class=help-block>只支持中国大陆工商局或市场监督管理局登记的企业。请填写工商营业执照上的企业全称，该名称将作为后续所有费用的发票抬头。</p>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=brief_name class="col-sm-2 control-label">简称※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=brief_name type=text value="<?php echo set_value('brief_name') ?>" placeholder="例如“SELECTED”" required>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">简介</label>
 				<div class=col-sm-10>
-					<textarea class=form-control name=description rows=5 placeholder="最多200个字符，请简述企业主要经营范围、主营产品等信息"><?php echo set_value('description') ?></textarea>
+					<textarea class=form-control name=description rows=5 placeholder="最多255个字符，请简述企业主要经营范围、主营产品等信息"><?php echo set_value('description') ?></textarea>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=tel_public class="col-sm-2 control-label">消费者服务电话※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=tel_public type=tel value="<?php echo set_value('tel_public') ?>" placeholder="即客服电话，400/800、手机号、带区号的固定电话号码均可" required>
+					<input class=form-control name=tel_public type=tel value="<?php echo set_value('tel_public') ?>" placeholder="400、800、手机号、带区号的固定电话号码均可" required>
+					<p class=help-block>即客服电话，不要加空格或其它符号，固定电话请填写区号</p>
 				</div>
 			</div>
 		</fieldset>
@@ -72,7 +76,7 @@
 			<legend>资质信息</legend>
 
 			<div class=form-group>
-				<label for=code_license class="col-sm-2 control-label">工商执照注册号※</label>
+				<label for=code_license class="col-sm-2 control-label">工商注册号※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=code_license type=text value="<?php echo set_value('code_license') ?>" placeholder="如为三证合一，请填写统一社会信用代码" required>
 					<p class=help-block>请填写营业执照上的15位工商注册号；或三证合一后18位的统一社会信用代码。</p>
@@ -88,21 +92,22 @@
 			<div class=form-group>
 				<label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=code_ssn_owner type=text size=18 value="<?php echo set_value('code_ssn_owner') ?>" placeholder="请输入18位有效身份证号" required>
+					<input class=form-control name=code_ssn_owner type=text value="<?php echo set_value('code_ssn_owner') ?>" placeholder="请输入18位有效身份证号" required>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=fullname_auth class="col-sm-2 control-label">经办人姓名</label>
 				<div class=col-sm-10>
-					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
 					<input class=form-control name=fullname_auth type=text size=15 value="<?php echo set_value('fullname_auth') ?>" placeholder="需与身份证一致">
+					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号</label>
 				<div class=col-sm-10>
+					<input class=form-control name=code_ssn_auth type=text value="<?php echo set_value('code_ssn_auth') ?>" placeholder="请输入18位有效身份证号">
 					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
-					<input class=form-control name=code_ssn_auth type=text size=18 value="<?php echo set_value('code_ssn_auth') ?>" placeholder="请输入18位有效身份证号">
 				</div>
 			</div>
 		</fieldset>
@@ -171,7 +176,7 @@
 			<div class=form-group>
 				<label for=url_image_auth_id class="col-sm-2 control-label">经办人身份证</label>
 				<div class=col-sm-10>
-					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
+					<p class=help-block>如果负责业务对接的不是法人本人，请上传经办人身份证</p>
 
 					<?php $name_to_upload = 'url_image_auth_id' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -187,7 +192,7 @@
 				<label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书</label>
 				<div class=col-sm-10>
 					<p class=help-block>
-						如果负责业务对接的不是法人本人，请填写此项
+						如果负责业务对接的不是法人本人，请上传授权书
 						<small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small>
 					</p>
 
@@ -204,13 +209,11 @@
 
 		<fieldset>
 			<legend>形象展示</legend>
-			<p class=help-block>您可根据自身情况提供合适的照片，向消费者展现企业形象</p>
+			<p class=help-block>您可根据自身情况上传合适的照片，向消费者展现企业形象，每种照片可上传4张</p>
 
 			<div class=form-group>
 				<label for=url_image_product class="col-sm-2 control-label">产品</label>
 				<div class=col-sm-10>
-					<p class=help-block>最多可上传4张</p>
-
 					<?php $name_to_upload = 'url_image_product' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">

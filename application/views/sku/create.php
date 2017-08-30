@@ -54,7 +54,7 @@
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+			<p class=help-block>必填项以“※”符号标示</p>
 
 			<input name=item_id type=hidden value="<?php echo $comodity['item_id'] ?>">
 
@@ -103,10 +103,11 @@
 					<input class=form-control name=name_third type=text value="<?php echo set_value('name_third') ?>" placeholder="三级规格">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=price class="col-sm-2 control-label">价格（元）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=price type=number step=0.01 min=1 max=99999.99 value="<?php echo set_value('price') ?>" placeholder="价格（元）" required>
+					<input class=form-control name=price type=number step=0.01 min=1 max=99999.99 value="<?php echo empty(set_value('price'))? $comodity['price']: set_value('price') ?>" placeholder="价格（元）" required>
 				</div>
 			</div>
 			<div class=form-group>

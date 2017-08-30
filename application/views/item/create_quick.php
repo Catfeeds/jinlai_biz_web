@@ -53,7 +53,7 @@
 		echo form_open_multipart($this->class_name.'/create_quick', $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
+			<p class=help-block>必填项以“※”符号标示</p>
 
 			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">系统分类※</label>

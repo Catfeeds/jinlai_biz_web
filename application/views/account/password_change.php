@@ -30,7 +30,7 @@
 		?>
 			<fieldset>
 				<div class=form-group>
-					<label for=password_current class="col-sm-2 control-label">原密码</label>
+					<label for=password_current>原密码</label>
 					<div class=input-group>
 						<span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden=true></i></span>
 						<input class=form-control name=password_current type=password placeholder="请输入当前密码" autofocus required>
@@ -38,7 +38,7 @@
 				</div>
 
 				<div class=form-group>
-					<label for=password class="col-sm-2 control-label">新密码</label>
+					<label for=password>新密码</label>
 					<div class=input-group>
 						<span class="input-group-addon"><i class="fa fa-lock fa-fw" aria-hidden=true></i></span>
 						<input class=form-control name=password type=password placeholder="可设置6-20位密码，需与原密码不同" required>

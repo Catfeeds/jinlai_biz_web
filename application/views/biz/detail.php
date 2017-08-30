@@ -91,11 +91,8 @@
 		<dd><?php echo empty($item['description'])? '未填写': $item['description'] ?></dd>
 		<dt>店铺公告</dt>
 		<dd><?php echo empty($item['notification'])? '未填写': $item['notification'] ?></dd>
-		<dt>官方网站</dt>
-		<dd><?php echo empty($item['url_web'])? '未填写': $item['url_web'] ?></dd>
-		<dt>官方微博</dt>
-		<dd><?php echo empty($item['url_weibo'])? '未填写': $item['url_weibo'] ?></dd>
 
+		<!--
 		<dt>微信二维码</dt>
 		<dd>
 			<?php if ( !empty($item['url_wechat']) ): ?>
@@ -130,6 +127,7 @@
 			未上传
 			<?php endif ?>
 		</dd>
+		-->
 
 		<dt>产品</dt>
 		<dd>
@@ -189,28 +187,18 @@
 		</dd>
 	</dl>
 
-	<h2>财务信息</h2>
-	<dl class=dl-horizontal>
-		<dt>开户行名称</dt>
-		<dd><?php echo empty($item['bank_name'])? '未填写': $item['bank_name'] ?></dd>
-		<dt>开户行账号</dt>
-		<dd><?php echo empty($item['bank_account'])? '未填写': $item['bank_account'] ?></dd>
-		<dt>财务联系手机号</dt>
-		<dd><?php echo empty($item['tel_protected_fiscal'])? '未填写': $item['tel_protected_fiscal'] ?></dd>
-	</dl>
-
 	<h2>资质信息</h2>
 	<dl class=dl-horizontal>
-		<dt>统一社会信用代码/营业执照号</dt>
+		<dt>工商注册号</dt>
 		<dd><?php echo $item['code_license'] ?></dd>
 		<dt>法人</dt>
 		<dd>
-			姓名 <?php echo $item['fullname_owner'] ?>，<br>
+			姓名 <?php echo $item['fullname_owner'] ?><br>
 			身份证号码 <?php echo substr_replace($item['code_ssn_owner'], '****', -4) ?>
 		</dd>
 		<dt>经办人</dt>
 		<dd>
-			姓名 <?php echo empty($item['fullname_auth'])? '未填写': $item['fullname_auth'] ?>，<br>
+			姓名 <?php echo empty($item['fullname_auth'])? '未填写': $item['fullname_auth'] ?><br>
 			身份证号码 <?php echo empty($item['code_ssn_auth'])? '未填写': substr_replace($item['code_ssn_auth'], '****', -4) ?>
 		</dd>
 
@@ -259,6 +247,16 @@
 			<?php endif ?>
 		</dd>
 	</dl>
+	
+	<h2>财务信息</h2>
+	<dl class=dl-horizontal>
+		<dt>开户行名称</dt>
+		<dd><?php echo empty($item['bank_name'])? '未填写': $item['bank_name'] ?></dd>
+		<dt>开户行账号</dt>
+		<dd><?php echo empty($item['bank_account'])? '未填写': $item['bank_account'] ?></dd>
+		<dt>财务联系手机号</dt>
+		<dd><?php echo empty($item['tel_protected_fiscal'])? '未填写': $item['tel_protected_fiscal'] ?></dd>
+	</dl>
 
 	<h2>联系地址</h2>
 	<dl class=dl-horizontal>
@@ -271,14 +269,16 @@
 
 			<?php if ( !empty($item['longitude']) && !empty($item['latitude']) ): ?>
 			<figure class="row">
+				<!--
 				<figcaption>
 					<p class="bg-info text-info text-center">
 						经纬度 <?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>
 					</p>
 				</figcaption>
-				<div id=map style="height:300px;background-color:#aaa"></div>
+				-->
+				<div id=map style="height:300px;background-color:#999"></div>
 			</figure>
-			
+
 			<script src="https://webapi.amap.com/maps?v=1.3&key=d698fd0ab2d88ad11f4c6a2c0e83f6a8"></script>
 			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
 			<script>
@@ -327,6 +327,6 @@
 		</dd>
 		<?php endif ?>
 	</dl>
-	
+
 	<?php endif ?>
 </div>

@@ -52,19 +52,18 @@
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+			<p class="help-block">必填项以“※”符号标示</p>
 
 			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">名称※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="名称" required>
+					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="最多20个字符" required>
 				</div>
 			</div>
 
 			<div class=form-group>
 				<label for=url_image class="col-sm-2 control-label">分类图片</label>
 				<div class=col-sm-10>
-					<p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
 
 					<?php $name_to_upload = 'url_image' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>

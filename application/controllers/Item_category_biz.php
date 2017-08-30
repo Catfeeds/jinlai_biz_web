@@ -4,9 +4,6 @@
 	/**
 	 * Item_category_biz 店内分类
 	 *
-	 * 以我的XX列表、列表、详情、创建、单行编辑、单/多行编辑（删除、恢复）等功能提供了常见功能的APP示例代码
-	 * CodeIgniter官方网站 https://www.codeigniter.com/user_guide/
-	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
 	 * @copyright ICBG <www.bingshankeji.com>
@@ -67,6 +64,7 @@
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
+				'url_image' => '分类图片',
 				'name' => '名称',
 			);
 		}

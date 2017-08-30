@@ -99,27 +99,28 @@
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">简介</label>
 				<div class=col-sm-10>
-					<textarea class=form-control name=description rows=5 placeholder="最多200个字符"><?php echo $item['description'] ?></textarea>
+					<textarea class=form-control name=description rows=5 placeholder="最多255个字符"><?php echo $item['description'] ?></textarea>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=notification class="col-sm-2 control-label">店铺公告</label>
 				<div class=col-sm-10>
-					<textarea class=form-control name=description rows=5 placeholder="最多100个字符"><?php echo $item['notification'] ?></textarea>
+					<textarea class=form-control name=notification rows=5 placeholder="最多255个字符"><?php echo $item['notification'] ?></textarea>
 				</div>
 			</div>
 
 			<div class=form-group>
 				<label for=tel_public class="col-sm-2 control-label">消费者服务电话※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=tel_public type=tel value="<?php echo $item['tel_public'] ?>" placeholder="即客服电话，400/800、手机号、带区号的固定电话号码均可" required>
+					<input class=form-control name=tel_public type=tel value="<?php echo $item['tel_public'] ?>" placeholder="400、800、手机号、带区号的固定电话号码均可" required>
+					<p class=help-block>即客服电话，不要加空格或其它符号，固定电话请填写区号</p>
 				</div>
 			</div>
 			
 			<div class=form-group>
 				<label for=tel_protected_order class="col-sm-2 control-label">订单通知手机号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=tel_protected_order type=tel size=11 value="<?php echo $item['tel_protected_order'] ?>" placeholder="订单通知手机号">
+					<input class=form-control name=tel_protected_order type=tel size=11 value="<?php echo $item['tel_protected_order'] ?>" placeholder="请填写手机号">
 				</div>
 			</div>
 		</fieldset>
@@ -128,35 +129,38 @@
 			<legend>资质信息</legend>
 
 			<div class=form-group>
-				<label for=code_license class="col-sm-2 control-label">营业执照号※</label>
+				<label for=code_license class="col-sm-2 control-label">工商注册号※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=code_license type=text value="<?php echo $item['code_license'] ?>" placeholder="如为三证合一，请填写统一社会信用代码" required>
+					<p class=help-block>请填写营业执照上的15位工商注册号；或三证合一后18位的统一社会信用代码。</p>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=fullname_owner class="col-sm-2 control-label">法人姓名※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=fullname_owner type=text size=15 value="<?php echo $item['fullname_owner'] ?>" placeholder="需与身份证一致" required>
+					<p class=help-block>按照营业执照上填写。如果属于分公司则填写工商营业执照上明确的负责人，个体工商户请填写经营者姓名，合伙企业请填写合伙人姓名，个人独资企业请填写投资人姓名，企业法人的非法人分支机构填写负责人姓名。 </p>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=code_ssn_owner type=text size=18 value="<?php echo $item['code_ssn_owner'] ?>" placeholder="法人身份证号" required>
+					<input class=form-control name=code_ssn_owner type=text value="<?php echo $item['code_ssn_owner'] ?>" placeholder="法人身份证号" required>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=fullname_auth class="col-sm-2 control-label">经办人姓名</label>
 				<div class=col-sm-10>
-					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
 					<input class=form-control name=fullname_auth type=text size=15 value="<?php echo $item['fullname_auth'] ?>" placeholder="需与身份证一致">
+					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号</label>
 				<div class=col-sm-10>
+					<input class=form-control name=code_ssn_auth type=text value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号">
 					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
-					<input class=form-control name=code_ssn_auth type=text size=18 value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号">
 				</div>
 			</div>
 		</fieldset>
@@ -179,7 +183,7 @@
 			<div class=form-group>
 				<label for=tel_protected_fiscal class="col-sm-2 control-label">财务联系手机号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=tel_protected_fiscal type=tel size=11 value="<?php echo $item['tel_protected_fiscal'] ?>" placeholder="财务联系手机号">
+					<input class=form-control name=tel_protected_fiscal type=tel size=11 value="<?php echo $item['tel_protected_fiscal'] ?>" placeholder="请填写手机号">
 				</div>
 			</div>
 		</fieldset>
@@ -241,7 +245,7 @@
 			<div class=form-group>
 				<label for=url_image_auth_id class="col-sm-2 control-label">经办人身份证</label>
 				<div class=col-sm-10>
-					<p class=help-block>如果负责业务对接的不是法人本人，请填写此项</p>
+					<p class=help-block>如果负责业务对接的不是法人本人，请上传经办人身份证</p>
 					
 					<?php if ( !empty($item['url_image_auth_id']) ): ?>
 					<div class=row>
@@ -269,10 +273,10 @@
 				<label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书</label>
 				<div class=col-sm-10>
 					<p class=help-block>
-						如果负责业务对接的不是法人本人，请填写此项
+						如果负责业务对接的不是法人本人，请上传授权书
 						<small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small>
 					</p>
-					
+
 					<?php if ( !empty($item['url_image_auth_doc']) ): ?>
 					<div class=row>
 						<figure class="col-xs-12 col-sm-6 col-md-4">
@@ -298,7 +302,7 @@
 
 		<fieldset>
 			<legend>形象展示</legend>
-			<p class=help-block>您可根据自身情况提供合适的照片，向消费者展现企业形象</p>
+			<p class=help-block>您可根据自身情况上传合适的照片，向消费者展现企业形象，每种照片可上传4张</p>
 
 			<div class=form-group>
 				<label for=url_image_product class="col-sm-2 control-label">产品</label>
@@ -312,7 +316,6 @@
 					<?php endif ?>
 
 					<div>
-						<p class=help-block>最多可上传4张</p>
 						<?php $name_to_upload = 'url_image_product' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -378,7 +381,7 @@
 		</fieldset>
 		
 		<fieldset>
-			<legend>地址信息</legend>
+			<legend>联系地址</legend>
 			<div class=form-group>
 				<label for=nation class="col-sm-2 control-label">国家</label>
 				<div class=col-sm-10>
@@ -415,7 +418,7 @@
 					<figcaption>
 						<p class=help-block>拖动地图可完善位置信息</p>
 					</figcaption>
-					<div id=map class="col-xs-12" style="height:300px;background-color:#aaa"></div>
+					<div id=map style="height:300px;background-color:#999"></div>
 				</figure>
 				<input name=longitude type=hidden value="<?php echo $item['longitude'] ?>">
 				<input name=latitude type=hidden value="<?php echo $item['latitude'] ?>">
@@ -446,7 +449,7 @@
 			        map.addControl(geolocation);
 			        geolocation.getCurrentPosition();
 			        AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
-			        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+			        AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
 			    });
 			    // 解析定位结果
 			    function onComplete(data)
@@ -459,7 +462,7 @@
 						document.getElementsByName('latitude')[0].value = data.position.getLat();
 					}
 			    }
-				//解析定位错误信息
+				// 解析定位错误信息
 			    function onError(data)
 				{
 			        alert('定位失败');
@@ -544,29 +547,6 @@
 				    }
 				});
 			</script>
-		</fieldset>
-
-		<fieldset>
-			<legend>更多……</legend>
-			
-			<div class=form-group>
-				<label for=url_web class="col-sm-2 control-label">官方网站</label>
-				<div class=col-sm-10>
-					<input class=form-control name=url_web type=text value="<?php echo $item['url_web'] ?>" placeholder="官方网站">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=url_weibo class="col-sm-2 control-label">官方微博</label>
-				<div class=col-sm-10>
-					<input class=form-control name=url_weibo type=text value="<?php echo $item['url_weibo'] ?>" placeholder="官方微博">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=url_wechat class="col-sm-2 control-label">微信二维码</label>
-				<div class=col-sm-10>
-					<input class=form-control name=url_wechat type=text value="<?php echo $item['url_wechat'] ?>" placeholder="服务号、订阅号、个人号均可">
-				</div>
-			</div>
 		</fieldset>
 
 		<div class=form-group>

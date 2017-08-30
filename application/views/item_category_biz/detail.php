@@ -45,7 +45,7 @@
 		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
 	</div>
 	<?php endif ?>
-	
+
 	<ul class=list-unstyled>
 		<?php
 		// 需要特定角色和权限进行该操作
@@ -59,19 +59,19 @@
 		<dt>商品分类ID</dt>
 		<dd><?php echo $item['category_id'] ?></dd>
 
-		<dt>名称</dt>
-		<dd><?php echo $item['name'] ?></dd>
-
-		<?php if ( !empty($item['url_image']) ): ?>
 		<dt>分类图片</dt>
+		<?php if ( !empty($item['url_image']) ): ?>
 		<dd class=row>
 			<figure class="col-xs-12 col-sm-6 col-md-4">
-				<img src="<?php echo $item['url_image'] ?>">
+				<img class=img-rounded src="<?php echo $item['url_image'] ?>">
 			</figure>
 		</dd>
 		<?php else: ?>
-		<dd>未设置</dd>
+		<dd>未上传</dd>
 		<?php endif ?>
+		
+		<dt>名称</dt>
+		<dd><?php echo $item['name'] ?></dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
