@@ -20,8 +20,6 @@
 	}
 </style>
 
-<base href="<?php echo $this->media_root ?>">
-
 <?php
 	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
 	// 在iOS设备上使用原生日期选择器
@@ -36,7 +34,7 @@
 			{
 			    language: 'cn', // 本地化语言在js/main.js中
 			    minDate: new Date("<?php echo date('Y-m-d H:i') ?>"),
-				maxDate: new Date("<?php echo date('Y-m-d H:i', strtotime("+31 days")) ?>"),
+				maxDate: new Date("<?php echo date('Y-m-d H:i', strtotime("+366 days")) ?>"),
 				timepicker: true, // 时间选择器
 				timeFormat: "hh:ii"
 			}
@@ -44,6 +42,8 @@
 	});
 </script>
 <?php endif ?>
+
+<base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
@@ -75,7 +75,7 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
+			<p class=help-block>必填项以“※”符号标示</p>
 
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 			
@@ -85,14 +85,14 @@
 					<input class=form-control name=name type=text value="<?php echo $item['name'] ?>" placeholder="最多20个字符" required>
 				</div>
 			</div>
-			
+
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">说明</label>
 				<div class=col-sm-10>
 					<input class=form-control name=description type=text value="<?php echo $item['description'] ?>" placeholder="最多30个字符">
 				</div>
 			</div>
-			
+
 			<div class=form-group>
 				<label for=amount class="col-sm-2 control-label">面值（元）※</label>
 				<div class=col-sm-10>
@@ -101,12 +101,16 @@
 			</div>
 			
 			<div class=form-group>
-				<label for=min_subtotal class="col-sm-2 control-label">起用金额/订单小计（元）</label>
+				<label for=min_subtotal class="col-sm-2 control-label">起用金额（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=min_subtotal type=number min=0 step=1 max=9999 value="<?php echo $item['min_subtotal'] ?>" placeholder="留空则不限，最高9999">
+					<input class=form-control name=min_subtotal type=number min=0 step=1 max=9999 value="<?php echo $item['min_subtotal'] ?>" placeholder="即订单商品小计；留空则不限，最高9999">
 				</div>
 			</div>
+		</fieldset>
 
+		<fieldset>
+			<legend>高级选项（可留空）</legend>
+			
 			<div class=form-group>
 				<label for=max_amount class="col-sm-2 control-label">总限量（份）</label>
 				<div class=col-sm-10>
@@ -121,8 +125,11 @@
 				</div>
 			</div>
 
+			<hr>
+			<p class=help-block>可选择有效期，或指定有效期起止时间；若选择了有效期后输入了开始时间，则将在用户领取优惠券时以领取时间加上有效期作为结束时间；若选择了有效期后输入了结束时间，则以结束时间为准，有效期将被忽略。</p>
+
 			<div class=form-group>
-				<label for=period class="col-sm-2 control-label">有效期</label>
+				<label for=period class="col-sm-2 control-label">领取后有效期</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'period' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
@@ -154,16 +161,17 @@
 						<option value="<?php echo $value ?>" <?php if ($value === $item[$input_name]) echo 'selected'; ?>><?php echo $name ?></option>
 						<?php endforeach ?>
 					</select>
+					<p class=help-block>留空则默认为自用户领取之日起30天内</p>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=time_start class="col-sm-2 control-label">开始时间</label>
+				<label for=time_start class="col-sm-2 control-label">有效期开始时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_start type=datetime value="<?php echo empty($item['time_start'])? NULL: date('Y-m-d H:i', $item['time_start']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>">
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=time_end class="col-sm-2 control-label">结束时间</label>
+				<label for=time_end class="col-sm-2 control-label">有效期结束时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_end type=datetime value="<?php echo empty($item['time_end'])? NULL: date('Y-m-d H:i', $item['time_end']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>">
 				</div>

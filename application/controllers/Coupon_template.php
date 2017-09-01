@@ -4,9 +4,6 @@
 	/**
 	 * Coupon_template 优惠券模板类
 	 *
-	 * 以我的XX列表、列表、详情、创建、单行编辑、单/多行编辑（删除、恢复）等功能提供了常见功能的APP示例代码
-	 * CodeIgniter官方网站 https://www.codeigniter.com/user_guide/
-	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
 	 * @copyright ICBG <www.bingshankeji.com>
@@ -68,8 +65,8 @@
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
 				'name' => '名称',
-				'amount' => '面值',
-				'min_subtotal' => '起用金额',
+				'amount' => '面值（元）',
+				'min_subtotal' => '起用金额（元）',
 			);
 		}
 		
@@ -96,7 +93,6 @@
 			// 筛选条件
 			$condition['biz_id'] = $this->session->biz_id;
 			$condition['time_delete'] = 'NULL';
-			//$condition['name'] = 'value';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
 				if ( !empty($this->input->post($sorter)) )
@@ -105,7 +101,6 @@
 
 			// 排序条件
 			$order_by = NULL;
-			//$order_by['name'] = 'value';
 
 			// 从API服务器获取相应列表信息
 			$params = $condition;
@@ -144,7 +139,7 @@
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
-				
+
 				// 获取系统商品分类信息
 				if ( !empty($data['item']['category_id']) ):
 					$data['category'] = $this->get_category($data['item']['category_id']);
@@ -163,7 +158,6 @@
 			// 页面信息
 			$data['title'] = $data['item']['name'];
 			$data['class'] = $this->class_name.' detail';
-			//$data['keywords'] = $this->class_name.','. $data['item']['name'];
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -256,9 +250,9 @@
 			$this->form_validation->set_rules('min_subtotal', '起用金额（元）', 'trim|greater_than_equal_to[0]|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
 			$this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[99]');
-			$this->form_validation->set_rules('period', '有效期', 'trim');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_rules('period', '领取后有效期', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
 
@@ -337,6 +331,17 @@
 				'class' => $this->class_name.' edit',
 			);
 			
+			// 从API服务器获取相应详情信息
+			$params['id'] = $id;
+			$params['biz_id'] = $this->session->biz_id;
+			$url = api_url($this->class_name. '/detail');
+			$result = $this->curl->go($url, $params, 'array');
+			if ($result['status'] === 200):
+				$data['item'] = $result['content'];
+			else:
+				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
+			endif;
+			
 			// 获取品牌
 			$data['brands'] = $this->list_brand();
 
@@ -357,26 +362,15 @@
 			$this->form_validation->set_rules('min_subtotal', '起用金额（元）', 'trim|greater_than_equal_to[0]|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
 			$this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[99]');
-			$this->form_validation->set_rules('period', '有效期', 'trim');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_rules('period', '领取后有效期', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
 				$data['error'] = validation_errors();
-
-				// 从API服务器获取相应详情信息
-				$params['id'] = $id;
-				$params['biz_id'] = $this->session->biz_id;
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['item'] = $result['content'];
-				else:
-					redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
-				endif;
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/edit', $data);

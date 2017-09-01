@@ -56,31 +56,16 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-		<dt>模板ID</dt>
+		<dt>优惠券模板ID</dt>
 		<dd><?php echo $item['template_id'] ?></dd>
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>说明</dt>
-		<dd><?php echo $item['description'] ?></dd>
+		<dd><?php echo empty($item['description'])? '无': $item['description'] ?></dd>
 		<dt>面值</dt>
 		<dd>￥ <?php echo $item['amount'] ?></dd>
-		<dt>起用金额/订单小计</dt>
-		<dd>￥ <?php echo $item['min_subtotal'] ?></dd>
-
-		<dt>总限量</dt>
-		<dd>
-			<?php echo empty($item['max_amount'])? '无': $item['max_amount'].'份'; ?>
-			<p class=help-block>当作为优惠券包中的优惠券进行发放时，限量以优惠券包限量为准</p>
-		</dd>
-		<dt>单个用户限量</dt>
-		<dd><?php echo empty($item['max_amount_user'])? '无': $item['max_amount_user'].'份'; ?></dd>
-
-		<dt>限用系统分类</dt>
-		<dd><?php echo empty($item['category_id'])? '不限': $category['name']; ?></dd>
-		<dt>限用店内分类</dt>
-		<dd><?php echo empty($item['category_biz_id'])? '不限': $category_biz['name']; ?></dd>
-		<dt>限用商品</dt>
-		<dd><?php echo empty($item['item_id'])? '不限': $item['item_id']; ?></dd>
+		<dt>起用金额（订单商品小计）</dt>
+		<dd><?php echo !empty($item['min_subtotal'])? '￥ '.$item['min_subtotal']: '不限' ?></dd>
 
 		<?php
 			$options = array(
@@ -106,13 +91,33 @@
 			);
 			$options = array_flip($options);
 		?>
+		
 		<dt>有效期</dt>
-		<dd><?php echo $options[ $item['period'] ] ?></dd>
-		<dt>有效时间</dt>
 		<dd>
-			<p class="bg-info text-info text-center">若未指定结束时间但已指定了有效期，则结束时间以有效期为准</p>
-			<?php echo empty($item['time_start'])? '自领取时起': date('Y-m-d H:i:s', $item['time_start']); ?> <?php echo empty($item['time_end'])? '至 有效期结束': '至 '.date('Y-m-d H:i:s', $item['time_end']); ?>
+			<p class=help-block>若选择了有效期后指定了开始时间，则将在用户领取优惠券时以领取时间加上有效期作为结束时间；若选择了有效期后输入了结束时间，则以结束时间为准，有效期将被忽略。</p>
+
+			<?php if ( !empty($item['time_start']) || !empty($item['time_end']) ): ?>
+				<?php echo empty($item['time_start'])? '自领取时起': date('Y-m-d H:i:s', $item['time_start']); ?> 至 <?php echo empty($item['time_end'])? '有效期结束': date('Y-m-d H:i:s', $item['time_end']); ?>，
+			<?php endif ?>
+			
+			<?php if ( !empty($item['time_end']) ): ?>
+			自领取之时起最长<?php echo $options[ $item['period'] ] ?>（不晚于有效期结束时间，若有。）
+			<?php endif ?>
 		</dd>
+		
+		<dt>总限量</dt>
+		<dd>
+			<?php echo empty($item['max_amount'])? '无': $item['max_amount'].'份'; ?>
+		</dd>
+		<dt>单个用户限量</dt>
+		<dd><?php echo empty($item['max_amount_user'])? '无': $item['max_amount_user'].'份'; ?></dd>
+
+		<dt>限用系统分类</dt>
+		<dd><?php echo empty($item['category_id'])? '不限': $category['name']; ?></dd>
+		<dt>限用店内分类</dt>
+		<dd><?php echo empty($item['category_biz_id'])? '不限': $category_biz['name']; ?></dd>
+		<dt>限用商品</dt>
+		<dd><?php echo empty($item['item_id'])? '不限': $item['item_id']; ?></dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

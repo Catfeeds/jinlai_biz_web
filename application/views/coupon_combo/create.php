@@ -20,8 +20,6 @@
 	}
 </style>
 
-<base href="<?php echo $this->media_root ?>">
-
 <?php
 	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
 	// 在iOS设备上使用原生日期选择器
@@ -36,7 +34,7 @@
 			{
 			    language: 'cn', // 本地化语言在js/main.js中
 			    minDate: new Date("<?php echo date('Y-m-d H:i') ?>"),
-				maxDate: new Date("<?php echo date('Y-m-d H:i', strtotime("+31 days")) ?>"),
+				maxDate: new Date("<?php echo date('Y-m-d H:i', strtotime("+366 days")) ?>"),
 				timepicker: true, // 时间选择器
 				timeFormat: "hh:ii"
 			}
@@ -44,6 +42,8 @@
 	});
 </script>
 <?php endif ?>
+
+<base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
@@ -75,7 +75,7 @@
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
+			<p class=help-block>必填项以“※”符号标示</p>
 
 			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">名称※</label>
@@ -88,6 +88,7 @@
 				<label for=template_ids class="col-sm-2 control-label">所含优惠券※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=template_ids type=text value="<?php echo set_value('template_ids') ?>" placeholder="请输入所含优惠券ID，多个ID间以一个半角逗号“,”分隔" required>
+					<p class=help-block>放入优惠券包的优惠券模板，在优惠券包被领取时将忽视总限量（若有）及单个用户限量（若有），以优惠券包的总限量（若有）为准；作为单个优惠券模板被领取时不受影响。</p>
 
 					<script>
 						$(function(){
@@ -126,11 +127,15 @@
 					</script>
 				</div>
 			</div>
-			
+		</fieldset>
+
+		<fieldset>
+			<legend>高级选项（可留空）</legend>
+
 			<div class=form-group>
 				<label for=max_amount class="col-sm-2 control-label">总限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=max_amount type=number step=1 min=0 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="最高999999，0为不限，留空默认为0">
+					<input class=form-control name=max_amount type=number step=1 min=0 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="最高999999，留空或0为不限">
 				</div>
 			</div>
 
