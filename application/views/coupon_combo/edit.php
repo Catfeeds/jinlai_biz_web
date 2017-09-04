@@ -102,17 +102,18 @@
 				<label for=max_amount class="col-sm-2 control-label">总限量（份）</label>
 				<div class=col-sm-10>
 					<input class=form-control name=max_amount type=number step=1 min=0 max=999999 value="<?php echo $item['max_amount'] ?>" placeholder="最高999999，留空或0为不限">
+					<p class=help-block>总共可被领取的优惠券数量上限；对于每位用户来说，每个优惠券包仅可领取一次</p>
 				</div>
 			</div>
 
 			<div class=form-group>
-				<label for=time_start class="col-sm-2 control-label">开始领取时间</label>
+				<label for=time_start class="col-sm-2 control-label">领取开始时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_start type=datetime value="<?php echo empty($item['time_start'])? NULL: date('Y-m-d H:i', $item['time_start']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>；留空则马上开放领取">
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=time_end class="col-sm-2 control-label">结束领取时间</label>
+				<label for=time_end class="col-sm-2 control-label">领取结束时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_end type=datetime value="<?php echo empty($item['time_end'])? NULL: date('Y-m-d H:i', $item['time_end']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>；留空则长期有效">
 				</div>

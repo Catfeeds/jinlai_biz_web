@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'user_id', 'template_id', 'category_id', 'biz_id', 'category_biz_id', 'item_id', 'name', 'description', 'amount', 'min_subtotal', 'time_start', 'time_end', 'time_expire', 'order_id', 'time_used', 'time_create', 'time_delete', 'status',
+			'user_id', 'combo_id', 'template_id', 'category_id', 'biz_id', 'category_biz_id', 'item_id', 'name', 'description', 'amount', 'min_subtotal', 'time_start', 'time_end', 'time_expire', 'order_id', 'time_used', 'time_create', 'time_delete', 'status',
 		);
 
 		/**
@@ -29,7 +29,7 @@
 			parent::__construct();
 
 			// （可选）未登录用户转到登录页
-			//($this->session->time_expire_login > time()) OR redirect( base_url('login') );
+			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
 
 			// 向类属性赋值
 			$this->class_name = strtolower(__CLASS__);
@@ -68,7 +68,6 @@
 
 			// 筛选条件
 			$condition['biz_id'] = $this->session->biz_id;
-			$condition['user_id'] = $this->session->user_id;
 			$condition['time_delete'] = 'NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
@@ -102,7 +101,6 @@
 			if ( !empty($id) ):
 				$params['id'] = $id;
 				$condition['biz_id'] = $this->session->biz_id;
-				$condition['user_id'] = $this->session->user_id;
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -208,7 +206,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'user_id', 'template_id',
+					'template_id', 'combo_id', 'count',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);

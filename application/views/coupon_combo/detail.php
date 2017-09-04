@@ -56,7 +56,7 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-		<dt>优惠券套餐ID</dt>
+		<dt>优惠券包ID</dt>
 		<dd><?php echo $item['combo_id'] ?></dd>
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
@@ -68,7 +68,7 @@
 		</dd>
 		<dt>开放领取时间</dt>
 		<dd>
-			<?php echo empty($item['time_start'])? '自即日起': date('Y-m-d H:i:s', $item['time_start']); ?> <?php echo empty($item['time_end'])? '始终开放': '至 '.date('Y-m-d H:i:s', $item['time_end']); ?>
+			<?php echo empty($item['time_start'])? '自即日起': date('Y-m-d H:i:s', $item['time_start']); ?> <?php echo empty($item['time_end'])? '始终开放': ' 至 '.date('Y-m-d H:i:s', $item['time_end']); ?>
 		</dd>
 	</dl>
 
