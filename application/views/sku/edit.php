@@ -64,7 +64,7 @@
 					<section id=item-info class=row>
 						<figcaption><?php echo $comodity['name'] ?></figcaption>
 						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $comodity['url_image_main'] ?>">
+							<img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
 						</figure>
 					</section>
 				</div>

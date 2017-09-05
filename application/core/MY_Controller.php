@@ -714,7 +714,7 @@
 
 			return $data['items'];
 		}
-		
+
 		// 获取特定商家运费模板详情
 		protected function get_freight_template_biz($id)
 		{
@@ -759,7 +759,7 @@
 
 			return $count;
 		}
-		
+
 		// 输出POST参数
 		protected function echo_param($param)
 		{
