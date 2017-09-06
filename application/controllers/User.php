@@ -159,7 +159,7 @@
 		} // end index
 
 		/**
-		 * 详情页
+		 * DEPRECATED 详情页
 		 */
 		public function detail()
 		{
@@ -244,7 +244,7 @@
 		public function edit()
 		{
 			// 检查是否已传入必要参数
-			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
+			$id = $this->input->get_post('id')? $this->input->get_post('id'): $this->session->user_id;
 			if ( !empty($id) ):
 				$params['id'] = $id;
 			else:
@@ -282,15 +282,9 @@
 				$this->form_validation->set_rules('nickname', '昵称', 'trim|max_length[12]');
 				$this->form_validation->set_rules('lastname', '姓氏', 'trim|max_length[9]');
 				$this->form_validation->set_rules('firstname', '名', 'trim|max_length[6]');
-				$this->form_validation->set_rules('code_ssn', '身份证号', 'trim|exact_length[18]');
-				$this->form_validation->set_rules('url_image_id', '身份证照片', 'trim|max_length[255]');
 				$this->form_validation->set_rules('gender', '性别', 'trim|in_list[男,女]');
 				$this->form_validation->set_rules('dob', '出生日期', 'trim|exact_length[10]');
 				$this->form_validation->set_rules('avatar', '头像', 'trim|max_length[255]');
-				$this->form_validation->set_rules('email', '电子邮件地址', 'trim|max_length[40]|valid_email');
-				$this->form_validation->set_rules('address_id', '默认地址', 'trim|is_natural_no_zero');
-				$this->form_validation->set_rules('bank_name', '开户行名称', 'trim|min_length[3]|max_length[20]');
-				$this->form_validation->set_rules('bank_account', '开户行账号', 'trim|max_length[30]');
 
 				// 若表单提交不成功
 				if ($this->form_validation->run() === FALSE):
@@ -308,7 +302,7 @@
 					);
 					// 自动生成无需特别处理的数据
 					$data_need_no_prepare = array(
-						'nickname', 'lastname', 'firstname', 'code_ssn', 'url_image_id', 'gender', 'dob', 'avatar', 'email', 'address_id', 'bank_name', 'bank_account',
+						'nickname', 'lastname', 'firstname', 'gender', 'dob', 'avatar',
 					);
 					foreach ($data_need_no_prepare as $name)
 						$data_to_edit[$name] = $this->input->post($name);

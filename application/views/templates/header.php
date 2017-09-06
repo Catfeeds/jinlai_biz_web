@@ -23,7 +23,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20170904">
+		<meta name=version content="revision20170906">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -235,7 +235,7 @@
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>我的<b class=caret></b></a>
 							<ul class=dropdown-menu>
-								<li><a title="个人中心" href="<?php echo base_url('mine') ?>">个人中心</a></li>
+								<li><a title="个人中心" href="<?php echo base_url('user/edit') ?>">我的资料</a></li>
 								<li><a title="密码修改" href="<?php echo base_url('password_change') ?>">密码修改</a></li>
 								<li><a title="密码重置" href="<?php echo base_url('password_reset') ?>">密码重置</a></li>
 								<?php if ( empty($this->session->password) ): ?>

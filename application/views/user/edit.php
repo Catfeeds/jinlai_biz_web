@@ -86,6 +86,13 @@
 
 				</div>
 			</div>
+			
+			<div class=form-group>
+				<label for=mobile class="col-sm-2 control-label">手机号</label>
+				<div class=col-sm-10>
+					<p class="form-control-static"><?php echo $item['mobile'] ?></p>
+				</div>
+			</div>
 
 			<div class=form-group>
 				<label for=nickname class="col-sm-2 control-label">昵称</label>
@@ -103,37 +110,6 @@
 				<label for=firstname class="col-sm-2 control-label">名</label>
 				<div class=col-sm-10>
 					<input class=form-control name=firstname type=text value="<?php echo $item['firstname'] ?>" placeholder="名">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=code_ssn class="col-sm-2 control-label">身份证号</label>
-				<div class=col-sm-10>
-					<input class=form-control name=code_ssn type=text value="<?php echo $item['code_ssn'] ?>" placeholder="身份证号">
-				</div>
-			</div>
-
-			<div class=form-group>
-				<label for=url_image_id class="col-sm-2 control-label">身份证照片</label>
-				<div class=col-sm-10>
-					<?php if ( !empty($item['url_image_id']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image_id'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
-
-					<div>
-						<?php $name_to_upload = 'url_image_id' ?>
-					
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
-
-						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="user/image_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
-
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
-
 				</div>
 			</div>
 
@@ -156,39 +132,6 @@
 				<label for=dob class="col-sm-2 control-label">出生日期</label>
 				<div class=col-sm-10>
 					<input class="form-control" name=dob type=date min=<?php echo date('Y-m-d', strtotime("-120years")) ?> max=<?php echo date('Y-m-d', strtotime("-14years")) ?> value="<?php echo $item['dob'] ?>" placeholder="例如：1994-07-28">
-				</div>
-			</div>
-
-			<div class=form-group>
-				<label for=mobile class="col-sm-2 control-label">手机号</label>
-				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $item['mobile'] ?></p>
-				</div>
-			</div>
-
-			<div class=form-group>
-				<label for=email class="col-sm-2 control-label">Email</label>
-				<div class=col-sm-10>
-					<input class=form-control name=email type=email value="<?php echo $item['email'] ?>" placeholder="Email">
-				</div>
-			</div>
-
-			<div class=form-group>
-				<label for=address_id class="col-sm-2 control-label">默认地址</label>
-				<div class=col-sm-10>
-					<input class=form-control name=address_id type=text value="<?php echo $item['address_id'] ?>" placeholder="默认地址ID">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=bank_name class="col-sm-2 control-label">开户行名称</label>
-				<div class=col-sm-10>
-					<input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="开户行名称">
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=bank_account class="col-sm-2 control-label">开户行账号</label>
-				<div class=col-sm-10>
-					<input class=form-control name=bank_account type=number step=1 value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号">
 				</div>
 			</div>
 		</fieldset>
