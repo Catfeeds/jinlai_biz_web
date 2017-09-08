@@ -68,8 +68,8 @@
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
 				'subtotal' => '小计（元）',
-				'total' => '应支付金额（元）',
-				'total_payed' => '实际支付金额（元）',
+				'total' => '应支付（元）',
+				'total_payed' => '已支付（元）',
 				'status' => '状态',
 			);
 		}

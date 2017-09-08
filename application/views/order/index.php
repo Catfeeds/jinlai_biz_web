@@ -39,7 +39,29 @@
 	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
 	<div class=btn-group role=group>
-		<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
+		<div class=btn-group role=group>
+		    <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
+				<?php echo $this->class_name_cn ?> <span class="caret"></span>
+		    </button>
+		    <ul class=dropdown-menu>
+				<li>
+					<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
+				</li>
+
+		  		<?php
+		  		$status_to_mark = array('待发货', '待收货', '待评价', '已评价', '已退款');
+		  		foreach ($status_to_mark as $status):
+		  			// 页面URL
+		  			$url = ($status === NULL)? base_url('order'): base_url('order?status='.$status);
+		  			// 链接样式
+		  			$style_class = ($this->input->get('status') !== $status)? 'btn-default': 'btn-primary';
+		  			echo '<li><a class="btn '. $style_class. '" title="'. $status. '订单" href="'. $url. '">'. $status. '</a> </li>';
+		  		endforeach;
+		  		?>
+		    </ul>
+		</div>
+		
+		<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>">回收站</a>
 	</div>
 	<?php endif ?>
 
@@ -57,6 +79,8 @@
 	<form method=get target=_blank>
 		<fieldset>
 			<div class=btn-group role=group>
+				<button formaction="<?php echo base_url($this->class_name.'/accept') ?>" type=submit class="btn btn-default">接单</button>
+				<button formaction="<?php echo base_url($this->class_name.'/refuse') ?>" type=submit class="btn btn-default">退单</button>
 				<button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit class="btn btn-default">删除</button>
 			</div>
 		</fieldset>

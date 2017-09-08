@@ -242,8 +242,10 @@
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
 			$this->form_validation->set_rules('type', '活动类型', 'trim|required');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required|exact_length[16]|callback_time_end');
+			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_rules('description', '说明', 'trim');
 			$this->form_validation->set_rules('url_image', '形象图', 'trim');
 			$this->form_validation->set_rules('url_image_wide', '宽屏形象图', 'trim');
@@ -297,8 +299,11 @@
 
 				// 向API服务器发送待创建数据
 				$params = $data_to_create;
+				//var_dump($params);
 				$url = api_url($this->class_name. '/create');
+				//var_dump($url);
 				$result = $this->curl->go($url, $params, 'array');
+				//var_dump($result);
 				if ($result['status'] === 200):
 					$data['title'] = $this->class_name_cn. '创建成功';
 					$data['class'] = 'success';
@@ -362,8 +367,8 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_rules('description', '说明', 'trim');
@@ -730,7 +735,7 @@
 					return false;
 
 				// 若已设置开始时间，不可早于开始时间一分钟以内
-				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check <= strtotime($this->input->post('time_to_publish')) + 60):
+				elseif ( !empty($this->input->post('time_start')) && $time_to_check <= strtotime($this->input->post('time_start')) + 60):
 					return false;
 
 				else:
@@ -782,7 +787,7 @@
 					return false;
 
 				// 若已设置开始时间，不可早于开始时间一分钟以内
-				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check <= strtotime($this->input->post('time_to_publish')) + 60):
+				elseif ( !empty($this->input->post('time_book_start')) && $time_to_check <= strtotime($this->input->post('time_book_start')) + 60):
 					return false;
 
 				else:
@@ -834,7 +839,7 @@
 					return false;
 
 				// 若已设置开始时间，不可早于开始时间一分钟以内
-				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check <= strtotime($this->input->post('time_to_publish')) + 60):
+				elseif ( !empty($this->input->post('time_complete_start')) && $time_to_check <= strtotime($this->input->post('time_complete_start')) + 60):
 					return false;
 
 				else:

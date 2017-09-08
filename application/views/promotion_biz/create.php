@@ -20,14 +20,14 @@
 	}
 </style>
 
-<base href="<?php echo $this->media_root ?>">
-
 <?php
-	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
+	//$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
+	$is_ios = FALSE;
 	// 在iOS设备上使用原生日期选择器
-	if ( ! $is_ios ):
+	if ( !$is_ios ):
 ?>
-<link href="/css/datepicker.min.css" rel="stylesheet">
+<link href="/css/datepicker.min.css" rel=stylesheet>
+<style>.datepickers-container{top:-60px;/*修复因为body的padding-top:50px;引起的位置异常*/}</style>
 <script src="/js/datepicker.min.js"></script>
 <script>
 	$(function(){
@@ -55,6 +55,8 @@
 		});
 	});
 </script>
+	
+<base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
@@ -74,9 +76,9 @@
 	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
 	<div class=btn-group role=group>
-		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
+		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有</a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-primary" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<a class="btn btn-primary" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建</a>
 	</div>
 	<?php endif ?>
 
@@ -86,7 +88,7 @@
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+			<p class=help-block>必填项以“※”符号标示</p>
 
 			<div class=form-group>
 				<label for=type class="col-sm-2 control-label">活动类型※</label>
@@ -137,14 +139,15 @@
 					<input class=form-control name=description type=text value="<?php echo set_value('description') ?>" placeholder="说明">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=url_image class="col-sm-2 control-label">形象图</label>
 				<div class=col-sm-10>
-					<p class=help-block>该图用于手机等窄屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+					<p class=help-block>该图用于手机等窄屏设备</p>
 
 					<?php $name_to_upload = 'url_image' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
 					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="promotion_biz/image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
@@ -154,11 +157,11 @@
 			<div class=form-group>
 				<label for=url_image_wide class="col-sm-2 control-label">宽屏形象图</label>
 				<div class=col-sm-10>
-					<p class=help-block>该图用于桌面电脑等宽屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+					<p class=help-block>该图用于笔记本、台式机等宽屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
 
 					<?php $name_to_upload = 'url_image_wide' ?>
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
+					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
 					<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="promotion_biz/image_wide" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
@@ -198,7 +201,7 @@
 		</fieldset>
 
 		<fieldset class=params data-type="单品满减,订单满减">
-			<p class="bg-warning text-warning text-center">“减免金额”及“减免比例”只可填写一项；若两项都填写，将按“减免金额”优惠</p>
+			<p class=help-block>“减免金额”及“减免比例”只可填写一项；若两项都填写，将按“减免金额”优惠</p>
 
 			<div class=form-group>
 				<label for=reduction_trigger_amount class="col-sm-2 control-label">满减触发金额（元）</label>
@@ -233,6 +236,8 @@
 		</fieldset>
 
 		<fieldset class=params data-type="单品赠券,订单赠券">
+			<p class=help-block>“赠送优惠券模板”及“赠送优惠券包”只可填写一项；若两项都填写，将按“赠送优惠券模板”进行</p>
+
 			<div class=form-group>
 				<label for=coupon_id class="col-sm-2 control-label">赠送优惠券模板</label>
 				<div class=col-sm-10>
@@ -240,14 +245,14 @@
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=coupon_combo_id class="col-sm-2 control-label">赠送优惠券套餐</label>
+				<label for=coupon_combo_id class="col-sm-2 control-label">赠送优惠券包</label>
 				<div class=col-sm-10>
-					<input class=form-control name=coupon_combo_id type=text value="<?php echo set_value('coupon_combo_id') ?>" placeholder="赠送优惠券套餐ID">
+					<input class=form-control name=coupon_combo_id type=text value="<?php echo set_value('coupon_combo_id') ?>" placeholder="赠送优惠券包ID">
 				</div>
 			</div>
 		</fieldset>
 
-		<fieldset class=params data-type="单品预售">
+		<fieldset class=params data-type="单品预购">
 			<div class=form-group>
 				<label for=deposit class="col-sm-2 control-label">订金/预付款（元）</label>
 				<div class=col-sm-10>

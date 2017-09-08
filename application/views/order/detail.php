@@ -79,32 +79,40 @@
 		<dd>￥ <?php echo $item['subtotal'] ?></dd>
 		<dt>营销活动ID</dt>
 		<dd><?php echo $item['promotion_id'] ?></dd>
-		<dt>优惠活动折抵金额</dt>
+		<dt>优惠活动折抵</dt>
 		<dd>￥ <?php echo $item['discount_promotion'] ?></dd>
 		<dt>优惠券ID</dt>
 		<dd><?php echo $item['coupon_id'] ?></dd>
-		<dt>优惠券折抵金额</dt>
+		<dt>优惠券折抵</dt>
 		<dd>￥ <?php echo $item['discount_coupon'] ?></dd>
+		
+		<?php if ( !empty($item['credit_payed'] !== '0.00') ): ?>
 		<dt>积分流水ID</dt>
 		<dd><?php echo $item['credit_id'] ?></dd>
-		<dt>积分折抵金额</dt>
-		<dd>￥ <?php echo $item['discount_credit'] ?></dd>
+		<dt>积分折抵</dt>
+		<dd>￥ <?php echo $item['credit_payed'] ?></dd>
+		<?php endif ?>
+
 		<dt>运费</dt>
 		<dd>￥ <?php echo $item['freight'] ?></dd>
-		<dt>应支付金额</dt>
-		<dd><strong>￥ <?php echo $item['total'] ?></strong></dd>
-		<dt>改价折抵金额</dt>
-		<dd>￥ <?php echo $item['discount_teller'] ?></dd>
+
+		<?php if ( !empty($item['discount_reprice'] !== '0.00') ): ?>
+		<dt>改价折抵</dt>
+		<dd>￥ <?php echo $item['discount_reprice'] ?></dd>
 		<dt>改价操作者ID</dt>
-		<dd><?php echo $item['teller_id'] ?></dd>
-		
+		<dd><?php echo $item['repricer_id'] ?></dd>
+		<?php endif ?>
+
+		<dt>应支付</dt>
+		<dd><strong>￥ <?php echo $item['total'] ?></strong></dd>
+
 		<?php if ( !empty($item['time_pay']) ): ?>
-		<dt>实际支付金额</dt>
+		<dt>已支付</dt>
 		<dd><strong>￥ <?php echo $item['total_payed'] ?></strong></dd>
 		<?php endif ?>
 		
 		<?php if ( !empty($item['time_refund']) ): ?>
-		<dt>实际退款金额</dt>
+		<dt>实际退款</dt>
 		<dd><strong>￥ <?php echo $item['total_refund'] ?></strong></dd>
 		<?php endif ?>
 	</dl>
@@ -121,7 +129,7 @@
 			<dd><?php echo $item['payment_account'] ?></dd>
 		</dl>
 	</section>
-	
+
 		<?php if ( $item['commission'] !== '0.00' ): ?>
 		<section>
 			<h2>佣金</h2>
@@ -141,22 +149,19 @@
 		<h2>收件人</h2>
 		<dl id=list-addressee class=dl-horizontal>
 			<dt>姓名</dt>
-			<dd><?php echo $item['addressee_fullname'] ?></dd>
+			<dd><?php echo $item['fullname'] ?></dd>
 			<dt>手机号</dt>
-			<dd><?php echo $item['addressee_mobile'] ?></dd>
-			<dt>省份</dt>
-			<dd><?php echo $item['addressee_province'] ?></dd>
-			<dt>城市</dt>
-			<dd><?php echo $item['addressee_city'] ?></dd>
-			<dt>区/县</dt>
-			<dd><?php echo $item['addressee_county'] ?></dd>
-			<dt>详细地址</dt>
-			<dd><?php echo $item['addressee_address'] ?></dd>
+			<dd><?php echo $item['mobile'] ?></dd>
+			<dt>地址</dt>
+			<dd>
+				<?php echo $item['province'] ?> <?php echo $item['city'] ?> <?php echo $item['county'] ?><br>
+				<?php echo $item['street'] ?>
+			</dd>
 		</dl>
 	</section>
-	
+
 	<section>
-		<h2>商品</h2>
+		<h2>订单商品</h2>
 		<dl id=list-items class=dl-horizontal>
 		
 		</dl>

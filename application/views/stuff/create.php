@@ -52,13 +52,13 @@
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
+			<p class=helper-block>必填项以“※”符号标示</p>
 
 			<div class=form-group>
 				<label for=mobile class="col-sm-2 control-label">手机号※</label>
 				<div class=col-sm-10>
-					<p class=help-block>该手机号必须已注册过本平台的账号（即通过短信登录过），且未被其它商家绑定为员工</p>
 					<input class=form-control name=mobile type=tel size=11 value="<?php echo set_value('mobile') ?>" size=11 pattern="\d{11}" placeholder="手机号" required>
+					<p class=help-block>该手机号必须已注册过本平台的账号（即通过短信登录过），且未被其它商家绑定为员工</p>
 				</div>
 			</div>
 

@@ -120,8 +120,9 @@
 							});
 
 							$('form').submit(function(){
-								var value = $('[name="ids"]').val();
-								alert(value);
+								//var value = $('[name=ids]').val();
+								var value = $('[name=time_end]').val();
+								console.log(value);
 							});
 						});
 					</script>

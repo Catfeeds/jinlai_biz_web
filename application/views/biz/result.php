@@ -37,7 +37,7 @@
 	<ul class=row>
 		<li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-default btn-lg" title="返回首页" href="<?php echo base_url() ?>">首页</a></li>
 
-	<?php if ( $operation === 'edit' ): ?>
+	<?php if ( isset($operation) && $operation === 'edit' ): ?>
 		<li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="查看<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/detail?id='.$id) ?>">确认一下</a></li>
 	<?php endif ?>
 	</ul>

@@ -52,7 +52,7 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
+			<p class=helper-block>必填项以“※”符号标示</p>
 
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
@@ -60,6 +60,7 @@
 				<label for=mobile class="col-sm-2 control-label">手机号</label>
 				<div class=col-sm-10>
 					<p class="form-control-static"><?php echo $item['mobile'] ?></p>
+					<p class=help-block>员工更改自己的手机号时，此处将同步更新，不可修改</p>
 				</div>
 			</div>
 
@@ -87,7 +88,7 @@
 
 				<?php else: ?>
 				<div class=col-sm-10>
-					<p class="form-control-static">不可修改自己的角色</p>
+					<p class="form-control-static"><?php echo $item['role'] ?></p>
 					<input name=role type=hidden value="<?php echo $item['role'] ?>" required>
 				</div>
 
@@ -100,7 +101,7 @@
 					<?php if ($item['user_id'] !== $this->session->user_id): ?>
 					<input class=form-control name=level type=number step=1 max=30 value="<?php echo $item['level'] ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
 					<?php else: ?>
-					<p class="form-control-static">不可修改自己的级别</p>
+					<p class="form-control-static"><?php echo $item['level'] ?></p>
 					<input name=level type=hidden value="<?php echo $item['level'] ?>" required>
 					<?php endif ?>
 				</div>

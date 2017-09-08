@@ -19,11 +19,11 @@
 	<head>
 		<meta charset=utf-8>
 		<meta http-equiv=x-dns-prefetch-control content=on>
-		<!--<link rel=dns-prefetch href="https://cdn.key2all.com">-->
+		<link rel=dns-prefetch href="<?php echo CDN_URL ?>">
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20170906">
+		<meta name=version content="revision20170908">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -170,26 +170,22 @@
 				});
 
 			});
-			
-			
 		</script>
 		<?php //endif ?>
-		
-		<script src="https://cdn.key2all.com/js/jquery/new.js"></script>
-		<script defer src="https://cdn.key2all.com/js/jquery/jquery.cookie.js"></script>
-		<script defer src="https://cdn.key2all.com/bootstrap/js/bootstrap-3_3_7.min.js"></script>
+
+		<script src="<?php echo CDN_URL ?>js/jquery-3.2.1.min.js"></script>
+		<script defer src="<?php echo CDN_URL ?>js/js.cookie.js"></script>
+		<script defer src="<?php echo CDN_URL ?>bootstrap/js/bootstrap.min.js"></script>
 		<script defer src="/js/file-upload.js"></script>
 
-		<link rel=stylesheet media=all href="https://cdn.key2all.com/css/reset.css">
-		<link rel=stylesheet media=all href="https://cdn.key2all.com/bootstrap/css/bootstrap-3_3_7.min.css">
+		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/reset.css">
+		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>bootstrap/css/bootstrap.min.css">
 		<link rel=stylesheet media=all href="https://cdn.key2all.com/flat-ui/css/flat-ui.min.css">
-		<link rel=stylesheet media=all href="https://cdn.key2all.com/font-awesome/css/font-awesome.min.css">
+		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>font-awesome/css/font-awesome.min.css">
 		<link rel=stylesheet media=all href="/css/style.css">
 
-		<!--
-		<link rel="shortcut icon" href="//images.ybslux.com/logos/logo_32x32.png">
-		<link rel=apple-touch-icon href="//images.ybslux.com/logos/logo_120x120.png">
-		-->
+		<link rel="shortcut icon" href="<?php echo CDN_URL ?>icon/jinlai_client/icon28@3x.png">
+		<link rel=apple-touch-icon href="<?php echo CDN_URL ?>icon/jinlai_client/icon120@3x.png">
 
 		<link rel=canonical href="<?php echo current_url() ?>">
 

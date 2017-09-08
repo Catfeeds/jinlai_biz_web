@@ -20,8 +20,6 @@
 	}
 </style>
 
-<base href="<?php echo $this->media_root ?>">
-
 <?php
 	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
 	// 在iOS设备上使用原生日期选择器
@@ -52,6 +50,8 @@
 		$('[data-type*="' + fieldset_to_show + '"]').show();
 	});
 </script>
+	
+<base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
@@ -71,9 +71,9 @@
 	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
 	<div class=btn-group role=group>
-		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
+		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有</a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建</a>
 	</div>
 	<?php endif ?>
 
@@ -83,7 +83,7 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
-			<p class="bg-info text-info text-center">必填项以“※”符号表示</p>
+			<p class=help-block>必填项以“※”符号标示</p>
 			
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
@@ -130,7 +130,7 @@
 			</div>
 			
 			<div class=form-group>
-				<label for=url_image class="col-sm-2 control-label">形象图※</label>
+				<label for=url_image class="col-sm-2 control-label">形象图</label>
 				<div class=col-sm-10>
 					<?php if ( !empty($item['url_image']) ): ?>
 					<div class=row>
@@ -141,7 +141,7 @@
 					<?php endif ?>
 
 					<div>
-						<p class=help-block>该图用于手机等窄屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+						<p class=help-block>该图用于手机等窄屏设备</p>
 						<?php $name_to_upload = 'url_image_main' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -156,7 +156,7 @@
 			</div>
 			
 			<div class=form-group>
-				<label for=url_image_wide class="col-sm-2 control-label">宽屏形象图※</label>
+				<label for=url_image_wide class="col-sm-2 control-label">宽屏形象图</label>
 				<div class=col-sm-10>
 					<?php if ( !empty($item['url_image_wide']) ): ?>
 					<div class=row>
@@ -167,7 +167,7 @@
 					<?php endif ?>
 
 					<div>
-						<p class=help-block>该图用于桌面电脑等宽屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
+						<p class=help-block>该图用于笔记本、台式机等宽屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
 						<?php $name_to_upload = 'url_image_wide' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
@@ -248,6 +248,8 @@
 		</fieldset>
 
 		<fieldset class=params data-type="单品赠券,订单赠券">
+			<p class=help-block>“赠送优惠券模板”及“赠送优惠券包”只可填写一项；若两项都填写，将按“赠送优惠券模板”进行</p>
+
 			<div class=form-group>
 				<label for=coupon_id class="col-sm-2 control-label">赠送优惠券模板</label>
 				<div class=col-sm-10>
@@ -255,14 +257,14 @@
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=coupon_combo_id class="col-sm-2 control-label">赠送优惠券套餐</label>
+				<label for=coupon_combo_id class="col-sm-2 control-label">赠送优惠券包</label>
 				<div class=col-sm-10>
-					<input class=form-control name=coupon_combo_id type=text value="<?php echo $item['coupon_combo_id'] ?>" placeholder="优惠券套餐ID">
+					<input class=form-control name=coupon_combo_id type=text value="<?php echo $item['coupon_combo_id'] ?>" placeholder="优惠券包ID">
 				</div>
 			</div>
 		</fieldset>
 
-		<fieldset class=params data-type="单品预售">
+		<fieldset class=params data-type="单品预购">
 			<div class=form-group>
 				<label for=deposit class="col-sm-2 control-label">订金/预付款（元）</label>
 				<div class=col-sm-10>

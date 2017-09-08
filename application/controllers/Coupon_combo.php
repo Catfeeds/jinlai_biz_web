@@ -229,8 +229,8 @@
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
 			$this->form_validation->set_rules('template_ids', '所含优惠券', 'trim|required');
 			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
-			$this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|integer|callback_time_start');
-			$this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|integer|callback_time_end');
+			$this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
 
@@ -247,10 +247,12 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 					'biz_id' => $this->session->biz_id,
+					'time_start' => strtotime( $this->input->post('time_start') ),
+					'time_end' => strtotime( $this->input->post('time_end') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'template_ids', 'max_amount', 'time_start', 'time_end', 
+					'name', 'description', 'template_ids', 'max_amount',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -313,8 +315,8 @@
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
 			$this->form_validation->set_rules('template_ids', '所含优惠券', 'trim|required');
 			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
-			$this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|integer|callback_time_start');
-			$this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|integer|callback_time_end');
+			$this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
 
@@ -342,11 +344,12 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
-					//'name' => $this->input->post('name')),
+					'time_start' => strtotime( $this->input->post('time_start') ),
+					'time_end' => strtotime( $this->input->post('time_end') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'template_ids', 'max_amount', 'time_start', 'time_end', 
+					'name', 'description', 'template_ids', 'max_amount',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
