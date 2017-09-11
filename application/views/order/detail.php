@@ -40,7 +40,30 @@
 	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
 	<div class=btn-group role=group>
-		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
+		<div class=btn-group role=group>
+		    <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
+				所有 <span class="caret"></span>
+		    </button>
+		    <ul class=dropdown-menu>
+				<li>
+					<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
+				</li>
+
+		  		<?php
+		  		$status_to_mark = array('待发货', '待收货', '待评价', '已评价', '已退款');
+		  		foreach ($status_to_mark as $status):
+		  			// 页面URL
+		  			$url = ($status === NULL)? base_url('order'): base_url('order?status='.$status);
+		  			// 链接样式
+		  			$style_class = ($this->input->get('status') !== $status)? 'btn-default': 'btn-primary';
+		  			echo '<li><a class="btn '. $style_class. '" title="'. $status. '订单" href="'. $url. '">'. $status. '</a> </li>';
+		  		endforeach;
+		  		?>
+		    </ul>
+		</div>
+
+		<a class="btn btn-warning" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
+		<a class="btn btn-default" title="待发货商品订单" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
 	</div>
 	<?php endif ?>
 	
@@ -59,8 +82,8 @@
 		<li>状态 <strong><?php echo $item['status'] ?></strong></li>
 		<li>退款 <?php echo $item['refund_status'] ?></li>
 		<li>发票 <?php echo $item['invoice_status'] ?></li>
-		<li>用户留言 <?php echo $item['note_user'] ?></li>
-		<li>员工留言 <?php echo $item['note_stuff'] ?></li>
+		<?php if ( isset($item['note_user']) ): ?><li>用户留言 <?php echo $item['note_user'] ?></li><?php endif ?>
+		<?php if ( isset($item['note_stuff']) ): ?><li>员工留言 <?php echo $item['note_stuff'] ?></li><?php endif ?>
 	</ul>
 
 	<dl id=list-brief class=dl-horizontal>
@@ -77,26 +100,34 @@
 		<dd><?php echo $item['user_ip'] ?></dd>
 		<dt>小计</dt>
 		<dd>￥ <?php echo $item['subtotal'] ?></dd>
+
+		<?php if ( isset($item['promotion_id']) ): ?>
 		<dt>营销活动ID</dt>
 		<dd><?php echo $item['promotion_id'] ?></dd>
 		<dt>优惠活动折抵</dt>
 		<dd>￥ <?php echo $item['discount_promotion'] ?></dd>
+		<?php endif ?>
+		
+		<?php if ( isset($item['coupon_id']) ): ?>
 		<dt>优惠券ID</dt>
 		<dd><?php echo $item['coupon_id'] ?></dd>
 		<dt>优惠券折抵</dt>
 		<dd>￥ <?php echo $item['discount_coupon'] ?></dd>
+		<?php endif ?>
 		
-		<?php if ( !empty($item['credit_payed'] !== '0.00') ): ?>
+		<?php if ( isset($item['credit_id']) ): ?>
 		<dt>积分流水ID</dt>
 		<dd><?php echo $item['credit_id'] ?></dd>
 		<dt>积分折抵</dt>
 		<dd>￥ <?php echo $item['credit_payed'] ?></dd>
 		<?php endif ?>
 
+		<?php if ( isset($item['freight']) ): ?>
 		<dt>运费</dt>
 		<dd>￥ <?php echo $item['freight'] ?></dd>
-
-		<?php if ( !empty($item['discount_reprice'] !== '0.00') ): ?>
+		<?php endif ?>
+		
+		<?php if ( isset($item['repricer_id']) ): ?>
 		<dt>改价折抵</dt>
 		<dd>￥ <?php echo $item['discount_reprice'] ?></dd>
 		<dt>改价操作者ID</dt>
@@ -146,7 +177,7 @@
 	<?php endif ?>
 
 	<section>
-		<h2>收件人</h2>
+		<h2>收件地址</h2>
 		<dl id=list-addressee class=dl-horizontal>
 			<dt>姓名</dt>
 			<dd><?php echo $item['fullname'] ?></dd>
@@ -162,11 +193,27 @@
 
 	<section>
 		<h2>订单商品</h2>
-		<dl id=list-items class=dl-horizontal>
-		
-		</dl>
+		<ul id=list-items>
+		<?php foreach ($item['order_items'] as $order_item): ?>
+		<li class=row>
+			<?php //var_dump($order_item) ?>
+
+			<figure class=col-xs-2>
+				<img src="<?php echo $order_item['item_image'] ?>">
+			</figure>
+			<div class="item-name col-xs-10">
+				<h3><?php echo $order_item['name'] ?></h3>
+				<?php if ( isset($order_item['slogan']) ): ?>
+				<h4><?php echo $order_item['slogan'] ?></h4>
+				<?php endif ?>
+			</div>
+			<div class="col-xs-12 text-right">￥<?php echo $order_item['price'] ?> × <?php echo $order_item['count'] ?></div>
+
+		</li>
+		<?php endforeach ?>
+		</ul>
 	</section>
-	
+
 	<section>
 		<h2>交易记录</h2>
 		<dl id=list-time class=dl-horizontal>

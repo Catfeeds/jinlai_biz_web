@@ -96,7 +96,7 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>确定要<?php echo $title ?>？</p>
+		<p>确定要接单？接单后请安排配货，配货完成后请进行发货。</p>
 	</div>
 
 	<?php

@@ -96,7 +96,7 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>确定要<?php echo $title ?>？</p>
+		<p>确定要退单？用户已支付的款项将原路退回。</p>
 	</div>
 
 	<?php

@@ -41,7 +41,7 @@
 	<div class=btn-group role=group>
 		<div class=btn-group role=group>
 		    <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
-				<?php echo $this->class_name_cn ?> <span class="caret"></span>
+				所有 <span class="caret"></span>
 		    </button>
 		    <ul class=dropdown-menu>
 				<li>
@@ -60,8 +60,9 @@
 		  		?>
 		    </ul>
 		</div>
-		
-		<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>">回收站</a>
+
+		<a class="btn btn-warning" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
+		<a class="btn btn-default" title="待发货商品订单" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
 	</div>
 	<?php endif ?>
 
@@ -122,15 +123,15 @@
 							// 需要特定角色和权限进行该操作
 							if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 							?>
-							<li><a title="备注" href="<?php echo base_url($this->class_name.'/memo?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-comment"></i> 备注</a></li>
+							<li><a title="备注" href="<?php echo base_url($this->class_name.'/note?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-comment"></i> 备注</a></li>
 
-							<li><a title="改价" href="<?php echo base_url($this->class_name.'/reprice?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-tags"></i> 改价</a></li>
+							<li><a title="改价" href="<?php echo base_url($this->class_name.'/reprice?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-tags"></i> 改价</a></li>
 
-							<li><a title="退单" href="<?php echo base_url($this->class_name.'/refuse?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-reply"></i> 退单</a></li>
+							<li><a title="退单" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-reply"></i> 退单</a></li>
 
-							<li><a title="接单" href="<?php echo base_url($this->class_name.'/accept?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-share"></i> 接单</a></li>
+							<li><a title="接单" href="<?php echo base_url($this->class_name.'/accept?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-share"></i> 接单</a></li>
 
-							<li><a title="发货" href="<?php echo base_url($this->class_name.'/deliver?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-truck"></i> 发货</a></li>
+							<li><a title="发货" href="<?php echo base_url($this->class_name.'/deliver?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-truck"></i> 发货</a></li>
 							<?php endif ?>
 						</ul>
 					</td>

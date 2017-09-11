@@ -96,7 +96,7 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>确定要<?php echo $title ?>？</p>
+		<p>订单的应支付金额将减去您输入的改价折扣金额，确定要改价？</p>
 	</div>
 
 	<?php
@@ -108,9 +108,16 @@
 			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
 
 			<div class=form-group>
+				<label for=discount_reprice class="col-sm-2 control-label">改价折扣金额</label>
+				<div class=col-sm-10>
+					<input class=form-control name=discount_reprice type=number step=0.01 min=0.01 max=99999.99 placeholder="请输入需要折抵的金额" autofocus required>
+				</div>
+			</div>
+
+			<div class=form-group>
 				<label for=password class="col-sm-2 control-label">密码</label>
 				<div class=col-sm-10>
-					<input class=form-control name=password type=password placeholder="请输入您的登录密码" autofocus required>
+					<input class=form-control name=password type=password placeholder="请输入您的登录密码" required>
 				</div>
 			</div>
 		</fieldset>

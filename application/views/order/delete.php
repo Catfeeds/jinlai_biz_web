@@ -1,5 +1,5 @@
 <style>
-
+	
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -101,8 +101,8 @@
 
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-restore form-horizontal', 'role' => 'form');
-		echo form_open($this->class_name.'/restore', $attributes);
+		$attributes = array('class' => 'form-'.$this->class_name.'-delete form-horizontal', 'role' => 'form');
+		echo form_open($this->class_name.'/delete', $attributes);
 	?>
 		<fieldset>
 			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
@@ -117,9 +117,10 @@
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
-				<button class="btn btn-warning btn-lg btn-block" type=submit>确定</button>
+				<button class="btn btn-danger btn-lg btn-block" type=submit>删除</button>
 		    </div>
 		</div>
 
 	</form>
+
 </div>

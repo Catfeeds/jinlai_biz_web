@@ -151,7 +151,7 @@
 		<ul class=row>
 			<li class="col-xs-3 col-md-2">
 				<a title="订单管理" href="<?php echo base_url('order') ?>">
-					<span class=count><?php echo $count['order'] ?></span>订单
+					<span class=count><?php echo $count['order'] ?></span>订单<br>(测试中)
 				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
@@ -160,9 +160,11 @@
 			<li class="col-xs-3 col-md-2">
 				<a title="商品评价" href="<?php echo base_url('comment_item') ?>">商品评价</a>
 			</li>
+			<!--
 			<li class="col-xs-3 col-md-2">
 				<a title="订单评价" href="<?php echo base_url('comment_order') ?>">订单评价</a>
 			</li>
+			-->
 		</ul>
 	</section>
 		<?php endif //if ($biz['status'] !== '冻结'): ?>

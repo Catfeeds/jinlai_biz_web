@@ -96,7 +96,7 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>确定要<?php echo $title ?>？</p>
+		<p>确定要发货？请选择发货方式，并填写相应信息。</p>
 	</div>
 
 	<?php
@@ -106,11 +106,50 @@
 	?>
 		<fieldset>
 			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
+			
+			<div class=form-group>
+				<label for=deliver_method class="col-sm-2 control-label">发货方式</label>
+				<div class=col-sm-10>
+					<?php
+						$input_name = 'deliver_method';
+						$options = array('自行配送', '本地配送', '物流快递');
+						foreach ($options as $option):
+					?>
+					<label class=radio-inline>
+						<input type=radio name="<?php echo $input_name ?>" value="<?php echo $option ?>" required <?php echo set_radio($input_name, $option, TRUE) ?>> <?php echo $option ?>
+					</label>
+					<?php endforeach ?>
+				</div>
+			</div>
+			
+			<div class=form-group>
+				<label for=deliver_biz class="col-sm-2 control-label">物流服务商</label>
+				<div class=col-sm-10>
+					<?php $input_name = 'deliver_biz' ?>
+					<select class=form-control name="<?php echo $input_name ?>" required>
+						<option value="" <?php echo set_select($input_name, '') ?>>请选择</option>
+						<?php
+							$options = array('自营', '达达', '蜂鸟', '顺丰速运', '圆通', '中通', '申通', '百世汇通', '天天',);
+							foreach ($options as $option):
+						?>
+						<option value="<?php echo $option ?>" <?php echo set_select($input_name, $option) ?>><?php echo $option ?></option>
+						<?php endforeach ?>
+					</select>
+				</div>
+			</div>
+
+			<div class=form-group>
+				<label for=waybill_id class="col-sm-2 control-label">运单号</label>
+				<div class=col-sm-10>
+					<input class=form-control name=waybill_id type=text placeholder="请输入运单号" autofocus>
+					<p class=help-block>自行配送时可留空</p>
+				</div>
+			</div>
 
 			<div class=form-group>
 				<label for=password class="col-sm-2 control-label">密码</label>
 				<div class=col-sm-10>
-					<input class=form-control name=password type=password placeholder="请输入您的登录密码" autofocus required>
+					<input class=form-control name=password type=password placeholder="请输入您的登录密码" required>
 				</div>
 			</div>
 		</fieldset>

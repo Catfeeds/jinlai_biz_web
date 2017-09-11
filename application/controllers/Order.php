@@ -17,7 +17,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'order_id', 'biz_id', 'user_id', 'user_ip', 'subtotal', 'promotion_id', 'discount_promotion', 'coupon_id', 'discount_coupon', 'credit_id', 'discount_credit', 'freight', 'total', 'discount_teller', 'teller_id', 'total_payed', 'total_refund', 'addressee_fullname', 'addressee_mobile', 'addressee_province', 'addressee_city', 'addressee_county', 'addressee_address', 'payment_type', 'payment_account', 'payment_id', 'note_user', 'note_stuff', 'commission_rate', 'commission', 'promoter_id', 'time_create', 'time_cancel', 'time_expire', 'time_pay', 'time_refuse', 'time_deliver', 'time_confirm', 'time_confirm_auto', 'time_comment', 'time_refund', 'time_delete', 'time_edit', 'operator_id', 'invoice_status',
+			'biz_id', 'user_id', 'user_ip', 'subtotal', 'promotion_id', 'discount_promotion', 'coupon_id', 'discount_coupon', 'credit_id', 'discount_credit', 'freight', 'total', 'discount_teller', 'teller_id', 'total_payed', 'total_refund', 'addressee_fullname', 'addressee_mobile', 'addressee_province', 'addressee_city', 'addressee_county', 'addressee_address', 'payment_type', 'payment_account', 'payment_id', 'note_user', 'note_stuff', 'commission_rate', 'commission', 'promoter_id', 'time_create', 'time_cancel', 'time_expire', 'time_pay', 'time_refuse', 'time_deliver', 'time_confirm', 'time_confirm_auto', 'time_comment', 'time_refund', 'time_delete', 'time_edit', 'operator_id', 'invoice_status',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -34,13 +34,6 @@
 		protected $names_edit_required = array(
 			'id',
 			'order_id', 'biz_id', 'user_id', 'user_ip', 'subtotal', 'promotion_id', 'discount_promotion', 'coupon_id', 'discount_coupon', 'credit_id', 'discount_credit', 'freight', 'total', 'discount_teller', 'teller_id', 'total_payed', 'total_refund', 'addressee_fullname', 'addressee_mobile', 'addressee_province', 'addressee_city', 'addressee_county', 'addressee_address', 'payment_type', 'payment_account', 'payment_id', 'note_user', 'note_stuff', 'commission_rate', 'commission', 'promoter_id', 'time_create', 'time_cancel', 'time_expire', 'time_pay', 'time_refuse', 'time_deliver', 'time_confirm', 'time_confirm_auto', 'time_comment', 'time_refund', 'time_delete', 'time_edit', 'operator_id', 'invoice_status',
-		);
-		
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
 		);
 
 		/**
@@ -146,7 +139,7 @@
 			$url = api_url($this->class_name. '/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
+				$data['item'] = array_filter( $result['content'] ); // 清除空元素
 			else:
 				$data['error'] = $result['content']['error']['message'];
 			endif;
@@ -163,22 +156,17 @@
 		} // end detail
 
 		/**
-		 * 修改单项
+		 * 商家备注
 		 */
-		public function edit_certain()
+		public function note()
 		{
-			// 检查必要参数是否已传入
-			$required_params = $this->names_edit_certain_required;
-			foreach ($required_params as $param):
-				${$param} = $this->input->post($param);
-				if ( $param !== 'value' && empty( ${$param} ) ): // value 可以为空；必要字段会在字段验证中另行检查
-					$data['error'] = '必要的请求参数未全部传入';
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-					exit();
-				endif;
-			endforeach;
+			// 检查是否已传入必要参数
+			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
+			if ( !empty($id) ):
+				$params['id'] = $id;
+			else:
+				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+			endif;
 
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
@@ -187,10 +175,10 @@
 
 			// 页面信息
 			$data = array(
-				'title' => '修改'.$this->class_name_cn. $name,
+				'title' => '备注'.$this->class_name_cn,
 				'class' => $this->class_name.' edit-certain',
 			);
-			
+
 			// 从API服务器获取相应详情信息
 			$params['id'] = $id;
 			$params['biz_id'] = $this->session->biz_id;
@@ -205,10 +193,7 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 动态设置待验证字段名及字段值
-			$data_to_validate["{$name}"] = $value;
-			$this->form_validation->set_data($data_to_validate);
 			$this->form_validation->set_rules('id', '待修改项ID', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('total', '应支付金额（元）', 'trim');
 			$this->form_validation->set_rules('note_stuff', '员工留言', 'trim');
 
 			// 若表单提交不成功
@@ -216,7 +201,7 @@
 				$data['error'] = validation_errors();
 
 				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/edit_certain', $data);
+				$this->load->view($this->view_root.'/note', $data);
 				$this->load->view('templates/footer', $data);
 
 			else:
@@ -224,8 +209,8 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
-					'name' => $name,
-					'value' => $value,
+					'name' => 'note_stuff',
+					'value' => $this->input->post('note_stuff'),
 				);
 
 				// 向API服务器发送待创建数据
@@ -233,7 +218,7 @@
 				$url = api_url($this->class_name. '/edit_certain');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn. '修改成功';
+					$data['title'] = $this->class_name_cn. '备注成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
 					$data['operation'] = 'edit_certain';
@@ -248,137 +233,16 @@
 					$data['error'] = $result['content']['error']['message'];
 
 					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/edit_certain', $data);
+					$this->load->view($this->view_root.'/note', $data);
 					$this->load->view('templates/footer', $data);
 
 				endif;
 
 			endif;
-		} // end edit_certain
+		} // end note
 
 		/**
-		 * 删除单行或多行项目
-		 *
-		 * 一般用于发货、退款、存为草稿、上架、下架、删除、恢复等状态变化，请根据需要修改方法名，例如deliver、refund、delete、restore、draft等
-		 */
-		public function delete()
-		{
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
-			$op_name = '删除'; // 操作的名称
-			$op_view = 'delete'; // 视图文件名
-
-			// 页面信息
-			$data = array(
-				'title' => $op_name. $this->class_name_cn,
-				'class' => $this->class_name. ' '. $op_view,
-				'error' => '', // 预设错误提示
-			);
-
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
-			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
-			
-			// 获取待操作项数据
-			$data['items'] = array();
-			foreach ($ids as $id):
-				// 从API服务器获取相应详情信息
-				$params['id'] = $id;
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['items'][] = $result['content'];
-				else:
-					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
-				endif;
-			endforeach;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] .= validation_errors();
-
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/'.$op_view, $data);
-				$this->load->view('templates/footer', $data);
-
-			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_bulk_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) ):
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
-				// 需要存入数据库的信息
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'ids' => $ids,
-					'password' => $password,
-					'operation' => $op_view, // 操作名称
-				);
-
-				// 向API服务器发送待创建数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit_bulk');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn.$op_name. '成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若创建失败，则进行提示
-					$data['error'] .= $result['content']['error']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-				endif;
-
-			endif;
-		} // end delete
-
-		/**
-		 * 恢复单行或多行项目
-		 *
-		 * 一般用于存为草稿、上架、下架、删除、恢复等状态变化，请根据需要修改方法名，例如delete、restore、draft等
+		 * 找回已删除订单
 		 */
 		public function restore()
 		{
@@ -387,7 +251,7 @@
 // 			$min_level = 30; // 级别要求
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
-			$op_name = '恢复'; // 操作的名称
+			$op_name = '找回'; // 操作的名称
 			$op_view = 'restore'; // 视图文件名
 
 			// 页面信息
@@ -493,6 +357,479 @@
 
 			endif;
 		} // end restore
+		
+		/**
+		 * 改价待付款订单
+		 */
+		public function reprice()
+		{
+			// 操作可能需要检查操作权限
+			// $role_allowed = array('管理员', '经理'); // 角色要求
+// 			$min_level = 30; // 级别要求
+// 			$this->basic->permission_check($role_allowed, $min_level);
+
+			$op_name = '改价'; // 操作的名称
+			$op_view = 'reprice'; // 视图文件名
+
+			// 页面信息
+			$data = array(
+				'title' => $op_name. $this->class_name_cn,
+				'class' => $this->class_name. ' '. $op_view,
+				'error' => '', // 预设错误提示
+			);
+
+			// 检查是否已传入必要参数
+			if ( !empty($this->input->get_post('ids')) ):
+				$ids = $this->input->get_post('ids');
+
+				// 将字符串格式转换为数组格式
+				if ( !is_array($ids) ):
+					$ids = explode(',', $ids);
+				endif;
+
+			elseif ( !empty($this->input->post('ids[]')) ):
+				$ids = $this->input->post('ids[]');
+
+			else:
+				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+
+			endif;
+			
+			// 赋值视图中需要用到的待操作项数据
+			$data['ids'] = $ids;
+			
+			// 获取待操作项数据
+			$data['items'] = array();
+			foreach ($ids as $id):
+				// 从API服务器获取相应详情信息
+				$params['id'] = $id;
+				$url = api_url($this->class_name. '/detail');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['items'][] = $result['content'];
+				else:
+					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
+				endif;
+			endforeach;
+
+			// 将需要显示的数据传到视图以备使用
+			$data['data_to_display'] = $this->data_to_display;
+
+			// 待验证的表单项
+			$this->form_validation->set_error_delimiters('', '；');
+			$this->form_validation->set_rules('discount_reprice', '改价折扣金额', 'trim|required|greater_than[0.01]|less_than_equal_to[99999.99]');
+			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+
+			// 若表单提交不成功
+			if ($this->form_validation->run() === FALSE):
+				$data['error'] .= validation_errors();
+
+				$this->load->view('templates/header', $data);
+				$this->load->view($this->view_root.'/'.$op_view, $data);
+				$this->load->view('templates/footer', $data);
+
+			else:
+				// 检查必要参数是否已传入
+				$required_params = $this->names_edit_bulk_required;
+				foreach ($required_params as $param):
+					${$param} = $this->input->post($param);
+					if ( empty( ${$param} ) ):
+						$data['error'] = '必要的请求参数未全部传入';
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/'.$op_view, $data);
+						$this->load->view('templates/footer', $data);
+						exit();
+					endif;
+				endforeach;
+
+				// 需要存入数据库的信息
+				$data_to_edit = array(
+					'user_id' => $this->session->user_id,
+					'ids' => $ids,
+					'password' => $password,
+					'operation' => $op_view, // 操作名称
+
+					'discount_reprice' => $this->input->post('discount_reprice'),
+				);
+
+				// 向API服务器发送待创建数据
+				$params = $data_to_edit;
+				$url = api_url($this->class_name. '/edit_bulk');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['title'] = $this->class_name_cn.$op_name. '成功';
+					$data['class'] = 'success';
+					$data['content'] = $result['content']['message'];
+
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/result', $data);
+					$this->load->view('templates/footer', $data);
+
+				else:
+					// 若创建失败，则进行提示
+					$data['error'] .= $result['content']['error']['message'];
+
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/'.$op_view, $data);
+					$this->load->view('templates/footer', $data);
+				endif;
+
+			endif;
+		} // end reprice
+		
+		/**
+		 * 拒绝已付款订单
+		 */
+		public function refuse()
+		{
+			// 操作可能需要检查操作权限
+			// $role_allowed = array('管理员', '经理'); // 角色要求
+// 			$min_level = 30; // 级别要求
+// 			$this->basic->permission_check($role_allowed, $min_level);
+
+			$op_name = '退单'; // 操作的名称
+			$op_view = 'refuse'; // 视图文件名
+
+			// 页面信息
+			$data = array(
+				'title' => $op_name. $this->class_name_cn,
+				'class' => $this->class_name. ' '. $op_view,
+				'error' => '', // 预设错误提示
+			);
+
+			// 检查是否已传入必要参数
+			if ( !empty($this->input->get_post('ids')) ):
+				$ids = $this->input->get_post('ids');
+
+				// 将字符串格式转换为数组格式
+				if ( !is_array($ids) ):
+					$ids = explode(',', $ids);
+				endif;
+
+			elseif ( !empty($this->input->post('ids[]')) ):
+				$ids = $this->input->post('ids[]');
+
+			else:
+				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+
+			endif;
+			
+			// 赋值视图中需要用到的待操作项数据
+			$data['ids'] = $ids;
+			
+			// 获取待操作项数据
+			$data['items'] = array();
+			foreach ($ids as $id):
+				// 从API服务器获取相应详情信息
+				$params['id'] = $id;
+				$url = api_url($this->class_name. '/detail');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['items'][] = $result['content'];
+				else:
+					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
+				endif;
+			endforeach;
+
+			// 将需要显示的数据传到视图以备使用
+			$data['data_to_display'] = $this->data_to_display;
+
+			// 待验证的表单项
+			$this->form_validation->set_error_delimiters('', '；');
+			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+
+			// 若表单提交不成功
+			if ($this->form_validation->run() === FALSE):
+				$data['error'] .= validation_errors();
+
+				$this->load->view('templates/header', $data);
+				$this->load->view($this->view_root.'/'.$op_view, $data);
+				$this->load->view('templates/footer', $data);
+
+			else:
+				// 检查必要参数是否已传入
+				$required_params = $this->names_edit_bulk_required;
+				foreach ($required_params as $param):
+					${$param} = $this->input->post($param);
+					if ( empty( ${$param} ) ):
+						$data['error'] = '必要的请求参数未全部传入';
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/'.$op_view, $data);
+						$this->load->view('templates/footer', $data);
+						exit();
+					endif;
+				endforeach;
+
+				// 需要存入数据库的信息
+				$data_to_edit = array(
+					'user_id' => $this->session->user_id,
+					'ids' => $ids,
+					'password' => $password,
+					'operation' => $op_view, // 操作名称
+				);
+
+				// 向API服务器发送待创建数据
+				$params = $data_to_edit;
+				$url = api_url($this->class_name. '/edit_bulk');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['title'] = $this->class_name_cn.$op_name. '成功';
+					$data['class'] = 'success';
+					$data['content'] = $result['content']['message'];
+
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/result', $data);
+					$this->load->view('templates/footer', $data);
+
+				else:
+					// 若创建失败，则进行提示
+					$data['error'] .= $result['content']['error']['message'];
+
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/'.$op_view, $data);
+					$this->load->view('templates/footer', $data);
+				endif;
+
+			endif;
+		} // end refuse
+		
+		/**
+		 * 接受已付款订单
+		 */
+		public function accept()
+		{
+			// 操作可能需要检查操作权限
+			// $role_allowed = array('管理员', '经理'); // 角色要求
+// 			$min_level = 30; // 级别要求
+// 			$this->basic->permission_check($role_allowed, $min_level);
+
+			$op_name = '接单'; // 操作的名称
+			$op_view = 'accept'; // 视图文件名
+
+			// 页面信息
+			$data = array(
+				'title' => $op_name. $this->class_name_cn,
+				'class' => $this->class_name. ' '. $op_view,
+				'error' => '', // 预设错误提示
+			);
+
+			// 检查是否已传入必要参数
+			if ( !empty($this->input->get_post('ids')) ):
+				$ids = $this->input->get_post('ids');
+
+				// 将字符串格式转换为数组格式
+				if ( !is_array($ids) ):
+					$ids = explode(',', $ids);
+				endif;
+
+			elseif ( !empty($this->input->post('ids[]')) ):
+				$ids = $this->input->post('ids[]');
+
+			else:
+				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+
+			endif;
+			
+			// 赋值视图中需要用到的待操作项数据
+			$data['ids'] = $ids;
+			
+			// 获取待操作项数据
+			$data['items'] = array();
+			foreach ($ids as $id):
+				// 从API服务器获取相应详情信息
+				$params['id'] = $id;
+				$url = api_url($this->class_name. '/detail');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['items'][] = $result['content'];
+				else:
+					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
+				endif;
+			endforeach;
+
+			// 将需要显示的数据传到视图以备使用
+			$data['data_to_display'] = $this->data_to_display;
+
+			// 待验证的表单项
+			$this->form_validation->set_error_delimiters('', '；');
+			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+
+			// 若表单提交不成功
+			if ($this->form_validation->run() === FALSE):
+				$data['error'] .= validation_errors();
+
+				$this->load->view('templates/header', $data);
+				$this->load->view($this->view_root.'/'.$op_view, $data);
+				$this->load->view('templates/footer', $data);
+
+			else:
+				// 检查必要参数是否已传入
+				$required_params = $this->names_edit_bulk_required;
+				foreach ($required_params as $param):
+					${$param} = $this->input->post($param);
+					if ( empty( ${$param} ) ):
+						$data['error'] = '必要的请求参数未全部传入';
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/'.$op_view, $data);
+						$this->load->view('templates/footer', $data);
+						exit();
+					endif;
+				endforeach;
+
+				// 需要存入数据库的信息
+				$data_to_edit = array(
+					'user_id' => $this->session->user_id,
+					'ids' => $ids,
+					'password' => $password,
+					'operation' => $op_view, // 操作名称
+				);
+
+				// 向API服务器发送待创建数据
+				$params = $data_to_edit;
+				$url = api_url($this->class_name. '/edit_bulk');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['title'] = $this->class_name_cn.$op_name. '成功';
+					$data['class'] = 'success';
+					$data['content'] = $result['content']['message'];
+
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/result', $data);
+					$this->load->view('templates/footer', $data);
+
+				else:
+					// 若创建失败，则进行提示
+					$data['error'] .= $result['content']['error']['message'];
+
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/'.$op_view, $data);
+					$this->load->view('templates/footer', $data);
+				endif;
+
+			endif;
+		} // end accept
+		
+		/**
+		 * TODO 发货已接单订单
+		 *
+		 * 需添加特有字段
+		 */
+		public function deliver()
+		{
+			// 操作可能需要检查操作权限
+			// $role_allowed = array('管理员', '经理'); // 角色要求
+// 			$min_level = 30; // 级别要求
+// 			$this->basic->permission_check($role_allowed, $min_level);
+
+			$op_name = '发货'; // 操作的名称
+			$op_view = 'deliver'; // 视图文件名
+
+			// 页面信息
+			$data = array(
+				'title' => $op_name. $this->class_name_cn,
+				'class' => $this->class_name. ' '. $op_view,
+				'error' => '', // 预设错误提示
+			);
+
+			// 检查是否已传入必要参数
+			if ( !empty($this->input->get_post('ids')) ):
+				$ids = $this->input->get_post('ids');
+
+				// 将字符串格式转换为数组格式
+				if ( !is_array($ids) ):
+					$ids = explode(',', $ids);
+				endif;
+
+			elseif ( !empty($this->input->post('ids[]')) ):
+				$ids = $this->input->post('ids[]');
+
+			else:
+				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+
+			endif;
+			
+			// 赋值视图中需要用到的待操作项数据
+			$data['ids'] = $ids;
+			
+			// 获取待操作项数据
+			$data['items'] = array();
+			foreach ($ids as $id):
+				// 从API服务器获取相应详情信息
+				$params['id'] = $id;
+				$url = api_url($this->class_name. '/detail');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['items'][] = $result['content'];
+				else:
+					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
+				endif;
+			endforeach;
+
+			// 将需要显示的数据传到视图以备使用
+			$data['data_to_display'] = $this->data_to_display;
+
+			// 待验证的表单项
+			$this->form_validation->set_error_delimiters('', '；');
+			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+
+			// 若表单提交不成功
+			if ($this->form_validation->run() === FALSE):
+				$data['error'] .= validation_errors();
+
+				$this->load->view('templates/header', $data);
+				$this->load->view($this->view_root.'/'.$op_view, $data);
+				$this->load->view('templates/footer', $data);
+
+			else:
+				// 检查必要参数是否已传入
+				$required_params = $this->names_edit_bulk_required;
+				foreach ($required_params as $param):
+					${$param} = $this->input->post($param);
+					if ( empty( ${$param} ) ):
+						$data['error'] = '必要的请求参数未全部传入';
+						$this->load->view('templates/header', $data);
+						$this->load->view($this->view_root.'/'.$op_view, $data);
+						$this->load->view('templates/footer', $data);
+						exit();
+					endif;
+				endforeach;
+
+				// 需要存入数据库的信息
+				$data_to_edit = array(
+					'user_id' => $this->session->user_id,
+					'ids' => $ids,
+					'password' => $password,
+					'operation' => $op_view, // 操作名称
+				);
+
+				// 向API服务器发送待创建数据
+				$params = $data_to_edit;
+				$url = api_url($this->class_name. '/edit_bulk');
+				$result = $this->curl->go($url, $params, 'array');
+				if ($result['status'] === 200):
+					$data['title'] = $this->class_name_cn.$op_name. '成功';
+					$data['class'] = 'success';
+					$data['content'] = $result['content']['message'];
+
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/result', $data);
+					$this->load->view('templates/footer', $data);
+
+				else:
+					// 若创建失败，则进行提示
+					$data['error'] .= $result['content']['error']['message'];
+
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/'.$op_view, $data);
+					$this->load->view('templates/footer', $data);
+				endif;
+
+			endif;
+		} // end deliver
 
 	} // end class Order
 
