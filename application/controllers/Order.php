@@ -775,6 +775,9 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+			$this->form_validation->set_rules('deliver_method', '发货方式', 'trim|required|max_length[30]');
+			$this->form_validation->set_rules('deliver_biz', '物流服务商', 'trim|required|max_length[30]');
+			$this->form_validation->set_rules('waybill_id', '物流运单号', 'trim|max_length[30]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -804,6 +807,10 @@
 					'ids' => $ids,
 					'password' => $password,
 					'operation' => $op_view, // 操作名称
+
+					'deliver_method' => $this->input->post('deliver_method'),
+					'deliver_biz' => $this->input->post('deliver_biz'),
+					'waybill_id' => $this->input->post('waybill_id'),
 				);
 
 				// 向API服务器发送待创建数据

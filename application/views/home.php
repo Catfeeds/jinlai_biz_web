@@ -56,13 +56,13 @@
 
 	<?php else: ?>
 	<section id=biz-info>
-		<div class="jumbotron row">
+		<div class=jumbotron>
 			<a title="商家详情" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">
+				<span class=pull-right><i class="fa fa-info-circle" aria-hidden=true></i> <?php echo $biz['status'] ?></span>
 				<h2><?php echo $biz['brief_name'] ?></h2>
 				<ul class=row>
 					<li><i class="fa fa-building fa-fw" aria-hidden=true></i> <?php echo $biz['name'] ?></li>
 					<li><i class="fa fa-phone fa-fw" aria-hidden=true></i> <?php echo $biz['tel_public'] ?></li>
-					<li class=text-right><i class="fa fa-info-circle fa-fw" aria-hidden=true></i> <?php echo $biz['status'] ?></li>
 				</ul>
 			</a>
 		</div>
@@ -121,7 +121,6 @@
 				<span class=count><?php echo $count['branch'] ?></span>
 				<a title="门店管理" href="<?php echo base_url('branch') ?>">门店/仓库</a>
 			</li>
-			
 			<li class="col-xs-3 col-md-2">
 				<span class=count><?php echo $count['promotion'] ?></span>
 				<a title="平台活动" href="<?php echo base_url('promotion') ?>">平台活动</a>
@@ -138,7 +137,7 @@
 				<span class=count><?php echo $count['coupon_combo'] ?></span>
 				<a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">优惠券包</a>
 			</li>
-			
+
 			<li class="col-xs-3 col-md-2">
 				<span class=count><?php echo $count['freight_template_biz'] ?></span>
 				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">运费模板</a>

@@ -1,12 +1,11 @@
 <style>
 
-
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
 
 	}
-	
+
 	/* 宽度在960像素以上的设备 */
 	@media only screen and (min-width:961px)
 	{
@@ -24,7 +23,7 @@
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
-		<li><a href="<?php echo base_url() ?>">首页</a></li>
+		<li><a href="<?php echo base_url() ?>">首页</a></li><a href="create.php" id="" title="create">create</a>
 		<li><a href="<?php echo base_url($this->class_name) ?>"><?php echo $this->class_name_cn ?></a></li>
 		<li class=active><?php echo $title ?></li>
 	</ol>
@@ -39,10 +38,10 @@
 	$level_allowed = 30;
 	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
-	<div class=btn-group role=group>
-		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
-	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-		<a class="btn btn-primary" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
+	<div class="btn-group btn-group-justified" role=group>
+		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
+	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>">回收站</a>
+		<a class="btn btn-primary" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
 	</div>
 	<?php endif ?>
 
@@ -51,7 +50,7 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-create form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
-		<p class="bg-info text-info text-center">必填项以“※”符号标示</p>
+		<p class=help-block>必填项以“※”符号标示</p>
 
 		<fieldset>
 			<div class=form-group>
@@ -140,8 +139,8 @@
 			<div class=form-group>
 				<label for=range_deliver class="col-sm-2 control-label">配送范围（公里）</label>
 				<div class=col-sm-10>
-					<p class=help-block>若提供本地配送，可填写此项</p>
 					<input class=form-control name=range_deliver type=number min=0 step=1 max=99 value="<?php echo set_value('range_deliver') ?>" placeholder="最高99">
+					<p class=help-block>若提供本地配送，可填写此项</p>
 				</div>
 			</div>
 		</fieldset>

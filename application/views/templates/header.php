@@ -29,6 +29,7 @@
 		<meta name=contact content="kamaslau@dingtalk.com">
 
 		<meta name=viewport content="width=device-width,user-scalable=0">
+		<!--<meta name=viewport content="width=750,user-scalable=0">-->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<?php //if ($is_wechat): ?>
@@ -266,6 +267,9 @@
 							<ul class=dropdown-menu>
 								<li><a title="店内分类列表" href="<?php echo base_url('item_category_biz') ?>">店内分类</a></li>
 								<li><a title="创建店内分类" href="<?php echo base_url('item_category_biz/create') ?>">创建店内分类</a></li>
+								<li role="separator" class="divider"></li>
+								<li><a title="运费模板列表" href="<?php echo base_url('freight_template_biz') ?>">运费模板</a></li>
+								<li><a title="创建运费模板" href="<?php echo base_url('freight_template_biz/create') ?>">创建运费模板</a></li>
 								<li role="separator" class="divider"></li>
 								<li><a title="商品列表" href="<?php echo base_url('item') ?>">商品列表</a></li>
 								<li><a title="创建商品" href="<?php echo base_url('item/create') ?>">创建商品</a></li>

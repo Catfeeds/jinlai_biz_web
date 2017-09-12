@@ -39,7 +39,7 @@
 	$level_allowed = 30;
 	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
-	<div class=btn-group role=group>
+	<div class="btn-group btn-group-justified" role=group>
 		<div class=btn-group role=group>
 		    <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
 				所有 <span class="caret"></span>

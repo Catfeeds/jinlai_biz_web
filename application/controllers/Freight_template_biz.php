@@ -2,10 +2,7 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Freight_template_biz 运费模板类
-	 *
-	 * 以我的XX列表、列表、详情、创建、单行编辑、单/多行编辑（删除、恢复）等功能提供了常见功能的APP示例代码
-	 * CodeIgniter官方网站 https://www.codeigniter.com/user_guide/
+	 * Freight_template_biz 商家运费模板类
 	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
@@ -17,14 +14,14 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'template_id', 'biz_id', 'name', 'type', 'time_valid_from', 'time_valid_end', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'max_count', 'max_net', 'max_gross', 'max_volume', 'fee_count_start', 'fee_net_start', 'fee_gross_start', 'fee_volumn_start', 'fee_count_amount', 'fee_net_amount', 'fee_gross_amount', 'fee_volumn_amount', 'fee_count', 'fee_net', 'fee_gross', 'fee_volume', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'biz_id', 'name', 'type', 'time_valid_from', 'time_valid_end', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'max_amount', 'start_amount', 'fee_start', 'fee_unit', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
 		/**
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'name', 'time_valid_from', 'time_valid_end', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'max_count', 'max_net', 'max_gross', 'max_volume', 'fee_count_start', 'fee_net_start', 'fee_gross_start', 'fee_volumn_start', 'fee_count_amount', 'fee_net_amount', 'fee_gross_amount', 'fee_volumn_amount', 'fee_count', 'fee_net', 'fee_gross', 'fee_volume',
+			'name', 'time_valid_from', 'time_valid_end', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
 		);
 
 		/**
@@ -232,6 +229,7 @@
 			$this->form_validation->set_rules('expire_refund_rate', '过期退款比例', 'trim|less_than_equal_to[1.00]');
 			$this->form_validation->set_rules('type_actual', '运费计算方式', 'trim');
 			$this->form_validation->set_rules('time_latest_deliver', '最晚发货时间', 'trim');
+			$this->form_validation->set_rules('exempt_amount', '包邮量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('max_amount', '每单最高配送量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('start_amount', '起始量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('fee_start', '起始量运费', 'trim|less_than_equal_to[9999]');
@@ -256,7 +254,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'type', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
+					'name', 'type', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -334,6 +332,7 @@
 			$this->form_validation->set_rules('expire_refund_rate', '过期退款比例', 'trim');
 			$this->form_validation->set_rules('type_actual', '运费计算方式', 'trim');
 			$this->form_validation->set_rules('time_latest_deliver', '最晚发货时间', 'trim');
+			$this->form_validation->set_rules('exempt_amount', '包邮量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('max_amount', '每单最高配送量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('start_amount', '起始量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('fee_start', '起始量运费', 'trim|less_than_equal_to[9999]');
@@ -358,7 +357,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
+					'name', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);

@@ -274,7 +274,7 @@
 				<div class=col-sm-10>
 					<p class=help-block>
 						如果负责业务对接的不是法人本人，请上传授权书
-						<small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small>
+						<small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-admission') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small>
 					</p>
 
 					<?php if ( !empty($item['url_image_auth_doc']) ): ?>

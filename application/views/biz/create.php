@@ -193,7 +193,7 @@
 				<div class=col-sm-10>
 					<p class=help-block>
 						如果负责业务对接的不是法人本人，请上传授权书
-						<small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small>
+						<small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-admission') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small>
 					</p>
 
 					<?php $name_to_upload = 'url_image_auth_doc' ?>
@@ -253,6 +253,7 @@
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
+				<p class=help-block>点击“提交入驻申请”代表您已阅读并同意<a href="<?php echo base_url('article/agreement-admission') ?>" target=_blank>入驻协议</a></p>
 				<button class="btn btn-primary btn-lg btn-block" type=submit>提交入驻申请</button>
 		    </div>
 		</div>
