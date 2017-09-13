@@ -28,8 +28,8 @@
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
 
-		<meta name=viewport content="width=device-width,user-scalable=0">
-		<!--<meta name=viewport content="width=750,user-scalable=0">-->
+		<!--<meta name=viewport content="width=device-width,user-scalable=0">-->
+		<meta name=viewport content="width=750,user-scalable=0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<?php //if ($is_wechat): ?>

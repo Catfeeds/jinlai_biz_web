@@ -75,7 +75,7 @@
 			$this->app_version = '0.0.1';
 			$this->device_platform = 'web';
 			$this->device_number = '';
-	    }
+	    } // end __construct
 
 		/**
 		 * 截止3.1.3为止，CI_Controller类无析构函数，所以无需继承相应方法
@@ -83,7 +83,7 @@
 		public function __destruct()
 		{
 			
-		}
+		} // end __destruct
 		
 		// 将数组输出为key:value格式，主要用于在postman等工具中进行api测试
 		protected function key_value($params)
@@ -91,7 +91,7 @@
 			foreach ($params as $key => $value):
 				echo $key .':' .$value ."\n";
 			endforeach;
-		}
+		} // end key_value
 
 		/**
 		 * 签名有效性检查
@@ -106,7 +106,7 @@
 			$this->sign_check_time();
 			$this->sign_check_params();
 			$this->sign_check_string();
-		}
+		} // end sign_check
 
 		// 检查签名是否传入
 		protected function sign_check_exits()
@@ -118,7 +118,7 @@
 				$this->result['content']['error']['message'] = '未传入签名';
 				exit();
 			endif;
-		}
+		} // end sign_check_exits
 
 		// 签名时间检查
 		protected function sign_check_time()
@@ -146,7 +146,7 @@
 				endif;
 
 			endif;
-		}
+		} // end sign_check_time
 
 		// 签名参数检查
 		protected function sign_check_params()
@@ -171,7 +171,7 @@
 			else:
 				return TRUE;
 			endif;
-		}
+		} // end sign_check_params
 
 		// 签名正确性检查
 		protected function sign_check_string()
@@ -195,7 +195,7 @@
 				return TRUE;
 
 			endif;
-		}
+		} // end sign_check_string
 
 		/**
 		 * 生成签名
@@ -220,7 +220,7 @@
 			$sign = strtoupper( SHA1($param_string) );
 
 			return $sign;
-		}
+		} // end sign_generate
 
 		/**
 		 * 权限检查
@@ -241,7 +241,34 @@
 			elseif ( $current_level < $min_level):
 				redirect( base_url('error/permission_level') );
 			endif;
-		}
+		} // end permission_check
+		
+		/**
+		 * 获取批量操作时的ID数组
+		 *
+		 * @return array $ids 解析为数组的ID们
+		 */
+		protected function parse_ids_array()
+		{
+			// 检查是否已传入必要参数
+			if ( !empty($this->input->get_post('ids')) ):
+				$ids = $this->input->get_post('ids');
+
+				// 将字符串格式转换为数组格式
+				if ( !is_array($ids) ):
+					$ids = explode(',', $ids);
+				endif;
+
+			elseif ( !empty($this->input->post('ids[]')) ):
+				$ids = $this->input->post('ids[]');
+
+			else:
+				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+
+			endif;
+			
+			return $ids;
+		} // end parse_ids_array
 
 		/**
 		 * 删除单行或多行项目
@@ -265,25 +292,8 @@
 				'error' => '', // 预设错误提示
 			);
 
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
 			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
+			$data['ids'] = $ids = $this->parse_ids_array();
 
 			// 获取待操作项数据
 			$data['items'] = array();
@@ -384,25 +394,8 @@
 				'error' => '', // 预设错误提示
 			);
 
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
 			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
+			$data['ids'] = $ids = $this->parse_ids_array();
 			
 			// 获取待操作项数据
 			$data['items'] = array();

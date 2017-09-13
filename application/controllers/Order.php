@@ -160,99 +160,13 @@
 		 */
 		public function note()
 		{
-			// 检查是否已传入必要参数
-			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
-			if ( !empty($id) ):
-				$params['id'] = $id;
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-			endif;
-
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
-			// 页面信息
-			$data = array(
-				'title' => '备注'.$this->class_name_cn,
-				'class' => $this->class_name.' edit-certain',
-			);
-
-			// 从API服务器获取相应详情信息
-			$params['id'] = $id;
-			$params['biz_id'] = $this->session->biz_id;
-			$url = api_url($this->class_name. '/detail');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
-			endif;
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			// 动态设置待验证字段名及字段值
-			$this->form_validation->set_rules('id', '待修改项ID', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('note_stuff', '员工留言', 'trim');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] = validation_errors();
-
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/note', $data);
-				$this->load->view('templates/footer', $data);
-
-			else:
-				// 需要编辑的信息
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'id' => $id,
-					'name' => 'note_stuff',
-					'value' => $this->input->post('note_stuff'),
-				);
-
-				// 向API服务器发送待创建数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit_certain');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn. '备注成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-					$data['operation'] = 'edit_certain';
-					$data['id'] = $id;
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若修改失败，则进行提示
-					$data['error'] = $result['content']['error']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/note', $data);
-					$this->load->view('templates/footer', $data);
-
-				endif;
-
-			endif;
-		} // end note
-
-		/**
-		 * 找回已删除订单
-		 */
-		public function restore()
-		{
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
-			$op_name = '找回'; // 操作的名称
-			$op_view = 'restore'; // 视图文件名
+			$op_name = '备注'; // 操作的名称
+			$op_view = 'note'; // 视图文件名
 
 			// 页面信息
 			$data = array(
@@ -261,26 +175,9 @@
 				'error' => '', // 预设错误提示
 			);
 
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
 			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
-			
+			$data['ids'] = $ids = $this->parse_ids_array();
+
 			// 获取待操作项数据
 			$data['items'] = array();
 			foreach ($ids as $id):
@@ -302,6 +199,7 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+			$this->form_validation->set_rules('note_stuff', '员工留言', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -331,6 +229,8 @@
 					'ids' => $ids,
 					'password' => $password,
 					'operation' => $op_view, // 操作名称
+
+					'note_stuff' => $this->input->post('note_stuff'),
 				);
 
 				// 向API服务器发送待创建数据
@@ -356,7 +256,7 @@
 				endif;
 
 			endif;
-		} // end restore
+		} // end note
 		
 		/**
 		 * 改价待付款订单
@@ -378,25 +278,8 @@
 				'error' => '', // 预设错误提示
 			);
 
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
 			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
+			$data['ids'] = $ids = $this->parse_ids_array();
 			
 			// 获取待操作项数据
 			$data['items'] = array();
@@ -417,9 +300,9 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('discount_reprice', '改价折扣金额', 'trim|required|greater_than[0.01]|less_than_equal_to[99999.99]');
 			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+			$this->form_validation->set_rules('discount_reprice', '改价折扣金额', 'trim|required|greater_than[0.01]|less_than_equal_to[99999.99]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -498,26 +381,9 @@
 				'error' => '', // 预设错误提示
 			);
 
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
 			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
-			
+			$data['ids'] = $ids = $this->parse_ids_array();
+
 			// 获取待操作项数据
 			$data['items'] = array();
 			foreach ($ids as $id):
@@ -615,25 +481,8 @@
 				'error' => '', // 预设错误提示
 			);
 
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
 			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
+			$data['ids'] = $ids = $this->parse_ids_array();
 			
 			// 获取待操作项数据
 			$data['items'] = array();
@@ -734,25 +583,8 @@
 				'error' => '', // 预设错误提示
 			);
 
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
 			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
+			$data['ids'] = $ids = $this->parse_ids_array();
 			
 			// 获取待操作项数据
 			$data['items'] = array();

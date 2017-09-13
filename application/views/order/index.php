@@ -45,11 +45,12 @@
 		    </button>
 		    <ul class=dropdown-menu>
 				<li>
-					<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
+					<?php $style_class = empty($this->input->get('status') )? 'btn-primary': 'btn-default'; ?>
+					<a class="btn <?php echo $style_class ?>" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
 				</li>
 
 		  		<?php
-		  		$status_to_mark = array('待发货', '待收货', '待评价', '已评价', '已退款');
+		  		$status_to_mark = array('待接单', '待发货', '待收货', '待评价', '已评价', '已退款');
 		  		foreach ($status_to_mark as $status):
 		  			// 页面URL
 		  			$url = ($status === NULL)? base_url('order'): base_url('order?status='.$status);
@@ -78,13 +79,28 @@
 
 	<?php else: ?>
 	<form method=get target=_blank>
+		<?php
+			if ( !empty($this->input->get('status')) ):
+				$status = $this->input->get('status');
+		?>
 		<fieldset>
 			<div class=btn-group role=group>
+				<button formaction="<?php echo base_url($this->class_name.'/note') ?>" type=submit class="btn btn-default">备注</button>
+				<?php if ($status === '待付款'): ?>
+				<button formaction="<?php echo base_url($this->class_name.'/reprice') ?>" type=submit class="btn btn-default">改价</button>
+				<?php endif ?>
+
+				<?php if ($status === '待接单'): ?>
 				<button formaction="<?php echo base_url($this->class_name.'/accept') ?>" type=submit class="btn btn-default">接单</button>
 				<button formaction="<?php echo base_url($this->class_name.'/refuse') ?>" type=submit class="btn btn-default">退单</button>
-				<button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit class="btn btn-default">删除</button>
+				<?php endif ?>
+				
+				<?php if ($status === '待发货'): ?>
+				<button formaction="<?php echo base_url($this->class_name.'/deliver') ?>" type=submit class="btn btn-default">发货</button>
+				<?php endif ?>
 			</div>
 		</fieldset>
+		<?php endif ?>
 
 		<table class="table table-condensed table-responsive table-striped sortable">
 			<thead>

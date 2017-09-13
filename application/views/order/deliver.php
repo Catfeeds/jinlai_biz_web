@@ -46,11 +46,11 @@
 		    </button>
 		    <ul class=dropdown-menu>
 				<li>
-					<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
+					<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
 				</li>
 
 		  		<?php
-		  		$status_to_mark = array('待发货', '待收货', '待评价', '已评价', '已退款');
+		  		$status_to_mark = array('待接单', '待发货', '待收货', '待评价', '已评价', '已退款');
 		  		foreach ($status_to_mark as $status):
 		  			// 页面URL
 		  			$url = ($status === NULL)? base_url('order'): base_url('order?status='.$status);
@@ -106,7 +106,7 @@
 	?>
 		<fieldset>
 			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
-			
+
 			<div class=form-group>
 				<label for=deliver_method class="col-sm-2 control-label">发货方式</label>
 				<div class=col-sm-10>
@@ -119,6 +119,12 @@
 						<input type=radio name="<?php echo $input_name ?>" value="<?php echo $option ?>" required <?php echo set_radio($input_name, $option, TRUE) ?>> <?php echo $option ?>
 					</label>
 					<?php endforeach ?>
+					
+					<div class="btn-group btn-group-justified" role=group>
+						<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">自行配送</a>
+					  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>">本地配送</a>
+						<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">物流快递</a>
+					</div>
 				</div>
 			</div>
 			

@@ -1,6 +1,22 @@
 <style>
-	#function-list li {text-align:center;}
-	#biz-info h2 {font-size:4rem;text-align:center;}
+	section {background-color:#fff;margin-top:20px;border-radius:20px;overflow:hidden;}
+		section li {overflow:hidden;border-right:2px solid #efefef;text-align:center;}
+			section li img {width:60px;height:60px;margin:0 auto 18px;}
+			section li>a {display:block;width:100%;height:100%;}
+
+	#biz-info {text-align:center;padding:60px 0 70px;position:relative;}
+		#biz-status {position:absolute;top:30px;right:30px;}
+		#biz-logo {width:120px;height:120px;border:1px solid #efefef;border-radius:50%;display:table-cell;vertical-align:middle;overflow:hidden;}
+		#biz-info h2 {font-size:30px;margin:30px 0;}
+		#biz-info p {font-size:26px;line-height:1;margin:0;}
+
+	#frequent-list {padding:45px 0;}
+		#frequent-list li:nth-child(4n+0) {border-right:0;}
+
+	#function-list {margin-bottom:60px;}
+		#function-list li {margin-top:-2px;border-top:2px solid #efefef;}
+			#function-list li:nth-child(3n+0) {border-right:0;}
+		#function-list a {line-height:1;padding:45px 0 50px;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -56,16 +72,18 @@
 
 	<?php else: ?>
 	<section id=biz-info>
-		<div class=jumbotron>
-			<a title="商家详情" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">
-				<span class=pull-right><i class="fa fa-info-circle" aria-hidden=true></i> <?php echo $biz['status'] ?></span>
-				<h2><?php echo $biz['brief_name'] ?></h2>
-				<ul class=row>
-					<li><i class="fa fa-building fa-fw" aria-hidden=true></i> <?php echo $biz['name'] ?></li>
-					<li><i class="fa fa-phone fa-fw" aria-hidden=true></i> <?php echo $biz['tel_public'] ?></li>
-				</ul>
-			</a>
-		</div>
+		<span id=biz-status><i class="fa fa-info-circle" aria-hidden=true></i> <?php echo $biz['status'] ?></span>
+
+		<a title="商家详情" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">
+			<?php if ( ! empty($biz['url_logo']) ): ?>
+			<figure id=biz-logo>
+				<img src="<?php echo MEDIA_URL.'biz/'.$biz['url_logo'] ?>">
+			</figure>
+			<?php endif ?>
+
+			<h2><?php echo $biz['brief_name'] ?></h2>
+			<p><?php echo $biz['tel_public'] ?></p>
+		</a>
 	</section>
 
 		<?php if ($biz['status'] !== '冻结'): ?>
@@ -73,84 +91,31 @@
 	<section id=order-status>
 		<ul class=row>
 			<li class="col-xs-4 col-md-2">
-				<a title="待付款" href="<?php echo base_url('order?status=create') ?>">待付款</a>
+				<a title="待付款" href="<?php echo base_url('order?status=待付款') ?>">待付款</a>
 			</li>
 			<li class="col-xs-4 col-md-2">
-				<a title="待确认" href="<?php echo base_url('order?status=pay') ?>">待接单</a>
+				<a title="待确认" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
 			</li>
 			<li class="col-xs-4 col-md-2">
-				<a title="待发货" href="<?php echo base_url('order?status=accept') ?>">待发货</a>
+				<a title="待发货" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
 			</li>
 			<li class="col-xs-4 col-md-2">
-				<a title="待收货" href="<?php echo base_url('order?status=deliver') ?>">待收货</a>
+				<a title="待收货" href="<?php echo base_url('order?status=待收货') ?>">待收货</a>
 			</li>
 			<li class="col-xs-4 col-md-2">
-				<a title="待评价" href="<?php echo base_url('order?status=finish') ?>">待评价</a>
+				<a title="待评价" href="<?php echo base_url('order?status=待评价') ?>">待评价</a>
 			</li>
 			<li class="col-xs-4 col-md-2">
-				<a title="已完成" href="<?php echo base_url('order?status=comment') ?>">已完成</a>
+				<a title="已完成" href="<?php echo base_url('order?status=待评价') ?>">待评价</a>
 			</li>
 		</ul>
 	</section>
 	-->
-	
-	<style>
-		.count {display:block;}
-
-		#function-list ul {border:1px solid #eee;border-bottom:0;}
-			#function-list li {height:8rem;margin-top:-1px;border:1px solid #eee;border-left:0;}
-				#function-list li>a {display:block;width:100%;height:100%;text-align:center;}
-	</style>
-
-	<section id=function-list>
-		<ul class=row>
-			<li class="col-xs-3 col-md-2">
-				<a title="商品管理" href="<?php echo base_url('item') ?>">
-					<span class=count><?php echo $count['item'] ?></span>商品
-				</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['item_category_biz'] ?></span>
-				<a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">商品分类</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['stuff'] ?></span>
-				<a title="团队管理" href="<?php echo base_url('stuff') ?>">团队</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['branch'] ?></span>
-				<a title="门店管理" href="<?php echo base_url('branch') ?>">门店/仓库</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['promotion'] ?></span>
-				<a title="平台活动" href="<?php echo base_url('promotion') ?>">平台活动</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['promotion_biz'] ?></span>
-				<a title="店内活动" href="<?php echo base_url('promotion_biz') ?>">店内活动</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['coupon_template'] ?></span>
-				<a title="优惠券" href="<?php echo base_url('coupon_template') ?>">优惠券</a>
-			</li>
-			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['coupon_combo'] ?></span>
-				<a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">优惠券包</a>
-			</li>
-
-			<li class="col-xs-3 col-md-2">
-				<span class=count><?php echo $count['freight_template_biz'] ?></span>
-				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">运费模板</a>
-			</li>
-		</ul>
-
-		<hr>
-
-		<p class=text-center>更多功能将随客户端正式开放</p>
+	<section id=frequent-list>
 		<ul class=row>
 			<li class="col-xs-3 col-md-2">
 				<a title="订单管理" href="<?php echo base_url('order') ?>">
-					<span class=count><?php echo $count['order'] ?></span>订单<br>(测试中)
+					订单<span class=count><?php echo $count['order'] ?></span><br>(测试中)
 				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
@@ -164,6 +129,65 @@
 				<a title="订单评价" href="<?php echo base_url('comment_order') ?>">订单评价</a>
 			</li>
 			-->
+		</ul>
+	</section>
+
+	<section id=function-list>
+		<ul class=row>
+			<li class="col-xs-4 col-md-2">
+				<a title="商品管理" href="<?php echo base_url('item') ?>">
+					<img src="/media/home/shangpin@3x.png">
+					商品<span class=count><?php echo $count['item'] ?></span>
+				</a>
+			</li>
+			<li class="col-xs-4 col-md-2">
+				<a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">
+					<img src="/media/home/fenlei@3x.png">
+					分类<span class=count><?php echo $count['item_category_biz'] ?></span>
+				</a>
+			</li>
+			<li class="col-xs-4 col-md-2">
+				<a title="团队管理" href="<?php echo base_url('stuff') ?>">
+					<img src="/media/home/tuandui@3x.png">
+					团队<span class=count><?php echo $count['stuff'] ?></span>
+				</a>
+			</li>
+			<li class="col-xs-4 col-md-2">
+				<a title="门店管理" href="<?php echo base_url('branch') ?>">
+					<img src="/media/home/mendian@3x.png">
+					门店/仓库<span class=count><?php echo $count['branch'] ?></span>
+				</a>
+			</li>
+			<li class="col-xs-4 col-md-2">
+				<a title="平台活动" href="<?php echo base_url('promotion') ?>">
+					<img src="/media/home/huodong-platform@3x.png">
+					平台活动<span class=count><?php echo $count['promotion'] ?></span>
+				</a>
+			</li>
+			<li class="col-xs-4 col-md-2">
+				<a title="店内活动" href="<?php echo base_url('promotion_biz') ?>">
+					<img src="/media/home/huodong-biz@3x.png">
+					店内活动<span class=count><?php echo $count['promotion_biz'] ?></span>
+				</a>
+			</li>
+			<li class="col-xs-4 col-md-2">
+				<a title="优惠券" href="<?php echo base_url('coupon_template') ?>">
+					<img src="/media/home/coupon@3x.png">
+					优惠券<span class=count><?php echo $count['coupon_template'] ?></span>
+				</a>
+			</li>
+			<li class="col-xs-4 col-md-2">
+				<a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">
+					<img src="/media/home/combo@3x.png">
+					优惠券包<span class=count><?php echo $count['coupon_combo'] ?></span>
+				</a>
+			</li>
+			<li class="col-xs-4 col-md-2">
+				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">
+					<img src="/media/home/moban@3x.png">
+					运费模板<span class=count><?php echo $count['freight_template_biz'] ?></span>
+				</a>
+			</li>
 		</ul>
 	</section>
 		<?php endif //if ($biz['status'] !== '冻结'): ?>
