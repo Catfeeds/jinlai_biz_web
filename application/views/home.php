@@ -2,11 +2,13 @@
 	section {background-color:#fff;margin-top:20px;border-radius:20px;overflow:hidden;}
 		section li {overflow:hidden;border-right:2px solid #efefef;text-align:center;}
 			section li img {width:60px;height:60px;margin:0 auto 18px;}
-			section li>a {display:block;width:100%;height:100%;}
+			section li>a {display:block;width:100%;height:100%;line-height:1;}
+		span.count:before {content:"(";}
+		span.count:after {content:")";}
 
 	#biz-info {text-align:center;padding:60px 0 70px;position:relative;}
-		#biz-status {position:absolute;top:30px;right:30px;}
-		#biz-logo {width:120px;height:120px;border:1px solid #efefef;border-radius:50%;display:table-cell;vertical-align:middle;overflow:hidden;}
+		#biz-status {color:#9fa0a0;position:absolute;top:30px;right:30px;}
+		#biz-logo {background-color:#fff;width:150px;height:150px;border:2px solid #efefef;border-radius:50%;display:table-cell;vertical-align:middle;overflow:hidden;}
 		#biz-info h2 {font-size:30px;margin:30px 0;}
 		#biz-info p {font-size:26px;line-height:1;margin:0;}
 
@@ -16,7 +18,7 @@
 	#function-list {margin-bottom:60px;}
 		#function-list li {margin-top:-2px;border-top:2px solid #efefef;}
 			#function-list li:nth-child(3n+0) {border-right:0;}
-		#function-list a {line-height:1;padding:45px 0 50px;}
+		#function-list a {padding:45px 0 50px;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -114,21 +116,25 @@
 	<section id=frequent-list>
 		<ul class=row>
 			<li class="col-xs-3 col-md-2">
-				<a title="订单管理" href="<?php echo base_url('order') ?>">
-					订单<span class=count><?php echo $count['order'] ?></span><br>(测试中)
+				<a title="待接单订单" href="<?php echo base_url('order?status=待接单') ?>">
+					<img src="/media/home/daijiedan@3x.png">
+					待接单<span class=count><?php echo $count['order'] ?></span>
 				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
+				<a title="待发货订单" href="<?php echo base_url('order?status=待发货') ?>">
+					<img src="/media/home/daifahuo@3x.png">
+					待发货<span class=count><?php echo $count['order'] ?></span>
+				</a>
+			</li>
+			<li class="col-xs-3 col-md-2">
+				<img src="/media/home/shouhou@3x.png">
 				<a title="退款处理" href="<?php echo base_url('refund') ?>">退款/售后</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
+				<img src="/media/home/pingjia@3x.png">
 				<a title="商品评价" href="<?php echo base_url('comment_item') ?>">商品评价</a>
 			</li>
-			<!--
-			<li class="col-xs-3 col-md-2">
-				<a title="订单评价" href="<?php echo base_url('comment_order') ?>">订单评价</a>
-			</li>
-			-->
 		</ul>
 	</section>
 
@@ -171,6 +177,12 @@
 				</a>
 			</li>
 			<li class="col-xs-4 col-md-2">
+				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">
+					<img src="/media/home/moban@3x.png">
+					运费模板<span class=count><?php echo $count['freight_template_biz'] ?></span>
+				</a>
+			</li>
+			<li class="col-xs-4 col-md-2">
 				<a title="优惠券" href="<?php echo base_url('coupon_template') ?>">
 					<img src="/media/home/coupon@3x.png">
 					优惠券<span class=count><?php echo $count['coupon_template'] ?></span>
@@ -180,12 +192,6 @@
 				<a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">
 					<img src="/media/home/combo@3x.png">
 					优惠券包<span class=count><?php echo $count['coupon_combo'] ?></span>
-				</a>
-			</li>
-			<li class="col-xs-4 col-md-2">
-				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">
-					<img src="/media/home/moban@3x.png">
-					运费模板<span class=count><?php echo $count['freight_template_biz'] ?></span>
 				</a>
 			</li>
 		</ul>

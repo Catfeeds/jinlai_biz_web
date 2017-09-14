@@ -56,9 +56,18 @@ noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid r
 /* 主导航栏 */
 #nav-main {text-align:center;background-color:#fff;position:fixed;bottom:0;left:0;right:0;height:98px;z-index:101;}
 	#nav-main ul {height:100%;}
-		#nav-main li {width:25%;height:100%;display:inline-block;}
-			#nav-main a {width:100%;height:100%;display:block;}
-				#nav-main a.active {background-color:#aaa;}
+		#nav-main li {background:url('/media/nav-main/home@3x.png') no-repeat center 10px;background-size:44px 44px;width:25%;height:100%;display:inline-block;}
+			#nav-main .home {background-image:url('/media/nav-main/home@3x.png');}
+				#nav-main .home.active {background-image:url('/media/nav-main/home-active@3x.png');}
+			#nav-main .order {background-image:url('/media/nav-main/order@3x.png');}
+				#nav-main .order.active {background-image:url('/media/nav-main/order-active@3x.png');}
+			#nav-main .item {background-image:url('/media/nav-main/item@3x.png');}
+				#nav-main .item.active {background-image:url('/media/nav-main/item-active@3x.png');}
+			#nav-main .mine {background-image:url('/media/nav-main/mine@3x.png');}
+				#nav-main .mine.active {background-image:url('/media/nav-main/mine-active@3x.png');}
+					
+			#nav-main a {font-size:30px;color:#666464;width:100%;height:100%;line-height:1;padding:59px 0 12px;display:block;}
+				#nav-main .active a {color:#ff3649;}
 
 #breadcrumb {display:none;}
 
