@@ -1,12 +1,34 @@
 <style>
+	#item-list>li {background-color:#fff;margin-top:20px;border-radius:12px;padding:20px 20px 0 20px;position:relative;}
 
+		#item-list>li>p:first-child {margin-bottom:12px;}
+		.item-status {position:absolute;top:20px;right:20px;}
+
+		.order-figures {color:#c9caca;margin:50px -20px 0;}
+			.order-figures>li {font-size:22px;border-right:1px solid #c9caca;padding:0 42px;}
+				.order-figures>li:last-child {border:0;}
+			.order-figures span {font-size:30px;color:#3e3a39;margin-top:12px;margin-left:-5px;display:block;}
+				.order-figures li:first-child>span {color:#c9caca;}
+
+		.item-actions {height:80px;line-height:80px;margin-top:46px;border-top:1px solid #c9caca;}
+			.item-actions.reprice, .item-actions.accept, .item-actions.deliver {background:url('/media/order/daifukuan@3x.png') no-repeat center bottom;height:94px;background-size:710px 26px;margin-left:-20px;margin-right:-20px;padding:0 20px;}
+			.item-actions.accept {background-image:url('/media/order/daijiedan@3x.png');}
+			.item-actions.deliver {background-image:url('/media/order/daifahuo@3x.png');}
+			.item-actions>* {float:left;display:inline;}
+				.item-actions>span {width:40px;height:40px;}
+				.item-actions ul {float:right;}
+					.item-actions li {margin-left:10px;padding:14px 0;}
+						.item-actions a {color:#9fa0a0;text-align:center;width:130px;height:52px;line-height:52px;border:1px solid #9fa0a0;border-radius:26px;}
+						.reprice li:last-child a {color:#ff3649;border-color:#ff3649;}
+						.accept li:last-child a {color:#ff843c;border-color:#ff843c;}
+						.deliver li:last-child a {color:#1a6eef;border-color:#1a6eef;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
 
 	}
-	
+
 	/* 宽度在960像素以上的设备 */
 	@media only screen and (min-width:961px)
 	{
@@ -62,7 +84,7 @@
 		    </ul>
 		</div>
 
-		<a class="btn btn-warning" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
+		<a class="btn btn-default" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
 		<a class="btn btn-default" title="待发货商品订单" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
 	</div>
 	<?php endif ?>
@@ -102,59 +124,71 @@
 		</fieldset>
 		<?php endif ?>
 
-		<table class="table table-condensed table-responsive table-striped sortable">
-			<thead>
-				<tr>
-					<th>&nbsp;</th>
-					<th><?php echo $this->class_name_cn ?>ID</th>
-					<th>下单时间</th>
-					<?php
-						$thead = array_values($data_to_display);
-						foreach ($thead as $th):
-							echo '<th>' .$th. '</th>';
-						endforeach;
-					?>
-					<th>操作</th>
-				</tr>
-			</thead>
+		<ul id=item-list class=row>
+			<?php
+				foreach ($items as $item):
+					$status = $item['status'];
+			?>
+			<li>
 
-			<tbody>
-			<?php foreach ($items as $item): ?>
-				<tr>
-					<td>
+				<span class=item-status><?php echo $item['status'] ?></span>
+				<p>订单ID <?php echo $item[$this->id_name] ?></p>
+				<p>下单时间 <?php echo date('Y-m-d H:i:s', $item['time_create']) ?></p>
+
+				<ul class="order-figures row">
+					<li class="col-xs-4">小计<span>￥<?php echo $item['subtotal'] ?></span></li>
+					<li class="col-xs-4">应支付<span>￥<?php echo $item['total'] ?></span>
+					<li class="col-xs-4">已支付<span>￥<?php echo $item['total_payed'] ?></span>
+				</ul>
+
+				<?php
+					if ($status !== '已关闭'):
+						switch ($status):
+							case '待付款':
+								$action_class = 'reprice';
+								break;
+							case '待接单':
+								$action_class = 'accept';
+								break;
+							case '待发货':
+								$action_class = 'deliver';
+								break;
+							default:
+								$action_class = NULL;
+						endswitch;
+				?>
+				<div class="item-actions <?php echo $action_class ?>">
+					<span>
 						<input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
-					</td>
-					<td><?php echo $item[$this->id_name] ?></td>
-					<td><?php echo date('Y-m-d H:i:s', $item['time_create']) ?></td>
+					</span>
+
+					<ul class=horizontal>
 					<?php
-						$tr = array_keys($data_to_display);
-						foreach ($tr as $td):
-							echo '<td>' .$item[$td]. '</td>';
-						endforeach;
+					// 需要特定角色和权限进行该操作
+					if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 					?>
-					<td>
-						<ul class=list-unstyled>
-							<li><a title="查看" href="<?php echo base_url($this->view_root.'/detail?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-eye"></i> 查看</a></li>
-							<?php
-							// 需要特定角色和权限进行该操作
-							if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-							?>
-							<li><a title="备注" href="<?php echo base_url($this->class_name.'/note?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-comment"></i> 备注</a></li>
+						<li><a title="备注" href="<?php echo base_url($this->class_name.'/note?ids='.$item[$this->id_name]) ?>" target=_blank>备注</a></li>
+						<?php if ($status === '待付款'): ?>
+						<li><a title="改价" href="<?php echo base_url($this->class_name.'/reprice?ids='.$item[$this->id_name]) ?>" target=_blank>改价</a></li>
+						<?php endif ?>
 
-							<li><a title="改价" href="<?php echo base_url($this->class_name.'/reprice?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-tags"></i> 改价</a></li>
-
-							<li><a title="退单" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-reply"></i> 退单</a></li>
-
-							<li><a title="接单" href="<?php echo base_url($this->class_name.'/accept?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-share"></i> 接单</a></li>
-
-							<li><a title="发货" href="<?php echo base_url($this->class_name.'/deliver?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-truck"></i> 发货</a></li>
-							<?php endif ?>
-						</ul>
-					</td>
-				</tr>
+						<?php if ($status === '待接单'): ?>
+						<li><a title="退单" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>退单</a></li>
+						<li><a title="接单" href="<?php echo base_url($this->class_name.'/accept?ids='.$item[$this->id_name]) ?>" target=_blank>接单</a></li>
+						<?php endif ?>
+			
+						<?php if ($status === '待发货'): ?>
+						<li><a title="发货" href="<?php echo base_url($this->class_name.'/deliver?ids='.$item[$this->id_name]) ?>" target=_blank>发货</a></li>
+						<?php endif ?>
+						
+					<?php endif ?>
+					</ul>
+				</div>
+				<?php endif ?>
+			
+			</li>
 			<?php endforeach ?>
-			</tbody>
-		</table>
+		</ul>
 
 	</form>
 	<?php endif ?>

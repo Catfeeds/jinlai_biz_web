@@ -23,7 +23,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20170912">
+		<meta name=version content="revision20170915">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -126,7 +126,6 @@
 					'onMenuShareAppMessage',
 					'hideMenuItems',
 				] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-
 			});
 
 			wx.ready(function(){
@@ -212,17 +211,19 @@
 	//if ($is_wechat === FALSE):
 ?>
 <?php //endif ?>
-		<header id=header class="navbar navbar-default navbar-fixed-top" role=navigation>
+		<header id=header class="navbar navbar-fixed-top" role=navigation>
+			<a id=return href="javascript:" onclick="history.back()">
+				<i class="fa fa-chevron-left" aria-hidden=true></i>
+			</a>
+
 			<nav class=container-fluid>
 				<div class=navbar-header>
 					<h1>
-						<a id=logo class=navbar-brand title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>"><?php echo SITE_NAME ?></a>
+						<a id=logo title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>"><?php echo SITE_NAME ?></a>
 					</h1>
 					<button class=navbar-toggle data-toggle=collapse data-target=".navbar-collapse">
 						<span class=sr-only>展开/收起菜单</span>
-						<span class=icon-bar></span>
-						<span class=icon-bar></span>
-						<span class=icon-bar></span>
+						<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
 					</button>
 				</div>
 				<div class="navbar-collapse collapse">
@@ -263,7 +264,7 @@
 						<?php endif ?>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown><i class="fa fa-database" aria-hidden=true></i> 商品<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>商品<b class=caret></b></a>
 							<ul class=dropdown-menu>
 								<li><a title="店内分类列表" href="<?php echo base_url('item_category_biz') ?>">店内分类</a></li>
 								<li><a title="创建店内分类" href="<?php echo base_url('item_category_biz/create') ?>">创建店内分类</a></li>
@@ -278,7 +279,7 @@
 						</li>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown><i class="fa fa-money" aria-hidden=true></i> 订单<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>订单<b class=caret></b></a>
 							<ul class=dropdown-menu>
 								<li><a title="商品订单列表" href="<?php echo base_url('order') ?>">订单列表</a></li>
 							</ul>

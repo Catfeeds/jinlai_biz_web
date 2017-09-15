@@ -7,13 +7,13 @@
 @viewport{width:device-width;}
 
 /* Flat-UI清理 */
-h1,h2,h3 {margin:0;}
-h1 {font-size:42px;}
+h1,h2,h3 {margin:0;font-weight:400;}
+h1 {font-size:34px;}
 h2 {font-size:28px;}
 h3 {font-size:22px;}
 .login {color:#111;background:none;padding:0;margin-bottom:0;}
 
-body {color:#3e3a39;background-color:#f6f6f6;font-size:26px;z-index:100;margin-top:54px;margin-bottom:8rem;}
+body {color:#3e3a39;background-color:#f6f6f6;font-size:26px;z-index:100;margin-top:88px;margin-bottom:98px;}
 .container {width:100%;padding:0;/* 去掉BootStrap默认的左右内边距 */}
 
 th, td {text-align:center;}
@@ -23,7 +23,7 @@ ul>li>a {width:100%;height:100%;display:block;}
 
 a {font-size:26px;color:#3e3a39;text-decoration:none;/* 清理BootStrap样式 */}
 	a:hover {color:#999;}
-#maincontainer p>a {color:#16a085;padding:0 0.5rem;}
+#maincontainer p>a {color:#3e3a39;padding:0 0.5rem;}
 #content {padding:20px;}
 
 /* 修复BootStrap样式 */
@@ -36,7 +36,12 @@ a {font-size:26px;color:#3e3a39;text-decoration:none;/* 清理BootStrap样式 */
 	
 	.alert-warning {text-align:center;}
 	.btn {font-size:30px;}
-	.btn-group .btn-default {color:#333;background-color:#fff;}
+	.btn-group {border-radius:12px;}
+		.btn-group .btn-default {color:#3e3a39;background-color:#fff;}
+
+	.navbar-collapse {background-color:#fff;}
+	.navbar-toggle {height:88px;line-height:88px;margin:-88px 20px 0 0;padding:0;}
+		.navbar-toggle::before {display:none;}
 
 form * {font-size:26px;line-height:1;}
 legend {font-size:36px;border-bottom:1px solid #efefef;padding-bottom:30px;text-align:center;}
@@ -70,6 +75,12 @@ noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid r
 				#nav-main .active a {color:#ff3649;}
 
 #breadcrumb {display:none;}
+
+#header {background-color:#fff;}
+	#header h1 {text-align:center;width:100%;height:88px;line-height:88px;}
+	#logo {font-size:34px;text-align:center;}
+	#header i {font-size:40px;width:40px;height:40px;text-align:center;vertical-align:middle;}
+	#return {position:absolute;top:24px;left:20px;}
 
 #footer {text-align:center;display:none;}
 

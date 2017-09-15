@@ -62,7 +62,7 @@
 		    </ul>
 		</div>
 
-		<a class="btn btn-warning" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
+		<a class="btn btn-default" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
 		<a class="btn btn-default" title="待发货商品订单" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
 	</div>
 	<?php endif ?>
