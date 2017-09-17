@@ -143,6 +143,19 @@
 		 */
 		public function note()
 		{
+			// 检查必要参数是否已传入
+			$required_params = $this->names_edit_bulk_required;
+			foreach ($required_params as $param):
+				${$param} = $this->input->post($param);
+				if ( empty( ${$param} ) ):
+					$data['error'] = '必要的请求参数未全部传入';
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/'.$op_view, $data);
+					$this->load->view('templates/footer', $data);
+					exit();
+				endif;
+			endforeach;
+
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -193,19 +206,6 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_bulk_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) ):
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
 				// 需要存入数据库的信息
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
@@ -246,6 +246,18 @@
 		 */
 		public function reprice()
 		{
+			// 检查必要参数是否已传入
+			$required_params = $this->names_edit_bulk_required;
+			foreach ($required_params as $param):
+				${$param} = $this->input->post($param);
+				if ( empty( ${$param} ) ):
+					$data['error'] = '必要的请求参数未全部传入';
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/'.$op_view, $data);
+					$this->load->view('templates/footer', $data);
+					exit();
+				endif;
+			endforeach;
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -296,19 +308,6 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_bulk_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) ):
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
 				// 需要存入数据库的信息
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
@@ -349,6 +348,19 @@
 		 */
 		public function refuse()
 		{
+			// 检查必要参数是否已传入
+			$required_params = $this->names_edit_bulk_required;
+			foreach ($required_params as $param):
+				${$param} = $this->input->post($param);
+				if ( empty( ${$param} ) ):
+					$data['error'] = '必要的请求参数未全部传入';
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/'.$op_view, $data);
+					$this->load->view('templates/footer', $data);
+					exit();
+				endif;
+			endforeach;
+
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -398,19 +410,6 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_bulk_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) ):
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
 				// 需要存入数据库的信息
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
@@ -449,6 +448,19 @@
 		 */
 		public function accept()
 		{
+			// 检查必要参数是否已传入
+			$required_params = $this->names_edit_bulk_required;
+			foreach ($required_params as $param):
+				${$param} = $this->input->post($param);
+				if ( empty( ${$param} ) ):
+					$data['error'] = '必要的请求参数未全部传入';
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/'.$op_view, $data);
+					$this->load->view('templates/footer', $data);
+					exit();
+				endif;
+			endforeach;
+
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -498,19 +510,6 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_bulk_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) ):
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
 				// 需要存入数据库的信息
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
@@ -551,6 +550,19 @@
 		 */
 		public function deliver()
 		{
+			// 检查必要参数是否已传入
+			$required_params = $this->names_edit_bulk_required;
+			foreach ($required_params as $param):
+				${$param} = $this->input->post($param);
+				if ( empty( ${$param} ) ):
+					$data['error'] = '必要的请求参数未全部传入';
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/'.$op_view, $data);
+					$this->load->view('templates/footer', $data);
+					exit();
+				endif;
+			endforeach;
+
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -603,19 +615,6 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
-				// 检查必要参数是否已传入
-				$required_params = $this->names_edit_bulk_required;
-				foreach ($required_params as $param):
-					${$param} = $this->input->post($param);
-					if ( empty( ${$param} ) ):
-						$data['error'] = '必要的请求参数未全部传入';
-						$this->load->view('templates/header', $data);
-						$this->load->view($this->view_root.'/'.$op_view, $data);
-						$this->load->view('templates/footer', $data);
-						exit();
-					endif;
-				endforeach;
-
 				// 需要存入数据库的信息
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,

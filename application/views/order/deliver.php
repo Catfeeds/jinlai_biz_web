@@ -101,8 +101,8 @@
 
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-restore form-horizontal', 'role' => 'form');
-		echo form_open($this->class_name.'/restore', $attributes);
+		$attributes = array('class' => 'form-'.$this->class_name.'-deliver form-horizontal', 'role' => 'form');
+		echo form_open($this->class_name.'/deliver', $attributes);
 	?>
 		<fieldset>
 			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">

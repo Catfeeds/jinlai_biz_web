@@ -231,7 +231,7 @@
 						<li><a title="回到首页" href="<?php echo base_url() ?>">首页</a></li>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>我的<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>我的 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
 								<li><a title="个人中心" href="<?php echo base_url('user/edit') ?>">我的资料</a></li>
 								<li><a title="密码修改" href="<?php echo base_url('password_change') ?>">密码修改</a></li>
@@ -244,7 +244,7 @@
 				<?php if ( !empty($this->session->biz_id) ): ?>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>商家<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>商家 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
 								<li><a title="我的店铺" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">店铺资料</a></li>
 							</ul>
@@ -255,7 +255,7 @@
 						if ($this->session->role === '管理员' && $this->session->level > 10):
 						?>
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>员工<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>员工 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
 								<li><a title="员工列表" href="<?php echo base_url('stuff') ?>">员工列表</a></li>
 								<li><a title="创建员工" href="<?php echo base_url('stuff/create') ?>">创建员工</a></li>
@@ -264,7 +264,7 @@
 						<?php endif ?>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>商品<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>商品 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
 								<li><a title="店内分类列表" href="<?php echo base_url('item_category_biz') ?>">店内分类</a></li>
 								<li><a title="创建店内分类" href="<?php echo base_url('item_category_biz/create') ?>">创建店内分类</a></li>
@@ -274,19 +274,19 @@
 								<li role="separator" class="divider"></li>
 								<li><a title="商品列表" href="<?php echo base_url('item') ?>">商品列表</a></li>
 								<li><a title="创建商品" href="<?php echo base_url('item/create') ?>">创建商品</a></li>
-								<li><a title="快速创建" href="<?php echo base_url('item/create_quick') ?>">快速创建 <i class="fa fa-bolt" aria-hidden="true"></i></a></li>
+								<li><a title="快速创建" href="<?php echo base_url('item/create_quick') ?>">快速创建</a></li>
 							</ul>
 						</li>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>订单<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>订单 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
 								<li><a title="商品订单列表" href="<?php echo base_url('order') ?>">订单列表</a></li>
 							</ul>
 						</li>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>营销活动<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>营销活动 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
 								<li><a title="店内活动列表" href="<?php echo base_url('promotion_biz') ?>">店内活动列表</a></li>
 								<li><a title="创建店内活动" href="<?php echo base_url('promotion_biz/create') ?>">创建店内活动</a></li>
@@ -297,7 +297,7 @@
 						</li>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>优惠券<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>优惠券 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
 								<li><a title="优惠券模板" href="<?php echo base_url('coupon_template') ?>">优惠券模板</a></li>
 								<li><a title="创建优惠券模板" href="<?php echo base_url('coupon_template/create') ?>">创建优惠券模板</a></li>
