@@ -187,6 +187,14 @@
 				</div>
 			</div>
 			<div class=form-group>
+				<label for=exempt_subtotal class="col-sm-2 control-label">包邮商品小计（<span class=type-actual></span>）</label>
+				<div class=col-sm-10>
+					<input class=form-control name=exempt_subtotal type=number step=0.01 max=99999.99 value="<?php echo set_value('exempt_subtotal') ?>" placeholder="最高99999.99">
+					<p class=help-block>达到该商品小计后全单免邮费</p>
+				</div>
+			</div>
+
+			<div class=form-group>
 				<label for=max_amount class="col-sm-2 control-label">每单最高配送量（<span class=type-actual></span>）</label>
 				<div class=col-sm-10>
 					<input class=form-control name=max_amount type=number step=1 max=9999 value="<?php echo set_value('max_amount') ?>" placeholder="最高9999">

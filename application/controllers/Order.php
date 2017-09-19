@@ -4,9 +4,6 @@
 	/**
 	 * Order 商品订单类
 	 *
-	 * 以我的XX列表、列表、详情、创建、单行编辑、单/多行编辑（删除、恢复）等功能提供了常见功能的APP示例代码
-	 * CodeIgniter官方网站 https://www.codeigniter.com/user_guide/
-	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
 	 * @copyright ICBG <www.bingshankeji.com>
@@ -68,7 +65,7 @@
 		{
 			// 页面信息
 			$data = array(
-				'title' => $this->class_name_cn. '列表',
+				'title' => '所有'. $this->class_name_cn,
 				'class' => $this->class_name.' index',
 			);
 
@@ -82,7 +79,6 @@
 
 			// 排序条件
 			$order_by = NULL;
-			//$order_by['name'] = 'value';
 
 			// 从API服务器获取相应列表信息
 			$params = $condition;
@@ -93,9 +89,11 @@
 			else:
 				$data['error'] = $result['content']['error']['message'];
 			endif;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
+			
+			// 根据状态筛选值确定页面标题
+			if ( !empty($condition['status'] ) ):
+				$data['title'] = $condition['status']. '订单';
+			endif;
 
 			// 输出视图
 			$this->load->view('templates/header', $data);

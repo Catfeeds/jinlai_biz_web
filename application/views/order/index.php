@@ -1,4 +1,6 @@
 <style>
+	#content {min-height:600px;}
+	
 	#item-list>li {background-color:#fff;margin-top:20px;border-radius:12px;padding:20px 20px 0 20px;position:relative;}
 
 		#item-list>li>p:first-child {margin-bottom:12px;}

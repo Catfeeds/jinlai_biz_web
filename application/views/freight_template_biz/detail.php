@@ -124,11 +124,11 @@
 			<dt>最晚发货时间</dt>
 			<dd><?php echo $options[ $item['time_latest_deliver'] ] ?></dd>
 		</dl>
-		
+
 		<p class="bg-info text-info text-center">计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）</p>
 		<p>
 			<span class=type-actual></span>
-			前<em><?php echo $item['start_amount'] ?></em>单位以内<em>￥<?php echo $item['fee_start'] ?></em>，超出后每单位<em>￥<?php echo $item['fee_unit'] ?></em>；每单最高<em><?php echo $item['max_amount'] ?></em>单位
+			前<em><?php echo $item['start_amount'] ?></em>单位以内<em>￥<?php echo $item['fee_start'] ?></em>，超出后每单位<em>￥<?php echo $item['fee_unit'] ?></em>；每单最高<em><?php echo $item['max_amount'] ?></em>单位，满<?php echo $item['exempt_amount'] ?>单位包邮，满<?php echo $item['exempt_subtotal'] ?>元包邮。
 		</p>
 	</div>
 

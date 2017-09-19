@@ -14,14 +14,14 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'biz_id', 'name', 'type', 'time_valid_from', 'time_valid_end', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'max_amount', 'start_amount', 'fee_start', 'fee_unit', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'biz_id', 'name', 'type', 'time_valid_from', 'time_valid_end', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'exempt_subtotal', 'max_amount', 'start_amount', 'fee_start', 'fee_unit', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
 		/**
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'name', 'time_valid_from', 'time_valid_end', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
+			'name', 'time_valid_from', 'time_valid_end', 'period_valid', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'exempt_subtotal', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
 		);
 
 		/**
@@ -30,13 +30,6 @@
 		protected $names_edit_required = array(
 			'id',
 			'name', 'type',
-		);
-		
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
 		);
 
 		/**
@@ -66,7 +59,7 @@
 				'type' => '类型',
 			);
 		}
-		
+
 		/**
 		 * 截止3.1.3为止，CI_Controller类无析构函数，所以无需继承相应方法
 		 */
@@ -229,11 +222,12 @@
 			$this->form_validation->set_rules('expire_refund_rate', '过期退款比例', 'trim|less_than_equal_to[1.00]');
 			$this->form_validation->set_rules('type_actual', '运费计算方式', 'trim');
 			$this->form_validation->set_rules('time_latest_deliver', '最晚发货时间', 'trim');
-			$this->form_validation->set_rules('exempt_amount', '包邮量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('max_amount', '每单最高配送量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('start_amount', '起始量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('fee_start', '起始量运费', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('fee_unit', '超出后运费', 'trim|less_than_equal_to[9999]');
+			$this->form_validation->set_rules('exempt_amount', '包邮量', 'trim|less_than_equal_to[9999]');
+			$this->form_validation->set_rules('exempt_subtotal', '包邮小计', 'trim|less_than_equal_to[99999.99]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -254,7 +248,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'type', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
+					'name', 'type', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'exempt_subtotal', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -332,11 +326,12 @@
 			$this->form_validation->set_rules('expire_refund_rate', '过期退款比例', 'trim');
 			$this->form_validation->set_rules('type_actual', '运费计算方式', 'trim');
 			$this->form_validation->set_rules('time_latest_deliver', '最晚发货时间', 'trim');
-			$this->form_validation->set_rules('exempt_amount', '包邮量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('max_amount', '每单最高配送量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('start_amount', '起始量', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('fee_start', '起始量运费', 'trim|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('fee_unit', '超出后运费', 'trim|less_than_equal_to[9999]');
+			$this->form_validation->set_rules('exempt_amount', '包邮量', 'trim|less_than_equal_to[9999]');
+			$this->form_validation->set_rules('exempt_subtotal', '包邮小计', 'trim|less_than_equal_to[99999.99]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -357,7 +352,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
+					'name', 'expire_refund_rate', 'type_actual', 'time_latest_deliver', 'exempt_amount', 'exempt_subtotal', 'max_amount', 'start_amount', 'fee_start', 'fee_unit',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
