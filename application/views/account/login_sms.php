@@ -1,6 +1,7 @@
 <style>
 	#content {padding-top:2rem;}
 	form {padding-top:2rem;}
+	fieldset {padding:0;}
 
 	#captcha-image {padding:0;min-width:100px;}
 		#captcha-image img {width:100%;height:100%;}
@@ -27,7 +28,7 @@
 <script src="/js/form.js"></script>
 
 <div id=content class=container>
-	<section class="row bg-info text-info">
+	<section class="bg-info text-info">
 		<p><em>RC0.9.2</em>当前系统为beta/RC版本，仅供技术研究及技术开发；样式将随时变动，布局将随时更改，数据将不定时清零、重置、非主动性变更；任何公告、订单、充值均无实际效力，任何信息均不构成合同要约或其它任何责任。</p>
 	</section>
 
@@ -78,7 +79,7 @@
 		
 			<div class=row>
 			    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
-					<button class="btn btn-primary btn-lg btn-block" type=submit role=button>确定</button>
+					<button class="btn btn-primary btn-block" type=submit role=button>确定</button>
 			    </div>
 			</div>
 

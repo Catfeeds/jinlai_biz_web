@@ -28,7 +28,7 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-create form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
-		<p class=help-block>必填项以“※”符号标示</p>
+		<p class=help-block>必填项以“*”符号标示</p>
 
 		<fieldset>
 			<legend>基本资料</legend>
@@ -42,7 +42,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">商家名称※</label>
+				<label for=name class="col-sm-2 control-label">商家名称 *</label>
 				<div class=col-sm-10>
 					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="请与营业执照保持一致" required>
 					<p class=help-block>只支持中国大陆工商局或市场监督管理局登记的企业。请填写工商营业执照上的企业全称，该名称将作为后续所有费用的发票抬头。</p>
@@ -50,7 +50,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=brief_name class="col-sm-2 control-label">简称※</label>
+				<label for=brief_name class="col-sm-2 control-label">简称 *</label>
 				<div class=col-sm-10>
 					<input class=form-control name=brief_name type=text value="<?php echo set_value('brief_name') ?>" placeholder="例如“SELECTED”" required>
 				</div>
@@ -64,7 +64,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=tel_public class="col-sm-2 control-label">消费者服务电话※</label>
+				<label for=tel_public class="col-sm-2 control-label">消费者服务电话 *</label>
 				<div class=col-sm-10>
 					<input class=form-control name=tel_public type=tel value="<?php echo set_value('tel_public') ?>" placeholder="400、800、手机号、带区号的固定电话号码均可" required>
 					<p class=help-block>即客服电话，不要加空格或其它符号，固定电话请填写区号</p>
@@ -76,21 +76,21 @@
 			<legend>资质信息</legend>
 
 			<div class=form-group>
-				<label for=code_license class="col-sm-2 control-label">工商注册号※</label>
+				<label for=code_license class="col-sm-2 control-label">工商注册号 *</label>
 				<div class=col-sm-10>
 					<input class=form-control name=code_license type=text value="<?php echo set_value('code_license') ?>" placeholder="如为三证合一，请填写统一社会信用代码" required>
 					<p class=help-block>请填写营业执照上的15位工商注册号；或三证合一后18位的统一社会信用代码。</p>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=fullname_owner class="col-sm-2 control-label">法人姓名※</label>
+				<label for=fullname_owner class="col-sm-2 control-label">法人姓名 *</label>
 				<div class=col-sm-10>
 					<input class=form-control name=fullname_owner type=text size=15 value="<?php echo set_value('fullname_owner') ?>" placeholder="需与身份证一致" required>
 					<p class=help-block>按照营业执照上填写。如果属于分公司则填写工商营业执照上明确的负责人，个体工商户请填写经营者姓名，合伙企业请填写合伙人姓名，个人独资企业请填写投资人姓名，企业法人的非法人分支机构填写负责人姓名。 </p>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号※</label>
+				<label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号 *</label>
 				<div class=col-sm-10>
 					<input class=form-control name=code_ssn_owner type=text value="<?php echo set_value('code_ssn_owner') ?>" placeholder="请输入18位有效身份证号" required>
 				</div>

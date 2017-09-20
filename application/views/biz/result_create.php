@@ -1,5 +1,5 @@
 <style>
-
+	section {margin:60px 0 100px;padding:0 110px;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -32,11 +32,14 @@
 	<h2>申请已提交</h2>
 	<?php if ( !empty($content) ): ?>
 	<section>
-		<?php echo $content ?>
+		<p><?php echo $content ?></p>
 		<!--<p>若您填写的财务信息真实有效，我们将在3个工作日内向该账户汇入一笔1元以下的款项进行资质验证，请在收到打款通知后在验证页面填写打款数额进行商家身份验证。</p>-->
 	</section>
 	<?php endif ?>
 
 	<ul class=row>
-		<li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-default btn-lg" title="返回首页" href="<?php echo base_url() ?>">返回首页</a></li>
+		<li class="col-xs-12 col-sm-6 col-sm-3">
+			<a class="btn btn-primary" title="返回首页" href="<?php echo base_url() ?>">返回首页</a>
+		</li>
+	</ul>
 </div>

@@ -5,6 +5,17 @@
 			section li>a {display:block;width:100%;height:100%;line-height:1;}
 		span.count:before {content:"(";}
 		span.count:after {content:")";}
+		
+	#recruiting-tempt {margin-top:20px;}
+		#recruiting-tempt figure {border-radius:12px;overflow:hidden;}
+		#recruiting-tempt p {font-size:30px;margin-top:30px;text-align:center;}
+	#prerequisite {background-color:#fff;margin-top:50px;border-radius:20px;padding:40px 20px 50px;overflow:hidden;}
+		#prerequisite p {font-size:30px;font-weight:bold;}
+			#prerequisite p:last-child {} {margin-top:40px;}
+		#prerequisite ul {margin-top:50px;}
+			#prerequisite li {font-size:30px;margin-bottom:30px;}
+				#prerequisite li:last-child {margin-bottom:0;}
+	#to_admission {margin:110px 0 80px;}
 
 	#biz-info {text-align:center;padding:60px 0 70px;position:relative;}
 		#biz-status {color:#9fa0a0;position:absolute;top:30px;right:30px;}
@@ -42,17 +53,14 @@
 <div id=content class=container>
 	<?php if ( empty($this->session->biz_id) ): ?>
 	<div id=recruiting-tempt>
-		<p class=help-block>这一部分将展示简单的平台介绍和招商信息，例如：</p>
-		<section>
-			<figure>
-				<img alt="进来商家招商中" src="<?php echo base_url('/media/home/recruiting.jpg') ?>">
-			</figure>
-			<p class="text-center">加入「进来」，让首家品控网购平台上最有消费能力的消费者在你店里疯狂买买买！</p>
-		</section>
+		<figure>
+			<img alt="进来商家招商中" src="<?php echo base_url('/media/home/recruiting.jpg') ?>">
+		</figure>
+		<p>加入「进来」，让首家品控网购平台上最有消费能力的消费者在你店里疯狂买买买！</p>
 	</div>
 
-	<div id=prerequisite class=well>
-		<p class=helper-block>准备好以下材料即可开始入驻申请：</p>
+	<div id=prerequisite>
+		<p>准备好以下材料即可开始入驻申请：</p>
 		<ul>
 			<li>营业执照影印件（彩色原件的扫描件或数码照，下同）</li>
 			<li>法人身份证影印件</li>
@@ -66,7 +74,7 @@
 		</ul>
 	</div>
 
-	<a title="创建商家" class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('biz/create') ?>">准备好了</a>
+	<a id=to_admission title="创建商家" class="btn btn-primary btn-block" href="<?php echo base_url('biz/create') ?>">准备好了</a>
 
 	<?php elseif ( empty($biz) ): ?>
 	<p>员工关系状态异常，请尝试重新登录</p>
