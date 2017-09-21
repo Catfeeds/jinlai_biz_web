@@ -1,5 +1,5 @@
 <style>
-	#content {min-height:600px;}
+	#content {min-height:670px;}
 	
 	#item-list>li {background-color:#fff;margin-top:20px;border-radius:12px;padding:20px 20px 0 20px;position:relative;}
 
@@ -86,8 +86,8 @@
 		    </ul>
 		</div>
 
-		<a class="btn btn-default" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
-		<a class="btn btn-default" title="待发货商品订单" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
+		<a class="btn <?php echo $this->input->get('status') === '待接单'? 'btn-primary': 'btn-default' ?>" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
+		<a class="btn <?php echo $this->input->get('status') === '待发货'? 'btn-primary': 'btn-default' ?>" title="待发货商品订单" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
 	</div>
 	<?php endif ?>
 

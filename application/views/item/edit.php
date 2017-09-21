@@ -20,13 +20,8 @@
 	}
 </style>
 
-<?php
-	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
-	// 在iOS设备上使用原生日期选择器
-	if ( ! $is_ios ):
-?>
-<link href="/css/datepicker.min.css" rel="stylesheet">
-<script src="/js/datepicker.min.js"></script>
+<link href="<?php echo CDN_URL ?>css/datepicker.min.css" rel="stylesheet">
+<script src="<?php echo CDN_URL ?>js/datepicker.min.js"></script>
 <script>
 	$(function(){
 		// 初始化日期选择器
@@ -41,7 +36,6 @@
 		)
 	});
 </script>
-<?php endif ?>
 
 <base href="<?php echo $this->media_root ?>">
 
@@ -75,9 +69,9 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
-		<fieldset>
-			<p class=help-block>必填项以“※”符号标示</p>
+		<p class=help-block>必填项以“※”符号标示</p>
 
+		<fieldset>
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>
@@ -89,11 +83,11 @@
 			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">系统分类</label>
 				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $category['name'] ?></p>
+					<p class=form-control-static><?php echo $category['name'] ?></p>
 					<p class=help-block>系统分类仅可在创建商品时指定</p>
 				</div>
 			</div>
-			
+
 			<?php if ( !empty($biz_categories) ): ?>
 			<div class=form-group>
 				<label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
@@ -105,7 +99,7 @@
 							$options = $biz_categories;
 							foreach ($options as $option):
 						?>
-						<option value="<?php echo $option['category_id'] ?>" <?php if ($option['category_id'] === $item['category_id']) echo 'selected'; ?>><?php echo $option['name'] ?></option>
+						<option value="<?php echo $option['category_id'] ?>" <?php if ($option['category_id'] === $item['category_biz_id']) echo 'selected'; ?>><?php echo $option['name'] ?></option>
 						<?php endforeach ?>
 					</select>
 				</div>

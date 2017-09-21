@@ -20,13 +20,8 @@
 	}
 </style>
 
-<?php
-	$is_ios = strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')? TRUE: FALSE;
-	// 在iOS设备上使用原生日期选择器
-	if ( ! $is_ios ):
-?>
-<link href="/css/datepicker.min.css" rel="stylesheet">
-<script src="/js/datepicker.min.js"></script>
+<link href="<?php echo CDN_URL ?>css/datepicker.min.css" rel="stylesheet">
+<script src="<?php echo CDN_URL ?>js/datepicker.min.js"></script>
 <script>
 	$(function(){
 		// 初始化日期选择器
@@ -41,7 +36,6 @@
 		)
 	});
 </script>
-<?php endif ?>
 
 <base href="<?php echo $this->media_root ?>">
 

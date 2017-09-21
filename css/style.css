@@ -42,9 +42,18 @@ a {font-size:26px;color:#3e3a39;text-decoration:none;/* 清理BootStrap样式 */
 	.btn-group {border-radius:12px;margin:20px 0;}
 		.btn-group .btn-default {color:#3e3a39;background-color:#fff;}
 
-	#content .btn-group:first-of-type * {color:#3e3a39;background-color:#fff;font-weight:bold;position:relative;}
-		#content .btn-group:first-of-type .btn-primary {color:#ff3649;}
-		#content .btn-group:first-of-type .btn-primary:after {content:"";width:60%;border-bottom:4px solid #ff3649;position:absolute;bottom:0;left:20%;right:20%;}
+	#content .btn-group:first-of-type {}
+		#content .btn-group:first-of-type * {color:#3e3a39;background-color:#fff;font-weight:bold;}
+			#content .btn-group:first-of-type li {position:relative;}
+			#content .btn-group:first-of-type .btn {line-height:80px;border-radius:0;padding:0;}
+				#content>.btn-group:first-of-type .btn:first-child {border-top-left-radius:12px;border-bottom-left-radius:12px;}
+				#content>.btn-group:first-of-type .btn:last-child {border-top-right-radius:12px;border-bottom-right-radius:12px;}
+			#content .btn-group:first-of-type .btn-primary {color:#ff3649;}
+				#content .btn-group:first-of-type .btn-primary:after {content:"";width:60%;border-bottom:4px solid #ff3649;position:absolute;bottom:0;left:20%;right:20%;}
+			#content .btn-group:first-of-type .dropdown-menu {border-radius:12px;overflow:hidden;}
+				#content .btn-group:first-of-type .dropdown-menu .btn {border-radius:0;}
+				#content .btn-group:first-of-type .dropdown-menu .btn-primary {color:#fff;background-color:#ff3649;}
+					#content .btn-group:first-of-type .dropdown-menu .btn-primary:after {content:none;}
 
 	.navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse {max-height:100%;}
 	.navbar-collapse {background-color:#fff;position:fixed;left:0;right:0;top:88px;bottom:98px;}
@@ -99,6 +108,25 @@ noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid r
 	#return {position:absolute;top:24px;left:20px;}
 
 #footer {text-align:center;display:none;}
+
+/* 特定组件样式 */
+/*修复因为body的padding-top:50px;引起的位置异常*/
+.datepickers-container {top:-170px !important;left:-20px !important;}
+	.datepickers-container * {font-size:32px;}
+	.datepickers-container>.datepicker {width:710px;}
+	.datepicker--nav {background-color:#e9eaf0;height:136px;padding:0 40px;}
+	.datepicker--content {padding:0;}
+		.datepicker--days.datepicker--body {padding:44px 40px;}
+		.datepicker--content .datepicker--days-names {margin:0 0 40px;line-height:1;}
+			.datepicker--days-names .datepicker--day-name {color:#91d9ff;font-size:28px;}
+		.datepicker--cells-days .datepicker--cell-day {color:#4c5373;font-size:32px;width:76px;height:76px;line-height:76px;margin:0 14px 14px 0;border:1px solid #cdd0dd;text-align:center;display:inline-block;}
+		.datepicker--cells-days .datepicker--cell-day:nth-of-type(7n+0) {margin-right:0;}
+			.datepicker--cell.datepicker--cell-day.-disabled- {color:#f3f4f7;border-color:#f3f4f7;}
+			.datepicker--cell.datepicker--cell-day.-current- {color:#fff;background-color:#ff3649;border-color:#ff3649;}
+		.datepicker--time-current {margin-left:40px !important;}
+		.datepicker--time-sliders {margin-right:40px !important;}
+		.datepicker--time-current-hours, .datepicker--time-current-minutes {font-size:32px !important;}
+		.datepicker--time-row {height:64px !important;}
 
 /* 宽度在750像素以上的设备 */
 @media only screen and (min-width:751px)

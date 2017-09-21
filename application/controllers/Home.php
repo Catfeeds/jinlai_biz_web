@@ -4,7 +4,7 @@
 	/**
 	 * Home 类
 	 *
-	 * 首页的示例代码示例代码
+	 * 首页的示例代码
 	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
@@ -19,12 +19,12 @@
 			
 			// 未登录用户转到登录页
 			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
-            
+
             // 向类属性赋值
             $this->class_name = strtolower(__CLASS__);
-            $this->class_name_cn = '类名'; // 改这里……
-            $this->table_name = 'table'; // 和这里……
-            $this->id_name = 'table_id';  // 还有这里，OK，这就可以了
+            $this->class_name_cn = ''; // 改这里……
+            $this->table_name = ''; // 和这里……
+            $this->id_name = '';  // 还有这里，OK，这就可以了
             $this->view_root = $this->class_name;
         }
 
@@ -33,7 +33,7 @@
 		{
 			// 页面信息
 			$data = array(
-				'title' => NULL, // 直接使用默认标题
+				'title' => '进来商家中心', // 页面标题
 				'class' => $this->class_name, // 页面body标签的class属性值
 			);
 
@@ -54,6 +54,9 @@
 			$data['count'] = array(
 				'item' => $this->count_table('item'),
 				'order' => $this->count_table('order'),
+				'order_pay' => $this->count_table('order', array('status' => '待接单')),
+				'order_confirm' => $this->count_table('order', array('status' => '待发货')),
+
 				'item_category_biz' => $this->count_table('item_category_biz'),
 				'freight_template_biz' => $this->count_table('freight_template_biz'),
 				'stuff' => $this->count_table('stuff'),
@@ -63,7 +66,6 @@
 				'promotion_biz' => $this->count_table('promotion_biz'),
 				'coupon_template' => $this->count_table('coupon_template'),
 				'coupon_combo' => $this->count_table('coupon_combo'),
-				
 
 				// 以下功能开通后可取消注释，并在视图文件中添加相应DOM
 				/*
@@ -78,8 +80,9 @@
 			$this->load->view('home', $data);
 			$this->load->view('templates/nav-main', $data);
 			$this->load->view('templates/footer', $data);
-		}
-	}
+		} // end index
+
+	} // end class Home
 
 /* End of file Home.php */
 /* Location: ./application/controllers/Home.php */

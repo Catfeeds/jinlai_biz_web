@@ -8,7 +8,7 @@
 	$is_android = strpos($user_agent, 'Android')? TRUE: FALSE;
 
 	// 生成SEO相关变量，一般为页面特定信息与在config/config.php中设置的站点通用信息拼接
-	$title = isset($title)? $title.' - '.SITE_NAME: SITE_NAME.' - '.SITE_SLOGAN;
+	$title = isset($title)? $title: SITE_NAME.' - '.SITE_SLOGAN;
 	$keywords = isset($keywords)? $keywords.',': NULL;
 	$keywords .= SITE_KEYWORDS;
 	$description = isset($description)? $description: NULL;
@@ -23,7 +23,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20170919">
+		<meta name=version content="revision20170921">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -180,7 +180,7 @@
 
 		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/reset.css">
 		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>bootstrap/css/bootstrap.min.css">
-		<link rel=stylesheet media=all href="https://cdn.key2all.com/flat-ui/css/flat-ui.min.css">
+		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/flat-ui.min.css">
 		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>font-awesome/css/font-awesome.min.css">
 		<link rel=stylesheet media=all href="/css/style.css">
 
@@ -219,7 +219,7 @@
 			<nav class=container-fluid>
 				<div class=navbar-header>
 					<h1>
-						<a id=logo title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>"><?php echo SITE_NAME ?></a>
+						<a id=logo class=ellipsis title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>"><?php echo $title ?></a>
 					</h1>
 					<button class=navbar-toggle data-toggle=collapse data-target=".navbar-collapse">
 						<span class=sr-only>展开/收起菜单</span>

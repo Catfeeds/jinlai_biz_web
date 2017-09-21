@@ -720,7 +720,7 @@
 			else:
 				$data['item'] = NULL;
 			endif;
-			
+
 			return $data['item'];
 		}
 
