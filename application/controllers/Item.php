@@ -98,7 +98,7 @@
 				'item' => $this->count_table('item'),
 				'biz_freight_templates' => $this->count_table('freight_template_biz'),
 			);
-			
+
 			// 若存在商品，则获取商品列表
 			if ($data['count']['item'] !== 0):
 				// 筛选条件
@@ -143,6 +143,7 @@
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
 			if ( !empty($id) ):
 				$params['id'] = $id;
+				$params['biz_id'] = $this->session->biz_id;
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -504,7 +505,7 @@
 			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后，亦不可早于预订上架时间（若有）');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
-			
+
 			// 从API服务器获取相应详情信息
 			$params['id'] = $id;
 			$params['biz_id'] = $this->session->biz_id;
@@ -541,6 +542,7 @@
 				// 需要编辑的数据；逐一赋值需特别处理的字段
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
+					'biz_id' => $this->session->biz_id,
 					'id' => $id,
 					'time_to_publish' => strtotime( substr($this->input->post('time_to_publish'), 0, 16) .':00' ),
 					'time_to_suspend' => strtotime( substr($this->input->post('time_to_suspend'), 0, 16) .':00' ),

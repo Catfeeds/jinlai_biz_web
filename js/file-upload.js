@@ -14,17 +14,10 @@ var api_url = '//biz.517ybang.com/ajaxupload?target=';
 // 最大文件数量，默认为4
 var max_count = 4;
 
-// 预览区主容器样式
-var css_preview_wrapper =
-{
-	'clear' : 'both',
-	'background-color' : '#eee',
-	'padding' : '12px 15px',
-	'border-radius' : '6px'
-};
-
 /* 从此处起请谨慎修改 */
 $(function(){
+	$('input[type=file]').after( $('<div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>') );
+
 	// 文件上传主处理方法
 	$('.file-upload').click(function(){
 		// 检查当前浏览器是否支持AJAX文件上传
@@ -138,7 +131,7 @@ $(function(){
 
 			// 初始化预览区
 			var file_previewer = button.siblings('.upload_preview');
-			file_previewer.html('').css( css_preview_wrapper );
+			file_previewer.html('');
 
 			// 轮番显示上传结果
 			$.each(
@@ -150,10 +143,12 @@ $(function(){
 					{
 						// 更新预览区
 						var item_content =
-						'<li class="col-xs-6 col-sm-4 col-md-3" data-item-url="'+ item.content +'">' +
-						'	<i class="fa fa-times"></i>' +
-						'	<figure class=thumbnail>' +
-						'		<img alt="'+ item.content +'" src="' + item.content +'">' +
+						'<li class=col-xs-3 data-item-url="'+ item.content +'">' +
+						'	<i class="remove fa fa-minus"></i>' +
+						'	<i class="left fa fa-arrow-left"></i>' +
+						'	<i class="right fa fa-arrow-right"></i>' +
+						'	<figure>' +
+						'		<img src="' + item.content +'">' +
 						'	</figure>' +
 						'</li>';
 
@@ -169,7 +164,7 @@ $(function(){
 					{
 						// 更新预览区
 						var item_content =
-						'<li class="col-xs-12 col-sm-4 col-md-3">' +
+						'<li class="col-xs-12">' +
 						'	<dl>' +
 						'		<dt>失败原因</dt><dd>' + item.content.descirption + '</dd>' +
 						'		<dt>源文件名</dt><dd>' + item.content.file.name + '</dd>' +
