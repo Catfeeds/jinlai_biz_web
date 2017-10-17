@@ -158,7 +158,7 @@
 
 					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="item/image_figure" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
-					<ul class="upload_preview list-inline row"></ul>
+					<ul class="upload_preview"></ul>
 				</div>
 			</div>
 

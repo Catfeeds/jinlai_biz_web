@@ -181,12 +181,14 @@
 				<label for=figure_image_urls class="col-sm-2 control-label">形象图</label>
 				<div class=col-sm-10>
 					<p class=help-block>最多可上传4张</p>
+					
+					<?php $name_to_upload = 'figure_image_urls' ?>
 
 					<ul class=upload_preview>
 					<?php if ( !empty($item['figure_image_urls']) ): ?>
 
 						<?php
-							$figure_image_urls = explode(',', $item['figure_image_urls']);
+							$figure_image_urls = explode(',', $item[$name_to_upload]);
 							foreach($figure_image_urls as $url):
 						?>
 						<li class=col-xs-3 data-item-url="<?php echo $url ?>">
@@ -201,8 +203,6 @@
 					
 					<?php endif ?>
 					</ul>
-					
-					<?php $name_to_upload = 'figure_image_urls' ?>
 
 					<input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
 					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">

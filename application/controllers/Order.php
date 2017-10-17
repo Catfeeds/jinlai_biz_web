@@ -649,6 +649,16 @@
 
 			endif;
 		} // end deliver
+		
+		/**
+		 * TODO 商家验证
+		 *
+		 * 对卡券验证码的有效性进行验证，并将相应的订单标记为待评价状态（即视为已收货）
+		 */
+		public function valid()
+		{
+			
+		} // end valid
 
 	} // end class Order
 
