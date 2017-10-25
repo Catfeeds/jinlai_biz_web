@@ -11,12 +11,22 @@
 // AJAX文件上传服务器端URL；上传目标文件夹名稍后通过上传按钮的相关属性获取
 var api_url = '//biz.517ybang.com/ajaxupload?target=';
 
-// 最大文件数量，默认为4
+// 最大可上传文件数量，默认为4
 var max_count = 4;
 
 /* 从此处起请谨慎修改 */
 $(function(){
-	$('input[type=file]').after( $('<div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>') );
+    // TODO 若当前已上传数不少于最大可上传文件数量，隐藏选择器
+
+	// 以样式可定制的虚拟选择按钮替代原生文件选择器
+    $('.file_selector').click(function(){
+            $(this).siblings('[type=file]').click();
+        });
+
+	// 可选：选择文件后自动上传
+	$('input[type=file]').change(function(){
+            $(this).closest('.selector_zone').siblings('.file-upload').click();
+		});
 
 	// 文件上传主处理方法
 	$('.file-upload').click(function(){
@@ -176,6 +186,8 @@ $(function(){
 
 					// 在预览区显示预览
 					file_previewer.prepend(item_content);
+
+                    // TODO 若当前已上传数不少于最大可上传文件数量，隐藏选择器
 				}
 			); //end $.each
 
@@ -186,23 +198,22 @@ $(function(){
 				$('[name=' + button.attr('data-input-name') + ']').val(input_value);
 			}
 	    });
-		
-		// 可从预览区删除图片
-		$('.upload_preview').on(
-			{
-				click: function(){
-					delete_single($(this), button.attr('data-input-name'));
-				}
-			},
-			'.fa-times'
-		);
 
 	} //end file_upload
 
+    // 可从预览区删除图片
+    $('.upload_preview .remove').on(
+        'click',
+        function(){
+            alert('click');
+            delete_single( $(this) );
+        }
+    );
 	// 点击叉号可删除相应图片
-	function delete_single(item, input_name)
+	function delete_single(item)
 	{
 		var item_url = item.closest('li').attr('data-item-url');
+        var input_name = item.closest('li').attr('data-input-name')
 
 		// 删除相应字段值(替换相应值为空字符串)
 		var current_value = $('[name='+ input_name +']').val();
@@ -212,6 +223,8 @@ $(function(){
 		// 删除相应dom
 		item.closest('li').remove();
 		console.log('deleted a item, of which value is '+ item_url);
+
+		// TODO 若所余项数少于最大可上传文件数量，显示选择器
 	}
 
 });

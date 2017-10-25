@@ -23,7 +23,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171017">
+		<meta name=version content="revision20171026">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -183,6 +183,7 @@
 		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/flat-ui.min.css">
 		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>font-awesome/css/font-awesome.min.css">
 		<link rel=stylesheet media=all href="/css/style.css">
+        <link rel=stylesheet media=all href="/css/file-upload.css">
 
 		<link rel="shortcut icon" href="<?php echo CDN_URL ?>icon/jinlai_client/icon28@3x.png">
 		<link rel=apple-touch-icon href="<?php echo CDN_URL ?>icon/jinlai_client/icon120@3x.png">

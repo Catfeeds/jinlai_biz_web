@@ -1,17 +1,4 @@
 <style>
-	input[type=file] {width:152px;height:152px;overflow:hidden;}
-		.file_selector {color:#ff3649;text-align:center;background-color:#fff;border:2px solid #ff3649;width:152px;height:152px;line-height:152px;border-radius:12px;}
-
-	.upload_preview {clear:both;}
-		.upload_preview li {position:relative;width:152px;margin-right:20px;border-radius:12px;padding:0;overflow:hidden;}
-			.upload_preview li:nth-child(4n+0) {margin-right:0;}
-			.upload_preview i {color:#fff;font-size:20px;text-align:center;background-color:rgba(0,0,0,0.5);width:50%;height:50px;line-height:50px;cursor:pointer;position:absolute;}
-				.upload_preview i.remove {background-color:#ff3649;width:30px;height:30px;line-height:30px;border-radius:15px;right:4px;top:4px;}
-				.upload_preview i.left {left:0;bottom:0;}
-					.upload_preview li:not(:last-child) i.left:after {content:"";background-color:rgba(255,255,255,0.5);width:1px;height:16px;position:absolute;left:76px;bottom:17px;z-index:10;}
-				.upload_preview i.right {right:0;bottom:0;}
-			.upload_preview li:first-child i.right, .upload_preview li:last-child i.left {width:100%;left:0;right:0;}
-			.upload_preview li:first-child i.left, .upload_preview li:last-child i.right {display:none;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -153,25 +140,28 @@
 				<div class=col-sm-10>
 					<p class=help-block>正方形图片视觉效果最佳</p>
 
-					<ul class=upload_preview>
-					<?php if ( !empty($item['url_image_main']) ): ?>
+                    <?php $name_to_upload = 'url_image_main' ?>
+                    <ul class=upload_preview>
+					<?php if ( !empty($item[$name_to_upload]) ): ?>
 
-						<li class=col-xs-3 data-item-url="<?php echo $item['url_image_main'] ?>">
+						<li class=col-xs-3 data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
 							<i class="remove fa fa-minus"></i>
 							<i class="left fa fa-arrow-left"></i>
 							<i class="right fa fa-arrow-right"></i>
 							<figure>
-								<img src="<?php echo $item['url_image_main'] ?>">
+								<img src="<?php echo $item[$name_to_upload] ?>">
 							</figure>
 						</li>
 
 					<?php endif ?>
 					</ul>
 
-					<?php $name_to_upload = 'url_image_main' ?>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
 
 					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="item/image_main" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 				</div>
@@ -183,15 +173,14 @@
 					<p class=help-block>最多可上传4张</p>
 					
 					<?php $name_to_upload = 'figure_image_urls' ?>
-
 					<ul class=upload_preview>
-					<?php if ( !empty($item['figure_image_urls']) ): ?>
+					<?php if ( !empty($item[$name_to_upload]) ): ?>
 
 						<?php
 							$figure_image_urls = explode(',', $item[$name_to_upload]);
 							foreach($figure_image_urls as $url):
 						?>
-						<li class=col-xs-3 data-item-url="<?php echo $url ?>">
+						<li class=col-xs-3 data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $url ?>">
 							<i class="remove fa fa-minus"></i>
 							<i class="left fa fa-arrow-left"></i>
 							<i class="right fa fa-arrow-right"></i>
@@ -204,8 +193,12 @@
 					<?php endif ?>
 					</ul>
 
-					<input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
 
 					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="item/image_figure" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 				</div>
