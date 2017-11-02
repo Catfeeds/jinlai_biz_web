@@ -20,6 +20,12 @@
 	}
 </style>
 
+<?php
+	$user_agent = $_SERVER['HTTP_USER_AGENT'];
+	$is_ios = (strpos($user_agent, 'iPhone') || strpos($user_agent, 'iPad'))? TRUE: FALSE;
+	$is_android = strpos($user_agent, 'Android')? TRUE: FALSE;
+	if (($is_ios + $is_android) === FALSE):
+?>
 <link href="<?php echo CDN_URL ?>css/datepicker.min.css" rel="stylesheet">
 <script src="<?php echo CDN_URL ?>js/datepicker.min.js"></script>
 <script>
@@ -36,6 +42,7 @@
 		)
 	});
 </script>
+<?php endif ?>
 
 <script>
 	$(function(){

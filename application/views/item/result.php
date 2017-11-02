@@ -41,7 +41,10 @@
 		<li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="继续创建" href="<?php echo base_url($this->class_name.'/create') ?>">继续创建</a></li>
 		<?php elseif ($operation === 'create_quick'): ?>
 		<li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="继续快速创建" href="<?php echo base_url($this->class_name.'/create-quick') ?>">继续创建</a></li>
-		<?php elseif ($operation === 'edit'): ?>
+		<?php
+            endif;
+            if ( in_array($operation, array('create', 'create_quick', 'edit',)) ):
+                ?>
 		<li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="查看<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/detail?id='.$id) ?>">确认一下</a></li>
 		<?php endif ?>
 	

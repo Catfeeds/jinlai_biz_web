@@ -4,9 +4,6 @@
 	/**
 	 * Item 商品类
 	 *
-	 * 以我的XX列表、列表、详情、创建、单行编辑、单/多行编辑（删除、恢复）等功能提供了常见功能的APP示例代码
-	 * CodeIgniter官方网站 https://www.codeigniter.com/user_guide/
-	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
 	 * @copyright ICBG <www.bingshankeji.com>
@@ -32,8 +29,7 @@
 		 * 完整编辑单行时必要的字段名
 		 */
 		protected $names_edit_required = array(
-			'id',
-			'url_image_main', 'name', 'price', 'stocks', 'freight_template_id',
+			'id', 'url_image_main', 'name', 'price', 'stocks', 'freight_template_id',
 		);
 
 		/**
@@ -79,7 +75,8 @@
 		public function __destruct()
 		{
 			// 调试信息输出开关
-			// $this->output->enable_profiler(TRUE);
+            if ($this->input->post('test_mode') === 'on')
+                $this->output->enable_profiler(TRUE);
 		}
 
 		/**
@@ -563,7 +560,7 @@
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
 					$data['operation'] = 'edit';
-					$data['id'] = $id;
+                    $data['id'] = $result['content']['id']; // 修改后的信息ID
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -685,7 +682,7 @@
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
 					$data['operation'] = 'edit_certain';
-					$data['id'] = $id;
+                    $data['id'] = $result['content']['id']; // 修改后的信息ID
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);

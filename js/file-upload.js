@@ -11,12 +11,21 @@
 // AJAX文件上传服务器端URL；上传目标文件夹名稍后通过上传按钮的相关属性获取
 var api_url = '//biz.517ybang.com/ajaxupload?target=';
 
-// 最大可上传文件数量，默认为4
+// 最大可上传文件数量，默认为4；可被上传按钮的data-max-count属性覆盖
 var max_count = 4;
+
+// 当前相应字段已上传文件数
+var current_count = 0;
 
 /* 从此处起请谨慎修改 */
 $(function(){
     // TODO 若当前已上传数不少于最大可上传文件数量，隐藏选择器
+	// 获取所有图片上传按钮
+	var upload_fields = $('button.file-upload');
+    // 为每个上传按钮对应的字段进行已上传项计数并决定是否显示上传按钮
+	upload_fields.each(function(){
+        selector_toggle( $(this) );
+	});
 
 	// 以样式可定制的虚拟选择按钮替代原生文件选择器
     $('.file_selector').click(function(){
@@ -92,11 +101,18 @@ $(function(){
 			button_restore(button); // 激活上传按钮
 			return;
 		}
-		
-		// 若超出最大文件数量，进行提示
-		if (file_count > max_count)
+
+		// 检查是否设置了最大可上传文件数
+		if (button.attr('data-max-count') != undefined)
 		{
-			alert('最多可选'+ max_count +'个文件');
+			max_count = button.attr('data-max-count');
+		}
+
+		// 若超出最大文件数量，进行提示
+        var slot_count = max_count - current_count;
+		if (file_count > slot_count)
+		{
+			alert('最多可选'+ slot_count +'个文件');
 			button_restore(button); // 激活上传按钮
 			return;
 		}
@@ -141,7 +157,6 @@ $(function(){
 
 			// 初始化预览区
 			var file_previewer = button.siblings('.upload_preview');
-			file_previewer.html('');
 
 			// 轮番显示上传结果
 			$.each(
@@ -185,9 +200,9 @@ $(function(){
 					}
 
 					// 在预览区显示预览
-					file_previewer.prepend(item_content);
+					file_previewer.append(item_content);
 
-                    // TODO 若当前已上传数不少于最大可上传文件数量，隐藏选择器
+                    selector_toggle( button );
 				}
 			); //end $.each
 
@@ -199,21 +214,39 @@ $(function(){
 			}
 	    });
 
-	} //end file_upload
+	} // end file_upload
 
-    // 可从预览区删除图片
+	// 切换选择器显示与否
+	function selector_toggle( button )
+	{
+        var input_name = button.attr('data-input-name');
+        var current_value = $('[name='+ input_name +']').val(); // 相应字段值
+        var current_array = current_value.split(','); // 相应字段值数组
+        current_array = $.grep(
+        	current_array,
+			function(n) {return $.trim(n).length > 0;}
+		);
+        console.log(current_array);
+
+		if (current_array.length < button.attr('data-max-count')){
+            button.siblings('.selector_zone').show();
+		} else {
+            button.siblings('.selector_zone').hide();
+		}
+    }
+
+    // 删除已上传图片
     $('.upload_preview .remove').on(
         'click',
         function(){
-            alert('click');
             delete_single( $(this) );
         }
     );
-	// 点击叉号可删除相应图片
 	function delete_single(item)
 	{
 		var item_url = item.closest('li').attr('data-item-url');
-        var input_name = item.closest('li').attr('data-input-name')
+        var input_name = item.closest('li').attr('data-input-name');
+        var button = item.closest('.upload_preview').siblings('button.file-upload');
 
 		// 删除相应字段值(替换相应值为空字符串)
 		var current_value = $('[name='+ input_name +']').val();
@@ -224,7 +257,64 @@ $(function(){
 		item.closest('li').remove();
 		console.log('deleted a item, of which value is '+ item_url);
 
-		// TODO 若所余项数少于最大可上传文件数量，显示选择器
+		// 若所余项数少于最大可上传文件数量，显示选择器
+        selector_toggle( button );
 	}
+
+	// 向左调整排序
+	$('.upload_preview .left').on(
+		'click',
+		function(){
+            left_single( $(this) );
+		}
+	);
+    function left_single(item)
+    {
+        var item_url = item.closest('li').attr('data-item-url'); // 当前DOM相应值
+        var input_name = item.closest('li').attr('data-input-name'); // 当前DOM对应字段名
+        var current_value = $('[name='+ input_name +']').val(); // 相应字段值
+		var current_array = current_value.split(','); // 相应字段值数组
+		var current_index = current_array.indexOf(item_url); // 当前值在字段值中的序号（从0开始）
+
+        // 修改字段值数组
+        current_array.splice(current_index-1, 0, item_url); // 添加到新位置
+        current_array.splice(current_index+1, 1); // 从原位置删除
+		// 生成结果字段值并赋值到字段
+        var current_value = $.unique( current_array ).join(',');
+        $('[name='+ input_name +']').val(current_value);
+
+        // 调整相应dom顺序
+		var current_dom = item.closest('li');
+        var dom_to_react = current_dom.closest('ul').find('li').eq(current_index-1);
+        current_dom.insertBefore(dom_to_react);
+    }
+
+	// 向右调整排序
+    $('.upload_preview .right').on(
+        'click',
+        function(){
+            right_single( $(this) );
+        }
+    );
+    function right_single(item)
+    {
+        var item_url = item.closest('li').attr('data-item-url'); // 当前DOM相应值
+        var input_name = item.closest('li').attr('data-input-name'); // 当前DOM对应字段名
+        var current_value = $('[name='+ input_name +']').val(); // 相应字段值
+        var current_array = current_value.split(','); // 相应字段值数组
+        var current_index = current_array.indexOf(item_url); // 当前值在字段值中的序号（从0开始）
+
+        // 修改字段值数组
+        current_array.splice(current_index+2, 0, item_url); // 添加到新位置
+        current_array.splice(current_index, 1); // 从原位置删除
+        // 生成结果字段值并赋值到字段
+        var current_value = $.unique( current_array ).join(',');
+        $('[name='+ input_name +']').val(current_value);
+
+        // 调整相应dom顺序
+        var current_dom = item.closest('li');
+        var dom_to_react = current_dom.closest('ul').find('li').eq(current_index+1);
+        current_dom.insertAfter(dom_to_react);
+    }
 
 });
