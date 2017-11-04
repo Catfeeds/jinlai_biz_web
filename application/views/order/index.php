@@ -1,29 +1,16 @@
+<link rel=stylesheet media=all href="/css/index.css">
 <style>
-	#content {min-height:670px;}
-	
-	#item-list>li {background-color:#fff;margin-top:20px;border-radius:12px;padding:20px 20px 0 20px;position:relative;}
+    .item-status {position:absolute;top:20px;right:20px;}
 
-		#item-list>li>p:first-child {margin-bottom:12px;}
-		.item-status {position:absolute;top:20px;right:20px;}
+    .order-figures {color:#c9caca;margin:50px -20px 0;}
+        .order-figures>li {font-size:22px;border-right:1px solid #c9caca;padding:0 42px;}
+            .order-figures>li:last-child {border:0;}
+        .order-figures span {font-size:30px;color:#3e3a39;margin-top:12px;margin-left:-5px;display:block;}
+            .order-figures li:first-child>span {color:#c9caca;}
 
-		.order-figures {color:#c9caca;margin:50px -20px 0;}
-			.order-figures>li {font-size:22px;border-right:1px solid #c9caca;padding:0 42px;}
-				.order-figures>li:last-child {border:0;}
-			.order-figures span {font-size:30px;color:#3e3a39;margin-top:12px;margin-left:-5px;display:block;}
-				.order-figures li:first-child>span {color:#c9caca;}
-
-		.item-actions {height:80px;line-height:80px;margin-top:46px;border-top:1px solid #c9caca;}
-			.item-actions.reprice, .item-actions.accept, .item-actions.deliver {background:url('/media/order/daifukuan@3x.png') no-repeat center bottom;height:94px;background-size:710px 26px;margin-left:-20px;margin-right:-20px;padding:0 20px;}
-			.item-actions.accept {background-image:url('/media/order/daijiedan@3x.png');}
-			.item-actions.deliver {background-image:url('/media/order/daifahuo@3x.png');}
-			.item-actions>* {float:left;display:inline;}
-				.item-actions>span {width:40px;height:40px;}
-				.item-actions ul {float:right;}
-					.item-actions li {margin-left:10px;padding:14px 0;}
-						.item-actions a {color:#9fa0a0;text-align:center;width:130px;height:52px;line-height:52px;border:1px solid #9fa0a0;border-radius:26px;}
-						.reprice li:last-child a {color:#ff3649;border-color:#ff3649;}
-						.accept li:last-child a {color:#ff843c;border-color:#ff843c;}
-						.deliver li:last-child a {color:#1a6eef;border-color:#1a6eef;}
+                    .reprice li:last-child a {color:#ff3649;border-color:#ff3649;}
+                    .accept li:last-child a {color:#ff843c;border-color:#ff843c;}
+                    .deliver li:last-child a {color:#1a6eef;border-color:#1a6eef;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -132,16 +119,17 @@
 					$status = $item['status'];
 			?>
 			<li>
+                <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
+                    <span class=item-status><?php echo $item['status'] ?></span>
+                    <p>订单ID <?php echo $item[$this->id_name] ?></p>
+                    <p>下单时间 <?php echo date('Y-m-d H:i:s', $item['time_create']) ?></p>
 
-				<span class=item-status><?php echo $item['status'] ?></span>
-				<p>订单ID <?php echo $item[$this->id_name] ?></p>
-				<p>下单时间 <?php echo date('Y-m-d H:i:s', $item['time_create']) ?></p>
-
-				<ul class="order-figures row">
-					<li class="col-xs-4">小计<span>￥<?php echo $item['subtotal'] ?></span></li>
-					<li class="col-xs-4">应支付<span>￥<?php echo $item['total'] ?></span>
-					<li class="col-xs-4">已支付<span>￥<?php echo $item['total_payed'] ?></span>
-				</ul>
+                    <ul class="order-figures row">
+                        <li class="col-xs-4">小计<span>￥<?php echo $item['subtotal'] ?></span></li>
+                        <li class="col-xs-4">应支付<span>￥<?php echo $item['total'] ?></span>
+                        <li class="col-xs-4">已支付<span>￥<?php echo $item['total_payed'] ?></span>
+                    </ul>
+                </a>
 
 				<?php
 					if ($status !== '已关闭'):

@@ -34,6 +34,7 @@
 		// 初始化总体上传结果，默认上传成功
 		public $result = array(
 			'status' => 200,
+            'content' => NULL,
 		);
 
 		// 构造函数
@@ -150,7 +151,7 @@
 				$this->result['content']['error']['message'] = $content;
 
 			endif;
-		}
+		} // end index
 
 		// 上传具体文件
 		private function upload_process($field_index)
@@ -185,7 +186,7 @@
 			endif;
 
 			return $data;
-		}
+		} // end upload_process
 
 		// 上传到CDN；目前采用的是又拍云
 		private function upload_to_cdn()
@@ -209,9 +210,9 @@
 			$tasks = array('x-gmkerl-thumb' => '/max/2048');
 
 			// 进行上传
-			$result_upyun = $upyun->write($target_path, $file, $tasks);
+			$upyun->write($target_path, $file, $tasks);
 			fclose($file); // 关闭文件流
-		}
+		} // end upload_to_cdn
 
 		// TODO 预处理照片
 		private function prepare_image()
@@ -232,5 +233,9 @@
 				return TRUE;
 
 			endif;
-		}
-	}
+		} // end prepare_image
+
+	} // end Class Ajaxupload
+
+/* End of file Ajaxupload.php */
+/* Location: ./application/controllers/Ajaxupload.php */

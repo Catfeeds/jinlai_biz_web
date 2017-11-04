@@ -1,3 +1,4 @@
+<link rel=stylesheet media=all href="/css/index.css">
 <style>
 
 

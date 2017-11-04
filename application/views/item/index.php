@@ -1,12 +1,12 @@
+<link rel=stylesheet media=all href="/css/index.css">
 <style>
-
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
 
 	}
-	
+
 	/* 宽度在960像素以上的设备 */
 	@media only screen and (min-width:961px)
 	{
@@ -50,16 +50,15 @@
 	<blockquote>
 		<p>您需要成为已入驻企业的员工，或者提交入驻申请，才可进行商品管理</p>
 	</blockquote>
-	
-	<?php else: ?>
 
+	<?php else: ?>
 		<?php if ( $count['biz_freight_templates'] === 0 ): ?>
 		<blockquote class=row>
 			<p>您目前没有运费模板，将为买家包邮。</p>
 			<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建运费模板</a>
 		</blockquote>
 		<?php endif ?>
-	
+
 		<?php if ( empty($items) ): ?>
 		<blockquote class=row>
 			<p>您的货架空空如也，快点添加商品吧！</p>
@@ -76,63 +75,48 @@
 				</div>
 			</fieldset>
 
-			<table class="table table-condensed table-responsive table-striped sortable">
-				<thead>
-					<tr>
-						<th>&nbsp;</th>
-						<th><?php echo $this->class_name_cn ?>ID</th>
-						<?php
-							$thead = array_values($data_to_display);
-							foreach ($thead as $th):
-								echo '<th>' .$th. '</th>';
-							endforeach;
-						?>
-						<th>商品规格/SKU</th>
-						<th>操作</th>
-					</tr>
-				</thead>
+            <ul id=item-list class=row>
+                <?php
+                    foreach ($items as $item):
+                    $status = $item['status'];
+                    ?>
+                    <li>
 
-				<tbody>
-				<?php foreach ($items as $item): ?>
-					<tr>
-						<td>
-							<input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
-						</td>
-						<td><?php echo $item[$this->id_name] ?></td>
-						<?php
-							$tr = array_keys($data_to_display);
-							foreach ($tr as $td):
-								echo '<td>' .$item[$td]. '</td>';
-							endforeach;
-						?>
-						<td>
-							<ul class=list-unstyled>
-								<li><a title="SKU列表" href="<?php echo base_url('sku/index?item_id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-eye"></i> 规格列表</a></li>
-								<li><a title="创建SKU" href="<?php echo base_url('sku/create?item_id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-plus"></i> 创建规格</a></li>
-							</ul>
-						</td>
-						<td>
-							<ul class=list-unstyled>
-								<li><a title="查看" href="<?php echo base_url($this->view_root.'/detail?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-eye"></i> 查看</a></li>
-								<?php
-								// 需要特定角色和权限进行该操作
-								if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-								?>
-								<?php if ( !empty($item['time_suspend']) ): ?>
-								<li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-level-up"></i> 上架</a></li>
-								<?php else: ?>
-								<li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-level-down"></i> 下架</a></li>
-								<?php endif ?>
-								<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-edit"></i> 编辑</a></li>
-								<li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-trash"></i> 删除</a></li>
-								<?php endif ?>
-							</ul>
-						</td>
-					</tr>
-				<?php endforeach ?>
-				</tbody>
-			</table>
-	
+                        <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
+                            <p>商品ID <?php echo $item[$this->id_name] ?></p>
+                            <p>商品名称 <?php echo $item['name'] ?></p>
+                            <p>商城价/现价 ￥<?php echo $item['price'] ?></p>
+                            <p>状态 <?php echo $item['status'] ?></p>
+                        </a>
+
+                        <div class="item-actions">
+                            <span>
+                                <input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
+                            </span>
+
+                            <ul class=horizontal>
+                                <?php
+                                    // 需要特定角色和权限进行该操作
+                                    if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+                                ?>
+                                    <?php if ( !empty($item['time_publish']) ): ?>
+                                    <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-level-down"></i> 下架</a></li>
+                                    <?php endif ?>
+
+                                    <?php if ( !empty($item['time_suspend']) ): ?>
+                                    <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-level-up"></i> 上架</a></li>
+                                    <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-trash"></i> 删除</a></li>
+                                    <?php endif ?>
+
+                                    <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-edit"></i> 编辑</a></li>
+                                <?php endif ?>
+                            </ul>
+                        </div>
+
+                    </li>
+                <?php endforeach ?>
+            </ul>
+
 		</form>
 		<?php endif ?>
 

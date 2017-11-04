@@ -1,0 +1,41 @@
+/**
+ * index.css
+ *
+ * 适用于列表页的样式规则
+ */
+@charset "utf-8";
+@viewport{width:device-width;}
+
+#content {min-height:670px;}
+
+#item-list>li {background-color:#fff;margin-top:20px;border-radius:12px;padding:20px 20px 0 20px;position:relative;}
+
+#item-list>li>p:first-child {margin-bottom:12px;}
+
+.item-actions {height:80px;line-height:80px;margin-top:46px;border-top:1px solid #c9caca;}
+.item-actions.reprice, .item-actions.accept, .item-actions.deliver {background:url('/media/order/daifukuan@3x.png') no-repeat center bottom;height:94px;background-size:710px 26px;margin-left:-20px;margin-right:-20px;padding:0 20px;}
+.item-actions.accept {background-image:url('/media/order/daijiedan@3x.png');}
+.item-actions.deliver {background-image:url('/media/order/daifahuo@3x.png');}
+.item-actions>* {float:left;display:inline;}
+.item-actions>span {width:40px;height:40px;}
+.item-actions ul {float:right;}
+.item-actions li {margin-left:10px;padding:14px 0;}
+.item-actions a {color:#9fa0a0;text-align:center;width:130px;height:52px;line-height:52px;border:1px solid #9fa0a0;border-radius:26px;}
+
+/* 宽度在750像素以上的设备 */
+@media only screen and (min-width:751px)
+{
+
+}
+
+/* 宽度在960像素以上的设备 */
+@media only screen and (min-width:961px)
+{
+
+}
+
+/* 宽度在1280像素以上的设备 */
+@media only screen and (min-width:1281px)
+{
+
+}
