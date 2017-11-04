@@ -56,11 +56,16 @@
 
 		<dt>规格图片</dt>
 		<?php if ( !empty($item['url_image']) ): ?>
-		<dd class=row>
-			<figure class="col-xs-12 col-sm-6 col-md-4">
-				<img src="<?php echo $item['url_image'] ?>">
-			</figure>
-		</dd>
+        <dd>
+            <?php $name_to_upload = 'url_image' ?>
+            <ul class=upload_preview>
+                <li>
+                    <figure>
+                        <img src="<?php echo $item[$name_to_upload] ?>">
+                    </figure>
+                </li>
+            </ul>
+        </dd>
 		<?php else: ?>
 		<dd>未上传</dd>
 		<?php endif ?>

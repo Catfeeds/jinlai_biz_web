@@ -73,21 +73,22 @@
 		<dt>自定义域名</dt>
 		<dd><?php echo $item['url_name'] ?></dd>
 		-->
-		<?php if ( !empty($item['url_images']) ): ?>
-		<dt>形象图</dt>
-		<dd>
-			<ul class=row>
-				<?php
-					$figure_image_urls = explode(',', $item['url_images']);
-					foreach($figure_image_urls as $url):
-				?>
-				<li class="col-xs-6 col-sm-4 col-md-3">
-					<img src="<?php echo $url ?>">
-				</li>
-				<?php endforeach ?>
-			</ul>
-		</dd>
-		<?php endif ?>
+
+        <dt>形象图</dt>
+        <?php if ( !empty($item['url_images']) ): ?>
+            <dd>
+                <?php $name_to_upload = 'url_images' ?>
+                <ul class=upload_preview>
+                    <li>
+                        <figure>
+                            <img src="<?php echo $item[$name_to_upload] ?>">
+                        </figure>
+                    </li>
+                </ul>
+            </dd>
+        <?php else: ?>
+            <dd>未上传</dd>
+        <?php endif ?>
 	</dl>
 
 	<!--

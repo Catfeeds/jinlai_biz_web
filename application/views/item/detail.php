@@ -1,5 +1,5 @@
 <style>
-
+    #content {background-color:#fff;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -37,15 +37,7 @@
 	$current_level = $this->session->level; // 当前用户级别
 	$role_allowed = array('管理员', '经理');
 	$level_allowed = 30;
-	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
-	<div class="btn-group btn-group-justified" role=group>
-		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
-	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>">回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create_quick') ?>">快速创建</a>
-	</div>
-	<?php endif ?>
 
 	<ul class=list-unstyled>
 		<?php
@@ -58,22 +50,29 @@
 
 	<dl id=list-info class=dl-horizontal>
 		<dt>主图</dt>
-		<dd class=row>
-			<figure class="col-xs-12 col-sm-6 col-md-4">
-				<img src="<?php echo $item['url_image_main'] ?>">
-			</figure>
+		<dd>
+            <?php $name_to_upload = 'url_image_main' ?>
+            <ul class=upload_preview>
+                <li>
+                    <figure>
+                        <img src="<?php echo $item[$name_to_upload] ?>">
+                    </figure>
+                </li>
+            </ul>
 		</dd>
 
 		<dt>形象图</dt>
 		<dd>
 			<?php if ( !empty($item['figure_image_urls']) ): ?>
-			<ul class=row>
+			<ul class=upload_preview>
 				<?php
 					$figure_image_urls = explode(',', $item['figure_image_urls']);
 					foreach($figure_image_urls as $url):
 				?>
-				<li class="col-xs-6 col-sm-4 col-md-3">
-					<img src="<?php echo $url ?>">
+				<li>
+                    <figure>
+                        <img src="<?php echo $url ?>">
+                    </figure>
 				</li>
 				<?php endforeach ?>
 			</ul>

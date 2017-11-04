@@ -144,7 +144,7 @@
                     <ul class=upload_preview>
 					<?php if ( !empty($item[$name_to_upload]) ): ?>
 
-						<li class=col-xs-3 data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+						<li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
 							<i class="remove fa fa-minus"></i>
 							<i class="left fa fa-arrow-left"></i>
 							<i class="right fa fa-arrow-right"></i>
@@ -180,7 +180,7 @@
 							$figure_image_urls = explode(',', $item[$name_to_upload]);
 							foreach($figure_image_urls as $url):
 						?>
-						<li class=col-xs-3 data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $url ?>">
+						<li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $url ?>">
 							<i class="remove fa fa-minus"></i>
 							<i class="left fa fa-arrow-left"></i>
 							<i class="right fa fa-arrow-right"></i>
