@@ -76,44 +76,44 @@
 			</fieldset>
 
             <ul id=item-list class=row>
-                <?php
-                    foreach ($items as $item):
-                    $status = $item['status'];
-                    ?>
-                    <li>
+                <?php foreach ($items as $item): ?>
+                <li>
 
-                        <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
-                            <p>商品ID <?php echo $item[$this->id_name] ?></p>
-                            <p>商品名称 <?php echo $item['name'] ?></p>
-                            <p>商城价/现价 ￥<?php echo $item['price'] ?></p>
-                            <p>状态 <?php echo $item['status'] ?></p>
-                        </a>
+                    <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
+                        <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
+                        <p>商品名称 <?php echo $item['name'] ?></p>
+                        <p>商城价/现价 ￥<?php echo $item['price'] ?></p>
+                        <p>状态 <?php echo $item['status'] ?></p>
+                    </a>
 
-                        <div class="item-actions">
-                            <span>
-                                <input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
-                            </span>
+                    <div class="item-actions">
+                        <span>
+                            <input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
+                        </span>
 
-                            <ul class=horizontal>
-                                <?php
-                                    // 需要特定角色和权限进行该操作
-                                    if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-                                ?>
-                                    <?php if ( !empty($item['time_publish']) ): ?>
-                                    <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-level-down"></i> 下架</a></li>
-                                    <?php endif ?>
+                        <ul class=horizontal>
+                        <?php
+                            // 需要特定角色和权限进行该操作
+                            if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+                        ?>
+                            <?php if ( !empty($item['time_publish']) ): ?>
+                            <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-level-down"></i> 下架</a></li>
+                            <?php endif ?>
 
-                                    <?php if ( !empty($item['time_suspend']) ): ?>
-                                    <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-level-up"></i> 上架</a></li>
-                                    <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-trash"></i> 删除</a></li>
-                                    <?php endif ?>
+                            <?php if ( !empty($item['time_suspend']) ): ?>
+                            <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-level-up"></i> 上架</a></li>
 
-                                    <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-edit"></i> 编辑</a></li>
+                                <?php if ( empty($item['time_delete']) ): ?>
+                            <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-trash"></i> 删除</a></li>
                                 <?php endif ?>
-                            </ul>
-                        </div>
+                            <?php endif ?>
 
-                    </li>
+                            <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-edit"></i> 编辑</a></li>
+                        <?php endif ?>
+                        </ul>
+                    </div>
+
+                </li>
                 <?php endforeach ?>
             </ul>
 

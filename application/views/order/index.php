@@ -121,7 +121,7 @@
 			<li>
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <span class=item-status><?php echo $item['status'] ?></span>
-                    <p>订单ID <?php echo $item[$this->id_name] ?></p>
+                    <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
                     <p>下单时间 <?php echo date('Y-m-d H:i:s', $item['time_create']) ?></p>
 
                     <ul class="order-figures row">

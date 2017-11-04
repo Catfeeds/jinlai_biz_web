@@ -37,17 +37,7 @@
 	$current_level = $this->session->level; // 当前用户级别
 	$role_allowed = array('管理员', '经理');
 	$level_allowed = 30;
-	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
-	<div class=btn-group role=group>
-		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>"><i class="fa fa-list fa-fw" aria-hidden=true></i> 所有<?php echo $this->class_name_cn ?></a>
-	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>
-
-		<?php if ( !empty($comodity) ): ?>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create?item_id='.$comodity['item_id']) ?>"><i class="fa fa-plus fa-fw" aria-hidden=true></i> 创建<?php echo $this->class_name_cn ?></a>
-		<?php endif ?>
-	</div>
-	<?php endif ?>
 	
 	<ul class=list-unstyled>
 		<?php
@@ -59,12 +49,12 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-		<dt>SKU ID</dt>
+		<dt>规格ID</dt>
 		<dd><?php echo $item['sku_id'] ?></dd>
 		<dt>所属商品</dt>
 		<dd><?php echo $comodity['name'] ?></dd>
 
-		<dt>图片</dt>
+		<dt>规格图片</dt>
 		<?php if ( !empty($item['url_image']) ): ?>
 		<dd class=row>
 			<figure class="col-xs-12 col-sm-6 col-md-4">
@@ -81,10 +71,12 @@
 		<dd><?php echo $item['name_second'] ?></dd>
 		<dt>三级规格</dt>
 		<dd><?php echo $item['name_third'] ?></dd>
+
 		<dt>价格</dt>
 		<dd>￥ <?php echo $item['price'] ?></dd>
 		<dt>库存量</dt>
 		<dd><?php echo $item['stocks'] ?></dd>
+
 		<dt>物流信息</dt>
 		<dd>
 			<p class="bg-info text-info text-center">以下3项中若填写了多项，将以毛重为准进行运费计算</p>
