@@ -64,7 +64,7 @@
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
 				'name' => '名称',
-				'price' => '商城价/现价（元）',
+				'price' => '商城现价',
 				'status' => '状态',
 			);
 		}
@@ -103,8 +103,15 @@
 				$condition['time_delete'] = 'NULL';
 				// （可选）遍历筛选条件
 				foreach ($this->names_to_sort as $sorter):
-					if ( !empty($this->input->post($sorter)) )
-						$condition[$sorter] = $this->input->post($sorter);
+					if ( !empty($this->input->get_post($sorter)) ):
+                        if ($sorter === 'status' && $this->input->get_post($sorter) === 'publish'):
+                            $condition['time_publish'] = 'IS NOT NULL';
+                        elseif ($sorter === 'status' && $this->input->get_post($sorter) === 'suspend'):
+                            $condition['time_suspend'] = 'IS NOT NULL';
+                        else:
+                            $condition[$sorter] = $this->input->get_post($sorter);
+                        endif;
+				    endif;
 				endforeach;
 
 				// 排序条件
@@ -721,31 +728,15 @@
 				'error' => '', // 预设错误提示
 			);
 
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-				
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-			
-			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
+            // 赋值视图中需要用到的待操作项数据
+            $data['ids'] = $ids = $this->parse_ids_array();
 			
 			// 获取待操作项数据
 			$data['items'] = array();
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
+                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -787,6 +778,7 @@
 
 				// 需要存入数据库的信息
 				$data_to_edit = array(
+                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -840,34 +832,15 @@
 				'error' => '', // 预设错误提示
 			);
 
-			// 检查是否已传入必要参数
-			if ( !empty($this->input->get_post('ids')) ):
-				$ids = $this->input->get_post('ids');
-
-				// 将字符串格式转换为数组格式
-				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
-				endif;
-
-			elseif ( !empty($this->input->post('ids[]')) ):
-				$ids = $this->input->post('ids[]');
-
-			else:
-				var_dump($_POST);
-				echo '<br>';
-				var_dump($_GET);
-				//redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
-			endif;
-
-			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $ids;
+            // 赋值视图中需要用到的待操作项数据
+            $data['ids'] = $ids = $this->parse_ids_array();
 
 			// 获取待操作项数据
 			$data['items'] = array();
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
+                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -909,6 +882,7 @@
 
 				// 需要存入数据库的信息
 				$data_to_edit = array(
+                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,

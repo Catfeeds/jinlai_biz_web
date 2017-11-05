@@ -1,20 +1,5 @@
 <link rel=stylesheet media=all href="/css/index.css">
 <style>
-    #bulk_action {background-color:#fff;position:fixed;left:0;right:0;bottom:98px;height:84px;line-height:84px;overflow:hidden;z-index:101;}
-        #bulk_action span:first-child {margin-left:20px;line-height:100%;}
-            #bulk_action span:first-child i {font-size:40px;width:40px;height:40px;}
-
-        #bulk_action ul {float:right;height:100%;}
-            #bulk_action li {height:100%;}
-            #bulk_action button {color:#fff;font-size:26px;width:160px;height:100%;line-height:100%;text-align:center;}
-
-    .color_primary a {color:#ff3649;border-color:#ff3649;}
-    .color_info a {color:#1a6eef;border-color:#1a6eef;}
-    .color_warning a {color:#ff843c;border-color:#ff843c;}
-
-    .bg_primary {background-color:#ff3649;}
-    .bg_info {background-color:#1a6eef;}
-    .bg_warning {background-color:#ff843c;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -35,6 +20,51 @@
 	}
 </style>
 
+<script>
+    $(function(){
+        // 显示批量操作栏
+        $('#enter_bulk').click(function(){
+            $('#primary_actions').hide();
+            $('#bulk_action').show();
+            $('.item-actions [type=checkbox]').show();
+        });
+        // 隐藏批量操作栏
+        $('#exit_bulk').click(function(){
+            $('.item-actions [type=checkbox]').hide();
+            $('#bulk_action').hide();
+            $('#primary_actions').show();
+        });
+
+        // 全选
+        $('#bulk_selector').click(function(){
+            if ($(this).attr('data-bulk-selector') == 'off')
+            {
+                $(this).attr('data-bulk-selector', 'on');
+                $("form :checkbox").prop("checked", true);
+                //console.log('已全选');
+                //get_checked();
+            }
+            else
+            {
+                $(this).attr('data-bulk-selector', 'off');
+                $("form :checkbox").prop("checked", false);
+                //console.log('已全不选');
+                //get_checked();
+            }
+        });
+        // 测试全选功能
+        function get_checked()
+        {
+            var ids_selected = new Array;
+            $('form :checkbox:checked').each(function(i){
+                ids_selected[i] = $(this).val();
+            });
+            console.log(ids_selected);
+            console.log(ids_selected.join(','));
+        }
+    });
+</script>
+
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
@@ -54,10 +84,11 @@
 	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
 	<div class="btn-group btn-group-justified" role=group>
-		<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
+        <?php $style_class = empty($this->input->get('status') )? 'btn-primary': 'btn-default'; ?>
+        <a class="btn <?php echo $style_class ?>" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
+        <a class="btn <?php echo $this->input->get('status') === 'publish'? 'btn-primary': 'btn-default' ?>" title="已上架商品" href="<?php echo base_url('item?status=publish') ?>">在售中</a>
+        <a class="btn <?php echo $this->input->get('status') === 'suspend'? 'btn-primary': 'btn-default' ?>" title="已下架商品" href="<?php echo base_url('item?status=suspend') ?>">已下架</a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>">回收站</a>
-		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
-		<a class="btn btn-default" title="快速创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create_quick') ?>">快速创建</a>
 	</div>
 	<?php endif ?>
 
@@ -67,10 +98,24 @@
 	</blockquote>
 
 	<?php else: ?>
+        <div id=primary_actions class=action_bottom>
+            <span id=enter_bulk>
+                <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量操作
+            </span>
+            <ul class=horizontal>
+                <li>
+                    <a class=bg_second title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
+                </li>
+                <li>
+                    <a class=bg_primary title="快速创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create_quick') ?>">快速创建</a>
+                </li>
+            </ul>
+        </div>
+
 		<?php if ( $count['biz_freight_templates'] === 0 ): ?>
 		<blockquote class=row>
-			<p>您目前没有运费模板，将为买家包邮。</p>
-			<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建运费模板</a>
+			<p>您未添加运费模板，将为买家包邮。</p>
+			<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建运费模板</a>
 		</blockquote>
 		<?php endif ?>
 
@@ -82,31 +127,32 @@
 
 		<?php else: ?>
 		<form method=get target=_blank>
-            <div id=bulk_action>
-                <span><i class="fa fa-circle-o" aria-hidden=true></i></span>
-                <span>全选</span>
+            <div id=bulk_action class="action_bottom">
+                <span id="bulk_selector" data-bulk-selector=off>
+                    <i class="fa fa-circle-o" aria-hidden=true></i>全选
+                </span>
+                <span id="exit_bulk">其它</span>
                 <ul class=horizontal>
-                    <li class=bg_info>
-                        <button formaction="<?php echo base_url($this->class_name.'/publish') ?>" type=submit>上架</button>
+                    <li>
+                        <button class=bg_third formaction="<?php echo base_url($this->class_name.'/publish') ?>" type=submit>上架</button>
                     </li>
-                    <li class=bg_warning>
-                        <button formaction="<?php echo base_url($this->class_name.'/suspend') ?>" type=submit>下架</button>
+                    <li>
+                        <button class=bg_second formaction="<?php echo base_url($this->class_name.'/suspend') ?>" type=submit>下架</button>
                     </li>
-                    <li class=bg_primary>
-                        <button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit>删除</button>
-                    </libg_primary>
+                    <li>
+                        <button class=bg_primary formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit>删除</button>
+                    </li>
                 </ul>
             </div>
 
             <ul id=item-list class=row>
                 <?php foreach ($items as $item): ?>
                 <li>
-
+                    <span class=item-status><?php echo $item['status'] ?></span>
                     <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                         <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
                         <p>商品名称 <?php echo $item['name'] ?></p>
-                        <p>商城价/现价 ￥<?php echo $item['price'] ?></p>
-                        <p>状态 <?php echo $item['status'] ?></p>
+                        <p>商城现价 ￥<?php echo $item['price'] ?></p>
                     </a>
 
                     <div class="item-actions">

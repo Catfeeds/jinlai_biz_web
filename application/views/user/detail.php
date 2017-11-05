@@ -69,6 +69,7 @@
 		<dd><?php echo $item['user_id'] ?></dd>
 		<dt>昵称</dt>
 		<dd><?php echo $item['nickname'] ?></dd>
+        <!--
 		<dt>姓氏</dt>
 		<dd><?php echo $item['lastname'] ?></dd>
 		<dt>名</dt>
@@ -77,16 +78,18 @@
 		<dd><?php echo $item['code_ssn'] ?></dd>
 		<dt>身份证照片</dt>
 		<dd><?php echo $item['url_image_id'] ?></dd>
+		-->
 		<dt>性别</dt>
 		<dd><?php echo $item['gender'] ?></dd>
 		<dt>出生日期</dt>
 		<dd><?php echo $item['dob'] ?></dd>
 
-		<dt>手机号</dt>
+        <!--
+        <dt>手机号</dt>
 		<dd><?php echo $item['mobile'] ?></dd>
 		<dt>电子邮件地址</dt>
 		<dd><?php echo $item['email'] ?></dd>
-		<dt>默认地址</dt>
+        <dt>默认地址</dt>
 		<dd><?php echo $item['address_id'] ?></dd>
 		<dt>开户行名称</dt>
 		<dd><?php echo $item['bank_name'] ?></dd>
@@ -98,6 +101,7 @@
 		<dd><?php echo $item['last_login_timestamp'] ?></dd>
 		<dt>最后登录IP地址</dt>
 		<dd><?php echo $item['last_login_ip'] ?></dd>
+		-->
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

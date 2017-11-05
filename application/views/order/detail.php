@@ -31,57 +31,13 @@
 </div>
 
 <div id=content class=container>
-	<?php
-	// 需要特定角色和权限进行该操作
-	$current_role = $this->session->role; // 当前用户角色
-	$current_level = $this->session->level; // 当前用户级别
-	$role_allowed = array('管理员', '经理');
-	$level_allowed = 30;
-	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-	?>
-	<div class="btn-group btn-group-justified" role=group>
-		<div class=btn-group role=group>
-		    <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
-				所有 <span class="caret"></span>
-		    </button>
-		    <ul class=dropdown-menu>
-				<li>
-					<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
-				</li>
-
-		  		<?php
-		  		$status_to_mark = array('待接单', '待发货', '待收货', '待评价', '已评价', '已退款');
-		  		foreach ($status_to_mark as $status):
-		  			// 页面URL
-		  			$url = ($status === NULL)? base_url('order'): base_url('order?status='.$status);
-		  			// 链接样式
-		  			$style_class = ($this->input->get('status') !== $status)? 'btn-default': 'btn-primary';
-		  			echo '<li><a class="btn '. $style_class. '" title="'. $status. '订单" href="'. $url. '">'. $status. '</a> </li>';
-		  		endforeach;
-		  		?>
-		    </ul>
-		</div>
-
-		<a class="btn btn-default" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
-		<a class="btn btn-default" title="待发货商品订单" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
-	</div>
-	<?php endif ?>
-	
-	<ul class=list-unstyled>
-		<?php
-		// 需要特定角色和权限进行该操作
-		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-		?>
-		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>
-		<?php endif ?>
-	</ul>
-	
 	<h2>基本信息</h2>
 	
 	<ul class="list-horizontal well">
 		<li>状态 <strong><?php echo $item['status'] ?></strong></li>
-		<li>退款 <?php echo $item['refund_status'] ?></li>
+		<?php if ( !empty($item['refund_status']) ): ?><li>退款状态 <?php echo $item['refund_status'] ?></li><?php endif ?>
 		<li>发票 <?php echo $item['invoice_status'] ?></li>
+
 		<?php if ( isset($item['note_user']) ): ?><li>用户留言 <?php echo $item['note_user'] ?></li><?php endif ?>
 		<?php if ( isset($item['note_stuff']) ): ?><li>员工留言 <?php echo $item['note_stuff'] ?></li><?php endif ?>
 	</ul>

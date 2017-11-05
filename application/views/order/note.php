@@ -31,42 +31,6 @@
 </div>
 
 <div id=content class=container>
-	<?php
-	// 需要特定角色和权限进行该操作
-	$current_role = $this->session->role; // 当前用户角色
-	$current_level = $this->session->level; // 当前用户级别
-	$role_allowed = array('管理员', '经理');
-	$level_allowed = 30;
-	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-	?>
-	<div class="btn-group btn-group-justified" role=group>
-		<div class=btn-group role=group>
-		    <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
-				所有 <span class="caret"></span>
-		    </button>
-		    <ul class=dropdown-menu>
-				<li>
-					<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
-				</li>
-
-		  		<?php
-		  		$status_to_mark = array('待接单', '待发货', '待收货', '待评价', '已评价', '已退款');
-		  		foreach ($status_to_mark as $status):
-		  			// 页面URL
-		  			$url = ($status === NULL)? base_url('order'): base_url('order?status='.$status);
-		  			// 链接样式
-		  			$style_class = ($this->input->get('status') !== $status)? 'btn-default': 'btn-primary';
-		  			echo '<li><a class="btn '. $style_class. '" title="'. $status. '订单" href="'. $url. '">'. $status. '</a> </li>';
-		  		endforeach;
-		  		?>
-		    </ul>
-		</div>
-
-		<a class="btn btn-default" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
-		<a class="btn btn-default" title="待发货商品订单" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
-	</div>
-	<?php endif ?>
-
 	<table class="table table-striped table-condensed table-responsive">
 		<thead>
 			<tr>
@@ -96,7 +60,7 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>确定要发货？请选择发货方式，并填写相应信息。</p>
+		<p>对订单的留言，将只对本商家的员工可见。</p>
 	</div>
 
 	<?php

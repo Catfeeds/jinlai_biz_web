@@ -1,7 +1,5 @@
 <link rel=stylesheet media=all href="/css/index.css">
 <style>
-    .item-status {position:absolute;top:20px;right:20px;}
-
     .order-figures {color:#c9caca;margin:50px -20px 0;}
         .order-figures>li {font-size:22px;border-right:1px solid #c9caca;padding:0 42px;}
             .order-figures>li:last-child {border:0;}
@@ -11,6 +9,10 @@
                     .reprice li:last-child a {color:#ff3649;border-color:#ff3649;}
                     .accept li:last-child a {color:#ff843c;border-color:#ff843c;}
                     .deliver li:last-child a {color:#1a6eef;border-color:#1a6eef;}
+
+    .item-actions.reprice, .item-actions.accept, .item-actions.deliver {background:url('/media/order/daifukuan@3x.png') no-repeat center bottom;height:94px;background-size:710px 26px;margin-left:-20px;margin-right:-20px;padding:0 20px;}
+    .item-actions.accept {background-image:url('/media/order/daijiedan@3x.png');}
+    .item-actions.deliver {background-image:url('/media/order/daifahuo@3x.png');}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -119,8 +121,8 @@
 					$status = $item['status'];
 			?>
 			<li>
+                <span class=item-status><?php echo $item['status'] ?></span>
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
-                    <span class=item-status><?php echo $item['status'] ?></span>
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
                     <p>下单时间 <?php echo date('Y-m-d H:i:s', $item['time_create']) ?></p>
 

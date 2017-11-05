@@ -1,6 +1,12 @@
 <style>
     #content {background-color:#fff;}
 
+    #nav-main {display:none;}
+
+    #item-actions {position:fixed;left:0;right:0;bottom:0;height:98px;line-height:98px;}
+        #item-actions li {color:#fff;background-color:#ff3649;}
+            #item-actions a {color:#fff;text-align:center;}
+
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
@@ -38,13 +44,14 @@
 	$role_allowed = array('管理员', '经理');
 	$level_allowed = 30;
 	?>
-
-	<ul class=list-unstyled>
+	<ul id=item-actions class=list-unstyled>
 		<?php
 		// 需要特定角色和权限进行该操作
 		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 		?>
-		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>
+		<li class="col-xs-12">
+            <a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a>
+        </li>
 		<?php endif ?>
 	</ul>
 

@@ -42,9 +42,9 @@
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'subtotal' => '小计（元）',
-				'total' => '应支付（元）',
-				'total_payed' => '已支付（元）',
+				'subtotal' => '小计',
+				'total' => '应支付',
+				'total_payed' => '已支付',
 				'status' => '状态',
 			);
 		}
@@ -120,15 +120,14 @@
 			$url = api_url($this->class_name. '/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
-				$data['item'] = array_filter( $result['content'] ); // 清除空元素
+				$data['item'] = $result['content']; // 清除空元素
 			else:
 				$data['error'] = $result['content']['error']['message'];
 			endif;
 
 			// 页面信息
-			$data['title'] = '商品订单№'. $data['item']['order_id'];
+			$data['title'] = '商品订单'. $data['item']['order_id'];
 			$data['class'] = $this->class_name.' detail';
-			//$data['keywords'] = $this->class_name.','. $data['item']['name'];
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -141,26 +140,13 @@
 		 */
 		public function note()
 		{
-			// 检查必要参数是否已传入
-			$required_params = $this->names_edit_bulk_required;
-			foreach ($required_params as $param):
-				${$param} = $this->input->post($param);
-				if ( empty( ${$param} ) ):
-					$data['error'] = '必要的请求参数未全部传入';
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-					exit();
-				endif;
-			endforeach;
-
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
+            // 操作可能需要检查操作权限
+            // $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
-			$op_name = '备注'; // 操作的名称
-			$op_view = 'note'; // 视图文件名
+            $op_name = '备注'; // 操作的名称
+            $op_view = 'note'; // 视图文件名
 
 			// 页面信息
 			$data = array(
@@ -177,6 +163,7 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
+                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -193,7 +180,7 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
-			$this->form_validation->set_rules('note_stuff', '员工留言', 'trim');
+			$this->form_validation->set_rules('note_stuff', '员工留言', 'trim|required');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -204,8 +191,22 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
+                // 检查必要参数是否已传入
+                $required_params = $this->names_edit_bulk_required;
+                foreach ($required_params as $param):
+                    ${$param} = $this->input->post($param);
+                    if ( empty( ${$param} ) ):
+                        $data['error'] = '必要的请求参数未全部传入';
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/'.$op_view, $data);
+                        $this->load->view('templates/footer', $data);
+                        exit();
+                    endif;
+                endforeach;
+
 				// 需要存入数据库的信息
 				$data_to_edit = array(
+                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -244,25 +245,13 @@
 		 */
 		public function reprice()
 		{
-			// 检查必要参数是否已传入
-			$required_params = $this->names_edit_bulk_required;
-			foreach ($required_params as $param):
-				${$param} = $this->input->post($param);
-				if ( empty( ${$param} ) ):
-					$data['error'] = '必要的请求参数未全部传入';
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-					exit();
-				endif;
-			endforeach;
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
+            // 操作可能需要检查操作权限
+            // $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
-			$op_name = '改价'; // 操作的名称
-			$op_view = 'reprice'; // 视图文件名
+            $op_name = '改价'; // 操作的名称
+            $op_view = 'reprice'; // 视图文件名
 
 			// 页面信息
 			$data = array(
@@ -279,6 +268,7 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
+                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -306,8 +296,22 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
+                // 检查必要参数是否已传入
+                $required_params = $this->names_edit_bulk_required;
+                foreach ($required_params as $param):
+                    ${$param} = $this->input->post($param);
+                    if ( empty( ${$param} ) ):
+                        $data['error'] = '必要的请求参数未全部传入';
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/'.$op_view, $data);
+                        $this->load->view('templates/footer', $data);
+                        exit();
+                    endif;
+                endforeach;
+
 				// 需要存入数据库的信息
 				$data_to_edit = array(
+                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -346,26 +350,13 @@
 		 */
 		public function refuse()
 		{
-			// 检查必要参数是否已传入
-			$required_params = $this->names_edit_bulk_required;
-			foreach ($required_params as $param):
-				${$param} = $this->input->post($param);
-				if ( empty( ${$param} ) ):
-					$data['error'] = '必要的请求参数未全部传入';
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-					exit();
-				endif;
-			endforeach;
-
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
+            // 操作可能需要检查操作权限
+            // $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
-			$op_name = '退单'; // 操作的名称
-			$op_view = 'refuse'; // 视图文件名
+            $op_name = '退单'; // 操作的名称
+            $op_view = 'refuse'; // 视图文件名
 
 			// 页面信息
 			$data = array(
@@ -382,6 +373,7 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
+                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -408,8 +400,22 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
+                // 检查必要参数是否已传入
+                $required_params = $this->names_edit_bulk_required;
+                foreach ($required_params as $param):
+                    ${$param} = $this->input->post($param);
+                    if ( empty( ${$param} ) ):
+                        $data['error'] = '必要的请求参数未全部传入';
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/'.$op_view, $data);
+                        $this->load->view('templates/footer', $data);
+                        exit();
+                    endif;
+                endforeach;
+
 				// 需要存入数据库的信息
 				$data_to_edit = array(
+                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -446,26 +452,13 @@
 		 */
 		public function accept()
 		{
-			// 检查必要参数是否已传入
-			$required_params = $this->names_edit_bulk_required;
-			foreach ($required_params as $param):
-				${$param} = $this->input->post($param);
-				if ( empty( ${$param} ) ):
-					$data['error'] = '必要的请求参数未全部传入';
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-					exit();
-				endif;
-			endforeach;
-
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
+            // 操作可能需要检查操作权限
+            // $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
-			$op_name = '接单'; // 操作的名称
-			$op_view = 'accept'; // 视图文件名
+            $op_name = '接单'; // 操作的名称
+            $op_view = 'accept'; // 视图文件名
 
 			// 页面信息
 			$data = array(
@@ -482,6 +475,7 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
+                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -508,8 +502,22 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
+                // 检查必要参数是否已传入
+                $required_params = $this->names_edit_bulk_required;
+                foreach ($required_params as $param):
+                    ${$param} = $this->input->post($param);
+                    if ( empty( ${$param} ) ):
+                        $data['error'] = '必要的请求参数未全部传入';
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/'.$op_view, $data);
+                        $this->load->view('templates/footer', $data);
+                        exit();
+                    endif;
+                endforeach;
+
 				// 需要存入数据库的信息
 				$data_to_edit = array(
+                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -548,26 +556,13 @@
 		 */
 		public function deliver()
 		{
-			// 检查必要参数是否已传入
-			$required_params = $this->names_edit_bulk_required;
-			foreach ($required_params as $param):
-				${$param} = $this->input->post($param);
-				if ( empty( ${$param} ) ):
-					$data['error'] = '必要的请求参数未全部传入';
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-					exit();
-				endif;
-			endforeach;
-
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
+            // 操作可能需要检查操作权限
+            // $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
-			$op_name = '发货'; // 操作的名称
-			$op_view = 'deliver'; // 视图文件名
+            $op_name = '发货'; // 操作的名称
+            $op_view = 'deliver'; // 视图文件名
 
 			// 页面信息
 			$data = array(
@@ -584,6 +579,7 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
+                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -613,8 +609,22 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
+                // 检查必要参数是否已传入
+                $required_params = $this->names_edit_bulk_required;
+                foreach ($required_params as $param):
+                    ${$param} = $this->input->post($param);
+                    if ( empty( ${$param} ) ):
+                        $data['error'] = '必要的请求参数未全部传入';
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/'.$op_view, $data);
+                        $this->load->view('templates/footer', $data);
+                        exit();
+                    endif;
+                endforeach;
+
 				// 需要存入数据库的信息
 				$data_to_edit = array(
+                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -659,6 +669,26 @@
 		{
 			
 		} // end valid
+
+        /**
+         * 删除订单
+         *
+         * 商家不可删除订单
+         */
+        public function delete()
+        {
+            exit('商家不可删除用户的订单；您意图删除用户订单的操作记录已被发送到安全中心。');
+        } // end valid
+
+        /**
+         * 找回订单
+         *
+         * 商家不可找回订单
+         */
+        public function restore()
+        {
+            exit('商家不可恢复用户的订单；您意图删除用户订单的操作记录已被发送到安全中心。');
+        } // end valid
 
 	} // end class Order
 
