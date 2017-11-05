@@ -1,5 +1,20 @@
 <link rel=stylesheet media=all href="/css/index.css">
 <style>
+    #bulk_action {background-color:#fff;position:fixed;left:0;right:0;bottom:98px;height:84px;line-height:84px;overflow:hidden;z-index:101;}
+        #bulk_action span:first-child {margin-left:20px;line-height:100%;}
+            #bulk_action span:first-child i {font-size:40px;width:40px;height:40px;}
+
+        #bulk_action ul {float:right;height:100%;}
+            #bulk_action li {height:100%;}
+            #bulk_action button {color:#fff;font-size:26px;width:160px;height:100%;line-height:100%;text-align:center;}
+
+    .color_primary a {color:#ff3649;border-color:#ff3649;}
+    .color_info a {color:#1a6eef;border-color:#1a6eef;}
+    .color_warning a {color:#ff843c;border-color:#ff843c;}
+
+    .bg_primary {background-color:#ff3649;}
+    .bg_info {background-color:#1a6eef;}
+    .bg_warning {background-color:#ff843c;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -67,13 +82,21 @@
 
 		<?php else: ?>
 		<form method=get target=_blank>
-			<fieldset>
-				<div class=btn-group role=group>
-					<button formaction="<?php echo base_url($this->class_name.'/publish') ?>" type=submit class="btn btn-warning">上架</button>
-					<button formaction="<?php echo base_url($this->class_name.'/suspend') ?>" type=submit class="btn btn-warning">下架</button>
-					<button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit class="btn btn-danger">删除</button>
-				</div>
-			</fieldset>
+            <div id=bulk_action>
+                <span><i class="fa fa-circle-o" aria-hidden=true></i></span>
+                <span>全选</span>
+                <ul class=horizontal>
+                    <li class=bg_info>
+                        <button formaction="<?php echo base_url($this->class_name.'/publish') ?>" type=submit>上架</button>
+                    </li>
+                    <li class=bg_warning>
+                        <button formaction="<?php echo base_url($this->class_name.'/suspend') ?>" type=submit>下架</button>
+                    </li>
+                    <li class=bg_primary>
+                        <button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit>删除</button>
+                    </libg_primary>
+                </ul>
+            </div>
 
             <ul id=item-list class=row>
                 <?php foreach ($items as $item): ?>
@@ -92,23 +115,25 @@
                         </span>
 
                         <ul class=horizontal>
+                            <li class=color_warning><a title="规格管理" href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>规格 <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+
                         <?php
                             // 需要特定角色和权限进行该操作
                             if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
                         ?>
                             <?php if ( !empty($item['time_publish']) ): ?>
-                            <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-level-down"></i> 下架</a></li>
+                            <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
                             <?php endif ?>
 
                             <?php if ( !empty($item['time_suspend']) ): ?>
-                            <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-level-up"></i> 上架</a></li>
+                            <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank>上架</a></li>
 
                                 <?php if ( empty($item['time_delete']) ): ?>
-                            <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-trash"></i> 删除</a></li>
+                            <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
                                 <?php endif ?>
                             <?php endif ?>
 
-                            <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-edit"></i> 编辑</a></li>
+                            <li class=color_primary><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
                         <?php endif ?>
                         </ul>
                     </div>
