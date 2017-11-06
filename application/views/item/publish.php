@@ -81,7 +81,7 @@
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
-				<button class="btn btn-warning btn-lg btn-block" type=submit>确定</button>
+				<button class="btn btn-warning btn-lg btn-block" type=submit>上架</button>
 		    </div>
 		</div>
 	</form>

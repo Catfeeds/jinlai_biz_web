@@ -23,7 +23,6 @@
 <base href="<?php echo $this->media_root ?>">
 
 <div id=content class=container>
-
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');

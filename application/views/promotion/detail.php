@@ -38,8 +38,7 @@
 	$role_allowed = array('管理员', '经理');
 	$level_allowed = 30;
 	?>
-	
-	<ul class=list-unstyled>
+	<ul id=item-actions class=list-unstyled>
 		<?php
 		// 需要特定角色和权限进行该操作
 		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):

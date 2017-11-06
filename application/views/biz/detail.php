@@ -37,19 +37,24 @@
 	<?php if ( empty($item) ): ?>
 	<p><?php echo $error ?></p>
 
-	<?php else: ?>
-	<ul class="list-unstyled row">
-		<?php
-		// 需要特定角色和权限进行该操作
-		$current_role = $this->session->role; // 当前用户角色
-		$current_level = $this->session->level; // 当前用户级别
-		$role_allowed = array('管理员', '经理');
-		$level_allowed = 30;
-		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-		?>
-		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>
-		<?php endif ?>
-	</ul>
+	<?php
+        else:
+        // 需要特定角色和权限进行该操作
+        $current_role = $this->session->role; // 当前用户角色
+        $current_level = $this->session->level; // 当前用户级别
+        $role_allowed = array('管理员', '经理');
+        $level_allowed = 30;
+    ?>
+        <ul id=item-actions class=list-unstyled>
+            <?php
+            // 需要特定角色和权限进行该操作
+            if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+                ?>
+                <li class="col-xs-12">
+                    <a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a>
+                </li>
+            <?php endif ?>
+        </ul>
 
 	<div class="jumbotron row">
 		<dl id=core-info class=dl-horizontal>

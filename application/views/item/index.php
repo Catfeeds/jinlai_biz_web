@@ -99,9 +99,11 @@
 
 	<?php else: ?>
         <div id=primary_actions class=action_bottom>
+            <?php if ( !empty($items) ): ?>
             <span id=enter_bulk>
                 <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量操作
             </span>
+            <?php endif ?>
             <ul class=horizontal>
                 <li>
                     <a class=bg_second title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
@@ -122,7 +124,6 @@
 		<?php if ( empty($items) ): ?>
 		<blockquote class=row>
 			<p>您的货架空空如也，快点添加商品吧！</p>
-			<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('item/create') ?>">创建一个</a>
 		</blockquote>
 
 		<?php else: ?>

@@ -74,7 +74,7 @@
 			<div class=form-group>
 				<label for=note_stuff class="col-sm-2 control-label">员工备注</label>
 				<div class=col-sm-10>
-					<textarea class=form-control name=note_stuff row=5 required><?php echo $item['note_stuff'] ?></textarea>
+					<textarea class=form-control name=note_stuff row=5 placeholder="最多255个字符" required><?php echo $item['note_stuff'] ?></textarea>
 				</div>
 			</div>
 
