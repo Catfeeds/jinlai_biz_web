@@ -60,7 +60,7 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>确定要<?php echo $title ?>？</p>
+		<p>确定要<?php echo $title ?>？被删除商品将同时被标记为已下架。</p>
 	</div>
 
 	<?php

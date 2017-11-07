@@ -326,7 +326,7 @@
 				<div class=col-sm-10>
 					<?php if ( empty($biz_freight_templates) ): ?>
 					<p class="help-block">您目前没有可用的运费模板，仅可包邮</p>
-					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-primary btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建一个</a>
+					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz') ?>">创建一个</a>
 					<?php endif ?>
 					
 					<select class=form-control name=freight_template_id>

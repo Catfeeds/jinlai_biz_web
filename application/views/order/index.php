@@ -1,5 +1,8 @@
 <link rel=stylesheet media=all href="/css/index.css">
 <style>
+    body {margin-bottom:202px;}
+    .action_bottom{bottom:98px;}
+    
     .order-figures {color:#c9caca;margin:50px -20px 0;}
         .order-figures>li {font-size:22px;border-right:1px solid #c9caca;padding:0 42px;}
             .order-figures>li:last-child {border:0;}
@@ -32,6 +35,8 @@
 
 	}
 </style>
+
+<script defer src="/js/index.js"></script>
 
 <base href="<?php echo $this->media_root ?>">
 
@@ -91,29 +96,52 @@
 	</blockquote>
 
 	<?php else: ?>
-	<form method=get target=_blank>
-		<?php
-			if ( !empty($this->input->get('status')) ):
-				$status = $this->input->get('status');
-		?>
-		<fieldset>
-			<div class=btn-group role=group>
-				<button formaction="<?php echo base_url($this->class_name.'/note') ?>" type=submit class="btn btn-default">备注</button>
-				<?php if ($status === '待付款'): ?>
-				<button formaction="<?php echo base_url($this->class_name.'/reprice') ?>" type=submit class="btn btn-default">改价</button>
-				<?php endif ?>
+    <div id=primary_actions class=action_bottom>
+        <?php if (count($items) > 1): ?>
+        <span id=enter_bulk>
+            <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
+        </span>
+        <?php endif ?>
+    </div>
 
-				<?php if ($status === '待接单'): ?>
-				<button formaction="<?php echo base_url($this->class_name.'/accept') ?>" type=submit class="btn btn-default">接单</button>
-				<button formaction="<?php echo base_url($this->class_name.'/refuse') ?>" type=submit class="btn btn-default">退单</button>
-				<?php endif ?>
-				
-				<?php if ($status === '待发货'): ?>
-				<button formaction="<?php echo base_url($this->class_name.'/deliver') ?>" type=submit class="btn btn-default">发货</button>
-				<?php endif ?>
-			</div>
-		</fieldset>
-		<?php endif ?>
+	<form method=get target=_blank>
+        <?php
+            $status = $this->input->get('status');
+            if (count($items) > 1 && !empty($status)):
+        ?>
+        <div id=bulk_action class=action_bottom>
+            <span id="bulk_selector" data-bulk-selector=off>
+                <i class="fa fa-circle-o" aria-hidden=true></i>全选
+            </span>
+            <span id=exit_bulk>取消</span>
+            <ul class=horizontal>
+                <li>
+                    <button class=bg_third formaction="<?php echo base_url($this->class_name.'/note') ?>" type=submit>备注</button>
+                </li>
+
+                <?php if ($status === '待付款'): ?>
+                <li>
+                    <button class=bg_primary formaction="<?php echo base_url($this->class_name.'/reprice') ?>" type=submit>改价</button>
+                </li>
+                <?php endif ?>
+
+                <?php if ($status === '待接单'): ?>
+                <li>
+                    <button formaction="<?php echo base_url($this->class_name.'/refuse') ?>" type=submit>退单</button>
+                </li>
+                <li>
+                    <button class=bg_primary formaction="<?php echo base_url($this->class_name.'/accept') ?>" type=submit>接单</button>
+                </li>
+                <?php endif ?>
+
+                <?php if ($status === '待发货'): ?>
+                <li>
+                    <button class=bg_primary formaction="<?php echo base_url($this->class_name.'/deliver') ?>" type=submit>发货</button>
+                </li>
+                <?php endif ?>
+            </ul>
+        </div>
+        <?php endif ?>
 
 		<ul id=item-list class=row>
 			<?php

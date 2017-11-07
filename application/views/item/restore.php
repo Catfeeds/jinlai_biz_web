@@ -60,7 +60,7 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>确定要<?php echo $title ?>？</p>
+		<p>确定要<?php echo $title ?>？恢复后商品将出现在已下架商品列表中。</p>
 	</div>
 
 	<?php

@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'sku_id', 'biz_id', 'item_id', 'url_image', 'name_first', 'name_second', 'name_third', 'price', 'stocks', 'weight_net', 'weight_gross', 'weight_volume',
+			'biz_id', 'item_id', 'url_image', 'name_first', 'name_second', 'name_third', 'price', 'stocks', 'weight_net', 'weight_gross', 'weight_volume',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -29,8 +29,7 @@
 		 * 完整编辑单行时必要的字段名
 		 */
 		protected $names_edit_required = array(
-			'id',
-			'item_id', 'name_first', 'price', 'stocks',
+			'id', 'item_id', 'name_first', 'price', 'stocks',
 		);
 
 		/**

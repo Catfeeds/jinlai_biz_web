@@ -51,11 +51,6 @@
 
 	<?php else: ?>
 	<form method=get target=_blank>
-		<fieldset>
-			<div class=btn-group role=group>
-				<button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit class="btn btn-default">删除</button>
-			</div>
-		</fieldset>
 
 		<table class="table table-condensed table-responsive table-striped sortable">
 			<thead>

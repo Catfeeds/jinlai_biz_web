@@ -1,3 +1,4 @@
+<link rel=stylesheet media=all href="/css/detail.css">
 <style>
 
 
@@ -45,7 +46,7 @@
 	</div>
 	<?php endif ?>
 	
-	<ul class=list-unstyled>
+	<ul id=item-actions class=list-unstyled>
 		<?php
 		// 仅可修改自己的信息
 		if ( $item['user_id'] === $this->session->user_id ):

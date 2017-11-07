@@ -1,3 +1,4 @@
+<link rel=stylesheet media=all href="/css/detail.css">
 <style>
 
 
@@ -37,7 +38,6 @@
     $current_level = $this->session->level; // 当前用户级别
     $role_allowed = array('管理员', '经理');
     $level_allowed = 30;
-    // TODO
     ?>
     <ul id=item-actions class=list-unstyled>
         <?php

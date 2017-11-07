@@ -20,6 +20,8 @@
 	}
 </style>
 
+<script defer src="/js/index.js"></script>
+
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
@@ -45,6 +47,19 @@
 	</div>
 	<?php endif ?>
 
+    <div id=primary_actions class=action_bottom>
+        <?php if ( isset($items) && count($items) > 1): ?>
+            <span id=enter_bulk>
+                <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
+            </span>
+        <?php endif ?>
+        <ul class=horizontal>
+            <li>
+                <a class=bg_primary title="绑定<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">绑定</a>
+            </li>
+        </ul>
+    </div>
+
 	<?php if ( empty($items) ): ?>
 	<blockquote>
 		<p>这里空空如也，快点添加<?php echo $this->class_name_cn ?>吧</p>
@@ -52,55 +67,52 @@
 
 	<?php else: ?>
 	<form method=get target=_blank>
-		<fieldset>
-			<div class=btn-group role=group>
-				<button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit class="btn btn-default">删除</button>
-			</div>
-		</fieldset>
+        <?php if (count($items) > 1): ?>
+        <div id=bulk_action class=action_bottom>
+            <span id="bulk_selector" data-bulk-selector=off>
+                <i class="fa fa-circle-o" aria-hidden=true></i>全选
+            </span>
+            <span id=exit_bulk>取消</span>
+            <ul class=horizontal>
+                <li>
+                    <button class=bg_primary formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit>删除</button>
+                </li>
+            </ul>
+        </div>
+        <?php endif ?>
 
-		<table class="table table-condensed table-responsive table-striped sortable">
-			<thead>
-				<tr>
-					<th>&nbsp;</th>
-					<th><?php echo $this->class_name_cn ?>ID</th>
-					<?php
-						$thead = array_values($data_to_display);
-						foreach ($thead as $th):
-							echo '<th>' .$th. '</th>';
-						endforeach;
-					?>
-					<th>操作</th>
-				</tr>
-			</thead>
+        <ul id=item-list class=row>
+            <?php foreach ($items as $item): ?>
+            <li>
 
-			<tbody>
-			<?php foreach ($items as $item): ?>
-				<tr>
-					<td>
-						<input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
-					</td>
-					<td><?php echo $item[$this->id_name] ?></td>
-					<?php
-						$tr = array_keys($data_to_display);
-						foreach ($tr as $td):
-							echo '<td>' .$item[$td]. '</td>';
-						endforeach;
-					?>
-					<td>
-						<ul class=list-unstyled>
-							<?php
-							// 需要特定角色和权限进行该操作
-							if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) && ($this->session->level >= $item['level']) ):
-							?>
+                <span class=item-status><?php echo $item['status'] ?></span>
+                <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
+                    <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
+                    <p>姓名 <?php echo $item['fullname'] ?></p>
+                    <p>手机号 <?php echo $item['mobile'] ?></p>
+                    <p>角色 <?php echo $item['role'] ?></p>
+                    <p>级别 <?php echo $item['level'] ?></p>
+                </a>
+
+                <div class="item-actions">
+                <span>
+                    <input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
+                </span>
+
+                    <ul class=horizontal>
+                        <?php
+                        // 需要特定角色和权限进行该操作
+                        if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+                            ?>
                             <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
-							<li class="color_primary"><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
-							<?php endif ?>
-						</ul>
-					</td>
-				</tr>
-			<?php endforeach ?>
-			</tbody>
-		</table>
+                            <li class=color_primary><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
+                        <?php endif ?>
+                    </ul>
+                </div>
+
+            </li>
+            <?php endforeach ?>
+        </ul>
 
 	</form>
 	<?php endif ?>

@@ -28,8 +28,7 @@
 		 * 完整编辑单行时必要的字段名
 		 */
 		protected $names_edit_required = array(
-			'id',
-			'title', 'excerpt', 'content'
+			'id', 'title', 'excerpt', 'content'
 		);
 		
 		/**

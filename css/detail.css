@@ -6,6 +6,12 @@
 @charset "utf-8";
 @viewport{width:device-width;}
 
+#nav-main {display:none;}
+
+#item-actions {position:fixed;left:0;right:0;bottom:0;height:98px;line-height:98px;}
+#item-actions li {color:#fff;background-color:#ff3649;}
+#item-actions a {color:#fff;text-align:center;}
+
 /* 宽度在750像素以上的设备 */
 @media only screen and (min-width:751px)
 {

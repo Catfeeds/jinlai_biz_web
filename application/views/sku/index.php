@@ -20,6 +20,8 @@
 	}
 </style>
 
+<script defer src="/js/index.js"></script>
+
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
@@ -55,6 +57,19 @@
 			<img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
 		</figure>
 	</section>
+
+    <div id=primary_actions class=action_bottom>
+        <?php if ( isset($items) && count($items) > 1): ?>
+            <span id=enter_bulk>
+            <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
+        </span>
+        <?php endif ?>
+        <ul class=horizontal>
+            <li>
+                <a class=bg_primary title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create?item_id='.$comodity['item_id']) ?>">创建</a>
+            </li>
+        </ul>
+    </div>
 	<?php endif ?>
 
 	<?php if ( empty($items) ): ?>
@@ -64,46 +79,49 @@
 
 	<?php else: ?>
 	<form method=get target=_blank>
-		<fieldset>
-			<div class=btn-group role=group>
-				<button formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit class="btn btn-default">删除</button>
-			</div>
-		</fieldset>
+        <?php if (count($items) > 1): ?>
+        <div id=bulk_action class=action_bottom>
+            <span id="bulk_selector" data-bulk-selector=off>
+                <i class="fa fa-circle-o" aria-hidden=true></i>全选
+            </span>
+            <span id=exit_bulk>取消</span>
+            <ul class=horizontal>
+                <li>
+                    <button class=bg_primary formaction="<?php echo base_url($this->class_name.'/delete') ?>" type=submit>删除</button>
+                </li>
+            </ul>
+        </div>
+        <?php endif ?>
 
         <ul id=item-list class=row>
-            <?php foreach ($items as $item): ?>
-                <li>
+        <?php foreach ($items as $item): ?>
+            <li>
 
-                    <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
-                        <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                        <p>一级规格 <?php echo $item['name_first'] ?></p>
-                        <p>二级规格 <?php echo $item['name_second'] ?></p>
-                        <p>三级规格 <?php echo $item['name_third'] ?></p>
-                        <p>商城价/现价 ￥<?php echo $item['price'] ?></p>
-                        <p>库存 <?php echo $item['stocks'] ?></p>
-                    </a>
+                <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
+                    <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
+                    <p>名称 <?php echo $item['name_first'].$item['name_second'].$item['name_third'] ?></p>
+                    <p>商城现价 ￥<?php echo $item['price'] ?></p>
+                    <p>库存 <?php echo $item['stocks'] ?></p>
+                </a>
 
-                    <div class="item-actions">
-                        <span>
-                            <input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
-                        </span>
+                <div class=item-actions>
+                    <span>
+                        <input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
+                    </span>
 
-                        <ul class=horizontal>
-                            <?php
-                            // 需要特定角色和权限进行该操作
-                            if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-                                ?>
-                                <?php if ( empty($item['time_delete']) ): ?>
-                                <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
-                            <?php endif ?>
+                    <ul class=horizontal>
+                        <?php
+                        // 需要特定角色和权限进行该操作
+                        if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+                            ?>
+                        <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
+                        <li class=color_primary><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
+                        <?php endif ?>
+                    </ul>
+                </div>
 
-                                <li class="color_primary"><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
-                            <?php endif ?>
-                        </ul>
-                    </div>
-
-                </li>
-            <?php endforeach ?>
+            </li>
+        <?php endforeach ?>
         </ul>
 
 	</form>

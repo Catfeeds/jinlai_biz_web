@@ -1,3 +1,4 @@
+<link rel=stylesheet media=all href="/css/detail.css">
 <style>
 
 
@@ -43,7 +44,7 @@
 		// 需要特定角色和权限进行该操作
 		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 		?>
-		<li><a title="报名" href="<?php echo base_url($this->class_name.'/apply?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-fw fa-edit"></i> 报名</a></li>
+		<li><a title="报名" href="<?php echo base_url($this->class_name.'/apply?id='.$item[$this->id_name]) ?>" target=_blank>报名</a></li>
 		<?php endif ?>
 	</ul>
 

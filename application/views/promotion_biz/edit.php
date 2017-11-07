@@ -114,19 +114,19 @@
 					<?php if ( !empty($item['url_image']) ): ?>
 					<div class=row>
 						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image_main'] ?>">
+							<img src="<?php echo $item['url_image'] ?>">
 						</figure>
 					</div>
 					<?php endif ?>
 
 					<div>
 						<p class=help-block>该图用于手机等窄屏设备</p>
-						<?php $name_to_upload = 'url_image_main' ?>
+						<?php $name_to_upload = 'url_image' ?>
 					
 						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
 						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="promotion_biz/image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="promotion_biz/url_image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
 						<ul class="upload_preview list-inline row"></ul>
 					</div>

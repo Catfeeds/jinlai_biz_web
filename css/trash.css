@@ -1,5 +1,5 @@
 /**
- * index.css
+ * trash.css
  *
  * 适用于列表页的样式规则
  */
@@ -11,8 +11,7 @@ body {margin-bottom:104px;}
 #content {min-height:670px;}
 
 .action_bottom {background-color:#fff;position:fixed;left:0;right:0;bottom:0;height:84px;line-height:84px;overflow:hidden;z-index:101;}
-    #primary_actions {}
-    #bulk_action {display:none;}
+    #bulk_action {}
 
         .action_bottom>span {padding:0 25px;line-height:84px;cursor:pointer;display:inline-block;}
             .action_bottom>span:first-child {padding:0 25px 0 20px;}
@@ -39,7 +38,6 @@ body {margin-bottom:104px;}
 .item-status {position:absolute;top:20px;right:20px;}
 
 .item-actions {height:80px;line-height:80px;margin-top:20px;border-top:1px solid #c9caca;}
-.item-actions [type=checkbox] {display:none;}
 
 .item-actions>* {float:left;display:inline;}
 .item-actions>span {width:40px;height:40px;}

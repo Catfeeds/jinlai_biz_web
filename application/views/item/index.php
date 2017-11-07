@@ -1,5 +1,7 @@
 <link rel=stylesheet media=all href="/css/index.css">
 <style>
+    body {margin-bottom:202px;}
+    .action_bottom{bottom:98px;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -20,50 +22,7 @@
 	}
 </style>
 
-<script>
-    $(function(){
-        // 显示批量操作栏
-        $('#enter_bulk').click(function(){
-            $('#primary_actions').hide();
-            $('#bulk_action').show();
-            $('.item-actions [type=checkbox]').show();
-        });
-        // 隐藏批量操作栏
-        $('#exit_bulk').click(function(){
-            $('.item-actions [type=checkbox]').hide();
-            $('#bulk_action').hide();
-            $('#primary_actions').show();
-        });
-
-        // 全选
-        $('#bulk_selector').click(function(){
-            if ($(this).attr('data-bulk-selector') == 'off')
-            {
-                $(this).attr('data-bulk-selector', 'on');
-                $("form :checkbox").prop("checked", true);
-                //console.log('已全选');
-                //get_checked();
-            }
-            else
-            {
-                $(this).attr('data-bulk-selector', 'off');
-                $("form :checkbox").prop("checked", false);
-                //console.log('已全不选');
-                //get_checked();
-            }
-        });
-        // 测试全选功能
-        function get_checked()
-        {
-            var ids_selected = new Array;
-            $('form :checkbox:checked').each(function(i){
-                ids_selected[i] = $(this).val();
-            });
-            console.log(ids_selected);
-            console.log(ids_selected.join(','));
-        }
-    });
-</script>
+<script defer src="/js/index.js"></script>
 
 <base href="<?php echo $this->media_root ?>">
 
@@ -99,9 +58,9 @@
 
 	<?php else: ?>
         <div id=primary_actions class=action_bottom>
-            <?php if ( !empty($items) ): ?>
+            <?php if ( isset($items) && count($items) > 1): ?>
             <span id=enter_bulk>
-                <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量操作
+                <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
             </span>
             <?php endif ?>
             <ul class=horizontal>
@@ -117,7 +76,7 @@
 		<?php if ( $count['biz_freight_templates'] === 0 ): ?>
 		<blockquote class=row>
 			<p>您未添加运费模板，将为买家包邮。</p>
-			<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz/create') ?>">创建运费模板</a>
+			<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz') ?>">创建运费模板</a>
 		</blockquote>
 		<?php endif ?>
 
@@ -128,11 +87,12 @@
 
 		<?php else: ?>
 		<form method=get target=_blank>
-            <div id=bulk_action class="action_bottom">
+            <?php if (count($items) > 1): ?>
+            <div id=bulk_action class=action_bottom>
                 <span id="bulk_selector" data-bulk-selector=off>
                     <i class="fa fa-circle-o" aria-hidden=true></i>全选
                 </span>
-                <span id="exit_bulk">其它</span>
+                <span id=exit_bulk>取消</span>
                 <ul class=horizontal>
                     <li>
                         <button class=bg_third formaction="<?php echo base_url($this->class_name.'/publish') ?>" type=submit>上架</button>
@@ -145,6 +105,7 @@
                     </li>
                 </ul>
             </div>
+            <?php endif ?>
 
             <ul id=item-list class=row>
                 <?php foreach ($items as $item): ?>

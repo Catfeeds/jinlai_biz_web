@@ -29,8 +29,7 @@
 		 * 完整编辑单行时必要的字段名
 		 */
 		protected $names_edit_required = array(
-			'id',
-			'name',
+			'id', 'name',
 		);
 
 		/**
@@ -64,7 +63,6 @@
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'url_image' => '分类图片',
 				'name' => '名称',
 			);
 		}

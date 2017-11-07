@@ -1,3 +1,4 @@
+<link rel=stylesheet media=all href="/css/detail.css">
 <style>
 
 
@@ -50,7 +51,7 @@
     </ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>优惠券ID</dt>
+        <dt>优惠券ID</dt>
 		<dd><?php echo $item['coupon_id'] ?></dd>
 		<dt>所属用户ID</dt>
 		<dd><?php echo $item['user_id'] ?></dd>
