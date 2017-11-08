@@ -84,6 +84,8 @@
 		</dd>
 
 		<dt>形象视频</dt>
+        <dd>高级商家功能，请联系品类负责人确认开通条件。</dd>
+        <!--
 		<dd>
 			<?php if ( !empty($item['figure_video_urls']) ): ?>
 			<ul class=row>
@@ -100,6 +102,7 @@
 			未上传
 			<?php endif ?>
 		</dd>
+		-->
 
 		<dt>状态</dt>
 		<dd><?php echo $item['status'] ?></dd>

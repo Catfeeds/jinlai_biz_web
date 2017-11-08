@@ -88,7 +88,7 @@
 		// 将数组输出为key:value格式，主要用于在postman等工具中进行api测试
 		protected function key_value($params)
 		{
-			foreach ($params as $key => $value):
+			foreach (array_filter($params) as $key => $value):
 				echo $key .':' .$value ."\n";
 			endforeach;
 		} // end key_value

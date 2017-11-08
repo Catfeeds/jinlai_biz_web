@@ -35,8 +35,7 @@
 		 * 完整编辑单行时必要的字段名
 		 */
 		protected $names_edit_required = array(
-			'id',
-			'tel_public', 'fullname_owner', 'code_license', 'code_ssn_owner',
+			'id', 'tel_public', 'fullname_owner', 'code_license', 'code_ssn_owner',
 		);
 		
 		/**

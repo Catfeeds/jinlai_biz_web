@@ -66,27 +66,34 @@
 
 			<div class=form-group>
 				<label for=url_logo class="col-sm-2 control-label">LOGO</label>
-				<div class=col-sm-10>
-					<?php if ( !empty($item['url_logo']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_logo'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
+                <div class=col-sm-10>
+                    <p class=help-block>正方形图片视觉效果最佳</p>
 
-					<div>
-						<?php $name_to_upload = 'url_logo' ?>
+                    <?php $name_to_upload = 'url_logo' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                                <i class="remove fa fa-minus"></i>
+                                <i class="left fa fa-arrow-left"></i>
+                                <i class="right fa fa-arrow-right"></i>
+                                <figure>
+                                    <img src="<?php echo $item[$name_to_upload] ?>">
+                                </figure>
+                            </li>
 
-						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="biz/logo" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                        <?php endif ?>
+                    </ul>
 
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-				</div>
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/logo" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 
 			<div class=form-group>
@@ -193,109 +200,129 @@
 
 			<div class=form-group>
 				<label for=url_image_license class="col-sm-2 control-label">营业执照※</label>
-				<div class=col-sm-10>
-					<?php if ( !empty($item['url_image_license']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image_license'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
+                <div class=col-sm-10>
+                    <?php $name_to_upload = 'url_image_license' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-					<div>
-						<?php $name_to_upload = 'url_image_license' ?>
-					
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>" required>
+                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                                <i class="remove fa fa-minus"></i>
+                                <i class="left fa fa-arrow-left"></i>
+                                <i class="right fa fa-arrow-right"></i>
+                                <figure>
+                                    <img src="<?php echo $item[$name_to_upload] ?>">
+                                </figure>
+                            </li>
 
-						<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/license" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                        <?php endif ?>
+                    </ul>
 
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>" required>
 
-				</div>
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/license" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 
 			<div class=form-group>
 				<label for=url_image_owner_id class="col-sm-2 control-label">法人身份证※</label>
-				<div class=col-sm-10>
-					<?php if ( !empty($item['url_image_owner_id']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image_owner_id'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
+                <div class=col-sm-10>
+                    <?php $name_to_upload = 'url_image_owner_id' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-					<div>
-						<?php $name_to_upload = 'url_image_owner_id' ?>
-					
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>" required>
+                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                                <i class="remove fa fa-minus"></i>
+                                <i class="left fa fa-arrow-left"></i>
+                                <i class="right fa fa-arrow-right"></i>
+                                <figure>
+                                    <img src="<?php echo $item[$name_to_upload] ?>">
+                                </figure>
+                            </li>
 
-						<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/owner_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                        <?php endif ?>
+                    </ul>
 
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>" required>
 
-				</div>
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/owner_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 
 			<div class=form-group>
 				<label for=url_image_auth_id class="col-sm-2 control-label">经办人身份证</label>
-				<div class=col-sm-10>
-					<p class=help-block>如果负责业务对接的不是法人本人，请上传经办人身份证</p>
-					
-					<?php if ( !empty($item['url_image_auth_id']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image_auth_id'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
+                <div class=col-sm-10>
+                    <p class=help-block>如果负责业务对接的不是法人本人，请上传经办人身份证</p>
 
-					<div>
-						<?php $name_to_upload = 'url_image_auth_id' ?>
-					
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                    <?php $name_to_upload = 'url_image_auth_id' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-						<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/auth_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                                <i class="remove fa fa-minus"></i>
+                                <i class="left fa fa-arrow-left"></i>
+                                <i class="right fa fa-arrow-right"></i>
+                                <figure>
+                                    <img src="<?php echo $item[$name_to_upload] ?>">
+                                </figure>
+                            </li>
 
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
+                        <?php endif ?>
+                    </ul>
 
-				</div>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/auth_id" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 
 			<div class=form-group>
 				<label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书</label>
-				<div class=col-sm-10>
-					<p class=help-block>
-						如果负责业务对接的不是法人本人，请上传授权书
-						<small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-admission') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small>
-					</p>
+                <div class=col-sm-10>
+                    <p class=help-block>
+                        如果负责业务对接的不是法人本人，请上传授权书
+                        <small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-admission') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small>
+                    </p>
 
-					<?php if ( !empty($item['url_image_auth_doc']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image_auth_doc'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
+                    <?php $name_to_upload = 'url_image_auth_doc' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-					<div>
-						<?php $name_to_upload = 'url_image_auth_doc' ?>
-					
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                                <i class="remove fa fa-minus"></i>
+                                <i class="left fa fa-arrow-left"></i>
+                                <i class="right fa fa-arrow-right"></i>
+                                <figure>
+                                    <img src="<?php echo $item[$name_to_upload] ?>">
+                                </figure>
+                            </li>
 
-						<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/auth_doc" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                        <?php endif ?>
+                    </ul>
 
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-				</div>
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/auth_doc" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 		</fieldset>
 
@@ -305,77 +332,107 @@
 
 			<div class=form-group>
 				<label for=url_image_product class="col-sm-2 control-label">产品</label>
-				<div class=col-sm-10>
-					<?php if ( !empty($item['url_image_product']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image_product'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
+                <div class=col-sm-10>
+                    <?php $name_to_upload = 'url_image_product' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-					<div>
-						<?php $name_to_upload = 'url_image_product' ?>
-					
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                            <?php
+                            $figure_image_urls = explode(',', $item[$name_to_upload]);
+                            foreach($figure_image_urls as $url):
+                                ?>
+                                <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $url ?>">
+                                    <i class="remove fa fa-minus"></i>
+                                    <i class="left fa fa-arrow-left"></i>
+                                    <i class="right fa fa-arrow-right"></i>
+                                    <figure>
+                                        <img src="<?php echo $url ?>">
+                                    </figure>
+                                </li>
+                            <?php endforeach ?>
 
-						<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/product" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                        <?php endif ?>
+                    </ul>
 
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-				</div>
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/product" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="4" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 
 			<div class=form-group>
 				<label for=url_image_produce class="col-sm-2 control-label">工厂/产地</label>
-				<div class=col-sm-10>
-					<?php if ( !empty($item['url_image_produce']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image_produce'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
+                <div class=col-sm-10>
+                    <?php $name_to_upload = 'url_image_produce' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-					<div>
-						<?php $name_to_upload = 'url_image_produce' ?>
-					
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                            <?php
+                            $figure_image_urls = explode(',', $item[$name_to_upload]);
+                            foreach($figure_image_urls as $url):
+                                ?>
+                                <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $url ?>">
+                                    <i class="remove fa fa-minus"></i>
+                                    <i class="left fa fa-arrow-left"></i>
+                                    <i class="right fa fa-arrow-right"></i>
+                                    <figure>
+                                        <img src="<?php echo $url ?>">
+                                    </figure>
+                                </li>
+                            <?php endforeach ?>
 
-						<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/produce" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                        <?php endif ?>
+                    </ul>
 
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-				</div>
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/produce" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="4" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 
 			<div class=form-group>
 				<label for=url_image_retail class="col-sm-2 control-label">门店/柜台</label>
-				<div class=col-sm-10>
-					<?php if ( !empty($item['url_image_retail']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image_retail'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
+                <div class=col-sm-10>
+                    <?php $name_to_upload = 'url_image_retail' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-					<div>
-						<?php $name_to_upload = 'url_image_retail' ?>
-					
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                            <?php
+                            $figure_image_urls = explode(',', $item[$name_to_upload]);
+                            foreach($figure_image_urls as $url):
+                                ?>
+                                <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $url ?>">
+                                    <i class="remove fa fa-minus"></i>
+                                    <i class="left fa fa-arrow-left"></i>
+                                    <i class="right fa fa-arrow-right"></i>
+                                    <figure>
+                                        <img src="<?php echo $url ?>">
+                                    </figure>
+                                </li>
+                            <?php endforeach ?>
 
-						<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="biz/retail" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                        <?php endif ?>
+                    </ul>
 
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-				</div>
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/retail" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="4" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 		</fieldset>
 		

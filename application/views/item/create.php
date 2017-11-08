@@ -5,7 +5,7 @@
 	{
 
 	}
-	
+
 	/* 宽度在960像素以上的设备 */
 	@media only screen and (min-width:961px)
 	{

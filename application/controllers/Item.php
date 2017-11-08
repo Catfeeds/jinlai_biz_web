@@ -29,7 +29,7 @@
 		 * 完整编辑单行时必要的字段名
 		 */
 		protected $names_edit_required = array(
-			'id', 'url_image_main', 'name', 'price', 'stocks', 'freight_template_id',
+			'id', 'url_image_main', 'name', 'price', 'stocks',
 		);
 
 		/**

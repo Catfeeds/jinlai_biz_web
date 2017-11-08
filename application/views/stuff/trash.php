@@ -73,7 +73,6 @@
             <?php foreach ($items as $item): ?>
             <li>
 
-                <span class=item-status><?php echo $item['status'] ?></span>
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
                     <p>姓名 <?php echo $item['fullname'] ?></p>

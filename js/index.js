@@ -14,6 +14,15 @@ $(function(){
         $('#primary_actions').show();
     });
 
+    // 检查是否已选中待批量操作项
+    $('#bulk_action [type=submit]').click(function(){
+        var items_selected = get_checked();
+        var items_selected_count = items_selected.length;
+        if (items_selected_count < 1){
+            return false;
+        }
+    });
+
     // 全选
     $('#bulk_selector').click(function(){
         if ($(this).attr('data-bulk-selector') == 'off')
@@ -38,7 +47,6 @@ $(function(){
         $('form :checkbox:checked').each(function(i){
             ids_selected[i] = $(this).val();
         });
-        console.log(ids_selected);
-        console.log(ids_selected.join(','));
+        return ids_selected;
     }
 });
