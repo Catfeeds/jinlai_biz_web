@@ -51,7 +51,7 @@
 		// 仅可修改自己的信息
 		if ( $item['user_id'] === $this->session->user_id ):
 		?>
-		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>
+		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
 		<?php endif ?>
 	</ul>
 
@@ -106,12 +106,7 @@
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
-		<?php if ( ! empty($item['time_delete']) ): ?>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<?php endif ?>
-
-		<?php if ( ! empty($item['operator_id']) ): ?>
+		<?php if ( !empty($item['operator_id']) && ( $item['user_id'] === $this->session->user_id ) ): ?>
 		<dt>最后操作时间</dt>
 		<dd>
 			<?php echo $item['time_edit'] ?>

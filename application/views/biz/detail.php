@@ -285,7 +285,7 @@
 				<div id=map style="height:300px;background-color:#999"></div>
 			</figure>
 
-			<script src="https://webapi.amap.com/maps?v=1.3&key=d698fd0ab2d88ad11f4c6a2c0e83f6a8"></script>
+			<script src="https://webapi.amap.com/maps?v=1.3&key=bf0fd60938b2f4f40de5ee83a90c2e0e"></script>
 			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
 			<script>
 				var lnglat = [<?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>];
@@ -293,7 +293,7 @@
 					center: lnglat,
 			        zoom: 16,
 		            scrollWheel: false,
-					mapStyle: 'amap://styles/2daddd87cfd0fa58d0bc932eed31b9d8', // 自定义样式
+					mapStyle: 'amap://styles/91f3dcb31dfbba6e97a3c2743d4dff88', // 自定义样式
 			    });
 				marker = new AMap.Marker({
 		            position: lnglat,

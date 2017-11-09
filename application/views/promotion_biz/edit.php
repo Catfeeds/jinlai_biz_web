@@ -110,54 +110,66 @@
 			
 			<div class=form-group>
 				<label for=url_image class="col-sm-2 control-label">形象图</label>
-				<div class=col-sm-10>
-					<?php if ( !empty($item['url_image']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
+                <div class=col-sm-10>
+                    <p class=help-block>该图用于手机等窄屏设备</p>
 
-					<div>
-						<p class=help-block>该图用于手机等窄屏设备</p>
-						<?php $name_to_upload = 'url_image' ?>
-					
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                    <?php $name_to_upload = 'url_image' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="promotion_biz/url_image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                                <i class="remove fa fa-minus"></i>
+                                <i class="left fa fa-arrow-left"></i>
+                                <i class="right fa fa-arrow-right"></i>
+                                <figure>
+                                    <img src="<?php echo $item[$name_to_upload] ?>">
+                                </figure>
+                            </li>
 
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
+                        <?php endif ?>
+                    </ul>
 
-				</div>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 			
 			<div class=form-group>
 				<label for=url_image_wide class="col-sm-2 control-label">宽屏形象图</label>
-				<div class=col-sm-10>
-					<?php if ( !empty($item['url_image_wide']) ): ?>
-					<div class=row>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo $item['url_image_wide'] ?>">
-						</figure>
-					</div>
-					<?php endif ?>
+                <div class=col-sm-10>
+                    <p class=help-block>该图用于笔记本、台式机等宽屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
 
-					<div>
-						<p class=help-block>该图用于笔记本、台式机等宽屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
-						<?php $name_to_upload = 'url_image_wide' ?>
-					
-						<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-						<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                    <?php $name_to_upload = 'url_image_wide' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-						<button class="file-upload btn btn-primary btn-lg col-xs-12 col-md-3" data-target-dir="promotion_biz/image_wide" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                                <i class="remove fa fa-minus"></i>
+                                <i class="left fa fa-arrow-left"></i>
+                                <i class="right fa fa-arrow-right"></i>
+                                <figure>
+                                    <img src="<?php echo $item[$name_to_upload] ?>">
+                                </figure>
+                            </li>
 
-						<ul class="upload_preview list-inline row"></ul>
-					</div>
+                        <?php endif ?>
+                    </ul>
 
-				</div>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 		</fieldset>
 

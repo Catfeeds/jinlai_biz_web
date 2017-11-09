@@ -480,7 +480,7 @@
 				<input name=latitude type=hidden value="<?php echo $item['latitude'] ?>">
 			</div>
 
-			<script src="https://webapi.amap.com/maps?v=1.3&key=d698fd0ab2d88ad11f4c6a2c0e83f6a8"></script>
+			<script src="https://webapi.amap.com/maps?v=1.3&key=bf0fd60938b2f4f40de5ee83a90c2e0e"></script>
 			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
 			<script>
 			    var map = new AMap.Map('map',{
@@ -489,7 +489,7 @@
 					<?php endif ?>
 					zoom: 16,
 		            scrollWheel: false,
-					mapStyle: 'amap://styles/2daddd87cfd0fa58d0bc932eed31b9d8', // 自定义样式，通过高德地图控制台管理
+					mapStyle: 'amap://styles/91f3dcb31dfbba6e97a3c2743d4dff88', // 自定义样式，通过高德地图控制台管理
 			    });
 
 				<?php if ( empty($item['longitude']) || empty($item['latitude']) ): ?>
@@ -604,6 +604,90 @@
 				});
 			</script>
 		</fieldset>
+
+        <?php if ( !empty($comodities) ): ?>
+        <fieldset>
+                <legend>店铺装修（高级版功能，您可试用）</legend>
+
+                <div class=form-group>
+                    <label for=m1figure_url class="col-sm-2 control-label">店铺模块1形象图</label>
+                    <div class=col-sm-10>
+                        <p class=help-block>请上传尺寸正确、大小合适的图片；过大的图片将导致页面打开缓慢，过小的图片则影响显示效果。</p>
+
+                        <?php $name_to_upload = 'm1figure_url' ?>
+                        <ul class=upload_preview>
+                            <?php if ( !empty($item[$name_to_upload]) ): ?>
+
+                                <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                                    <i class="remove fa fa-minus"></i>
+                                    <i class="left fa fa-arrow-left"></i>
+                                    <i class="right fa fa-arrow-right"></i>
+                                    <figure>
+                                        <img src="<?php echo $item[$name_to_upload] ?>">
+                                    </figure>
+                                </li>
+
+                            <?php endif ?>
+                        </ul>
+
+                        <div class=selector_zone>
+                            <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                            <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+                            <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                        </div>
+
+                        <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    </div>
+                </div>
+
+
+                <div class=form-group>
+                    <label for=m1ace_id class="col-sm-2 control-label">店铺模块1首推商品</label>
+                    <div class=col-sm-10>
+                        <p class=help-block>即点击形象图后需跳转到的商品</p>
+
+                        <?php $input_name = 'm1ace_id' ?>
+                        <select class=form-control name="<?php echo $input_name ?>">
+                            <?php
+                            $options = $comodities;
+                            foreach ($options as $option):
+                                if ( empty($option['time_delete']) ):
+                                ?>
+                                <option value="<?php echo $option['item_id'] ?>" <?php if ($option['item_id'] === $item['m1ace_id']) echo 'selected'; ?>><?php echo $option['name'] ?></option>
+                            <?php
+                                endif;
+                                endforeach;
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class=form-group>
+                    <label for=m1ids class="col-sm-2 control-label">店铺模块1商品们</label>
+                    <div class=col-sm-10>
+                        <p class=help-block>请选择需要推广的1-3款商品的ID，电脑上按住ctrl或command键即可多选；如果选择了3款以上，将仅示前3款</p>
+
+                        <?php $input_name = 'm1ids[]' ?>
+                        <select class=form-control name="<?php echo $input_name ?>" multiple>
+                            <?php
+                            $options = $comodities;
+                            $current_array = explode(',', $item['m1ids']);
+                            var_dump($current_array);
+                            foreach ($options as $option):
+                                if ( empty($option['time_delete']) ):
+                                    ?>
+                                    <option value="<?php echo $option['item_id'] ?>" <?php if ( in_array($option['item_id'], $current_array) ) echo 'selected'; ?>><?php echo $option['name'] ?></option>
+                                    <?php
+                                endif;
+                            endforeach;
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+            </fieldset>
+        <?php endif ?>
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">

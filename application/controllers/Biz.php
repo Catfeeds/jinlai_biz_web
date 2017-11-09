@@ -29,6 +29,8 @@
 			'bank_name', 'bank_account',
 			'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_image_product', 'url_image_produce', 'url_image_retail',
 			'longitude', 'latitude', 'province', 'city', 'county', 'street',
+
+            'm1figure_url', 'm1ace_id', 'm1ids',
 		);
 
 		/**
@@ -104,7 +106,7 @@
 			endif;
 
 			// 页面信息
-			$data['title'] = isset($data['item'])? $data['item']['name']: '商家详情';
+			$data['title'] = isset($data['item'])? $data['item']['brief_name']: '商家详情';
 			$data['class'] = $this->class_name.' detail';
 			//$data['keywords'] = $this->class_name.','. $data['item']['name'];
 
@@ -265,6 +267,9 @@
 				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
 			endif;
 
+			// 获取当前商家所有商品数据
+            $data['comodities'] = $this->list_item();
+
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('url_logo', 'LOGO', 'trim|max_length[255]');
@@ -302,6 +307,11 @@
 			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');
 
+			// TODO 页面装修，临时放于此处
+            $this->form_validation->set_rules('m1figure_url', '店铺模块1形象图', 'trim|max_length[255]');
+            $this->form_validation->set_rules('m1ace_id', '店铺模块1首推商品', 'trim|max_length[11]');
+            $this->form_validation->set_rules('m1ids', '店铺模块1商品们', 'trim|max_length[255]');
+
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
 				$data['error'] = validation_errors();
@@ -315,6 +325,7 @@
 				$data_to_edit = array(
 					'id' => $id,
 					'user_id' => $this->session->user_id,
+                    'm1ids' => implode(',', $this->input->post('m1ids')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -326,6 +337,8 @@
 					'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_image_product', 'url_image_produce', 'url_image_retail',
 					'min_order_subtotal', 'delivery_time_start', 'delivery_time_end',
 					'longitude', 'latitude', 'province', 'city', 'county', 'street',
+
+                    'm1figure_url', 'm1ace_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);

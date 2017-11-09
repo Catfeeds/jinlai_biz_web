@@ -142,7 +142,7 @@
 
                     <div class=selector_zone>
                         <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>" required>
 
                         <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
                     </div>
@@ -220,7 +220,7 @@
 					</script>
 
 					<?php else: ?>
-					<p class="help-block">在电脑上编辑可添加更丰富内容</p>
+					<p class=help-block>在电脑上编辑可添加更丰富内容</p>
 					<textarea class=form-control name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo set_value('description') ?></textarea>
 
 					<?php endif ?>

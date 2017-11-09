@@ -40,31 +40,40 @@
 		<fieldset>
 			<div class=form-group>
 				<label for=url_image_main class="col-sm-2 control-label">主图</label>
-				<div class=col-sm-10>
-					<p class=help-block>推荐上传正方形图片以达到最佳视觉效果</p>
+                <div class=col-sm-10>
+                    <p class=help-block>推荐上传正方形图片以达到最佳视觉效果</p>
 
-					<?php $name_to_upload = 'url_image_main' ?>
-					<input id=<?php echo $name_to_upload ?> class=form-control type=file>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
+                    <?php $name_to_upload = 'url_image_main' ?>
+                    <ul class="upload_preview"></ul>
 
-					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="branch/main" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
 
-					<ul class="upload_preview list-inline row"></ul>
-				</div>
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
+
 			<div class=form-group>
 				<label for=figure_image_urls class="col-sm-2 control-label">形象图</label>
-				<div class=col-sm-10>
-					<p class=help-block>最多可上传4张</p>
+                <div class=col-sm-10>
+                    <p class=help-block>最多可上传4张</p>
 
-					<?php $name_to_upload = 'figure_image_urls' ?>
-					<input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
-					<input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
+                    <?php $name_to_upload = 'figure_image_urls' ?>
+                    <ul class="upload_preview"></ul>
 
-					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="branch/figure_image" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
 
-					<ul class="upload_preview list-inline row"></ul>
-				</div>
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count="4" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
 			</div>
 		</fieldset>
 		
@@ -177,7 +186,7 @@
 				<input name=latitude type=hidden value="<?php echo set_value('latitude') ?>">
 			</div>
 
-			<script src="https://webapi.amap.com/maps?v=1.3&key=d698fd0ab2d88ad11f4c6a2c0e83f6a8"></script>
+			<script src="https://webapi.amap.com/maps?v=1.3&key=bf0fd60938b2f4f40de5ee83a90c2e0e"></script>
 			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
 			<script>
 			    var map = new AMap.Map('map',{
@@ -186,7 +195,7 @@
 					<?php endif ?>
 					zoom: 16,
 		            scrollWheel: false,
-					mapStyle: 'amap://styles/2daddd87cfd0fa58d0bc932eed31b9d8', // 自定义样式，通过高德地图控制台管理
+					mapStyle: 'amap://styles/91f3dcb31dfbba6e97a3c2743d4dff88', // 自定义样式，通过高德地图控制台管理
 			    });
 
 				// 为BasicControl设置DomLibrary，jQuery
