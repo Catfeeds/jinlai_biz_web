@@ -23,7 +23,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171107">
+		<meta name=version content="revision20171113">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -252,6 +252,8 @@
 							<a href=# class=dropdown-toggle data-toggle=dropdown>商家 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
 								<li><a title="我的店铺" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">店铺资料</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a title="店铺装修列表" href="<?php echo base_url('ornament_biz') ?>">店铺装修</a></li>
 							</ul>
 						</li>
 

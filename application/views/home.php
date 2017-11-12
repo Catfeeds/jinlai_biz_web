@@ -154,6 +154,12 @@
 					商品<span class=count><?php echo $count['item'] ?></span>
 				</a>
 			</li>
+            <li class="col-xs-4 col-md-2">
+                <a title="店铺装修" href="<?php echo base_url('ornament_biz') ?>">
+                    <img src="/media/home/fenlei@3x.png">
+                    分类<span class=count><?php echo $count['ornament_biz'] ?></span>
+                </a>
+            </li>
 			<li class="col-xs-4 col-md-2">
 				<a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">
 					<img src="/media/home/fenlei@3x.png">

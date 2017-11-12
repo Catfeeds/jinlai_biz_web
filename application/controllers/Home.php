@@ -57,7 +57,8 @@
 				'order_pay' => $this->count_table('order', array('status' => '待接单')),
 				'order_confirm' => $this->count_table('order', array('status' => '待发货')),
 
-				'item_category_biz' => $this->count_table('item_category_biz'),
+                'ornament_biz' => $this->count_table('ornament_biz'),
+                'item_category_biz' => $this->count_table('item_category_biz'),
 				'freight_template_biz' => $this->count_table('freight_template_biz'),
 				'stuff' => $this->count_table('stuff'),
 				'branch' => $this->count_table('branch'),
