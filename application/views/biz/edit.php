@@ -607,7 +607,7 @@
 
         <?php if ( !empty($comodities) ): ?>
         <fieldset>
-                <legend>店铺装修（高级版功能，您可试用）</legend>
+                <legend>店铺装修（高级版功能，测试期间开放试用）</legend>
 
                 <div class=form-group>
                     <label for=m1figure_url class="col-sm-2 control-label">店铺模块1形象图</label>
@@ -618,7 +618,7 @@
                         <ul class=upload_preview>
                             <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-                                <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                                <li style="width:670px;height:322px;" data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
                                     <i class="remove fa fa-minus"></i>
                                     <i class="left fa fa-arrow-left"></i>
                                     <i class="right fa fa-arrow-right"></i>
@@ -630,11 +630,11 @@
                             <?php endif ?>
                         </ul>
 
-                        <div class=selector_zone>
+                        <div class=selector_zone style="width:670px;height:322px;">
                             <input id=<?php echo $name_to_upload ?> class=form-control type=file>
                             <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-                            <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                            <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
                         </div>
 
                         <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
