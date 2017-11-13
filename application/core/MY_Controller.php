@@ -84,14 +84,6 @@
 		{
 			
 		} // end __destruct
-		
-		// 将数组输出为key:value格式，主要用于在postman等工具中进行api测试
-		protected function key_value($params)
-		{
-			foreach (array_filter($params) as $key => $value):
-				echo $key .':' .$value ."\n";
-			endforeach;
-		} // end key_value
 
 		/**
 		 * 签名有效性检查
@@ -242,6 +234,29 @@
 				redirect( base_url('error/permission_level') );
 			endif;
 		} // end permission_check
+
+        // 将数组输出为key:value格式，主要用于在postman等工具中进行api测试
+        protected function key_value($params)
+        {
+            foreach (array_filter($params) as $key => $value):
+                echo $key .':' .$value ."\n";
+            endforeach;
+        } // end key_value
+
+        /**
+         * 拆分CSV为数组
+         */
+        protected function explode_csv($text, $seperator = ',')
+        {
+            // 清理可能存在的空字符、冗余分隔符
+            $text = trim($text);
+            $text = trim($text, $seperator);
+
+            // 拆分文本为数组并清理可被转换为布尔型FALSE的数组元素（空数组、空字符、NULL、0、’0‘等）
+            $array = array_filter( explode(',', $text) );
+
+            return $array;
+        } // end explode_csv
 		
 		/**
 		 * 获取批量操作时的ID数组

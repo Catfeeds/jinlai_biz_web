@@ -64,27 +64,27 @@
 		</dd>
 
 		<dt>形象图</dt>
-		<dd>
-			<?php if ( !empty($item['figure_image_urls']) ): ?>
-			<ul class=upload_preview>
-				<?php
-					$figure_image_urls = explode(',', $item['figure_image_urls']);
-					foreach($figure_image_urls as $url):
-				?>
-				<li>
-                    <figure>
-                        <img src="<?php echo $url ?>">
-                    </figure>
-				</li>
-				<?php endforeach ?>
-			</ul>
-			<?php else: ?>
-			未上传
-			<?php endif ?>
-		</dd>
+        <dd>
+            <?php if ( !empty($item['figure_image_urls']) ): ?>
+                <ul class=upload_preview>
+                    <?php
+                    $slides = explode(',', $item['figure_image_urls']);
+                    foreach($slides as $slide):
+                        ?>
+                        <li>
+                            <figure>
+                                <img src="<?php echo $slide ?>">
+                            </figure>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            <?php else: ?>
+                未上传
+            <?php endif ?>
+        </dd>
 
 		<dt>形象视频</dt>
-        <dd>高级商家功能，请联系品类负责人确认开通条件。</dd>
+        <dd>高级功能，请联系品类负责人确认开通条件。</dd>
         <!--
 		<dd>
 			<?php if ( !empty($item['figure_video_urls']) ): ?>

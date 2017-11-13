@@ -29,8 +29,6 @@
 			'bank_name', 'bank_account',
 			'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_image_product', 'url_image_produce', 'url_image_retail',
 			'longitude', 'latitude', 'province', 'city', 'county', 'street',
-
-            'm1figure_url', 'm1ace_id', 'm1ids',
 		);
 
 		/**
@@ -267,8 +265,15 @@
 				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
 			endif;
 
-			// 获取当前商家所有商品数据
-            $data['comodities'] = $this->list_item();
+			// 获取当前商家有效店铺装修
+            $params['biz_id'] = $this->session->biz_id;
+            $url = api_url('ornament_biz/index');
+            $result = $this->curl->go($url, $params, 'array');
+            if ($result['status'] === 200):
+                $data['ornaments'] = $result['content'];
+            else:
+                $data['ornaments'] = NULL;
+            endif;
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
@@ -307,10 +312,7 @@
 			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');
 
-			// TODO 页面装修，临时放于此处
-            $this->form_validation->set_rules('m1figure_url', '店铺模块1形象图', 'trim|max_length[255]');
-            $this->form_validation->set_rules('m1ace_id', '店铺模块1首推商品', 'trim|max_length[11]');
-            $this->form_validation->set_rules('m1ids', '店铺模块1商品们', 'trim|max_length[255]');
+            $this->form_validation->set_rules('ornament_id', '店铺装修ID', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -325,7 +327,6 @@
 				$data_to_edit = array(
 					'id' => $id,
 					'user_id' => $this->session->user_id,
-                    'm1ids' => implode(',', $this->input->post('m1ids')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -335,11 +336,9 @@
 					'code_license', 'code_ssn_owner',  'code_ssn_auth',
 					'bank_name', 'bank_account',
 					'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_image_product', 'url_image_produce', 'url_image_retail',
-					'min_order_subtotal', 'delivery_time_start', 'delivery_time_end',
 					'longitude', 'latitude', 'province', 'city', 'county', 'street',
-
-                    'm1figure_url', 'm1ace_id',
-				);
+                    'ornament_id',
+                );
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
 
@@ -445,6 +444,8 @@
 			$this->form_validation->set_rules('street', '具体地址；小区名、路名、门牌号等', 'trim|max_length[50]');
 			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');
+
+            $this->form_validation->set_rules('ornament_id', '店铺装修ID', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
