@@ -14,14 +14,14 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'biz_id', 'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_figure_url', 'member_thumb_url', 'template_id', 'home_slides', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m1_ids', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m2_ids', 'home_m3_ace_url', 'home_m3_ace_id', 'home_m3_ids', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'biz_id', 'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_logo_url', 'member_figure_url', 'member_thumb_url', 'template_id', 'home_slides', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m1_ids', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m2_ids', 'home_m3_ace_url', 'home_m3_ace_id', 'home_m3_ids', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
 		/**
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_figure_url', 'member_thumb_url', 'home_json', 'home_html', 'template_id', 'home_slides', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m1_ids', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m2_ids', 'home_m3_ace_url', 'home_m3_ace_id', 'home_m3_ids',
+			'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_logo_url', 'member_figure_url', 'member_thumb_url', 'home_json', 'home_html', 'template_id', 'home_slides', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m1_ids', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m2_ids', 'home_m3_ace_url', 'home_m3_ace_id', 'home_m3_ids',
 		);
 
 		/**
@@ -228,6 +228,7 @@
             $this->form_validation->set_rules('vi_color_first', '第一识别色', 'trim|min_length[3]|max_length[6]');
             $this->form_validation->set_rules('vi_color_second', '第二识别色', 'trim|min_length[3]|max_length[6]');
             $this->form_validation->set_rules('main_figure_url', '主形象图', 'trim|max_length[255]');
+            $this->form_validation->set_rules('member_logo_url', '会员卡LOGO', 'trim|max_length[255]');
             $this->form_validation->set_rules('member_figure_url', '会员卡封图', 'trim|max_length[255]');
             $this->form_validation->set_rules('member_thumb_url', '会员卡列表图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_json', '首页JSON格式内容', 'trim|max_length[20000]');
@@ -263,7 +264,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-                    'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_figure_url', 'member_thumb_url', 'home_json', 'home_html', 'template_id', 'home_slides', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m3_ace_url', 'home_m3_ace_id',
+                    'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_logo_url', 'member_figure_url', 'member_thumb_url', 'home_json', 'home_html', 'template_id', 'home_slides', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m3_ace_url', 'home_m3_ace_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -341,6 +342,7 @@
             $this->form_validation->set_rules('vi_color_first', '第一识别色', 'trim|min_length[3]|max_length[6]');
             $this->form_validation->set_rules('vi_color_second', '第二识别色', 'trim|min_length[3]|max_length[6]');
             $this->form_validation->set_rules('main_figure_url', '主形象图', 'trim|max_length[255]');
+            $this->form_validation->set_rules('member_logo_url', '会员卡LOGO', 'trim|max_length[255]');
             $this->form_validation->set_rules('member_figure_url', '会员卡封图', 'trim|max_length[255]');
             $this->form_validation->set_rules('member_thumb_url', '会员卡列表图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_json', '首页JSON格式内容', 'trim|max_length[20000]');
@@ -377,7 +379,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_figure_url', 'member_thumb_url', 'home_json', 'home_html', 'template_id', 'home_slides', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m3_ace_url', 'home_m3_ace_id',
+					'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_logo_url', 'member_figure_url', 'member_thumb_url', 'home_json', 'home_html', 'template_id', 'home_slides', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m3_ace_url', 'home_m3_ace_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -461,6 +463,7 @@
             $this->form_validation->set_rules('vi_color_first', '第一识别色', 'trim|min_length[3]|max_length[6]');
             $this->form_validation->set_rules('vi_color_second', '第二识别色', 'trim|min_length[3]|max_length[6]');
             $this->form_validation->set_rules('main_figure_url', '主形象图', 'trim|max_length[255]');
+            $this->form_validation->set_rules('member_logo_url', '会员卡LOGO', 'trim|max_length[255]');
             $this->form_validation->set_rules('member_figure_url', '会员卡封图', 'trim|max_length[255]');
             $this->form_validation->set_rules('member_thumb_url', '会员卡列表图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_json', '首页JSON格式内容', 'trim|max_length[20000]');

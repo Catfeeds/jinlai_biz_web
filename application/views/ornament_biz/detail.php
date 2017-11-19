@@ -69,6 +69,9 @@
         <dt>主形象图</dt>
         <dd><?php echo empty($item['main_figure_url'])? '未设置': '<img src="'.$item['main_figure_url'].'">' ?></dd>
 
+        <dt>会员卡LOGO</dt>
+        <dd><?php echo empty($item['member_logo_url'])? '未设置': '<img src="'.$item['member_logo_url'].'">' ?></dd>
+
         <dt>会员卡封图</dt>
         <dd><?php echo empty($item['member_figure_url'])? '未设置': '<img src="'.$item['member_figure_url'].'">' ?></dd>
 

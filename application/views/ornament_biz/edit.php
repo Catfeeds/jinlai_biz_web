@@ -103,6 +103,38 @@
             </div>
 
             <div class=form-group>
+                <label for=member_logo_url class="col-sm-2 control-label">会员卡LOGO</label>
+                <div class=col-sm-10>
+                    <p class=help-block>用于会员卡相关页面；若不上传，则默认以商家LOGO作为会员卡LOGO</p>
+
+                    <?php $name_to_upload = 'member_logo_url' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
+
+                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                                <i class="remove fa fa-minus"></i>
+                                <i class="left fa fa-arrow-left"></i>
+                                <i class="right fa fa-arrow-right"></i>
+                                <figure>
+                                    <img src="<?php echo $item[$name_to_upload] ?>">
+                                </figure>
+                            </li>
+
+                        <?php endif ?>
+                    </ul>
+
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
+            </div>
+
+            <div class=form-group>
                 <label for=member_figure_url class="col-sm-2 control-label">会员卡封图</label>
                 <div class=col-sm-10>
                     <p class=help-block>用于会员卡领取页</p>
@@ -173,7 +205,7 @@
                     <ul class=upload_preview>
                         <?php if ( !empty($item[$name_to_upload]) ): ?>
 
-                            <li style="width:670px;height:322px;" data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
+                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
                                 <i class="remove fa fa-minus"></i>
                                 <i class="left fa fa-arrow-left"></i>
                                 <i class="right fa fa-arrow-right"></i>
@@ -185,11 +217,11 @@
                         <?php endif ?>
                     </ul>
 
-                    <div class=selector_zone style="width:670px;height:322px;">
+                    <div class=selector_zone>
                         <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
                         <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
 
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
                     </div>
 
                     <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=4 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
