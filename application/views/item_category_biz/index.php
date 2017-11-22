@@ -86,7 +86,7 @@
             <li>
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                    <p>名称 <?php echo $item['name'] ?></p>
+                    <p><?php echo $this->class_name_cn ?>名称 <?php echo $item['name'] ?></p>
                 </a>
 
                 <div class="item-actions">
@@ -95,6 +95,8 @@
                     </span>
 
                     <ul class=horizontal>
+                        <li class=color_warning><a title="分类商品" href="<?php echo base_url('item/index?category_biz_id='.$item[$this->id_name]) ?>" target=_blank>分类商品 <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+
                         <?php
                         // 需要特定角色和权限进行该操作
                         if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):

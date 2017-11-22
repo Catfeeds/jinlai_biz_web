@@ -1,25 +1,27 @@
+<link rel=stylesheet media=all href="/css/edit.css">
 <style>
-	.params {display:none;}
-	div.params {border-top:1px solid #aaa;}
 
-	/* 宽度在750像素以上的设备 */
-	@media only screen and (min-width:751px)
-	{
+    /* 宽度在750像素以上的设备 */
+    @media only screen and (min-width:751px)
+    {
 
-	}
-	
-	/* 宽度在960像素以上的设备 */
-	@media only screen and (min-width:961px)
-	{
+    }
 
-	}
+    /* 宽度在960像素以上的设备 */
+    @media only screen and (min-width:961px)
+    {
 
-	/* 宽度在1280像素以上的设备 */
-	@media only screen and (min-width:1281px)
-	{
+    }
 
-	}
+    /* 宽度在1280像素以上的设备 */
+    @media only screen and (min-width:1281px)
+    {
+
+    }
 </style>
+<script defer src="/js/edit.js"></script>
+
+<base href="<?php echo $this->media_root ?>">
 
 <script>
 	$(function(){

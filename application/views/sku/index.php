@@ -100,8 +100,8 @@
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
                     <p>名称 <?php echo $item['name_first'].$item['name_second'].$item['name_third'] ?></p>
-                    <p>商城现价 ￥<?php echo $item['price'] ?></p>
-                    <p>库存 <?php echo $item['stocks'] ?></p>
+                    <p>商城价/现价 ￥<?php echo $item['price'] ?></p>
+                    <p>库存 <?php echo $item['stocks'] ?>单位</p>
                 </a>
 
                 <div class=item-actions>

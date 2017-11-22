@@ -1,24 +1,29 @@
+<link rel=stylesheet media=all href="/css/edit.css">
 <style>
 
-	/* 宽度在750像素以上的设备 */
-	@media only screen and (min-width:751px)
-	{
+    /* 宽度在750像素以上的设备 */
+    @media only screen and (min-width:751px)
+    {
 
-	}
-	
-	/* 宽度在960像素以上的设备 */
-	@media only screen and (min-width:961px)
-	{
+    }
 
-	}
+    /* 宽度在960像素以上的设备 */
+    @media only screen and (min-width:961px)
+    {
 
-	/* 宽度在1280像素以上的设备 */
-	@media only screen and (min-width:1281px)
-	{
+    }
 
-	}
+    /* 宽度在1280像素以上的设备 */
+    @media only screen and (min-width:1281px)
+    {
+
+    }
 </style>
+<script defer src="/js/edit.js"></script>
 
+<base href="<?php echo $this->media_root ?>">
+
+<!--
 <link href="<?php echo CDN_URL ?>css/datepicker.min.css" rel="stylesheet">
 <script src="<?php echo CDN_URL ?>js/datepicker.min.js"></script>
 <script>
@@ -36,8 +41,7 @@
 		)
 	});
 </script>
-
-<base href="<?php echo $this->media_root ?>">
+-->
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
@@ -363,8 +367,8 @@
 				<div class=col-sm-10>
 					<?php if ( empty($biz_freight_templates) ): ?>
 					<p class="help-block">您目前没有可用的运费模板，仅可包邮</p>
-					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz') ?>">创建一个</a>
-					<?php endif ?>
+					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz') ?>">创建运费模板</a>
+                    <?php else: ?>
 
 					<?php $input_name = 'freight_template_id' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
@@ -376,6 +380,7 @@
 						<option value="<?php echo $option['template_id'] ?>" <?php if ($option['template_id'] === $item['freight_template_id']) echo 'selected'; ?>><?php echo $option['name'] ?></option>
 						<?php endforeach ?>
 					</select>
+                    <?php endif ?>
 				</div>
 			</div>
 		</fieldset>

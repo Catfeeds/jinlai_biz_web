@@ -1,24 +1,27 @@
+<link rel=stylesheet media=all href="/css/create.css">
 <style>
 
 
-	/* 宽度在750像素以上的设备 */
-	@media only screen and (min-width:751px)
-	{
+    /* 宽度在750像素以上的设备 */
+    @media only screen and (min-width:751px)
+    {
 
-	}
+    }
 
-	/* 宽度在960像素以上的设备 */
-	@media only screen and (min-width:961px)
-	{
+    /* 宽度在960像素以上的设备 */
+    @media only screen and (min-width:961px)
+    {
 
-	}
+    }
 
-	/* 宽度在1280像素以上的设备 */
-	@media only screen and (min-width:1281px)
-	{
+    /* 宽度在1280像素以上的设备 */
+    @media only screen and (min-width:1281px)
+    {
 
-	}
+    }
 </style>
+
+<script defer src="/js/create.js"></script>
 
 <base href="<?php echo $this->media_root ?>">
 
@@ -92,9 +95,9 @@
 			</div>
 
 			<div class=form-group>
-				<label for=price class="col-sm-2 control-label">价格（元）※</label>
+				<label for=price class="col-sm-2 control-label">商城价/现价（元）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=price type=number step=0.01 min=1 max=99999.99 value="<?php echo empty(set_value('price'))? $comodity['price']: set_value('price') ?>" placeholder="价格（元）" required>
+					<input class=form-control name=price type=number step=0.01 min=1 max=99999.99 value="<?php echo empty(set_value('price'))? $comodity['price']: set_value('price') ?>" placeholder="商城价/现价（元）" required>
 				</div>
 			</div>
 			<div class=form-group>

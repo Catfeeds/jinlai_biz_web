@@ -140,8 +140,22 @@
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
+
+                if ( !empty($data['item']['template_ids']) ):
+                    unset($params['id']);
+                    $params['ids'] = $data['item']['template_ids'];
+                    $url = api_url('coupon_template/index');
+                    $result = $this->curl->go($url, $params, 'array');
+                    if ($result['status'] === 200):
+                        $data['templates'] = $result['content'];
+                    else:
+                        $data['templates'] = NULL;
+                    endif;
+                endif;
+
 			else:
 				$data['error'] = $result['content']['error']['message'];
+
 			endif;
 
 			// 页面信息
@@ -219,12 +233,15 @@
 				'class' => $this->class_name.' create',
 			);
 
+            // 获取当前商家所有优惠券数据
+            $data['coupon_templates'] = $this->list_coupon_template();
+
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
-			$this->form_validation->set_rules('template_ids', '所含优惠券', 'trim|required');
+			$this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
 			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
 			$this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|callback_time_end');
@@ -244,12 +261,13 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 					'biz_id' => $this->session->biz_id,
+                    'template_ids' => implode(',', $this->input->post('template_ids')),
 					'time_start' => strtotime( $this->input->post('time_start') ),
 					'time_end' => strtotime( $this->input->post('time_end') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'template_ids', 'max_amount',
+					'name', 'description', 'max_amount',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -306,11 +324,14 @@
 				'class' => $this->class_name.' edit',
 			);
 
+            // 获取当前商家所有优惠券数据
+            $data['coupon_templates'] = $this->list_coupon_template();
+
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
-			$this->form_validation->set_rules('template_ids', '所含优惠券', 'trim|required');
+			$this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
 			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
 			$this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|callback_time_end');
@@ -341,12 +362,13 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
+                    'template_ids' => implode(',', $this->input->post('template_ids')),
 					'time_start' => strtotime( $this->input->post('time_start') ),
 					'time_end' => strtotime( $this->input->post('time_end') ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'template_ids', 'max_amount',
+					'name', 'description', 'max_amount',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);

@@ -29,7 +29,7 @@
 
 <div id=content class=container>
 	<section class="bg-info text-info">
-        <p><em>RC0.10.1</em>当前系统为beta/RC版本，仅供技术研究及开发；在不以任何形式告知的情况下，数据、功能、页面样式都将不定时变更；任何数据、业务、功能均无实际意义，且均不构成任何责任。</p>
+        <p><em>RC0.11.0</em>当前系统为beta/RC版本，仅供技术研究及开发；在不以任何形式告知的情况下，数据、功能、页面样式都将不定时变更；任何数据、业务、功能均无实际意义，且均不构成任何责任。</p>
 	</section>
 
 	<div class="btn-group btn-group-justified" role=group>
@@ -49,7 +49,7 @@
 				<div class=form-group>
 					<label for=mobile>手机号</label>
 					<div class=input-group>
-						<span class="input-group-addon"><i class="fa fa-mobile fa-fw" aria-hidden=true></i></span>
+						<span class=input-group-addon><i class="fa fa-mobile fa-fw" aria-hidden=true></i></span>
 						<input class=form-control name=mobile type=tel value="<?php echo $this->input->post('mobile')? set_value('mobile'): $this->input->cookie('mobile') ?>" size=11 pattern="\d{11}" placeholder="若该号码未注册，系统将自动生成账户" required>
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 					<label for=captcha>短信验证码</label>
 					<div class=input-group>
 						<input id=captcha-input class=form-control name=captcha type=number max=999999 step=1 size=6 pattern="\d{6}" placeholder="请输入短信验证码" disabled required>
-						<span class="input-group-addon">
+						<span class=input-group-addon>
 							<a id=sms-send href="#">获取验证码</a>
 						</span>
 					</div>

@@ -1,24 +1,35 @@
+<link rel=stylesheet media=all href="/css/edit.css">
 <style>
-	.params {display:none;}
 
-	/* 宽度在750像素以上的设备 */
-	@media only screen and (min-width:751px)
-	{
+    /* 宽度在750像素以上的设备 */
+    @media only screen and (min-width:751px)
+    {
 
-	}
+    }
 
-	/* 宽度在960像素以上的设备 */
-	@media only screen and (min-width:961px)
-	{
+    /* 宽度在960像素以上的设备 */
+    @media only screen and (min-width:961px)
+    {
 
-	}
+    }
 
-	/* 宽度在1280像素以上的设备 */
-	@media only screen and (min-width:1281px)
-	{
+    /* 宽度在1280像素以上的设备 */
+    @media only screen and (min-width:1281px)
+    {
 
-	}
+    }
 </style>
+<script defer src="/js/edit.js"></script>
+
+<base href="<?php echo $this->media_root ?>">
+
+<script>
+    $(function(){
+        // 仅显示适用于当前营销活动类型的参数
+        var fieldset_to_show = '<?php echo $item['type'] ?>';
+        $('[data-type*="' + fieldset_to_show + '"]').show();
+    });
+</script>
 
 <link href="<?php echo CDN_URL ?>css/datepicker.min.css" rel="stylesheet">
 <script src="<?php echo CDN_URL ?>js/datepicker.min.js"></script>
@@ -34,14 +45,6 @@
 				timeFormat: "hh:ii"
 			}
 		)
-	});
-</script>
-
-<script>
-	$(function(){
-		// 仅显示适用于当前营销活动类型的参数
-		var fieldset_to_show = '<?php echo $item['type'] ?>';
-		$('[data-type*="' + fieldset_to_show + '"]').show();
 	});
 </script>
 	
@@ -136,7 +139,7 @@
                         <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
                     </div>
 
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
                 </div>
 			</div>
 			

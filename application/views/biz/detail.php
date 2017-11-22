@@ -79,7 +79,7 @@
 	</div>
 
 	<dl id=list-info class=dl-horizontal>
-		<dt>LOGO</dt>
+		<dt>商家LOGO</dt>
 		<dd>
 			<?php if ( ! empty($item['url_logo']) ): ?>
 			<figure class=row>

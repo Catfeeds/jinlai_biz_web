@@ -1,23 +1,27 @@
+<link rel=stylesheet media=all href="/css/create.css">
 <style>
 
-	/* 宽度在750像素以上的设备 */
-	@media only screen and (min-width:751px)
-	{
 
-	}
+    /* 宽度在750像素以上的设备 */
+    @media only screen and (min-width:751px)
+    {
 
-	/* 宽度在960像素以上的设备 */
-	@media only screen and (min-width:961px)
-	{
+    }
 
-	}
+    /* 宽度在960像素以上的设备 */
+    @media only screen and (min-width:961px)
+    {
 
-	/* 宽度在1280像素以上的设备 */
-	@media only screen and (min-width:1281px)
-	{
+    }
 
-	}
+    /* 宽度在1280像素以上的设备 */
+    @media only screen and (min-width:1281px)
+    {
+
+    }
 </style>
+
+<script defer src="/js/create.js"></script>
 
 <link href="<?php echo CDN_URL ?>css/datepicker.min.css" rel="stylesheet">
 <script src="<?php echo CDN_URL ?>js/datepicker.min.js"></script>
@@ -292,6 +296,7 @@
 				</div>
 			</div>
 
+            <!--
 			<div class=form-group>
 				<label for=time_to_publish class="col-sm-2 control-label">预定上架时间</label>
 				<div class=col-sm-10>
@@ -306,6 +311,7 @@
 					<p class=help-block>最小可限定到分钟级别；若填写了此项，则商品在创建后将处于上架状态</p>
 				</div>
 			</div>
+			-->
 
 			<?php if ( !empty($biz_promotions) ): ?>
 			<div class=form-group>
@@ -324,20 +330,23 @@
 			<div class=form-group>
 				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
 				<div class=col-sm-10>
-					<?php if ( empty($biz_freight_templates) ): ?>
-					<p class="help-block">您目前没有可用的运费模板，仅可包邮</p>
-					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz') ?>">创建一个</a>
+                    <?php if ( empty($biz_freight_templates) ): ?>
+                    <p class=help-block>您目前没有可用的运费模板，仅可包邮</p>
+                    <a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz') ?>">创建运费模板</a>
+
+                    <?php else: ?>
+                    <select class=form-control name=freight_template_id>
+                        <option value="">默认包邮</option>
+                        <?php
+                        $options = $biz_freight_templates;
+                        foreach ($options as $option):
+                            ?>
+                            <option value="<?php echo $option['template_id'] ?>" <?php echo set_select('freight_template_id', $option['template_id']) ?>><?php echo $option['name'] ?></option>
+                        <?php endforeach ?>
+                    </select>
+
 					<?php endif ?>
-					
-					<select class=form-control name=freight_template_id>
-						<option value="">默认包邮</option>
-						<?php
-							$options = $biz_freight_templates;
-							foreach ($options as $option):
-						?>
-							<option value="<?php echo $option['template_id'] ?>" <?php echo set_select('freight_template_id', $option['template_id']) ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
+
 				</div>
 			</div>
 		</fieldset>

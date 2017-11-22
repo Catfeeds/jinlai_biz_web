@@ -1,25 +1,28 @@
+<link rel=stylesheet media=all href="/css/create.css">
 <style>
-	.params {display:none;}
-	div.params {border-top:1px solid #aaa;}
+    .params {display:none;}
+    div.params {border-top:1px solid #aaa;}
 
-	/* 宽度在750像素以上的设备 */
-	@media only screen and (min-width:751px)
-	{
+    /* 宽度在750像素以上的设备 */
+    @media only screen and (min-width:751px)
+    {
 
-	}
-	
-	/* 宽度在960像素以上的设备 */
-	@media only screen and (min-width:961px)
-	{
+    }
 
-	}
+    /* 宽度在960像素以上的设备 */
+    @media only screen and (min-width:961px)
+    {
 
-	/* 宽度在1280像素以上的设备 */
-	@media only screen and (min-width:1281px)
-	{
+    }
 
-	}
+    /* 宽度在1280像素以上的设备 */
+    @media only screen and (min-width:1281px)
+    {
+
+    }
 </style>
+
+<script defer src="/js/create.js"></script>
 
 <script>
 	$(function(){

@@ -19,7 +19,8 @@
 
 	#biz-info {text-align:center;padding:60px 0 70px;position:relative;}
 		#biz-status {color:#9fa0a0;position:absolute;top:30px;right:30px;}
-		#biz-logo {background-color:#fff;width:150px;height:150px;border:2px solid #efefef;border-radius:50%;display:table-cell;vertical-align:middle;overflow:hidden;}
+		#biz-logo {background-color:#fff;width:150px;height:150px;border:2px solid #efefef;border-radius:50%;display:inline-block;vertical-align:middle;text-align:center;overflow:hidden;}
+            #biz-logo img {max-width:100%;max-height:100%;width:auto;margin:0 auto;}
 		#biz-info h2 {font-size:30px;margin:30px 0;}
 		#biz-info p {font-size:26px;line-height:1;margin:0;}
 
@@ -74,7 +75,8 @@
 		</ul>
 	</div>
 
-	<a id=to_admission title="创建商家" class="btn btn-primary btn-block" href="<?php echo base_url('biz/create') ?>">准备好了</a>
+    <a id=to_admission title="快速创建" class="btn btn-default btn-lg col-xs-6" href="<?php echo base_url('biz/create_quick') ?>">以后补充，先开店吧</a>
+    <a id=to_admission title="创建商家" class="btn btn-primary btn-lg col-xs-6" href="<?php echo base_url('biz/create') ?>">准备好了，申请入驻</a>
 
 	<?php elseif ( empty($biz) ): ?>
 	<p>员工关系状态异常，请尝试重新登录</p>
@@ -155,17 +157,17 @@
 				</a>
 			</li>
             <li class="col-xs-4 col-md-2">
+                <a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">
+                    <img src="/media/home/fenlei@3x.png">
+                    商品分类<span class=count><?php echo $count['item_category_biz'] ?></span>
+                </a>
+            </li>
+            <li class="col-xs-4 col-md-2">
                 <a title="店铺装修" href="<?php echo base_url('ornament_biz') ?>">
                     <img src="/media/home/fenlei@3x.png">
                     店铺装修<span class=count><?php echo $count['ornament_biz'] ?></span>
                 </a>
             </li>
-			<li class="col-xs-4 col-md-2">
-				<a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">
-					<img src="/media/home/fenlei@3x.png">
-					分类<span class=count><?php echo $count['item_category_biz'] ?></span>
-				</a>
-			</li>
 			<li class="col-xs-4 col-md-2">
 				<a title="团队管理" href="<?php echo base_url('stuff') ?>">
 					<img src="/media/home/tuandui@3x.png">

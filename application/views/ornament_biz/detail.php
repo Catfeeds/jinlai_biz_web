@@ -1,6 +1,6 @@
 <link rel=stylesheet media=all href="/css/detail.css">
 <style>
-
+    .upload_preview>li {border-radius:0;height:auto;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)

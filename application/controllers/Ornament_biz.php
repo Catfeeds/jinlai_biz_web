@@ -237,13 +237,13 @@
             $this->form_validation->set_rules('home_slides', '首页轮播图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_url', '模块一形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_id', '模块一首推商品', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_m1_ids', '模块一陈列商品', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m1_ids[]', '模块一陈列商品', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m2_ace_url', '模块二形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m2_ace_id', '模块二首推商品', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_m2_ids', '模块二陈列商品', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m2_ids[]', '模块二陈列商品', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m3_ace_url', '模块三形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m3_ace_id', '模块三首推商品', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_m3_ids', '模块三陈列商品', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m3_ids[]', '模块三陈列商品', 'trim|max_length[255]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -351,13 +351,13 @@
             $this->form_validation->set_rules('home_slides', '首页轮播图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_url', '模块一形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_id', '模块一首推商品', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_m1_ids', '模块一陈列商品', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m1_ids[]', '模块一陈列商品', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m2_ace_url', '模块二形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m2_ace_id', '模块二首推商品', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_m2_ids', '模块二陈列商品', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m2_ids[]', '模块二陈列商品', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m3_ace_url', '模块三形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m3_ace_id', '模块三首推商品', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_m3_ids', '模块三陈列商品', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m3_ids[]', '模块三陈列商品', 'trim|max_length[255]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -472,13 +472,13 @@
             $this->form_validation->set_rules('home_slides', '首页轮播图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_url', '模块一形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_id', '模块一首推商品', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_m1_ids', '模块一陈列商品', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m1_ids[]', '模块一陈列商品', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m2_ace_url', '模块二形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m2_ace_id', '模块二首推商品', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_m2_ids', '模块二陈列商品', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m2_ids[]', '模块二陈列商品', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m3_ace_url', '模块三形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m3_ace_id', '模块三首推商品', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_m3_ids', '模块三陈列商品', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m3_ids[]', '模块三陈列商品', 'trim|max_length[255]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):

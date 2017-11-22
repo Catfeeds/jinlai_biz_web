@@ -530,10 +530,15 @@
 			return $data['item'];
 		}
 		
-		// 获取商品列表
+		/**
+         * 获取规格列表
+         *
+         * @param string/int $item_id 所属商品ID
+         * @return array
+         */
 		protected function list_sku($item_id = NULL)
 		{
-			// 仅可获取当前商家的商品
+			// 仅可获取当前商家的规格
 			$params['biz_id'] = $this->session->biz_id;
 			
 			if ( !empty($item_id) ):
@@ -552,10 +557,10 @@
 			return $data['items'];
 		}
 
-		// 获取特定商品信息
+		// 获取特定规格信息
 		protected function get_sku($id)
 		{
-			// 仅可获取当前商家的商品
+			// 仅可获取当前商家的规格
 			$params['biz_id'] = $this->session->biz_id;
 
 			// 从API服务器获取相应列表信息
@@ -636,15 +641,10 @@
 		}
 		
 		// 获取商家分类列表
-		protected function list_category_biz($id = NULL)
+		protected function list_category_biz()
 		{
-			if ( !empty($this->session->biz_id) ):
-				$params['biz_id'] = $this->session->biz_id;
-			else:
-				$params['biz_id'] = $id;
-			endif;
-
 			// 从API服务器获取相应列表信息
+            $params['biz_id'] = $this->session->biz_id;
 			$url = api_url('item_category_biz/index');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -672,13 +672,43 @@
 			return $data['item'];
 		}
 
+        // 获取优惠券模板列表
+        protected function list_coupon_template()
+        {
+            // 从API服务器获取相应列表信息
+            $params['biz_id'] = $this->session->biz_id;
+            $url = api_url('coupon_template/index');
+            $result = $this->curl->go($url, $params, 'array');
+            if ($result['status'] === 200):
+                $data['items'] = $result['content'];
+            else:
+                $data['items'] = NULL;
+            endif;
+
+            return $data['items'];
+        }
+
+        // 获取特定优惠券模板信息
+        protected function get_coupon_template($id)
+        {
+            // 从API服务器获取相应列表信息
+            $params['id'] = $id;
+            $url = api_url('coupon_template/detail');
+            $result = $this->curl->go($url, $params, 'array');
+            if ($result['status'] === 200):
+                $data['item'] = $result['content'];
+            else:
+                $data['item'] = NULL;
+            endif;
+
+            return $data['item'];
+        }
+
 		// 获取店内活动列表
 		protected function list_promotion_biz()
 		{
-			// 从API服务器获取相应列表信息
-			$params = array(
-				'biz_id' => $this->session->biz_id,
-			);
+            // 从API服务器获取相应列表信息
+            $params['biz_id'] = $this->session->biz_id;
 			$url = api_url('promotion_biz/index');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -707,15 +737,10 @@
 		}
 		
 		// 获取商家运费模板
-		protected function list_freight_template_biz($id = NULL)
+		protected function list_freight_template_biz()
 		{
-			if ( !empty($this->session->biz_id) ):
-				$params['biz_id'] = $this->session->biz_id;
-			else:
-				$params['biz_id'] = $id;
-			endif;
-
-			// 从API服务器获取相应列表信息
+            // 从API服务器获取相应列表信息
+            $params['biz_id'] = $this->session->biz_id;
 			$url = api_url('freight_template_biz/index');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):

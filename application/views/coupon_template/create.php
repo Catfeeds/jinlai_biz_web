@@ -1,25 +1,31 @@
+<link rel=stylesheet media=all href="/css/create.css">
 <style>
 
 
-	/* 宽度在750像素以上的设备 */
-	@media only screen and (min-width:751px)
-	{
+    /* 宽度在750像素以上的设备 */
+    @media only screen and (min-width:751px)
+    {
 
-	}
-	
-	/* 宽度在960像素以上的设备 */
-	@media only screen and (min-width:961px)
-	{
+    }
 
-	}
+    /* 宽度在960像素以上的设备 */
+    @media only screen and (min-width:961px)
+    {
 
-	/* 宽度在1280像素以上的设备 */
-	@media only screen and (min-width:1281px)
-	{
+    }
 
-	}
+    /* 宽度在1280像素以上的设备 */
+    @media only screen and (min-width:1281px)
+    {
+
+    }
 </style>
 
+<script defer src="/js/create.js"></script>
+
+<base href="<?php echo $this->media_root ?>">
+
+<!--
 <link href="<?php echo CDN_URL ?>css/datepicker.min.css" rel="stylesheet">
 <script src="<?php echo CDN_URL ?>js/datepicker.min.js"></script>
 <script>
@@ -36,8 +42,7 @@
 		)
 	});
 </script>
-
-<base href="<?php echo $this->media_root ?>">
+-->
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
@@ -83,30 +88,26 @@
 					<input class=form-control name=min_subtotal type=number step=1 max=9999 value="<?php echo set_value('min_subtotal') ?>" placeholder="即订单商品小计；留空则不限，最高9999">
 				</div>
 			</div>
-		</fieldset>
 
-		<fieldset>
-			<legend>高级选项（可留空）</legend>
-			
 			<div class=form-group>
 				<label for=max_amount class="col-sm-2 control-label">总限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=max_amount type=number step=1 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="留空则不限，最高999999">
+					<input class=form-control name=max_amount type=number step=1 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="留空或0为不限，最高999999">
 				</div>
 			</div>
 			
 			<div class=form-group>
 				<label for=max_amount_user class="col-sm-2 control-label">单个用户限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=max_amount_user type=number step=1 max=99 value="<?php echo set_value('max_amount_user') ?>" placeholder="留空则不限，最高99">
+					<input class=form-control name=max_amount_user type=number step=1 max=99 value="<?php echo set_value('max_amount_user') ?>" placeholder="留空或0为不限，最高99">
 				</div>
 			</div>
-		
-			<hr>
-			<p class=help-block>可选择有效期，或指定有效期起止时间；若选择了有效期后输入了开始时间，则将在用户领取优惠券时以领取时间加上有效期作为结束时间；若选择了有效期后输入了结束时间，则以结束时间为准，有效期将被忽略。</p>
 
+        </fieldset>
+
+        <fieldset>
 			<div class=form-group>
-				<label for=period class="col-sm-2 control-label">领取后有效期</label>
+				<label for=period class="col-sm-2 control-label">有效期</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'period' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
@@ -138,14 +139,16 @@
 						<option value="<?php echo $value ?>" <?php echo set_select($input_name, $value) ?>><?php echo $name ?></option>
 						<?php endforeach ?>
 					</select>
-					<p class=help-block>留空则默认为自领取之日起30天内</p>
+					<p class=help-block>自领取之时起有效时长；留空则默认为自领取之日起30天内</p>
 				</div>
 			</div>
 
-			<div class=form-group>
+			<!--
+            <div class=form-group>
 				<label for=time_start class="col-sm-2 control-label">有效期开始时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_start type=datetime value="<?php echo set_value('time_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>">
+                    <p class=help-block>若指定了开始时间，则有效期将从该时间开始</p>
 				</div>
 			</div>
 
@@ -153,11 +156,15 @@
 				<label for=time_end class="col-sm-2 control-label">有效期结束时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_end type=datetime value="<?php echo set_value('time_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>">
+                    <p class=help-block>若指定了结束时间，则将忽略领取后有效期</p>
 				</div>
 			</div>
+			-->
 		</fieldset>
 
-		<fieldset>
+        <fieldset>
+            <legend>高级功能（免费试用）</legend>
+
 			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">限用系统分类</label>
 				<div class=col-sm-10>
@@ -176,7 +183,7 @@
 					<select class=form-control name=category_biz_id>
 						<option value="">不限</option>
 						<?php foreach ($biz_categories as $option): ?>
-							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
+							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_biz_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
 						<?php endforeach ?>
 					</select>
 				</div>
@@ -185,8 +192,19 @@
 			<div class=form-group>
 				<label for=item_id class="col-sm-2 control-label">限用商品</label>
 				<div class=col-sm-10>
-					<p class=help-block>如仅限部分商品可用，请输入可用商品的商品ID，多个ID间用一个半角逗号“,”进行分隔</p>
-					<input class=form-control name=item_id type=text value="<?php echo set_value('item_id') ?>" placeholder="多个ID间用一个半角逗号“,”进行分隔">
+                    <select class=form-control name=item_id>
+                        <option value="">不限</option>
+                        <?php
+                            $options = $comodities;
+                            foreach ($options as $option):
+                            if ( empty($option['time_delete']) ):
+                        ?>
+                            <option value="<?php echo $option['item_id'] ?>" <?php echo set_select('item_id', $option['item_id']) ?>><?php echo $option['name'] ?></option>
+                        <?php
+                            endif;
+                            endforeach;
+                        ?>
+                    </select>
 				</div>
 			</div>
 		</fieldset>

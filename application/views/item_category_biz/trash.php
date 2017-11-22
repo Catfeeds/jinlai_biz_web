@@ -74,7 +74,7 @@
             <li>
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                    <p>名称 <?php echo $item['name'] ?></p>
+                    <p><?php echo $this->class_name_cn ?>名称 <?php echo $item['name'] ?></p>
                 </a>
 
                 <div class="item-actions">

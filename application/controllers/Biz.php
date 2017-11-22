@@ -69,8 +69,8 @@
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'name' => '全称',
-				'brief_name' => '简称',
+				'name' => '商家全称',
+				'brief_name' => '店铺名称',
 			);
 		}
 
@@ -140,7 +140,7 @@
 				$this->form_validation->set_error_delimiters('', '；');
 				// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
 				$this->form_validation->set_rules('name', '商家全称', 'trim|required|min_length[5]|max_length[35]|is_unique[biz.name]');
-				$this->form_validation->set_rules('brief_name', '简称', 'trim|required|max_length[15]|is_unique[biz.brief_name]');
+				$this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]|is_unique[biz.brief_name]');
 				$this->form_validation->set_rules('description', '简介', 'trim|max_length[255]');
 				$this->form_validation->set_rules('tel_public', '消费者联系电话', 'trim|required|min_length[10]|max_length[13]|is_unique[biz.tel_public]');
 
@@ -225,6 +225,93 @@
 			endif;
 		} // end create
 
+        /**
+         * 创建
+         */
+        public function create_quick()
+        {
+            // 若为其它商家的员工，不允许创建商家
+            if ( !empty($this->session->biz_id) ):
+                $data['title'] = $this->class_name_cn. '创建失败';
+                $data['class'] = 'fail';
+                $data['content'] = '您目前是其它商家的成员，不可创建商家；请与当前所属商家解除关系后再尝试。';
+
+                $this->load->view('templates/header', $data);
+                $this->load->view($this->view_root.'/result', $data);
+                $this->load->view('templates/footer', $data);
+
+            else:
+                // 页面信息
+                $data = array(
+                    'title' => '创建'.$this->class_name_cn,
+                    'class' => $this->class_name.' create',
+                );
+
+                // 待验证的表单项
+                $this->form_validation->set_error_delimiters('', '；');
+                // 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
+                $this->form_validation->set_rules('url_logo', '商家LOGO', 'trim|max_length[255]');
+                $this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]|is_unique[biz.brief_name]');
+
+                // 若表单提交不成功
+                if ($this->form_validation->run() === FALSE):
+                    $data['error'] = validation_errors();
+
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/create_quick', $data);
+                    $this->load->view('templates/footer', $data);
+
+                else:
+                    // 需要创建的数据；逐一赋值需特别处理的字段
+                    $data_to_create = array(
+                        'user_id' => $this->session->user_id,
+                        'tel_public' => $this->session->mobile,
+                        'tel_protected_biz' => $this->session->mobile,
+                        'tel_protected_fiscal' => $this->session->mobile,
+                        'tel_protected_order' => $this->session->mobile,
+                    );
+                    // 自动生成无需特别处理的数据
+                    $data_need_no_prepare = array(
+                        'url_logo', 'brief_name',
+                    );
+                    foreach ($data_need_no_prepare as $name)
+                        $data_to_create[$name] = $this->input->post($name);
+
+                    // 向API服务器发送待创建数据
+                    $params = $data_to_create;
+                    $url = api_url($this->class_name. '/create_quick');
+                    $result = $this->curl->go($url, $params, 'array');
+                    if ($result['status'] === 200):
+                        $data['title'] = $this->class_name_cn. '创建成功';
+                        $data['class'] = 'success';
+                        $data['content'] = $result['content']['message'];
+                        $data['operation'] = 'create';
+                        $data['id'] = $result['content']['id']; // 创建后的信息ID
+
+                        // 更新本地商家信息
+                        $this->session->biz_id = $data['id'];
+                        $this->session->role = '管理员';
+                        $this->session->level = '100';
+
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/result_create', $data);
+                        $this->load->view('templates/footer', $data);
+
+                    else:
+                        // 若创建失败，则进行提示
+                        $data['error'] = $result['content']['error']['message'];
+
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/create_quick', $data);
+                        $this->load->view('templates/footer', $data);
+
+                    endif;
+
+                endif;
+
+            endif;
+        } // end create_quick
+
 		/**
 		 * 编辑单行
 		 */
@@ -277,7 +364,7 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('url_logo', 'LOGO', 'trim|max_length[255]');
+			$this->form_validation->set_rules('url_logo', '商家LOGO', 'trim|max_length[255]');
 			$this->form_validation->set_rules('slogan', '宣传语', 'trim|max_length[30]');
 			$this->form_validation->set_rules('description', '简介', 'trim|max_length[255]');
 			$this->form_validation->set_rules('notification', '公告', 'trim|max_length[255]');

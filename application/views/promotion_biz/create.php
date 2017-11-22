@@ -1,24 +1,37 @@
+<link rel=stylesheet media=all href="/css/create.css">
 <style>
-	.params {display:none;}
+    .params {display:none;}
 
-	/* 宽度在750像素以上的设备 */
-	@media only screen and (min-width:751px)
-	{
+    /* 宽度在750像素以上的设备 */
+    @media only screen and (min-width:751px)
+    {
 
-	}
-	
-	/* 宽度在960像素以上的设备 */
-	@media only screen and (min-width:961px)
-	{
+    }
 
-	}
+    /* 宽度在960像素以上的设备 */
+    @media only screen and (min-width:961px)
+    {
 
-	/* 宽度在1280像素以上的设备 */
-	@media only screen and (min-width:1281px)
-	{
+    }
 
-	}
+    /* 宽度在1280像素以上的设备 */
+    @media only screen and (min-width:1281px)
+    {
+
+    }
 </style>
+
+<script defer src="/js/create.js"></script>
+<script>
+    $(function(){
+        // 根据所选活动类型显示相应参数
+        $('select[name=type]').change(function(){
+            var fieldset_to_show = $(this).find('option:selected').attr('value');
+            $('fieldset.params').hide();
+            $('[data-type*="' + fieldset_to_show + '"]').show();
+        });
+    });
+</script>
 
 <?php
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
@@ -43,17 +56,6 @@
 	});
 </script>
 <?php endif ?>
-
-<script>
-	$(function(){
-		// 根据所选活动类型显示相应参数
-		$('select[name=type]').change(function(){
-			var fieldset_to_show = $(this).find('option:selected').attr('value');
-			$('fieldset.params').hide();
-			$('[data-type*="' + fieldset_to_show + '"]').show();
-		});
-	});
-</script>
 	
 <base href="<?php echo $this->media_root ?>">
 

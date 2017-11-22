@@ -1,7 +1,6 @@
 <link rel=stylesheet media=all href="/css/detail.css">
 <style>
 
-
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
@@ -56,11 +55,19 @@
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>所含优惠券</dt>
-		<dd><?php echo $item['template_ids'] ?></dd>
-		<dt>总限量</dt>
 		<dd>
-			<?php echo empty($item['max_amount'])? '否': $item['max_amount'].'份'; ?>
-		</dd>
+            <ul class=margined-list>
+            <?php foreach ($templates as $item): ?>
+                <li>
+                    <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('coupon_template/detail?id='.$item['template_id']) ?>"><?php echo $item['name'] ?></a>
+                </li>
+            <?php endforeach ?>
+            </ul>
+        </dd>
+
+		<dt>总限量</dt>
+		<dd><?php echo empty($item['max_amount'])? '不限': $item['max_amount'].'份'; ?></dd>
+
 		<dt>开放领取时间</dt>
 		<dd>
 			<?php echo empty($item['time_start'])? '自即日起': date('Y-m-d H:i:s', $item['time_start']); ?> <?php echo empty($item['time_end'])? '始终开放': ' 至 '.date('Y-m-d H:i:s', $item['time_end']); ?>

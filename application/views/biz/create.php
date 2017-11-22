@@ -1,3 +1,4 @@
+<link rel=stylesheet media=all href="/css/create.css">
 <style>
 
 
@@ -19,6 +20,8 @@
 
 	}
 </style>
+
+<script defer src="/js/create.js"></script>
 
 <base href="<?php echo $this->media_root ?>">
 
@@ -50,7 +53,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=brief_name class="col-sm-2 control-label">简称 *</label>
+				<label for=brief_name class="col-sm-2 control-label">店铺名称 *</label>
 				<div class=col-sm-10>
 					<input class=form-control name=brief_name type=text value="<?php echo set_value('brief_name') ?>" placeholder="例如“SELECTED”" required>
 				</div>
@@ -283,7 +286,7 @@
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
-				<p class=help-block>点击“提交入驻申请”代表您已阅读并同意<a href="<?php echo base_url('article/agreement-admission') ?>" target=_blank>入驻协议</a></p>
+				<p class=help-block>点击“提交入驻申请”代表您已阅读并同意<a href="<?php echo base_url('article/agreement-admission') ?>" target=_blank><?php echo SITE_NAME ?>入驻协议</a></p>
 				<button class="btn btn-primary btn-lg btn-block" type=submit>提交入驻申请</button>
 		    </div>
 		</div>

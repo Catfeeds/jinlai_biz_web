@@ -1,23 +1,25 @@
+<link rel=stylesheet media=all href="/css/edit.css">
 <style>
 
-	/* 宽度在750像素以上的设备 */
-	@media only screen and (min-width:751px)
-	{
+    /* 宽度在750像素以上的设备 */
+    @media only screen and (min-width:751px)
+    {
 
-	}
+    }
 
-	/* 宽度在960像素以上的设备 */
-	@media only screen and (min-width:961px)
-	{
+    /* 宽度在960像素以上的设备 */
+    @media only screen and (min-width:961px)
+    {
 
-	}
+    }
 
-	/* 宽度在1280像素以上的设备 */
-	@media only screen and (min-width:1281px)
-	{
+    /* 宽度在1280像素以上的设备 */
+    @media only screen and (min-width:1281px)
+    {
 
-	}
+    }
 </style>
+<script defer src="/js/edit.js"></script>
 
 <base href="<?php echo $this->media_root ?>">
 
@@ -73,8 +75,6 @@
             <div class=form-group>
                 <label for=main_figure_url class="col-sm-2 control-label">主形象图</label>
                 <div class=col-sm-10>
-                    <p class=help-block>用于商家店铺首页、商家会员卡详情页</p>
-
                     <?php $name_to_upload = 'main_figure_url' ?>
                     <ul class=upload_preview>
                         <?php if ( !empty($item[$name_to_upload]) ): ?>
@@ -99,14 +99,14 @@
                     </div>
 
                     <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>用于商家店铺首页、商家会员卡详情页</p>
                 </div>
             </div>
 
             <div class=form-group>
                 <label for=member_logo_url class="col-sm-2 control-label">会员卡LOGO</label>
                 <div class=col-sm-10>
-                    <p class=help-block>用于会员卡相关页面；若不上传，则默认以商家LOGO作为会员卡LOGO</p>
-
                     <?php $name_to_upload = 'member_logo_url' ?>
                     <ul class=upload_preview>
                         <?php if ( !empty($item[$name_to_upload]) ): ?>
@@ -131,14 +131,14 @@
                     </div>
 
                     <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>用于会员卡相关页面；若不上传，则默认以商家LOGO作为会员卡LOGO</p>
                 </div>
             </div>
 
             <div class=form-group>
                 <label for=member_figure_url class="col-sm-2 control-label">会员卡封图</label>
                 <div class=col-sm-10>
-                    <p class=help-block>用于会员卡领取页</p>
-
                     <?php $name_to_upload = 'member_figure_url' ?>
                     <ul class=upload_preview>
                         <?php if ( !empty($item[$name_to_upload]) ): ?>
@@ -163,14 +163,14 @@
                     </div>
 
                     <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>用于会员卡领取页、详情页</p>
                 </div>
             </div>
 
             <div class=form-group>
                 <label for=member_thumb_url class="col-sm-2 control-label">会员卡列表图</label>
                 <div class=col-sm-10>
-                    <p class=help-block>用于会员卡列表页</p>
-
                     <?php $name_to_upload = 'member_thumb_url' ?>
                     <ul class=upload_preview>
                         <?php if ( !empty($item[$name_to_upload]) ): ?>
@@ -195,6 +195,8 @@
                     </div>
 
                     <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>用于会员卡列表</p>
                 </div>
             </div>
 
@@ -265,8 +267,6 @@
             <div class=form-group>
                 <label for=home_m1_ace_id class="col-sm-2 control-label">模块一首推商品</label>
                 <div class=col-sm-10>
-                    <p class=help-block>点击形象图后跳转到的商品，下同</p>
-
                     <?php $input_name = 'home_m1_ace_id' ?>
                     <select class=form-control name="<?php echo $input_name ?>">
                         <?php
@@ -280,14 +280,14 @@
                         endforeach;
                         ?>
                     </select>
+
+                    <p class=help-block>点击形象图后跳转到的商品，下同</p>
                 </div>
             </div>
 
             <div class=form-group>
                 <label for=home_m1_ids class="col-sm-2 control-label">模块一陈列商品</label>
                 <div class=col-sm-10>
-                    <p class=help-block>需要进行展示的1-3款商品，下同；桌面端按住Ctrl或⌘键可多选；如果选择了3款以上，将仅示前3款</p>
-
                     <?php $input_name = 'home_m1_ids[]' ?>
                     <select class=form-control name="<?php echo $input_name ?>" multiple>
                         <?php
@@ -302,6 +302,8 @@
                         endforeach;
                         ?>
                     </select>
+
+                    <p class=help-block>需要进行展示的1-3款商品，下同；桌面端按住Ctrl（Windows）或⌘（Mac）可多选；如果选择了3款以上，将仅示前3款</p>
                 </div>
             </div>
         </fieldset>

@@ -1,25 +1,31 @@
+<link rel=stylesheet media=all href="/css/create.css">
 <style>
 
 
-	/* 宽度在750像素以上的设备 */
-	@media only screen and (min-width:751px)
-	{
+    /* 宽度在750像素以上的设备 */
+    @media only screen and (min-width:751px)
+    {
 
-	}
-	
-	/* 宽度在960像素以上的设备 */
-	@media only screen and (min-width:961px)
-	{
+    }
 
-	}
+    /* 宽度在960像素以上的设备 */
+    @media only screen and (min-width:961px)
+    {
 
-	/* 宽度在1280像素以上的设备 */
-	@media only screen and (min-width:1281px)
-	{
+    }
 
-	}
+    /* 宽度在1280像素以上的设备 */
+    @media only screen and (min-width:1281px)
+    {
+
+    }
 </style>
 
+<script defer src="/js/create.js"></script>
+
+<base href="<?php echo $this->media_root ?>">
+
+<!--
 <link href="<?php echo CDN_URL ?>css/datepicker.min.css" rel="stylesheet">
 <script src="<?php echo CDN_URL ?>js/datepicker.min.js"></script>
 <script>
@@ -36,8 +42,7 @@
 		)
 	});
 </script>
-
-<base href="<?php echo $this->media_root ?>">
+-->
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
@@ -59,66 +64,44 @@
 			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">名称※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="名称" required>
+					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="最多20个字符" required>
 				</div>
 			</div>
 
 			<div class=form-group>
 				<label for=template_ids class="col-sm-2 control-label">所含优惠券※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=template_ids type=text value="<?php echo set_value('template_ids') ?>" placeholder="请输入所含优惠券ID，多个ID间以一个半角逗号“,”分隔" required>
-					<p class=help-block>放入优惠券包的优惠券模板，在优惠券包被领取时将忽视总限量（若有）及单个用户限量（若有），以优惠券包的总限量（若有）为准；作为单个优惠券模板被领取时不受影响。</p>
+                    <?php $input_name = 'template_ids[]' ?>
+                    <select class=form-control name="<?php echo $input_name ?>" multiple required>
+                        <?php
+                        $options = $coupon_templates;
+                        $current_array = explode(',', $item['template_ids']);
+                        foreach ($options as $option):
+                            if ( empty($option['time_delete']) ):
+                                ?>
+                                <option value="<?php echo $option['template_id'] ?>" <?php if ( in_array($option['template_id'], $current_array) ) echo 'selected' ?>><?php echo $option['name'] ?></option>
+                                <?php
+                            endif;
+                        endforeach;
+                        ?>
+                    </select>
 
-					<script>
-						$(function(){
-							$('[name="ids[]"]').change(function(){
-								// 获取选项ID
-								var item_id = $(this).val();
-								console.log(item_id + ' selected');
-
-								// 获取当前字段及字段值
-								var input = $('[name=ids]');
-								var origin_ids = input.val();
-
-								// 若所选项值在当前值中不存在，则追加所选项值到当前值末尾，否则删除当前值中的所选值
-								var value_to_check = origin_ids + ',';
-								console.log(value_to_check);
-								if (value_to_check.indexOf(','+item_id+',') == -1)
-								{
-									var current_ids = origin_ids + ',' + item_id;
-									input.val(current_ids);
-									console.log(current_ids + ' after appended');
-								}
-								else
-								{
-									var current_ids = value_to_check.replace(','+item_id+',', ',');
-									current_ids = current_ids.slice(0, -1); // 去掉末尾的冗余半角逗号
-									input.val(current_ids);
-									console.log(current_ids + ' after deleted');
-								}
-							});
-
-							$('form').submit(function(){
-								//var value = $('[name=ids]').val();
-								var value = $('[name=time_end]').val();
-								console.log(value);
-							});
-						});
-					</script>
+                    <p class=help-block>放入券包的优惠券，在优惠券包被领取时将忽视总限量（若有）及单个用户限量（若有），以优惠券包的总限量（若有）为准；作为单个优惠券被领取时不受影响。</p>
 				</div>
 			</div>
+
+            <div class=form-group>
+                <label for=max_amount class="col-sm-2 control-label">总限量（份）</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=max_amount type=number step=1 min=0 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="最高999999，留空或0为不限">
+                    <p class=help-block>总共可被领取的优惠券数量上限；对于每位用户来说，每个优惠券包仅可领取一次</p>
+                </div>
+            </div>
 		</fieldset>
 
-		<fieldset>
+		<!--
+        <fieldset>
 			<legend>高级选项（可留空）</legend>
-
-			<div class=form-group>
-				<label for=max_amount class="col-sm-2 control-label">总限量（份）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=max_amount type=number step=1 min=0 max=999999 value="<?php echo set_value('max_amount') ?>" placeholder="最高999999，留空或0为不限">
-					<p class=help-block>总共可被领取的优惠券数量上限；对于每位用户来说，每个优惠券包仅可领取一次</p>
-				</div>
-			</div>
 
 			<div class=form-group>
 				<label for=time_start class="col-sm-2 control-label">领取开始时间</label>
@@ -134,6 +117,7 @@
 				</div>
 			</div>
 		</fieldset>
+		-->
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">

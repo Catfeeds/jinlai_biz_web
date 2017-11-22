@@ -79,10 +79,10 @@
 		<dt>三级规格</dt>
 		<dd><?php echo $item['name_third'] ?></dd>
 
-		<dt>价格</dt>
+		<dt>商城价/现价</dt>
 		<dd>￥ <?php echo $item['price'] ?></dd>
 		<dt>库存量</dt>
-		<dd><?php echo $item['stocks'] ?></dd>
+		<dd><?php echo $item['stocks'] ?>单位</dd>
 
 		<dt>物流信息</dt>
 		<dd>

@@ -142,19 +142,21 @@
 				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
 				<div class=col-sm-10>
 					<?php if ( empty($biz_freight_templates) ): ?>
-					<p class="help-block">您目前没有可用的运费模板，仅可包邮</p>
-					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz') ?>">创建一个</a>
-					<?php endif ?>
+					<p class=help-block>您目前没有可用的运费模板，仅可包邮</p>
+					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz') ?>">创建运费模板</a>
 
-					<select class=form-control name=freight_template_id>
-						<option value="">默认包邮</option>
-						<?php
-							$options = $biz_freight_templates;
-							foreach ($options as $option):
-						?>
-							<option value="<?php echo $option['template_id'] ?>" <?php echo set_select('freight_template_id', $option['template_id']) ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
+                    <?php else: ?>
+                    <select class=form-control name=freight_template_id>
+                        <option value="">默认包邮</option>
+                        <?php
+                        $options = $biz_freight_templates;
+                        foreach ($options as $option):
+                            ?>
+                            <option value="<?php echo $option['template_id'] ?>" <?php echo set_select('freight_template_id', $option['template_id']) ?>><?php echo $option['name'] ?></option>
+                        <?php endforeach ?>
+                    </select>
+
+					<?php endif ?>
 				</div>
 			</div>
 		</fieldset>
