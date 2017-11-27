@@ -130,8 +130,9 @@
 		{
 			// 检查是否已传入必要参数
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
-			if ( !empty($id) ):
-				$params['user_id'] = $id; // 以user_id进行查询
+            $user_id = $this->input->get_post('user_id')? $this->input->get_post('user_id'): NULL;
+			if ( !empty($id) || !empty($user_id) ):
+				$params['user_id'] = !empty($id)? $id: $user_id; // 以user_id进行查询
                 $params['biz_id'] = $this->session->biz_id;
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页

@@ -54,7 +54,18 @@
 		<dt>规格ID</dt>
 		<dd><?php echo $item['sku_id'] ?></dd>
 		<dt>所属商品</dt>
-		<dd><?php echo $comodity['name'] ?></dd>
+		<dd>
+            <section id=item-info class="well col-xs-12 col-sm-6 col-md-4">
+                <figure class="col-xs-4">
+                    <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
+                </figure>
+
+                <div class="col-xs-8">
+                    <h3><?php echo $comodity['name'] ?></h3>
+                    <p>￥<?php echo $comodity['price'] ?></p>
+                </div>
+            </section>
+        </dd>
 
 		<dt>规格图片</dt>
 		<?php if ( !empty($item['url_image']) ): ?>

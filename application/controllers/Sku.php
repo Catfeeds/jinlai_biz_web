@@ -255,9 +255,9 @@
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
 			$this->form_validation->set_rules('item_id', '所属商品', 'trim|required');
 			$this->form_validation->set_rules('url_image', '图片', 'trim|max_length[255]');
-			$this->form_validation->set_rules('name_first', '名称第一部分', 'trim|required|max_length[10]');
-			$this->form_validation->set_rules('name_second', '名称第二部分', 'trim|max_length[10]');
-			$this->form_validation->set_rules('name_third', '名称第三部分', 'trim|max_length[10]');
+			$this->form_validation->set_rules('name_first', '名称第一部分', 'trim|required|max_length[15]');
+			$this->form_validation->set_rules('name_second', '名称第二部分', 'trim|max_length[15]');
+			$this->form_validation->set_rules('name_third', '名称第三部分', 'trim|max_length[15]');
 			$this->form_validation->set_rules('price', '价格（元）', 'trim|required|greater_than[0]|less_than_equal_to[99999.99]');
 			$this->form_validation->set_rules('stocks', '库存量（单位）', 'trim|required|greater_than_equal_to[0]|less_than_equal_to[65535]');
 			$this->form_validation->set_rules('weight_net', '净重（KG）', 'trim|greater_than_equal_to[0]|less_than_equal_to[999.99]');
@@ -295,6 +295,7 @@
 					$data['content'] = $result['content']['message'];
 					$data['operation'] = 'create';
 					$data['id'] = $result['content']['id']; // 创建后的信息ID
+                    $data['item_id'] = $item_id;
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -354,9 +355,9 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('url_image', '图片', 'trim|max_length[255]');
-			$this->form_validation->set_rules('name_first', '名称第一部分', 'trim|required|max_length[10]');
-			$this->form_validation->set_rules('name_second', '名称第二部分', 'trim|max_length[10]');
-			$this->form_validation->set_rules('name_third', '名称第三部分', 'trim|max_length[10]');
+            $this->form_validation->set_rules('name_first', '名称第一部分', 'trim|required|max_length[15]');
+            $this->form_validation->set_rules('name_second', '名称第二部分', 'trim|max_length[15]');
+            $this->form_validation->set_rules('name_third', '名称第三部分', 'trim|max_length[15]');
 			$this->form_validation->set_rules('price', '价格（元）', 'trim|required|greater_than[0]|less_than_equal_to[99999.99]');
 			$this->form_validation->set_rules('stocks', '库存量（单位）', 'trim|required|greater_than_equal_to[0]|less_than_equal_to[65535]');
 			$this->form_validation->set_rules('weight_net', '净重（KG）', 'trim|greater_than_equal_to[0]|less_than_equal_to[999.99]');

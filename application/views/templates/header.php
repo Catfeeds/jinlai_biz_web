@@ -6,6 +6,8 @@
 	$is_wechat = strpos($user_agent, 'MicroMessenger')? TRUE: FALSE;
 	$is_ios = strpos($user_agent, 'iPhone')? TRUE: FALSE;
 	$is_android = strpos($user_agent, 'Android')? TRUE: FALSE;
+	$is_mac = strpos($user_agent, 'Macintosh;')? TRUE: FALSE;
+    $is_windows = strpos($user_agent, 'Windows ')? TRUE: FALSE;
 
 	// 生成SEO相关变量，一般为页面特定信息与在config/config.php中设置的站点通用信息拼接
 	$title = isset($title)? $title: SITE_NAME.' - '.SITE_SLOGAN;
@@ -23,13 +25,16 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171122">
+		<meta name=version content="revision20171128">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
 
-		<!--<meta name=viewport content="width=device-width,user-scalable=0">-->
+		<?php if ($is_mac || $is_windows): ?>
+        <meta name=viewport content="width=device-width,user-scalable=0">
+        <?php else: ?>
 		<meta name=viewport content="width=750,user-scalable=0">
+        <?php endif ?>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<?php //if ($is_wechat): ?>
@@ -224,7 +229,7 @@
 			<nav class=container-fluid>
 				<div class=navbar-header>
 					<h1>
-						<a id=logo class=ellipsis title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>"><?php echo $title ?></a>
+						<a id=logo class=ellipsis title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>"><?php echo SITE_NAME ?></a>
 					</h1>
 					<button class=navbar-toggle data-toggle=collapse data-target=".navbar-collapse">
 						<span class=sr-only>展开/收起菜单</span>
@@ -236,7 +241,6 @@
 						<li><a title="回到首页" href="<?php echo base_url() ?>">首页</a></li>
 
 				<?php if ( !empty($this->session->biz_id) ): ?>
-
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>商家 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>

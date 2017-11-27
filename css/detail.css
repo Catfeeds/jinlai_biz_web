@@ -8,7 +8,7 @@
 
 #nav-main {display:none;}
 
-#item-actions {position:fixed;left:0;right:0;bottom:0;height:98px;line-height:98px;}
+#item-actions {position:fixed;left:0;right:0;bottom:0;height:98px;line-height:98px;z-index:101;}
     #item-actions li {color:#fff;background-color:#ff3649;}
         #item-actions a {color:#fff;text-align:center;}
 

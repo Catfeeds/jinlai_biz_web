@@ -234,13 +234,16 @@
 				'class' => $this->class_name.' create',
 			);
 
+            // 获取当前商家所有优惠券模板数据
+            $data['coupon_templates'] = $this->list_coupon_template();
+
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
 			$this->form_validation->set_rules('type', '活动类型', 'trim|required');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required|exact_length[16]|callback_time_start');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required|exact_length[16]|callback_time_end');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_rules('description', '说明', 'trim');
@@ -280,8 +283,8 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 					'biz_id' => $this->session->biz_id,
-					'time_start' => strtotime( $this->input->post('time_start') ),
-					'time_end' => strtotime( $this->input->post('time_end') ),
+                    'time_start' => empty($this->input->post('time_start'))? time(): strtotime( $this->input->post('time_start') ),
+                    'time_end' => empty($this->input->post('time_end'))? time() + 2592000: strtotime( $this->input->post('time_end') ),
 					'time_book_start' => strtotime( $this->input->post('time_book_start') ),
 					'time_book_end' => strtotime( $this->input->post('time_book_end') ),
 					'time_complete_start' => strtotime( $this->input->post('time_complete_start') ),
@@ -361,11 +364,14 @@
 				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
 			endif;
 
+            // 获取当前商家所有优惠券模板数据
+            $data['coupon_templates'] = $this->list_coupon_template();
+
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
-			$this->form_validation->set_rules('time_start', '开始时间', 'trim|required|exact_length[16]|callback_time_start');
-			$this->form_validation->set_rules('time_end', '结束时间', 'trim|required|exact_length[16]|callback_time_end');
+			$this->form_validation->set_rules('time_start', '开始时间', 'trim|exact_length[16]|callback_time_start');
+			$this->form_validation->set_rules('time_end', '结束时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_rules('description', '说明', 'trim');
@@ -411,8 +417,8 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
-					'time_start' => strtotime( $this->input->post('time_start') ),
-					'time_end' => strtotime( $this->input->post('time_end') ),
+                    'time_start' => empty($this->input->post('time_start'))? time(): strtotime( $this->input->post('time_start') ),
+                    'time_end' => empty($this->input->post('time_end'))? time() + 2592000: strtotime( $this->input->post('time_end') ),
 					'time_book_start' => strtotime( $this->input->post('time_book_start') ),
 					'time_book_end' => strtotime( $this->input->post('time_book_end') ),
 					'time_complete_start' => strtotime( $this->input->post('time_complete_start') ),
@@ -690,9 +696,15 @@
 
 			endif;
 		} // end suspend
-		
-		// 检查起始时间
-		public function time_start($value)
+
+        /**
+         * 检查起始时间
+         *
+         * @param string $value
+         * @param bool $later_than_now 是否允许早于当前时间，默认不允许
+         * @return bool
+         */
+		public function time_start($value, $later_than_now = FALSE)
 		{
 			if ( empty($value) ):
 				return true;
@@ -705,7 +717,7 @@
 				$time_to_check = strtotime($value.':00');
 
 				// 该时间不可早于当前时间一分钟以内
-				if ($time_to_check <= time() + 60):
+				if ($later_than_now === FALSE && $time_to_check <= time() + 60):
 					return false;
 				else:
 					return true;

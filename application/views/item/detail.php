@@ -194,28 +194,36 @@
 		</dd>
 	</dl>
 
-	<?php if ( !empty($skus) ): ?>
 	<section id=skus class=well>
 		<h2>商品规格</h2>
-		<a class="btn btn-info btn-lg" href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>管理规格</a>
-		
+
+        <?php if ( !empty($skus) ): ?>
 		<ul class=row>
 			<?php foreach ($skus as $sku): ?>
-			<li class="col-xs-6 col-sm-4 col-md-3">
+			<li class="col-xs-12 col-sm-6 col-md-4">
 				<a href="<?php echo base_url('sku/detail?id='.$sku['sku_id']) ?>">
-					<h3><?php echo $sku['name_first'].$sku['name_second'].$sku['name_third'] ?></h3>
-					<small>￥<?php echo $sku['price'] ?> / 库存<?php echo $sku['stocks'] ?></small>
-					<?php if ( !empty($sku['url_image']) ): ?>
-					<figure>
-						<img src="<?php echo $sku['url_image'] ?>">
+
+					<figure class="list-item-figure col-xs-4">
+                        <?php if ( !empty($sku['url_image']) ): ?>
+						<img src="<?php echo MEDIA_URL.'sku/'.$sku['url_image'] ?>">
+                        <?php else: ?>
+                        <img src="<?php echo $item['url_image_main'] ?>">
+                        <?php endif ?>
 					</figure>
-					<?php endif ?>
+
+                    <div class="list-item-info col-xs-8">
+                        <h3><?php echo $sku['name_first'].' '.$sku['name_second'].' '.$sku['name_third'] ?></h3>
+                        <p>￥<?php echo $sku['price'] ?> / 库存<?php echo $sku['stocks'] ?></p>
+                    </div>
 				</a>
 			</li>
 			<?php endforeach ?>
 		</ul>
+        <?php endif ?>
+
+        <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>管理规格</a>
 	</section>
-	<?php endif ?>
+
 
 	<section id=description class=well>
 		<h2>商品描述</h2>

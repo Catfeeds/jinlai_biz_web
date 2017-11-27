@@ -194,26 +194,56 @@
 		<dl id=list-time class=dl-horizontal>
 			<dt>用户下单时间</dt>
 			<dd><?php echo date('Y-m-d H:i:s', $item['time_create']) ?></dd>
+
+            <?php if ( isset($item['time_cancel']) ): ?>
 			<dt>用户取消时间</dt>
-			<dd><?php echo empty($item['time_cancel'])? NULL: date('Y-m-d H:i:s', $item['time_cancel']) ?></dd>
-			<dt>自动过期时间</dt>
-			<dd><?php echo empty($item['time_expire'])? NULL: date('Y-m-d H:i:s', $item['time_expire']) ?></dd>
-			<dt>用户付款时间</dt>
-			<dd><?php echo empty($item['time_pay'])? NULL: date('Y-m-d H:i:s', $item['time_pay']) ?></dd>
-			<dt>商家拒绝时间</dt>
-			<dd><?php echo empty($item['time_refuse'])? NULL: date('Y-m-d H:i:s', $item['time_refuse']) ?></dd>
-			<dt>商家接单时间</dt>
-			<dd><?php echo empty($item['time_accept'])? NULL: date('Y-m-d H:i:s', $item['time_accept']) ?></dd>
-			<dt>商家发货时间</dt>
-			<dd><?php echo empty($item['time_deliver'])? NULL: date('Y-m-d H:i:s', $item['time_deliver']) ?></dd>
-			<dt>用户确认时间</dt>
-			<dd><?php echo empty($item['time_confirm'])? NULL: date('Y-m-d H:i:s', $item['time_confirm']) ?></dd>
-			<dt>系统确认时间</dt>
-			<dd><?php echo empty($item['time_confirm_auto'])? NULL: date('Y-m-d H:i:s', $item['time_confirm_auto']) ?></dd>
-			<dt>用户评价时间</dt>
-			<dd><?php echo empty($item['time_comment'])? NULL: date('Y-m-d H:i:s', $item['time_comment']) ?></dd>
-			<dt>商家退款时间</dt>
-			<dd><?php echo empty($item['time_refund'])? NULL: date('Y-m-d H:i:s', $item['time_refund']) ?></dd>
+			<dd><?php echo $item['time_cancel'] ?></dd>
+            <?php endif ?>
+
+            <?php if ( isset($item['time_expire']) ): ?>
+                <dt>自动过期时间</dt>
+                <dd><?php echo $item['time_expire'] ?></dd>
+            <?php endif ?>
+
+            <?php if ( isset($item['time_pay']) ): ?>
+                <dt>用户付款时间</dt>
+                <dd><?php echo $item['time_pay'] ?></dd>
+            <?php endif ?>
+
+            <?php if ( isset($item['time_refuse']) ): ?>
+                <dt>商家拒绝时间</dt>
+                <dd><?php echo $item['time_refuse'] ?></dd>
+            <?php endif ?>
+
+            <?php if ( isset($item['time_accept']) ): ?>
+                <dt>商家接单时间</dt>
+                <dd><?php echo $item['time_accept'] ?></dd>
+            <?php endif ?>
+
+            <?php if ( isset($item['time_deliver']) ): ?>
+                <dt>商家发货时间</dt>
+                <dd><?php echo $item['time_deliver'] ?></dd>
+            <?php endif ?>
+
+            <?php if ( isset($item['time_confirm']) ): ?>
+                <dt>用户确认时间</dt>
+                <dd><?php echo $item['time_confirm'] ?></dd>
+            <?php endif ?>
+
+            <?php if ( isset($item['time_confirm_auto']) ): ?>
+                <dt>系统确认时间</dt>
+                <dd><?php echo $item['time_confirm_auto'] ?></dd>
+            <?php endif ?>
+
+            <?php if ( isset($item['time_comment']) ): ?>
+                <dt>用户评价时间</dt>
+                <dd><?php echo $item['time_comment'] ?></dd>
+            <?php endif ?>
+
+            <?php if ( isset($item['time_refund']) ): ?>
+                <dt>商家退款时间</dt>
+                <dd><?php echo $item['time_refund'] ?></dd>
+            <?php endif ?>
 
 			<?php if ( ! empty($item['operator_id']) ): ?>
 			<dt>最后操作时间</dt>

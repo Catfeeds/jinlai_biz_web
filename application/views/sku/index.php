@@ -51,11 +51,15 @@
 	<?php endif ?>
 
 	<?php if ( !empty($comodity) ): ?>
-	<section id=item-info class="row well">
-		<figcaption><?php echo $comodity['name'] ?></figcaption>
-		<figure class="col-xs-12 col-sm-6 col-md-4">
+	<section id=item-info class="well col-xs-12 col-sm-6 col-md-4">
+		<figure class="col-xs-4">
 			<img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
 		</figure>
+
+        <div class="col-xs-8">
+            <h3><?php echo $comodity['name'] ?></h3>
+            <p>￥<?php echo $comodity['price'] ?></p>
+        </div>
 	</section>
 
     <div id=primary_actions class=action_bottom>

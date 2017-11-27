@@ -40,7 +40,7 @@
         <?php if ( !empty($operation) ): ?>
 
             <?php if ($operation === 'create'): ?>
-                <li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="继续创建" href="<?php echo base_url($this->class_name.'/create') ?>">继续创建</a></li>
+                <li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="继续创建" href="<?php echo base_url($this->class_name.'/create?item_id='.$item_id) ?>">继续创建</a></li>
                 <?php
             endif;
             if ( in_array($operation, array('create', 'edit',)) ):

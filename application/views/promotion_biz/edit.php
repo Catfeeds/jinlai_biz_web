@@ -83,15 +83,16 @@
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=time_start class="col-sm-2 control-label">开始时间※</label>
+				<label for=time_start class="col-sm-2 control-label">开始时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_start type=datetime value="<?php echo empty($item['time_start'])? NULL: substr(date('Y-m-d H:i:s', $item['time_start']), 0,16); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>" required>
+					<input class=form-control name=time_start type=datetime value="<?php echo empty($item['time_start'])? NULL: substr(date('Y-m-d H:i:s', $item['time_start']), 0,16); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>">
+                    <p class=help-block>若留空，则以当前时间为开始时间</p>
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=time_end class="col-sm-2 control-label">结束时间※</label>
+				<label for=time_end class="col-sm-2 control-label">结束时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_end type=datetime value="<?php echo empty($item['time_end'])? NULL: substr(date('Y-m-d H:i:s', $item['time_end']), 0,16); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>" required>
+					<input class=form-control name=time_end type=datetime value="<?php echo empty($item['time_end'])? NULL: substr(date('Y-m-d H:i:s', $item['time_end']), 0,16); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>">
 				</div>
 			</div>
 			<div class=form-group>
@@ -114,8 +115,6 @@
 			<div class=form-group>
 				<label for=url_image class="col-sm-2 control-label">形象图</label>
                 <div class=col-sm-10>
-                    <p class=help-block>该图用于手机等窄屏设备</p>
-
                     <?php $name_to_upload = 'url_image' ?>
                     <ul class=upload_preview>
                         <?php if ( !empty($item[$name_to_upload]) ): ?>
@@ -140,14 +139,14 @@
                     </div>
 
                     <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>该图用于手机等窄屏设备</p>
                 </div>
 			</div>
 			
 			<div class=form-group>
 				<label for=url_image_wide class="col-sm-2 control-label">宽屏形象图</label>
                 <div class=col-sm-10>
-                    <p class=help-block>该图用于笔记本、台式机等宽屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
-
                     <?php $name_to_upload = 'url_image_wide' ?>
                     <ul class=upload_preview>
                         <?php if ( !empty($item[$name_to_upload]) ): ?>
@@ -172,6 +171,8 @@
                     </div>
 
                     <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>该图用于笔记本、台式机等宽屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
                 </div>
 			</div>
 		</fieldset>
@@ -242,12 +243,18 @@
 		</fieldset>
 
 		<fieldset class=params data-type="单品赠券,订单赠券">
-			<p class=help-block>“赠送优惠券模板”及“赠送优惠券包”只可填写一项；若两项都填写，将按“赠送优惠券模板”进行</p>
+            <p class=help-block>成交后发放相应优惠券到用户；“赠送优惠券模板”及“赠送优惠券包”只可填写一项；若两项都填写，将按“赠送优惠券模板”进行</p>
 
 			<div class=form-group>
-				<label for=coupon_id class="col-sm-2 control-label">赠送优惠券模板</label>
+				<label for=coupon_id class="col-sm-2 control-label">赠送优惠券</label>
 				<div class=col-sm-10>
-					<input class=form-control name=coupon_id type=text value="<?php echo $item['coupon_id'] ?>" placeholder="优惠券模板ID">
+                    <select class=form-control name=coupon_id required>
+                        <option value="">请选择</option>
+                        <?php var_dump($coupon_templates) ?>
+                        <?php foreach ($coupon_templates as $option): ?>
+                            <option value="<?php echo $option['template_id'] ?>" <?php echo set_select('coupon_id', $option['template_id']) ?>><?php echo $option['name'] ?></option>
+                        <?php endforeach ?>
+                    </select>
 				</div>
 			</div>
 			<div class=form-group>

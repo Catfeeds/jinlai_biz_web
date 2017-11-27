@@ -47,12 +47,16 @@
 			<div class="form-group well">
 				<label for=item_id class="col-sm-2 control-label">所属商品</label>
 				<div class=col-sm-10>
-					<section id=item-info class=row>
-						<figcaption><?php echo $comodity['name'] ?></figcaption>
-						<figure class="col-xs-12 col-sm-6 col-md-4">
-							<img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
-						</figure>
-					</section>
+                    <section id=item-info class="well col-xs-12 col-sm-6 col-md-4">
+                        <figure class="col-xs-4">
+                            <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
+                        </figure>
+
+                        <div class="col-xs-8">
+                            <h3><?php echo $comodity['name'] ?></h3>
+                            <p>￥<?php echo $comodity['price'] ?></p>
+                        </div>
+                    </section>
 				</div>
 			</div>
 

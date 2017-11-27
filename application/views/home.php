@@ -19,8 +19,8 @@
 
 	#biz-info {text-align:center;padding:60px 0 70px;position:relative;}
 		#biz-status {color:#9fa0a0;position:absolute;top:30px;right:30px;}
-		#biz-logo {background-color:#fff;width:150px;height:150px;border:2px solid #efefef;border-radius:50%;display:inline-block;vertical-align:middle;text-align:center;overflow:hidden;}
-            #biz-logo img {max-width:100%;max-height:100%;width:auto;margin:0 auto;}
+		#biz-logo {background-color:#fff;width:150px;height:150px;line-height:150px;border:2px solid #efefef;border-radius:50%;display:inline-block;text-align:center;overflow:hidden;}
+            #biz-logo img {max-width:100%;max-height:100%;width:auto;margin:0 auto;display:inline-block}
 		#biz-info h2 {font-size:30px;margin:30px 0;}
 		#biz-info p {font-size:26px;line-height:1;margin:0;}
 

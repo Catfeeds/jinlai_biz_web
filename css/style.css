@@ -55,16 +55,16 @@ a {font-size:26px;color:#3e3a39;text-decoration:none;/* 清理BootStrap样式 */
 				#content .btn-group:first-of-type .dropdown-menu .btn-primary {color:#fff;background-color:#ff3649;}
 					#content .btn-group:first-of-type .dropdown-menu .btn-primary:after {content:none;}
 
-#header .navbar-fixed-bottom .navbar-collapse, #header .navbar-fixed-top .navbar-collapse {max-height:100%;}
-	#header .navbar-collapse {background-color:#fff;position:fixed;left:0;right:0;top:88px;bottom:98px;}
+#header .navbar-collapse {background-color:#fff;position:fixed;left:0;right:0;top:88px;bottom:0;max-height:100%;}
+
 #header .navbar-toggle {height:88px;line-height:88px;margin:-88px 20px 0 0;padding:0;}
-#header .navbar-toggle::before {display:none;}
+	#header .navbar-toggle::before {display:none;}
 
 #header .navbar-nav>li {border-top:1px solid #e1e1e1;padding:0 20px;}
-#header .navbar-nav>li>a {font-size:26px;padding:0 20px;line-height:88px;}
+	#header .navbar-nav>li>a {font-size:26px;padding:0 20px;line-height:88px;}
 #header .navbar-nav .dropdown.open .dropdown-menu {overflow:hidden;margin-top:-30px !important;padding:0 20px;}
 #header .navbar-nav .dropdown-menu>li {margin-right:10px;display:inline-block;padding:30px 0;}
-#header .navbar-nav .dropdown-menu>li.divider {display:block;background-color:#e1e1e1;height:1px;margin:0;padding:0;}
+	#header .navbar-nav .dropdown-menu>li.divider {display:block;background-color:#e1e1e1;height:1px;margin:0;padding:0;}
 #header .navbar-nav .open .dropdown-menu>li>a {color:#3e3a39;background-color:#e1e1e1;min-width:140px;height:50px;line-height:50px;border-radius:12px;padding:0 20px !important;text-align:center;display:table-cell;vertical-align:middle;}
 						#header .dropdown-menu > li > a {border-radius:12px;}
 
@@ -102,8 +102,8 @@ noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid r
 #breadcrumb {display:none;}
 
 #header {background-color:#fff;}
-	#header h1 {text-align:center;width:100%;height:88px;line-height:88px;}
-	#logo {font-size:34px;text-align:center;}
+	#header h1 {text-align:center;width:80%;height:88px;line-height:88px;margin:0 auto;}
+		#logo {font-size:34px;text-align:center;display:block;width:100%;height:100%;}
 	#header i {font-size:40px;width:40px;height:40px;text-align:center;vertical-align:middle;}
 	#return {position:absolute;top:24px;left:20px;}
 
@@ -132,10 +132,15 @@ noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid r
 @media only screen and (min-width:751px)
 {
 	body {margin-bottom:0}
-	
-	#nav-main {display:none;}
+
+	#header h1 {width:205px;margin:0;}
+	#return {display:none;}
+	#header .navbar-collapse {position:relative;max-height:340px;top:0;margin-left:205px;}
+	#header .navbar-nav>li {border-top:none;padding:0;}
 	
 	#breadcrumb {display:block;}
+
+	#nav-main {display:none;}
 	
 	#footer {text-align:left;}
 }

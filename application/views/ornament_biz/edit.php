@@ -60,7 +60,7 @@
                 <label for=vi_color_first class="col-sm-2 control-label">第一识别色</label>
                 <div class="col-sm-10 input-group">
                     <div class=input-group-addon>#</div>
-                    <input class=form-control name=vi_color_first type=color value="<?php echo $item['vi_color_first'] ?>" placeholder="16进制颜色码，例如红色为cc0000；亦可使用缩写形式c00">
+                    <input class=form-control name=vi_color_first type=text value="<?php echo $item['vi_color_first'] ?>" placeholder="16进制颜色码，例如红色为cc0000；亦可使用缩写形式c00">
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
                 <label for=vi_color_second class="col-sm-2 control-label">第二识别色</label>
                 <div class="col-sm-10 input-group">
                     <div class=input-group-addon>#</div>
-                    <input class=form-control name=vi_color_second type=color value="<?php echo $item['vi_color_second'] ?>" placeholder="16进制颜色码，例如红色为cc0000；亦可使用缩写形式c00">
+                    <input class=form-control name=vi_color_second type=text value="<?php echo $item['vi_color_second'] ?>" placeholder="16进制颜色码，例如红色为cc0000；亦可使用缩写形式c00">
                 </div>
             </div>
 
@@ -453,7 +453,7 @@
 		</fieldset>
 
         <fieldset>
-            <legend>开发者功能（试用）</legend>
+            <legend>开发者功能（高级功能，免费试用）</legend>
             <p class=help-block>请勿更改此处内容，除非您清楚地知道自己在做什么</p>
 
             <div class=form-group>
