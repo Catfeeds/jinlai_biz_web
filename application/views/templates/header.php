@@ -229,7 +229,7 @@
 			<nav class=container-fluid>
 				<div class=navbar-header>
 					<h1>
-						<a id=logo class=ellipsis title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>"><?php echo SITE_NAME ?></a>
+						<a id=logo class=ellipsis title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>"><?php echo $title ?></a>
 					</h1>
 					<button class=navbar-toggle data-toggle=collapse data-target=".navbar-collapse">
 						<span class=sr-only>展开/收起菜单</span>

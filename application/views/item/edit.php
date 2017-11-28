@@ -261,13 +261,13 @@
 			<div class=form-group>
 				<label for=quantity_max class="col-sm-2 control-label">每单最高限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=quantity_max type=number min=0 step=1 max=99 value="<?php echo $item['quantity_max'] ?>" placeholder="留空则默认为99，最高99">
+					<input class=form-control name=quantity_max type=number min=0 step=1 max=50 value="<?php echo $item['quantity_max'] ?>" placeholder="留空则默认为50，最高50">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=quantity_min class="col-sm-2 control-label">每单最低限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=quantity_min type=number min=1 step=1 max=99 value="<?php echo $item['quantity_min'] ?>" placeholder="留空则默认为1，最高99">
+					<input class=form-control name=quantity_min type=number min=1 step=1 max=50 value="<?php echo $item['quantity_min'] ?>" placeholder="留空则默认为1，最高50">
 				</div>
 			</div>
 		</fieldset>

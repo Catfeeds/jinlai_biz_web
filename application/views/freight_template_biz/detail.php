@@ -23,15 +23,6 @@
 
 <script>
 	$(function(){
-		/*
-		// 仅显示适用于当前类型的参数
-		var div_to_show = '<?php echo $item['type'] ?>';
-		$('[data-type*="' + div_to_show + '"]').show();
-		
-		var fieldset_to_show = '<?php echo $item['type_actual'] ?>';
-		$('[data-type*="' + fieldset_to_show + '"]').show();
-		*/
-		
 		// 仅显示适用于当前类型的参数
 		var fieldset_to_show = '<?php echo $item['type'] ?>';
 		$('[data-type*="' + fieldset_to_show + '"]').show();
@@ -123,7 +114,7 @@
 		<p class="bg-info text-info text-center">计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）</p>
 		<p>
 			<span class=type-actual></span>
-			前<em><?php echo $item['start_amount'] ?></em>单位以内<em>￥<?php echo $item['fee_start'] ?></em>，超出后每单位<em>￥<?php echo $item['fee_unit'] ?></em>；每单最高<em><?php echo $item['max_amount'] ?></em>单位，满<?php echo $item['exempt_amount'] ?>单位包邮，满<?php echo $item['exempt_subtotal'] ?>元包邮。
+			前<?php echo $item['start_amount'] ?>单位以内￥<?php echo $item['fee_start'] ?>，超出后每单位￥<?php echo $item['fee_unit'] ?>；每单最高<?php echo $item['max_amount'] ?>单位，满<?php echo $item['exempt_amount'] ?>单位或商品小计满<?php echo $item['exempt_subtotal'] ?>元包邮。
 		</p>
 	</div>
 

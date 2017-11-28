@@ -55,15 +55,17 @@
 		<dd><?php echo $item['sku_id'] ?></dd>
 		<dt>所属商品</dt>
 		<dd>
-            <section id=item-info class="well col-xs-12 col-sm-6 col-md-4">
-                <figure class="col-xs-4">
-                    <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
-                </figure>
+            <section id=item-info class="row well">
+                <a href="<?php echo base_url('item/detail?id='.$comodity['item_id']) ?>">
+                    <figure class="col-xs-4">
+                        <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
+                    </figure>
 
-                <div class="col-xs-8">
-                    <h3><?php echo $comodity['name'] ?></h3>
-                    <p>￥<?php echo $comodity['price'] ?></p>
-                </div>
+                    <div class="col-xs-8">
+                        <h3><?php echo $comodity['name'] ?></h3>
+                        <p>￥<?php echo $comodity['price'] ?></p>
+                    </div>
+                </a>
             </section>
         </dd>
 
@@ -99,9 +101,9 @@
 		<dd>
 			<p class="bg-info text-info text-center">以下3项中若填写了多项，将以毛重为准进行运费计算</p>
 			<ul class="list-horizontal row">
-				<li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net']: '-'; ?> KG</li>
-				<li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross']: '-'; ?> KG</li>
-				<li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume']: '-'; ?> KG</li>
+                <li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross'].' KG': '-' ?></li>
+                <li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net'].' KG': '-' ?></li>
+                <li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume'].' KG': '-' ?></li>
 			</ul>
 		</dd>
 	</dl>

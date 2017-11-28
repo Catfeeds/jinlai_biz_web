@@ -24,6 +24,21 @@
 <base href="<?php echo $this->media_root ?>">
 
 <div id=content class=container>
+    <div class="jumbotron row">
+        <p class=help-block>该部分信息需通过您的专属顾问进行修改或分配</p>
+
+        <dl id=core-info class=dl-horizontal>
+            <dt>商家全称</dt>
+            <dd><?php echo !empty($item['name'])? $item['name']: '未填写' ?></dd>
+            <dt>店铺名称</dt>
+            <dd><?php echo $item['brief_name'] ?></dd>
+            <dt>店铺域名</dt>
+            <dd><?php echo !empty($item['url_name'])? $item['url_name']: '未分配' ?></dd>
+            <dt>商务联系手机号</dt>
+            <dd><?php echo $item['tel_protected_biz'] ?></dd>
+        </dl>
+    </div>
+
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
@@ -35,35 +50,6 @@
 			<legend>基本资料</legend>
 
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
-			
-			<div class="jumbotron row">
-				<p class=help-block>该部分信息需通过您的专属顾问进行修改或分配</p>
-				
-				<div class=form-group>
-					<label for=tel_protected_biz class="col-sm-2 control-label">商务联系手机号</label>
-					<div class=col-sm-10>
-						<p class="form-control-static"><?php echo $this->session->mobile ?></p>
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=name class="col-sm-2 control-label">商家名称</label>
-					<div class=col-sm-10>
-						<p class="form-control-static"><?php echo $item['name'] ?></p>
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=brief_name class="col-sm-2 control-label">简称</label>
-					<div class=col-sm-10>
-						<p class="form-control-static"><?php echo $item['brief_name'] ?></p>
-					</div>
-				</div>
-				<div class=form-group>
-					<label for=url_name class="col-sm-2 control-label">店铺域名</label>
-					<div class=col-sm-10>
-						<p class="form-control-static"><?php echo !empty($item['url_name'])? $item['url_name']: '未设置' ?></p>
-					</div>
-				</div>
-			</div>
 
 			<div class=form-group>
 				<label for=url_logo class="col-sm-2 control-label">LOGO</label>
@@ -74,8 +60,6 @@
 
                             <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
                                 <i class="remove fa fa-minus"></i>
-                                <i class="left fa fa-arrow-left"></i>
-                                <i class="right fa fa-arrow-right"></i>
                                 <figure>
                                     <img src="<?php echo $item[$name_to_upload] ?>">
                                 </figure>
@@ -439,6 +423,8 @@
 		
 		<fieldset>
 			<legend>联系地址</legend>
+            <p class=help-block>该信息将用于订单退换货等业务</p>
+
 			<div class=form-group>
 				<label for=nation class="col-sm-2 control-label">国家</label>
 				<div class=col-sm-10>
@@ -466,7 +452,7 @@
 			<div class=form-group>
 				<label for=street class="col-sm-2 control-label">具体地址</label>
 				<div class=col-sm-10>
-					<input class=form-control name=street type=text value="<?php echo $item['street'] ?>" placeholder="具体地址">
+					<textarea class=form-control name=street rows=3 placeholder="具体地址"><?php echo $item['street'] ?></textarea>
 				</div>
 			</div>
 
@@ -481,8 +467,8 @@
 				<input name=latitude type=hidden value="<?php echo $item['latitude'] ?>">
 			</div>
 
-			<script src="https://webapi.amap.com/maps?v=1.3&key=bf0fd60938b2f4f40de5ee83a90c2e0e"></script>
-			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
+			<script src="//webapi.amap.com/maps?v=1.3&key=bf0fd60938b2f4f40de5ee83a90c2e0e"></script>
+			<script src="//webapi.amap.com/ui/1.0/main.js"></script>
 			<script>
 			    var map = new AMap.Map('map',{
 					<?php if ( !empty($item['longitude']) && !empty($item['latitude']) ): ?>

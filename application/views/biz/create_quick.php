@@ -65,7 +65,7 @@
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
-				<p class=help-block>点击“开店”代表您已阅读并同意<a href="<?php echo base_url('article/agreement-admission') ?>" target=_blank><?php echo SITE_NAME ?>入驻协议</a></p>
+				<p class=help-block>请开店后及时进行认证；未通过认证的商家，货款将暂时由<?php echo SITE_NAME ?>进行存管。点击“开店”代表您已阅读并同意<a href="<?php echo base_url('article/agreement-admission') ?>" target=_blank><?php echo SITE_NAME ?>入驻协议。</a></p>
 				<button class="btn btn-primary btn-lg btn-block" type=submit>开店</button>
 		    </div>
 		</div>

@@ -64,8 +64,8 @@
 			<dt>商家ID</dt>
 			<dd><?php echo $item['biz_id'] ?></dd>
 			<dt>商家全称</dt>
-			<dd><?php echo $item['name'] ?></dd>
-			<dt>简称</dt>
+            <dd><?php echo !empty($item['name'])? $item['name']: '未填写' ?></dd>
+			<dt>店铺名称</dt>
 			<dd><?php echo $item['brief_name'] ?></dd>
 			<dt>店铺域名</dt>
 			<dd><?php echo !empty($item['url_name'])? $item['url_name']: '未分配' ?></dd>
@@ -74,11 +74,18 @@
 			<dt>商务联系手机号</dt>
 			<dd><?php echo $item['tel_protected_biz'] ?></dd>
 			<dt>订单通知手机号</dt>
-			<dd><?php echo !empty($item['tel_protected_order'])? $item['tel_protected_order']: '未设置' ?></dd>
+			<dd><?php echo $item['tel_protected_order'] ?></dd>
+            <dt>财务联系手机号</dt>
+            <dd><?php echo $item['tel_protected_fiscal'] ?></dd>
 		</dl>
 	</div>
 
 	<dl id=list-info class=dl-horizontal>
+        <dt>店铺链接</dt>
+        <dd>
+            <a class="btn btn-info btn-lg btn-block" href="<?php echo WEB_URL.'biz/detail?id='.$item['biz_id'] ?>">查看店铺</a>
+        </dd>
+
 		<dt>商家LOGO</dt>
 		<dd>
 			<?php if ( ! empty($item['url_logo']) ): ?>
@@ -98,25 +105,23 @@
 		<dt>店铺公告</dt>
 		<dd><?php echo empty($item['notification'])? '未填写': $item['notification'] ?></dd>
 
-		<!--
-		<dt>微信二维码</dt>
+		<dt>店铺二维码</dt>
 		<dd>
-			<?php if ( !empty($item['url_wechat']) ): ?>
 			<figure id=qrcode class="col-xs-12 col-sm-6 col-md-3"></figure>
 			<script>
 			$(function(){
 				// 创建二维码并转换为图片格式，以使微信能识别该二维码
-				$('#qrcode').qrcode("<?php echo $item['url_wechat'] ?>");
+				$('#qrcode').qrcode("<?php echo WEB_URL.'biz/detail?id='.$item['biz_id'] ?>");
 				
 				// 将canvas转换为Base64格式的图片内容
 				function convertCanvasToImage(canvas)
 				{
-					// 新Image对象，可以理解为DOM 
+					// 新Image对象，可以理解为DOM
 					var image = new Image();
 					// canvas.toDataURL 返回的是一串Base64编码的URL，当然,浏览器自己肯定支持 
 					// 指定格式 PNG 
 					image.src = canvas.toDataURL("image/png"); 
-					return image; 
+					return image;
 				} 
 
 				//获取网页中的canvas对象 
@@ -128,12 +133,7 @@
 				$('#qrcode canvas').remove(); // 移除canvas格式的二维码
 			})
 			</script>
-
-			<?php else: ?>
-			未上传
-			<?php endif ?>
 		</dd>
-		-->
 
 		<dt>产品</dt>
 		<dd>
@@ -193,7 +193,8 @@
 		</dd>
 	</dl>
 
-	<h2>资质信息</h2>
+	<!--
+    <h2>资质信息</h2>
 	<dl class=dl-horizontal>
 		<dt>工商注册号</dt>
 		<dd><?php echo $item['code_license'] ?></dd>
@@ -260,9 +261,8 @@
 		<dd><?php echo empty($item['bank_name'])? '未填写': $item['bank_name'] ?></dd>
 		<dt>开户行账号</dt>
 		<dd><?php echo empty($item['bank_account'])? '未填写': $item['bank_account'] ?></dd>
-		<dt>财务联系手机号</dt>
-		<dd><?php echo empty($item['tel_protected_fiscal'])? '未填写': $item['tel_protected_fiscal'] ?></dd>
 	</dl>
+	-->
 
 	<h2>联系地址</h2>
 	<dl class=dl-horizontal>

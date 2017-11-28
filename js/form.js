@@ -1,6 +1,6 @@
 $(function(){
 	// 图片验证码URL
-	var url_captcha = 'https://www.517ybang.com/captcha?';
+	var url_captcha = 'https://biz.517ybang.com/captcha?';
 
 	// 短信验证码URL
 	var url_sms = 'https://api.517ybang.com/sms/create';

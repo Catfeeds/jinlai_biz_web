@@ -21,6 +21,8 @@
 	}
 </style>
 
+<script src="/js/jquery.qrcode.min.js"></script>
+
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
@@ -51,6 +53,41 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
+        <dt>商品链接</dt>
+        <dd>
+            <a class="btn btn-info btn-lg btn-block" href="<?php echo WEB_URL.'item/detail?id='.$item['item_id'] ?>">查看商品</a>
+        </dd>
+
+        <dt>商品二维码</dt>
+        <dd>
+            <figure id=qrcode class="col-xs-12 col-sm-6 col-md-3"></figure>
+            <script>
+                $(function(){
+                    // 创建二维码并转换为图片格式，以使微信能识别该二维码
+                    $('#qrcode').qrcode("<?php echo WEB_URL.'item/detail?id='.$item['item_id'] ?>");
+
+                    // 将canvas转换为Base64格式的图片内容
+                    function convertCanvasToImage(canvas)
+                    {
+                        // 新Image对象，可以理解为DOM
+                        var image = new Image();
+                        // canvas.toDataURL 返回的是一串Base64编码的URL，当然,浏览器自己肯定支持
+                        // 指定格式 PNG
+                        image.src = canvas.toDataURL("image/png");
+                        return image;
+                    }
+
+                    //获取网页中的canvas对象
+                    var mycanvas = document.getElementsByTagName('canvas')[0];
+
+                    //将转换后的img标签插入到html中
+                    var img = convertCanvasToImage(mycanvas);
+                    $('#qrcode').append(img);
+                    $('#qrcode canvas').remove(); // 移除canvas格式的二维码
+                })
+            </script>
+        </dd>
+
 		<dt>主图</dt>
 		<dd>
             <?php $name_to_upload = 'url_image_main' ?>
@@ -140,7 +177,10 @@
 
 		<?php $unit_name = !empty($item['unit_name'])? $item['unit_name']: '份（默认单位）' ?>
 		<dt>库存量</dt>
-		<dd><strong><?php echo $item['stocks'].' '. $unit_name ?></strong></dd>
+		<dd>
+            <strong><?php echo $item['stocks'].' '. $unit_name ?></strong>
+            <p class="help-block">若商品存在规格，则可销售库存量以各规格相应库存量为准</p>
+        </dd>
 
 		<dt>每单最高限量</dt>
 		<dd><?php echo !empty($item['quantity_max'])? $item['quantity_max'].' 份': '不限'; ?></dd>
@@ -167,9 +207,9 @@
 		<dd>
 			<p class=help-block>以下3项择一填写即可；若填写多项，将按毛重、净重、体积重的顺序取首个有效值计算运费。</p>
 			<ul class="list-horizontal row">
-				<li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net']: '-'; ?> KG</li>
-				<li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross']: '-'; ?> KG</li>
-				<li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume']: '-'; ?> KG</li>
+                <li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross'].' KG': '-' ?></li>
+                <li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net'].' KG': '-' ?></li>
+				<li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume'].' KG': '-' ?></li>
 			</ul>
 		</dd>
 

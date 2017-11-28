@@ -20,6 +20,7 @@ define('SITE_DESCRIPTION', '「进来」是首款需要严苛标准认证的品�
 define('ICP_NUMBER', NULL); // ICP备案号码，没有请留空
 
 define('BASE_URL', 'https://'. $_SERVER['SERVER_NAME']); // 可对外使用的站点URL；在本地测试时须替换为类似“localhost/BasicCodeigniter”形式
+define('WEB_URL', 'https://www.517ybang.com/');
 
 // （可选）JS、CSS等非当前站点特有资源所在URL，可用于配合又拍云等第三方存储
 //define('CDN_URL', 'http://cdn-remote.ybslux.com/'); // 生产环境

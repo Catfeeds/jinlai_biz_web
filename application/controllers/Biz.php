@@ -123,7 +123,7 @@
 			if ( !empty($this->session->biz_id) ):
 				$data['title'] = $this->class_name_cn. '创建失败';
 				$data['class'] = 'fail';
-				$data['content'] = '您目前是其它商家的成员，不可创建商家；请与当前所属商家解除关系后再尝试。';
+				$data['content'] = '您已是其它商家的成员，不可再次创建商家；与当前所属商家解除关系后再尝试。';
 
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/result', $data);
@@ -176,11 +176,14 @@
 					// 需要创建的数据；逐一赋值需特别处理的字段
 					$data_to_create = array(
 						'user_id' => $this->session->user_id,
-						'tel_protected_biz' => $this->session->mobile,
+                        'tel_public' => empty($this->input->post('tel_public'))? $this->session->mobile: $this->input->post('tel_public'),
+                        'tel_protected_biz' => $this->session->mobile,
+                        'tel_protected_fiscal' => $this->session->mobile,
+                        'tel_protected_order' => $this->session->mobile,
 					);
 					// 自动生成无需特别处理的数据
 					$data_need_no_prepare = array(
-						'name', 'brief_name', 'tel_public',
+						'name', 'brief_name',
 						'description', 'bank_name', 'bank_account',
 						'fullname_owner', 'fullname_auth',
 						'code_license', 'code_ssn_owner', 'code_ssn_auth',
@@ -399,7 +402,7 @@
 			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');
 
-            $this->form_validation->set_rules('ornament_id', '店铺装修ID', 'trim');
+            $this->form_validation->set_rules('ornament_id', '默认店铺装修方案', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -532,7 +535,7 @@
 			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');
 
-            $this->form_validation->set_rules('ornament_id', '店铺装修ID', 'trim');
+            $this->form_validation->set_rules('ornament_id', '默认店铺装修方案', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):

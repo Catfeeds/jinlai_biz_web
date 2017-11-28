@@ -28,14 +28,15 @@
 		#frequent-list li:nth-child(4n+0) {border-right:0;}
 
 	#function-list {margin-bottom:60px;}
-		#function-list li {margin-top:-2px;border-top:2px solid #efefef;}
+        #function-list li {margin-bottom:-2px;border-bottom:2px solid #efefef;}
 			#function-list li:nth-child(3n+0) {border-right:0;}
 		#function-list a {padding:45px 0 50px;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
-
+        #function-list li:nth-child(3n+0) {border-right:2px solid #efefef;}
+        #function-list li:nth-child(6n+0) {border-right:0;}
 	}
 
 	/* 宽度在960像素以上的设备 */
