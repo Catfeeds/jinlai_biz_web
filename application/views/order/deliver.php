@@ -20,6 +20,42 @@
 	}
 </style>
 
+<script>
+    $(function(){
+        $('.optional-input').hide();
+
+        // 若用户自提，不需要填写服务商和运单号
+        $('#deliver_method li').click(function(){
+            // 突出显示被选中项
+            $(this).siblings('li').removeClass('btn-primary');
+            $(this).addClass('btn-primary');
+
+            // 获取被选值
+            var deliver_method = $(this).attr('data-deliver_method-value');
+            $('[for=deliver_biz]').text(deliver_method + '商'); // 更新服务商字段label文案
+
+            $('.optional-input').hide(); // 隐藏所有可选字段
+            if (deliver_method !== '用户自提')
+            {
+                $('#deliver_biz, #waybill_id').show();
+            }
+        });
+
+        // 若同城配送商为自营，提示不需要填写运单号
+        $('#waybill_notice').hide();
+        $('[name=deliver_biz]').change(function(){
+            var deliver_method = $('#deliver_method li.btn-primary').attr('data-deliver_method-value');
+            var deliver_biz = $(this).val();
+
+            $('#waybill_notice').hide(); // 隐藏运单号提示
+            if (deliver_method === '同城配送' && deliver_biz === '自营')
+            {
+                $('#waybill_notice').show();
+            }
+        });
+    });
+</script>
+
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
@@ -74,27 +110,26 @@
 			<div class=form-group>
 				<label for=deliver_method class="col-sm-2 control-label">发货方式</label>
 				<div class=col-sm-10>
+                    <ul id=deliver_method class="btn-group btn-group-justified" role=group>
 					<?php
 						$input_name = 'deliver_method';
-						$options = array('用户自提', '自行配送', '同城配送', '物流快递');
+						$options = array('物流快递', '同城配送', '用户自提',);
 						foreach ($options as $option):
 					?>
-					<label class=radio-inline>
+					<!--
+                    <label class=radio-inline>
 						<input type=radio name="<?php echo $input_name ?>" value="<?php echo $option ?>" required <?php echo set_radio($input_name, $option, TRUE) ?>> <?php echo $option ?>
 					</label>
-					<?php endforeach ?>
+					-->
+                    <li class="btn btn-default" data-<?php echo $input_name ?>-value="<?php echo $option ?>"><?php echo $option ?></li>
 
-					<div class="btn-group btn-group-justified" role=group>
-						<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>" href="#">用户自提</a>
-						<a class="btn btn-primary" title="<?php echo $this->class_name_cn ?>" href="#">自行配送</a>
-					  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>" href="#">同城配送</a>
-						<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>" href="#">物流快递</a>
-					</div>
+					<?php endforeach ?>
+                    </ul>
 				</div>
 			</div>
 
-			<div class=form-group>
-				<label for=deliver_biz class="col-sm-2 control-label">物流服务商</label>
+			<div id=deliver_biz class="form-group optional-input">
+				<label for=deliver_biz class="col-sm-2 control-label"><span>服务商</span></label>
 				<div class=col-sm-10>
 					<?php $input_name = 'deliver_biz' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
@@ -109,11 +144,11 @@
 				</div>
 			</div>
 
-			<div class=form-group>
+			<div id=waybill_id class="form-group optional-input">
 				<label for=waybill_id class="col-sm-2 control-label">运单号</label>
 				<div class=col-sm-10>
 					<input class=form-control name=waybill_id type=text placeholder="请输入运单号" autofocus>
-					<p class=help-block>自行配送时可留空</p>
+					<p id=waybill_notice class=help-block>同城配送商选择自营时可留空</p>
 				</div>
 			</div>
 

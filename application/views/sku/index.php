@@ -41,8 +41,8 @@
 	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
 	<div class="btn-group btn-group-justified" role=group>
-		<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
-	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>">回收站</a>
+		<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/index?item_id='.$comodity['item_id']) ?>">所有</a>
+	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash?item_id='.$comodity['item_id']) ?>">回收站</a>
 
 		<?php if ( !empty($comodity) ): ?>
 		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create?item_id='.$comodity['item_id']) ?>">创建</a>

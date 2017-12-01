@@ -19,7 +19,7 @@
 
     }
 </style>
-<script defer src="/js/edit.js"></script>
+<!--<script defer src="/js/edit.js"></script>-->
 
 <base href="<?php echo $this->media_root ?>">
 
@@ -27,6 +27,7 @@
 	$(function(){
 		// 仅显示适用于当前类型的参数
 		var fieldset_to_show = '<?php echo $item['type'] ?>';
+        $('div.params').hide();
 		$('[data-type*="' + fieldset_to_show + '"]').show();
 	});
 </script>
@@ -63,7 +64,6 @@
 				</div>
 			</div>
 		</fieldset>
-
 
         <div class=params data-type="电子凭证">
             <fieldset>
@@ -176,7 +176,7 @@
                             <option value="<?php echo $option ?>" <?php if ($option === $item[$input_name]) echo 'selected'; ?>><?php echo $option ?></option>
                             <?php endforeach ?>
                         </select>
-                        <p class=help-block>计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）</p>
+                        <p class=help-block>计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）；商品需要填写相应信息。</p>
                     </div>
                 </div>
 

@@ -52,7 +52,7 @@
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>
-				<label for=url_logo class="col-sm-2 control-label">LOGO</label>
+				<label for=url_logo class="col-sm-2 control-label">店铺LOGO</label>
                 <div class=col-sm-10>
                     <?php $name_to_upload = 'url_logo' ?>
                     <ul class=upload_preview>
@@ -114,6 +114,29 @@
 					<input class=form-control name=tel_protected_order type=tel size=11 value="<?php echo $item['tel_protected_order'] ?>" placeholder="请填写手机号">
 				</div>
 			</div>
+
+            <div class=form-group>
+                <label for=freight_template_id class="col-sm-2 control-label">默认运费模板</label>
+                <div class=col-sm-10>
+                    <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('freight_template_biz') ?>">管理运费模板</a>
+
+                    <?php $input_name = 'category_biz_id' ?>
+                    <select class=form-control name="<?php echo $input_name ?>">
+                        <option>包邮</option>
+                        <?php
+                            if ( !empty($biz_freight_templates) ):
+                                $options = $biz_freight_templates;
+                                foreach ($options as $option):
+                            ?>
+                            <option value="<?php echo $option['template_id'] ?>" <?php if ($option['template_id'] === $item[$input_name]) echo 'selected' ?>><?php echo $option['name'] ?></option>
+                        <?php
+                                endforeach;
+                            endif;
+                        ?>
+                    </select>
+
+                </div>
+            </div>
 		</fieldset>
 
 		<fieldset>

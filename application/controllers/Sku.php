@@ -185,13 +185,13 @@
 				'class' => $this->class_name.' trash',
 			);
 
-			// 如已限定所属商品，获取商品信息并限定筛选条件
-			$item_id = $this->input->get_post('item_id')? $this->input->get_post('item_id'): NULL;
-			if ( !empty($item_id) ):
-				$data['comodity'] = $this->get_item($item_id);
+            // 如已限定所属商品，获取商品信息并限定筛选条件
+            $item_id = $this->input->get_post('item_id')? $this->input->get_post('item_id'): NULL;
+            if ( !empty($item_id) ):
+                $data['comodity'] = $this->get_item($item_id);
 
-				$condition['item_id'] = $item_id;
-			endif;
+                $condition['item_id'] = $item_id;
+            endif;
 
 			// 筛选条件
 			$condition['biz_id'] = $this->session->biz_id;

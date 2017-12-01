@@ -1,11 +1,10 @@
 <link rel=stylesheet media=all href="/css/detail.css">
 <style>
 
-
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
-		
+
 	}
 	
 	/* 宽度在960像素以上的设备 */
@@ -60,7 +59,14 @@
 	<div class="jumbotron row">
 		<dl id=core-info class=dl-horizontal>
 			<dt>状态</dt>
-			<dd><?php echo $item['status'] ?></dd>
+			<dd>
+                <?php echo $item['status'] ?>
+                <?php if ( !empty($item['identity_id']) ): ?>
+                已认证 <a class="btn btn-default btn-lg" href="<?php echo base_url('identity_biz/detail?id='.$item['identity_id']) ?>">认证信息</a>
+                <?php else: ?>
+                未认证 <a class="btn btn-default btn-lg" href="<?php echo base_url('identity_biz/create') ?>">去认证</a>
+                <?php endif ?>
+            </dd>
 			<dt>商家ID</dt>
 			<dd><?php echo $item['biz_id'] ?></dd>
 			<dt>商家全称</dt>
@@ -86,7 +92,7 @@
             <a class="btn btn-info btn-lg btn-block" href="<?php echo WEB_URL.'biz/detail?id='.$item['biz_id'] ?>">查看店铺</a>
         </dd>
 
-		<dt>商家LOGO</dt>
+		<dt>店铺LOGO</dt>
 		<dd>
 			<?php if ( ! empty($item['url_logo']) ): ?>
 			<figure class=row>
@@ -134,6 +140,18 @@
 			})
 			</script>
 		</dd>
+
+        <dt>默认运费模板</dt>
+        <dd>
+            <?php if ( !empty($item['freight_template_id']) ): ?>
+                <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('freight_template_biz/detail?id='.$freight_template['template_id']) ?>"><?php echo $freight_template['name'] ?></a>
+            <?php
+            else:
+                echo '包邮';
+            endif
+            ?>
+            <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('freight_template_biz') ?>">管理运费模板</a>
+        </dd>
 
 		<dt>产品</dt>
 		<dd>

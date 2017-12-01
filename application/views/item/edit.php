@@ -63,12 +63,6 @@
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>
-				<label for=item_id class="col-sm-2 control-label">商品ID</label>
-				<div class=col-sm-10>
-					<p class="form-control-static"><?php echo $item['item_id'] ?></p>
-				</div>
-			</div>
-			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">系统分类</label>
 				<div class=col-sm-10>
 					<p class=form-control-static><?php echo $category['name'] ?></p>
@@ -76,23 +70,27 @@
 				</div>
 			</div>
 
-			<?php if ( !empty($biz_categories) ): ?>
 			<div class=form-group>
 				<label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'category_biz_id' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
-						<option value="">可选</option>
+						<option>不选择</option>
 						<?php
+                        if ( !empty($biz_categories) ):
 							$options = $biz_categories;
 							foreach ($options as $option):
 						?>
-						<option value="<?php echo $option['category_id'] ?>" <?php if ($option['category_id'] === $item['category_biz_id']) echo 'selected'; ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
+						<option value="<?php echo $option['category_id'] ?>" <?php if ($option['category_id'] === $item[$input_name]) echo 'selected' ?>><?php echo $option['name'] ?></option>
+                        <?php
+                            endforeach;
+                        endif;
+                        ?>
 					</select>
+
+                    <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('item_category_biz') ?>">管理店内分类</a>
 				</div>
 			</div>
-			<?php endif ?>
 
 			<?php if ( !empty($brands) ): ?>
 			<div class=form-group>
@@ -273,20 +271,22 @@
 		</fieldset>
 
 		<fieldset>
-			<p class=help-block>以下3项择一填写即可；若填写多项，将按毛重、净重、体积重的顺序取首个有效值计算运费。</p>
+            <p class=help-block>请填写与店铺<a href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">默认运费模板</a>计费方式相符的重量信息</p>
 
-			<div class=form-group>
+            <div class=form-group>
+                <label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo $item['weight_gross'] ?>" placeholder="最高999.99，运费计算将以运费模板为准">
+                </div>
+            </div>
+
+            <div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
 					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo $item['weight_net'] ?>" placeholder="最高999.99，运费计算将以运费模板为准">
 				</div>
 			</div>
-			<div class=form-group>
-				<label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo $item['weight_gross'] ?>" placeholder="最高999.99，运费计算将以运费模板为准">
-				</div>
-			</div>
+
 			<div class=form-group>
 				<label for=weight_volume class="col-sm-2 control-label">体积重（KG）</label>
 				<div class=col-sm-10>
@@ -361,28 +361,6 @@
 				</div>
 			</div>
 			<?php endif ?>
-
-			<div class=form-group>
-				<label for=freight_template_id class="col-sm-2 control-label">运费模板</label>
-				<div class=col-sm-10>
-					<?php if ( empty($biz_freight_templates) ): ?>
-					<p class="help-block">您目前没有可用的运费模板，仅可包邮</p>
-					<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz') ?>">创建运费模板</a>
-                    <?php else: ?>
-
-					<?php $input_name = 'freight_template_id' ?>
-					<select class=form-control name="<?php echo $input_name ?>">
-						<option value="">默认包邮</option>
-						<?php
-							$options = $biz_freight_templates;
-							foreach ($options as $option):
-						?>
-						<option value="<?php echo $option['template_id'] ?>" <?php if ($option['template_id'] === $item['freight_template_id']) echo 'selected'; ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-                    <?php endif ?>
-				</div>
-			</div>
 		</fieldset>
 
 		<div class=form-group>

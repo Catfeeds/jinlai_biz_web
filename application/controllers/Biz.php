@@ -99,8 +99,13 @@
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
+
+                // 获取商家运费模板详情
+                $data['freight_template'] = $this->get_freight_template_biz($data['item']['freight_template_id']);
+
 			else:
 				$data['error'] = $result['content']['error']['message'];
+
 			endif;
 
 			// 页面信息
@@ -139,7 +144,8 @@
 				// 待验证的表单项
 				$this->form_validation->set_error_delimiters('', '；');
 				// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-				$this->form_validation->set_rules('name', '商家全称', 'trim|required|min_length[5]|max_length[35]|is_unique[biz.name]');
+                $this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
+                $this->form_validation->set_rules('name', '商家全称', 'trim|required|min_length[5]|max_length[35]|is_unique[biz.name]');
 				$this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]|is_unique[biz.brief_name]');
 				$this->form_validation->set_rules('description', '简介', 'trim|max_length[255]');
 				$this->form_validation->set_rules('tel_public', '消费者联系电话', 'trim|required|min_length[10]|max_length[13]|is_unique[biz.tel_public]');
@@ -183,7 +189,7 @@
 					);
 					// 自动生成无需特别处理的数据
 					$data_need_no_prepare = array(
-						'name', 'brief_name',
+                        'url_logo', 'name', 'brief_name',
 						'description', 'bank_name', 'bank_account',
 						'fullname_owner', 'fullname_auth',
 						'code_license', 'code_ssn_owner', 'code_ssn_auth',
@@ -253,7 +259,7 @@
                 // 待验证的表单项
                 $this->form_validation->set_error_delimiters('', '；');
                 // 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-                $this->form_validation->set_rules('url_logo', '商家LOGO', 'trim|max_length[255]');
+                $this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
                 $this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]|is_unique[biz.brief_name]');
 
                 // 若表单提交不成功
@@ -269,9 +275,6 @@
                     $data_to_create = array(
                         'user_id' => $this->session->user_id,
                         'tel_public' => $this->session->mobile,
-                        'tel_protected_biz' => $this->session->mobile,
-                        'tel_protected_fiscal' => $this->session->mobile,
-                        'tel_protected_order' => $this->session->mobile,
                     );
                     // 自动生成无需特别处理的数据
                     $data_need_no_prepare = array(
@@ -354,6 +357,9 @@
 			else:
 				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
 			endif;
+
+            // 获取商家运费模板列表
+            $data['biz_freight_templates'] = $this->list_freight_template_biz();
 
 			// 获取当前商家有效店铺装修
             $params['biz_id'] = $this->session->biz_id;

@@ -150,7 +150,7 @@
 
 			// 页面信息
 			$data = array(
-				'title' => $op_name. $this->class_name_cn,
+				'title' => $op_name,
 				'class' => $this->class_name. ' '. $op_view,
 				'error' => '', // 预设错误提示
 			);
@@ -255,7 +255,7 @@
 
 			// 页面信息
 			$data = array(
-				'title' => $op_name. $this->class_name_cn,
+				'title' => $op_name,
 				'class' => $this->class_name. ' '. $op_view,
 				'error' => '', // 预设错误提示
 			);
@@ -360,7 +360,7 @@
 
 			// 页面信息
 			$data = array(
-				'title' => $op_name. $this->class_name_cn,
+				'title' => $op_name,
 				'class' => $this->class_name. ' '. $op_view,
 				'error' => '', // 预设错误提示
 			);
@@ -462,7 +462,7 @@
 
 			// 页面信息
 			$data = array(
-				'title' => $op_name. $this->class_name_cn,
+				'title' => $op_name,
 				'class' => $this->class_name. ' '. $op_view,
 				'error' => '', // 预设错误提示
 			);
@@ -566,7 +566,7 @@
 
 			// 页面信息
 			$data = array(
-				'title' => $op_name. $this->class_name_cn,
+				'title' => $op_name,
 				'class' => $this->class_name. ' '. $op_view,
 				'error' => '', // 预设错误提示
 			);
@@ -597,8 +597,20 @@
 			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
 			$this->form_validation->set_rules('deliver_method', '发货方式', 'trim|required|max_length[30]');
-			$this->form_validation->set_rules('deliver_biz', '物流服务商', 'trim|required|max_length[30]');
-			$this->form_validation->set_rules('waybill_id', '物流运单号', 'trim|max_length[30]');
+
+            // 若用户自提，不需要填写服务商
+            if ($this->input->post('deliver_method') === '用户自提'):
+                $this->form_validation->set_rules('deliver_biz', '物流服务商', 'trim|max_length[30]');
+            else:
+                $this->form_validation->set_rules('deliver_biz', '物流服务商', 'trim|required|max_length[30]');
+            endif;
+
+			// 用户自提，或同城配送的服务商选择自营时，不需要填写运单号
+			if ($this->input->post('deliver_method') === '用户自提' || $this->input->post('deliver_biz') === '自营'):
+                $this->form_validation->set_rules('waybill_id', '物流运单号', 'trim|max_length[30]');
+            else:
+                $this->form_validation->set_rules('waybill_id', '物流运单号', 'trim|required|max_length[30]');
+            endif;
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -667,7 +679,7 @@
 		 */
 		public function valid()
 		{
-			
+
 		} // end valid
 
         /**

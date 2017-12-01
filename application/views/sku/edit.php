@@ -45,7 +45,7 @@
 			<div class="form-group well">
 				<label for=item_id class="col-sm-2 control-label">所属商品</label>
 				<div class=col-sm-10>
-                    <section id=item-info class="row well">
+                    <section id=item-info class=row>
                         <figure class="col-xs-4">
                             <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
                         </figure>
@@ -85,6 +85,8 @@
                     </div>
 
                     <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>正方形图片视觉效果最佳</p>
                 </div>
 			</div>
 
@@ -121,20 +123,22 @@
 		</fieldset>
 	
 		<fieldset>
-			<p class=help-block>以下3项择一填写即可；若填写多项，将按毛重、净重、体积重的顺序取首个有效值计算运费。</p>
-		
-			<div class=form-group>
+			<p class=help-block>请填写与店铺<a href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">默认运费模板</a>计费方式相符的重量信息</p>
+
+            <div class=form-group>
+                <label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo $item['weight_gross'] ?>" placeholder="最高999.99">
+                </div>
+            </div>
+
+            <div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
 					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo $item['weight_net'] ?>" placeholder="最高999.99">
 				</div>
 			</div>
-			<div class=form-group>
-				<label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
-				<div class=col-sm-10>
-					<input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo $item['weight_gross'] ?>" placeholder="最高999.99">
-				</div>
-			</div>
+
 			<div class=form-group>
 				<label for=weight_volume class="col-sm-2 control-label">体积重（KG）</label>
 				<div class=col-sm-10>

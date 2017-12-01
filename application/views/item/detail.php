@@ -213,17 +213,6 @@
 			</ul>
 		</dd>
 
-		<dt>运费模板</dt>
-		<dd>
-			<?php
-				if ( !empty($item['freight_template_id']) ):
-					echo $freight_template['name'];
-				else:
-			?>
-			包邮（免运费）
-			<?php endif ?>
-		</dd>
-
 		<dt>店内活动</dt>
 		<dd>
 			<?php if ( ! empty($item['promotion_id']) ): ?>

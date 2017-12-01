@@ -25,7 +25,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171128">
+		<meta name=version content="revision20171201">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -222,9 +222,11 @@
 		</noscript>
 
 		<header id=header class="navbar navbar-fixed-top" role=navigation>
+            <?php if ($class !== 'home'): ?>
 			<a id=return href="javascript:" onclick="history.back()">
 				<i class="fa fa-chevron-left" aria-hidden=true></i>
 			</a>
+            <?php endif ?>
 
 			<nav class=container-fluid>
 				<div class=navbar-header>

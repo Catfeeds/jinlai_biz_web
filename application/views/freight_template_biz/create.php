@@ -187,7 +187,7 @@
                             <option value="<?php echo $option ?>" <?php echo set_select($input_name, $option) ?>><?php echo $option ?></option>
                             <?php endforeach ?>
                         </select>
-                        <p class=help-block>计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）</p>
+                        <p class=help-block>计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）；商品需要填写相应信息。</p>
                     </div>
                 </div>
 

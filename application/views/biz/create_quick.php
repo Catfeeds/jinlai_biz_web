@@ -37,7 +37,7 @@
 			<legend>基本资料</legend>
 
             <div class=form-group>
-                <label for=url_logo class="col-sm-2 control-label">商家LOGO</label>
+                <label for=url_logo class="col-sm-2 control-label">店铺LOGO</label>
                 <div class=col-sm-10>
                     <?php $name_to_upload = 'url_logo' ?>
                     <ul class=upload_preview></ul>

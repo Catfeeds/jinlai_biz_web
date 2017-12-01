@@ -172,9 +172,6 @@
 				if ( !empty($data['item']['promotion_id']) ):
 					$data['promotion'] = $this->get_promotion_biz($data['item']['promotion_id']);
 				endif;
-				
-				// 获取商家运费模板详情
-				$data['freight_template'] = $this->get_freight_template_biz($data['item']['freight_template_id']);
 
 			else:
 				$data['error'] = $result['content']['error']['message'];
@@ -267,9 +264,6 @@
 			// 获取店内营销活动
 			$data['biz_promotions'] = $this->list_promotion_biz();
 
-			// 获取商家运费模板列表
-			$data['biz_freight_templates'] = $this->list_freight_template_biz();
-
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
@@ -282,7 +276,6 @@
 			$this->form_validation->set_rules('stocks', '库存量（单位）', 'trim|required|greater_than_equal_to[0]|less_than_equal_to[65535]');
 			$this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -361,9 +354,6 @@
 			// 获取店内营销活动
 			$data['biz_promotions'] = $this->list_promotion_biz();
 
-			// 获取商家运费模板列表
-			$data['biz_freight_templates'] = $this->list_freight_template_biz();
-
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
@@ -394,7 +384,6 @@
 			$this->form_validation->set_message('time_start', '预定上架时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后，亦不可早于预订上架时间（若有）');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -477,9 +466,6 @@
 
 			// 获取店内活动列表
 			$data['biz_promotions'] = $this->list_promotion_biz();
-			
-			// 获取商家运费模板列表
-			$data['biz_freight_templates'] = $this->list_freight_template_biz();
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
@@ -508,7 +494,6 @@
 			$this->form_validation->set_message('time_start', '预定上架时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后，亦不可早于预订上架时间（若有）');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('freight_template_id', '运费模板', 'trim|is_natural_no_zero');
 
 			// 从API服务器获取相应详情信息
 			$params['id'] = $id;

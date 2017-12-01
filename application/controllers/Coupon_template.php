@@ -176,9 +176,9 @@
 		public function trash()
 		{
 			// 操作可能需要检查操作权限
-			$role_allowed = array('管理员', '经理'); // 角色要求
-			$min_level = 30; // 级别要求
-			$this->permission_check($role_allowed, $min_level);
+//			$role_allowed = array('管理员', '经理'); // 角色要求
+//			$min_level = 30; // 级别要求
+//			$this->permission_check($role_allowed, $min_level);
 
 			// 页面信息
 			$data = array(
@@ -291,7 +291,6 @@
 				$params = $data_to_create;
 				$url = api_url($this->class_name. '/create');
 				$result = $this->curl->go($url, $params, 'array');
-				var_dump($result);
 				if ($result['status'] === 200):
 					$data['title'] = $this->class_name_cn. '创建成功';
 					$data['class'] = 'success';
