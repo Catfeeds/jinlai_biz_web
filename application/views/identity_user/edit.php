@@ -51,91 +51,42 @@
 
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
-									<div class=form-group>
-							<label for=identity_id class="col-sm-2 control-label">认证ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=identity_id type=text value="<?php echo $item['identity_id'] ?>" placeholder="认证ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=user_id class="col-sm-2 control-label">所属用户ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=user_id type=text value="<?php echo $item['user_id'] ?>" placeholder="所属用户ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=fullname class="col-sm-2 control-label">姓名</label>
-							<div class=col-sm-10>
-								<input class=form-control name=fullname type=text value="<?php echo $item['fullname'] ?>" placeholder="姓名" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=code_ssn_owner class="col-sm-2 control-label">身份证号</label>
-							<div class=col-sm-10>
-								<input class=form-control name=code_ssn_owner type=text value="<?php echo $item['code_ssn_owner'] ?>" placeholder="身份证号" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=url_image_owner_id class="col-sm-2 control-label">身份证照片</label>
-							<div class=col-sm-10>
-								<input class=form-control name=url_image_owner_id type=text value="<?php echo $item['url_image_owner_id'] ?>" placeholder="身份证照片" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=url_verify_photo class="col-sm-2 control-label">用户持身份证照片</label>
-							<div class=col-sm-10>
-								<input class=form-control name=url_verify_photo type=text value="<?php echo $item['url_verify_photo'] ?>" placeholder="用户持身份证照片" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=bank_name class="col-sm-2 control-label">开户行名称</label>
-							<div class=col-sm-10>
-								<input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="开户行名称" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=bank_account class="col-sm-2 control-label">开户行账号</label>
-							<div class=col-sm-10>
-								<input class=form-control name=bank_account type=text value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_create class="col-sm-2 control-label">创建时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_create type=text value="<?php echo $item['time_create'] ?>" placeholder="创建时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_delete class="col-sm-2 control-label">删除时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_delete type=text value="<?php echo $item['time_delete'] ?>" placeholder="删除时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_edit class="col-sm-2 control-label">最后操作时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_edit type=text value="<?php echo $item['time_edit'] ?>" placeholder="最后操作时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=creator_id class="col-sm-2 control-label">创建者ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=creator_id type=text value="<?php echo $item['creator_id'] ?>" placeholder="创建者ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=operator_id class="col-sm-2 control-label">最后操作者ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=operator_id type=text value="<?php echo $item['operator_id'] ?>" placeholder="最后操作者ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=status class="col-sm-2 control-label">状态</label>
-							<div class=col-sm-10>
-								<input class=form-control name=status type=text value="<?php echo $item['status'] ?>" placeholder="状态" required>
-							</div>
-						</div>
-
+            <div class=form-group>
+                <label for=fullname class="col-sm-2 control-label">姓名</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=fullname type=text value="<?php echo $item['fullname'] ?>" placeholder="姓名" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=code_ssn_owner class="col-sm-2 control-label">身份证号</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=code_ssn_owner type=text value="<?php echo $item['code_ssn_owner'] ?>" placeholder="身份证号" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=url_image_owner_id class="col-sm-2 control-label">身份证照片</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=url_image_owner_id type=text value="<?php echo $item['url_image_owner_id'] ?>" placeholder="身份证照片" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=url_verify_photo class="col-sm-2 control-label">用户持身份证照片</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=url_verify_photo type=text value="<?php echo $item['url_verify_photo'] ?>" placeholder="用户持身份证照片" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=bank_name class="col-sm-2 control-label">开户行名称</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="开户行名称" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=bank_account class="col-sm-2 control-label">开户行账号</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=bank_account type=text value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号" required>
+                </div>
+            </div>
 		</fieldset>
 
 		<div class=form-group>

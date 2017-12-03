@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'longitude', 'latitude', 'nation', 'province', 'city', 'county',
+            'category_ids', 'longitude', 'latitude', 'nation', 'province', 'city', 'county',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id', 'status',
 		);
 
@@ -22,7 +22,7 @@
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'name', 'brief_name', 'url_name', 'url_logo', 'slogan', 'description', 'notification',
+            'category_ids', 'name', 'brief_name', 'url_name', 'url_logo', 'slogan', 'description', 'notification',
 			'tel_public', 'tel_protected_biz', 'tel_protected_fiscal', 'tel_protected_order',
 			'fullname_owner', 'fullname_auth',
 			'code_license', 'code_ssn_owner', 'code_ssn_auth',
@@ -141,9 +141,23 @@
 					'class' => $this->class_name.' create',
 				);
 
+                // 从API服务器获取顶级商品分类列表信息
+                $params = array(
+                    'level' => 1,
+                    'time_delete' => 'NULL',
+                );
+                $url = api_url('item_category/index');
+                $result = $this->curl->go($url, $params, 'array');
+                if ($result['status'] === 200):
+                    $data['item_categories'] = $result['content'];
+                else:
+                    $data['item_categories'] = NULL;
+                endif;
+
 				// 待验证的表单项
 				$this->form_validation->set_error_delimiters('', '；');
 				// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
+                $this->form_validation->set_rules('category_ids[]', '主营商品类目', 'trim|required|max_length[255]');
                 $this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
                 $this->form_validation->set_rules('name', '商家全称', 'trim|required|min_length[5]|max_length[35]|is_unique[biz.name]');
 				$this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]|is_unique[biz.brief_name]');
@@ -182,6 +196,7 @@
 					// 需要创建的数据；逐一赋值需特别处理的字段
 					$data_to_create = array(
 						'user_id' => $this->session->user_id,
+                        'category_ids' => !empty($this->input->post('category_ids'))? implode(',', $this->input->post('category_ids')): NULL,
                         'tel_public' => empty($this->input->post('tel_public'))? $this->session->mobile: $this->input->post('tel_public'),
                         'tel_protected_biz' => $this->session->mobile,
                         'tel_protected_fiscal' => $this->session->mobile,
@@ -256,9 +271,23 @@
                     'class' => $this->class_name.' create',
                 );
 
+                // 从API服务器获取顶级商品分类列表信息
+                $params = array(
+                    'level' => 1,
+                    'time_delete' => 'NULL',
+                );
+                $url = api_url('item_category/index');
+                $result = $this->curl->go($url, $params, 'array');
+                if ($result['status'] === 200):
+                    $data['item_categories'] = $result['content'];
+                else:
+                    $data['item_categories'] = NULL;
+                endif;
+
                 // 待验证的表单项
                 $this->form_validation->set_error_delimiters('', '；');
                 // 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
+                $this->form_validation->set_rules('category_ids[]', '主营商品类目', 'trim|required|max_length[255]');
                 $this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
                 $this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]|is_unique[biz.brief_name]');
 
@@ -275,6 +304,7 @@
                     $data_to_create = array(
                         'user_id' => $this->session->user_id,
                         'tel_public' => $this->session->mobile,
+                        'category_ids' => !empty($this->input->post('category_ids'))? implode(',', $this->input->post('category_ids')): NULL,
                     );
                     // 自动生成无需特别处理的数据
                     $data_need_no_prepare = array(
@@ -358,6 +388,19 @@
 				redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
 			endif;
 
+            // 从API服务器获取顶级商品分类列表信息
+            $params = array(
+                'level' => 1,
+                'time_delete' => 'NULL',
+            );
+            $url = api_url('item_category/index');
+            $result = $this->curl->go($url, $params, 'array');
+            if ($result['status'] === 200):
+                $data['item_categories'] = $result['content'];
+            else:
+                $data['item_categories'] = NULL;
+            endif;
+
             // 获取商家运费模板列表
             $data['biz_freight_templates'] = $this->list_freight_template_biz();
 
@@ -373,7 +416,8 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('url_logo', '商家LOGO', 'trim|max_length[255]');
+            $this->form_validation->set_rules('category_ids[]', '主营商品类目', 'trim|required|max_length[255]');
+			$this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
 			$this->form_validation->set_rules('slogan', '宣传语', 'trim|max_length[30]');
 			$this->form_validation->set_rules('description', '简介', 'trim|max_length[255]');
 			$this->form_validation->set_rules('notification', '公告', 'trim|max_length[255]');
@@ -423,6 +467,7 @@
 				$data_to_edit = array(
 					'id' => $id,
 					'user_id' => $this->session->user_id,
+                    'category_ids' => !empty($this->input->post('category_ids'))? implode(',', $this->input->post('category_ids')): NULL,
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -505,7 +550,8 @@
 			// 动态设置待验证字段名及字段值
 			$data_to_validate["{$name}"] = $value;
 			$this->form_validation->set_data($data_to_validate);
-			$this->form_validation->set_rules('url_logo', 'LOGO', 'trim|max_length[255]');
+            $this->form_validation->set_rules('category_ids[]', '主营商品类目', 'trim|required|max_length[255]');
+			$this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
 			$this->form_validation->set_rules('slogan', '宣传语', 'trim|max_length[30]');
 			$this->form_validation->set_rules('description', '简介', 'trim|max_length[255]');
 			$this->form_validation->set_rules('notification', '公告', 'trim|max_length[255]');

@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'identity_id', 'biz_id', 'name', 'fullname_owner', 'fullname_auth', 'code_license', 'code_ssn_owner', 'code_ssn_auth', 'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_verify_photo', 'nation', 'province', 'city', 'county', 'street', 'bank_name', 'bank_account', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id', 'status',
+			'biz_id', 'name', 'fullname_owner', 'fullname_auth', 'code_license', 'code_ssn_owner', 'code_ssn_auth', 'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_verify_photo', 'nation', 'province', 'city', 'county', 'street', 'bank_name', 'bank_account', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id', 'status',
 		);
 
 		/**
@@ -226,8 +226,6 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('identity_id', '认证ID', 'trim|required');
-			$this->form_validation->set_rules('biz_id', '所属商家ID', 'trim|required');
 			$this->form_validation->set_rules('name', '主体名称', 'trim|required');
 			$this->form_validation->set_rules('fullname_owner', '法人姓名', 'trim|required');
 			$this->form_validation->set_rules('fullname_auth', '经办人姓名', 'trim|required');
@@ -246,12 +244,6 @@
 			$this->form_validation->set_rules('street', '具体地址', 'trim|required');
 			$this->form_validation->set_rules('bank_name', '开户行名称', 'trim|required');
 			$this->form_validation->set_rules('bank_account', '开户行账号', 'trim|required');
-			$this->form_validation->set_rules('time_create', '创建时间', 'trim|required');
-			$this->form_validation->set_rules('time_delete', '删除时间', 'trim|');
-			$this->form_validation->set_rules('time_edit', '最后操作时间', 'trim|required');
-			$this->form_validation->set_rules('creator_id', '创建者ID', 'trim|');
-			$this->form_validation->set_rules('operator_id', '最后操作者ID', 'trim|');
-			$this->form_validation->set_rules('status', '状态', 'trim|required');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -269,7 +261,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'identity_id', 'biz_id', 'name', 'fullname_owner', 'fullname_auth', 'code_license', 'code_ssn_owner', 'code_ssn_auth', 'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_verify_photo', 'nation', 'province', 'city', 'county', 'street', 'bank_name', 'bank_account', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id', 'status',
+					'name', 'fullname_owner', 'fullname_auth', 'code_license', 'code_ssn_owner', 'code_ssn_auth', 'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_verify_photo', 'nation', 'province', 'city', 'county', 'street', 'bank_name', 'bank_account',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -340,8 +332,6 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('identity_id', '认证ID', 'trim|required');
-			$this->form_validation->set_rules('biz_id', '所属商家ID', 'trim|required');
 			$this->form_validation->set_rules('name', '主体名称', 'trim|required');
 			$this->form_validation->set_rules('fullname_owner', '法人姓名', 'trim|required');
 			$this->form_validation->set_rules('fullname_auth', '经办人姓名', 'trim|required');
@@ -360,12 +350,6 @@
 			$this->form_validation->set_rules('street', '具体地址', 'trim|required');
 			$this->form_validation->set_rules('bank_name', '开户行名称', 'trim|required');
 			$this->form_validation->set_rules('bank_account', '开户行账号', 'trim|required');
-			$this->form_validation->set_rules('time_create', '创建时间', 'trim|required');
-			$this->form_validation->set_rules('time_delete', '删除时间', 'trim|');
-			$this->form_validation->set_rules('time_edit', '最后操作时间', 'trim|required');
-			$this->form_validation->set_rules('creator_id', '创建者ID', 'trim|');
-			$this->form_validation->set_rules('operator_id', '最后操作者ID', 'trim|');
-			$this->form_validation->set_rules('status', '状态', 'trim|required');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -379,13 +363,12 @@
 				// 需要编辑的数据；逐一赋值需特别处理的字段
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
-					'biz_id' => $this->session->biz_id,
 					'id' => $id,
 					//'name' => $this->input->post('name')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'identity_id', 'biz_id', 'name', 'fullname_owner', 'fullname_auth', 'code_license', 'code_ssn_owner', 'code_ssn_auth', 'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_verify_photo', 'nation', 'province', 'city', 'county', 'street', 'bank_name', 'bank_account', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id', 'status',
+					'name', 'fullname_owner', 'fullname_auth', 'code_license', 'code_ssn_owner', 'code_ssn_auth', 'url_image_license', 'url_image_owner_id', 'url_image_auth_id', 'url_image_auth_doc', 'url_verify_photo', 'nation', 'province', 'city', 'county', 'street', 'bank_name', 'bank_account',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -465,9 +448,6 @@
 			// 动态设置待验证字段名及字段值
 			$data_to_validate["{$name}"] = $value;
 			$this->form_validation->set_data($data_to_validate);
-			$this->form_validation->set_rules('id', '待修改项ID', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('identity_id', '认证ID', 'trim|required');
-			$this->form_validation->set_rules('biz_id', '所属商家ID', 'trim|required');
 			$this->form_validation->set_rules('name', '主体名称', 'trim|required');
 			$this->form_validation->set_rules('fullname_owner', '法人姓名', 'trim|required');
 			$this->form_validation->set_rules('fullname_auth', '经办人姓名', 'trim|required');
@@ -486,12 +466,6 @@
 			$this->form_validation->set_rules('street', '具体地址', 'trim|required');
 			$this->form_validation->set_rules('bank_name', '开户行名称', 'trim|required');
 			$this->form_validation->set_rules('bank_account', '开户行账号', 'trim|required');
-			$this->form_validation->set_rules('time_create', '创建时间', 'trim|required');
-			$this->form_validation->set_rules('time_delete', '删除时间', 'trim|');
-			$this->form_validation->set_rules('time_edit', '最后操作时间', 'trim|required');
-			$this->form_validation->set_rules('creator_id', '创建者ID', 'trim|');
-			$this->form_validation->set_rules('operator_id', '最后操作者ID', 'trim|');
-			$this->form_validation->set_rules('status', '状态', 'trim|required');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -537,216 +511,6 @@
 
 			endif;
 		} // end edit_certain
-
-		/**
-		 * 删除单行或多行项目
-		 *
-		 * 一般用于发货、退款、存为草稿、上架、下架、删除、恢复等状态变化，请根据需要修改方法名，例如deliver、refund、delete、restore、draft等
-		 */
-		public function delete()
-		{
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
-			$op_name = '删除'; // 操作的名称
-			$op_view = 'delete'; // 视图文件名
-			
-			// 检查必要参数是否已传入
-			$required_params = $this->names_edit_bulk_required;
-			foreach ($required_params as $param):
-				${$param} = $this->input->post($param);
-				if ( empty( ${$param} ) ):
-					$data['error'] = '必要的请求参数未全部传入';
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-					exit();
-				endif;
-			endforeach;
-
-			// 页面信息
-			$data = array(
-				'title' => $op_name. $this->class_name_cn,
-				'class' => $this->class_name. ' '. $op_view,
-				'error' => '', // 预设错误提示
-			);
-
-			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $this->parse_ids_array();
-			
-			// 获取待操作项数据
-			$data['items'] = array();
-			foreach ($ids as $id):
-				// 从API服务器获取相应详情信息
-				$params['id'] = $id;
-				$params['biz_id'] = $this->session->biz_id;
-				$params['user_id'] = $this->session->user_id;
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['items'][] = $result['content'];
-				else:
-					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
-				endif;
-			endforeach;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] .= validation_errors();
-
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/'.$op_view, $data);
-				$this->load->view('templates/footer', $data);
-
-			else:
-				// 需要存入数据库的信息
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'ids' => $ids,
-					'password' => $password,
-					'operation' => $op_view, // 操作名称
-				);
-
-				// 向API服务器发送待修改数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit_bulk');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn.$op_name. '成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-					$data['operation'] = 'bulk';
-					$data['ids'] = $ids;
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若修改失败，则进行提示
-					$data['error'] .= $result['content']['error']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-				endif;
-
-			endif;
-		} // end delete
-
-		/**
-		 * 恢复单行或多行项目
-		 *
-		 * 一般用于存为草稿、上架、下架、删除、恢复等状态变化，请根据需要修改方法名，例如delete、restore、draft等
-		 */
-		public function restore()
-		{
-			// 操作可能需要检查操作权限
-			// $role_allowed = array('管理员', '经理'); // 角色要求
-// 			$min_level = 30; // 级别要求
-// 			$this->basic->permission_check($role_allowed, $min_level);
-
-			$op_name = '恢复'; // 操作的名称
-			$op_view = 'restore'; // 视图文件名
-			
-			// 检查必要参数是否已传入
-			$required_params = $this->names_edit_bulk_required;
-			foreach ($required_params as $param):
-				${$param} = $this->input->post($param);
-				if ( empty( ${$param} ) ):
-					$data['error'] = '必要的请求参数未全部传入';
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-					exit();
-				endif;
-			endforeach;
-			
-			// 页面信息
-			$data = array(
-				'title' => $op_name. $this->class_name_cn,
-				'class' => $this->class_name. ' '. $op_view,
-				'error' => '', // 预设错误提示
-			);
-
-			// 赋值视图中需要用到的待操作项数据
-			$data['ids'] = $this->parse_ids_array();
-			
-			// 获取待操作项数据
-			$data['items'] = array();
-			foreach ($ids as $id):
-				// 从API服务器获取相应详情信息
-				$params['id'] = $id;
-				$params['user_id'] = $this->session->user_id;
-				$params['biz_id'] = $this->session->biz_id;
-				$url = api_url($this->class_name. '/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['items'][] = $result['content'];
-				else:
-					$data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
-				endif;
-			endforeach;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
-
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
-
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] .= validation_errors();
-
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/'.$op_view, $data);
-				$this->load->view('templates/footer', $data);
-
-			else:
-				// 需要存入数据库的信息
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'ids' => $ids,
-					'password' => $password,
-					'operation' => $op_view, // 操作名称
-				);
-
-				// 向API服务器发送待修改数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit_bulk');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn.$op_name. '成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
-
-				else:
-					// 若修改失败，则进行提示
-					$data['error'] .= $result['content']['error']['message'];
-
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/'.$op_view, $data);
-					$this->load->view('templates/footer', $data);
-				endif;
-
-			endif;
-		} // end restore
 
 	} // end class Identity_biz
 

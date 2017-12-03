@@ -29,7 +29,7 @@
 
 <div id=content class=container>
 	<section class="bg-info text-info">
-        <p><em>RC0.13.1</em>当前系统为beta/RC版本，仅供技术研究及开发；在不以任何形式告知的情况下，数据、功能、页面样式都将不定时变更；任何数据、业务、功能均无实际意义，且均不构成任何责任。</p>
+        <p><em>RC0.13.2</em>当前系统为beta/RC版本，仅供技术研究及开发；在不以任何形式告知的情况下，数据、功能、页面样式都将不定时变更；任何数据、业务、功能均无实际意义，且均不构成任何责任。</p>
 	</section>
 
 	<div class="btn-group btn-group-justified" role=group>

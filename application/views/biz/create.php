@@ -45,6 +45,27 @@
 			</div>
 
             <div class=form-group>
+                <label for=category_ids class="col-sm-2 control-label">主营商品类目</label>
+                <div class=col-sm-10>
+                    <?php $input_name = 'category_ids[]' ?>
+                    <select class=form-control name="<?php echo $input_name ?>" multiple required>
+                        <?php
+                        $options = $item_categories;
+                        $current_array = explode(',', $item['category_ids']);
+                        foreach ($options as $option):
+                            if ( empty($option['time_delete']) ):
+                                ?>
+                                <option value="<?php echo $option['category_id'] ?>" <?php if ( in_array($option['category_id'], $current_array) ) echo 'selected'; ?>><?php echo $option['name'] ?></option>
+                            <?php
+                            endif;
+                        endforeach;
+                        ?>
+                    </select>
+                    <p class=help-block>您最多可以选择3种类别的商品进行售卖</p>
+                </div>
+            </div>
+
+            <div class=form-group>
                 <label for=url_logo class="col-sm-2 control-label">店铺LOGO</label>
                 <div class=col-sm-10>
                     <?php $name_to_upload = 'url_logo' ?>

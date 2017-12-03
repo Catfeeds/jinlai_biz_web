@@ -69,6 +69,8 @@
             </dd>
 			<dt>商家ID</dt>
 			<dd><?php echo $item['biz_id'] ?></dd>
+            <dt>主营商品类目</dt>
+            <dd><?php echo !empty($item['category_ids'])? $item['category_ids']: '未填写' ?></dd>
 			<dt>商家全称</dt>
             <dd><?php echo !empty($item['name'])? $item['name']: '未填写' ?></dd>
 			<dt>店铺名称</dt>

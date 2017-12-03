@@ -54,10 +54,6 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>认证ID</dt>
-		<dd><?php echo $item['identity_id'] ?></dd>
-		<dt>所属商家ID</dt>
-		<dd><?php echo $item['biz_id'] ?></dd>
 		<dt>主体名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>法人姓名</dt>
@@ -71,15 +67,25 @@
 		<dt>经办人身份证号</dt>
 		<dd><?php echo $item['code_ssn_auth'] ?></dd>
 		<dt>营业执照</dt>
-		<dd><?php echo $item['url_image_license'] ?></dd>
+        <dd>
+            <img src="<?php echo $item['url_image_license'] ?>">
+        </dd>
 		<dt>法人身份证</dt>
-		<dd><?php echo $item['url_image_owner_id'] ?></dd>
+        <dd>
+            <img src="<?php echo $item['url_image_owner_id'] ?>">
+        </dd>
 		<dt>经办人身份证</dt>
-		<dd><?php echo $item['url_image_auth_id'] ?></dd>
+        <dd>
+            <img src="<?php echo $item['url_image_auth_id'] ?>">
+        </dd>
 		<dt>经办人授权书</dt>
-		<dd><?php echo $item['url_image_auth_doc'] ?></dd>
+        <dd>
+            <img src="<?php echo $item['url_image_auth_doc'] ?>">
+        </dd>
 		<dt>经办人持身份证照片</dt>
-		<dd><?php echo $item['url_verify_photo'] ?></dd>
+        <dd>
+            <img src="<?php echo $item['url_verify_photo'] ?>">
+        </dd>
 		<dt>国家</dt>
 		<dd><?php echo $item['nation'] ?></dd>
 		<dt>省</dt>
@@ -94,19 +100,6 @@
 		<dd><?php echo $item['bank_name'] ?></dd>
 		<dt>开户行账号</dt>
 		<dd><?php echo $item['bank_account'] ?></dd>
-		<dt>创建时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
-		<dt>创建者ID</dt>
-		<dd><?php echo $item['creator_id'] ?></dd>
-		<dt>最后操作者ID</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
-		<dt>状态</dt>
-		<dd><?php echo $item['status'] ?></dd>
-
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

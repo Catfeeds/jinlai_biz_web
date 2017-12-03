@@ -51,163 +51,116 @@
 
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
-									<div class=form-group>
-							<label for=identity_id class="col-sm-2 control-label">认证ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=identity_id type=text value="<?php echo $item['identity_id'] ?>" placeholder="认证ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=biz_id class="col-sm-2 control-label">所属商家ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=biz_id type=text value="<?php echo $item['biz_id'] ?>" placeholder="所属商家ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=name class="col-sm-2 control-label">主体名称</label>
-							<div class=col-sm-10>
-								<input class=form-control name=name type=text value="<?php echo $item['name'] ?>" placeholder="主体名称" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=fullname_owner class="col-sm-2 control-label">法人姓名</label>
-							<div class=col-sm-10>
-								<input class=form-control name=fullname_owner type=text value="<?php echo $item['fullname_owner'] ?>" placeholder="法人姓名" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=fullname_auth class="col-sm-2 control-label">经办人姓名</label>
-							<div class=col-sm-10>
-								<input class=form-control name=fullname_auth type=text value="<?php echo $item['fullname_auth'] ?>" placeholder="经办人姓名" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=code_license class="col-sm-2 control-label">工商注册号</label>
-							<div class=col-sm-10>
-								<input class=form-control name=code_license type=text value="<?php echo $item['code_license'] ?>" placeholder="工商注册号" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号</label>
-							<div class=col-sm-10>
-								<input class=form-control name=code_ssn_owner type=text value="<?php echo $item['code_ssn_owner'] ?>" placeholder="法人身份证号" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号</label>
-							<div class=col-sm-10>
-								<input class=form-control name=code_ssn_auth type=text value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=url_image_license class="col-sm-2 control-label">营业执照</label>
-							<div class=col-sm-10>
-								<input class=form-control name=url_image_license type=text value="<?php echo $item['url_image_license'] ?>" placeholder="营业执照" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=url_image_owner_id class="col-sm-2 control-label">法人身份证</label>
-							<div class=col-sm-10>
-								<input class=form-control name=url_image_owner_id type=text value="<?php echo $item['url_image_owner_id'] ?>" placeholder="法人身份证" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=url_image_auth_id class="col-sm-2 control-label">经办人身份证</label>
-							<div class=col-sm-10>
-								<input class=form-control name=url_image_auth_id type=text value="<?php echo $item['url_image_auth_id'] ?>" placeholder="经办人身份证" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书</label>
-							<div class=col-sm-10>
-								<input class=form-control name=url_image_auth_doc type=text value="<?php echo $item['url_image_auth_doc'] ?>" placeholder="经办人授权书" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=url_verify_photo class="col-sm-2 control-label">经办人持身份证照片</label>
-							<div class=col-sm-10>
-								<input class=form-control name=url_verify_photo type=text value="<?php echo $item['url_verify_photo'] ?>" placeholder="经办人持身份证照片" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=nation class="col-sm-2 control-label">国家</label>
-							<div class=col-sm-10>
-								<input class=form-control name=nation type=text value="<?php echo $item['nation'] ?>" placeholder="国家" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=province class="col-sm-2 control-label">省</label>
-							<div class=col-sm-10>
-								<input class=form-control name=province type=text value="<?php echo $item['province'] ?>" placeholder="省" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=city class="col-sm-2 control-label">市</label>
-							<div class=col-sm-10>
-								<input class=form-control name=city type=text value="<?php echo $item['city'] ?>" placeholder="市" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=county class="col-sm-2 control-label">区</label>
-							<div class=col-sm-10>
-								<input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=street class="col-sm-2 control-label">具体地址</label>
-							<div class=col-sm-10>
-								<input class=form-control name=street type=text value="<?php echo $item['street'] ?>" placeholder="具体地址" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=bank_name class="col-sm-2 control-label">开户行名称</label>
-							<div class=col-sm-10>
-								<input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="开户行名称" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=bank_account class="col-sm-2 control-label">开户行账号</label>
-							<div class=col-sm-10>
-								<input class=form-control name=bank_account type=text value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_create class="col-sm-2 control-label">创建时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_create type=text value="<?php echo $item['time_create'] ?>" placeholder="创建时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_delete class="col-sm-2 control-label">删除时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_delete type=text value="<?php echo $item['time_delete'] ?>" placeholder="删除时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=time_edit class="col-sm-2 control-label">最后操作时间</label>
-							<div class=col-sm-10>
-								<input class=form-control name=time_edit type=text value="<?php echo $item['time_edit'] ?>" placeholder="最后操作时间" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=creator_id class="col-sm-2 control-label">创建者ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=creator_id type=text value="<?php echo $item['creator_id'] ?>" placeholder="创建者ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=operator_id class="col-sm-2 control-label">最后操作者ID</label>
-							<div class=col-sm-10>
-								<input class=form-control name=operator_id type=text value="<?php echo $item['operator_id'] ?>" placeholder="最后操作者ID" required>
-							</div>
-						</div>
-						<div class=form-group>
-							<label for=status class="col-sm-2 control-label">状态</label>
-							<div class=col-sm-10>
-								<input class=form-control name=status type=text value="<?php echo $item['status'] ?>" placeholder="状态" required>
-							</div>
-						</div>
-
+            <div class=form-group>
+                <label for=name class="col-sm-2 control-label">主体名称</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=name type=text value="<?php echo $item['name'] ?>" placeholder="主体名称" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=fullname_owner class="col-sm-2 control-label">法人姓名</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=fullname_owner type=text value="<?php echo $item['fullname_owner'] ?>" placeholder="法人姓名" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=fullname_auth class="col-sm-2 control-label">经办人姓名</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=fullname_auth type=text value="<?php echo $item['fullname_auth'] ?>" placeholder="经办人姓名" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=code_license class="col-sm-2 control-label">工商注册号</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=code_license type=text value="<?php echo $item['code_license'] ?>" placeholder="工商注册号" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=code_ssn_owner type=text value="<?php echo $item['code_ssn_owner'] ?>" placeholder="法人身份证号" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=code_ssn_auth type=text value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=url_image_license class="col-sm-2 control-label">营业执照</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=url_image_license type=text value="<?php echo $item['url_image_license'] ?>" placeholder="营业执照" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=url_image_owner_id class="col-sm-2 control-label">法人身份证</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=url_image_owner_id type=text value="<?php echo $item['url_image_owner_id'] ?>" placeholder="法人身份证" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=url_image_auth_id class="col-sm-2 control-label">经办人身份证</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=url_image_auth_id type=text value="<?php echo $item['url_image_auth_id'] ?>" placeholder="经办人身份证" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=url_image_auth_doc type=text value="<?php echo $item['url_image_auth_doc'] ?>" placeholder="经办人授权书" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=url_verify_photo class="col-sm-2 control-label">经办人持身份证照片</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=url_verify_photo type=text value="<?php echo $item['url_verify_photo'] ?>" placeholder="经办人持身份证照片" required>
+                </div>
+            </div>
+            <!--
+            <div class=form-group>
+                <label for=nation class="col-sm-2 control-label">国家</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=nation type=text value="<?php echo $item['nation'] ?>" placeholder="国家" required>
+                </div>
+            </div>
+            -->
+            <div class=form-group>
+                <label for=province class="col-sm-2 control-label">省</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=province type=text value="<?php echo $item['province'] ?>" placeholder="省" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=city class="col-sm-2 control-label">市</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=city type=text value="<?php echo $item['city'] ?>" placeholder="市" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=county class="col-sm-2 control-label">区</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=street class="col-sm-2 control-label">具体地址</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=street type=text value="<?php echo $item['street'] ?>" placeholder="具体地址" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=bank_name class="col-sm-2 control-label">开户行名称</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="开户行名称" required>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=bank_account class="col-sm-2 control-label">开户行账号</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=bank_account type=text value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号" required>
+                </div>
+            </div>
 		</fieldset>
 
 		<div class=form-group>

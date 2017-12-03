@@ -81,6 +81,26 @@
                 </div>
 			</div>
 
+            <div class=form-group>
+                <label for=category_ids class="col-sm-2 control-label">主营商品类目</label>
+                <div class=col-sm-10>
+                    <?php $input_name = 'category_ids[]' ?>
+                    <select class=form-control name="<?php echo $input_name ?>" multiple required>
+                        <?php
+                        $options = $item_categories;
+                        $current_array = explode(',', $item['category_ids']);
+                        foreach ($options as $option):
+                            if ( empty($option['time_delete']) ):
+                                ?>
+                                <option value="<?php echo $option['category_id'] ?>" <?php if ( in_array($option['category_id'], $current_array) ) echo 'selected'; ?>><?php echo $option['name'] ?></option>
+                            <?php
+                            endif;
+                        endforeach;
+                        ?>
+                    </select>
+                </div>
+            </div>
+
 			<div class=form-group>
 				<label for=slogan class="col-sm-2 control-label">宣传语</label>
 				<div class=col-sm-10>
@@ -448,12 +468,14 @@
 			<legend>联系地址</legend>
             <p class=help-block>该信息将用于订单退换货等业务</p>
 
-			<div class=form-group>
+			<!--
+            <div class=form-group>
 				<label for=nation class="col-sm-2 control-label">国家</label>
 				<div class=col-sm-10>
 					<p class="form-control-static"><?php echo $item['nation'] ?></p>
 				</div>
 			</div>
+			-->
 			<div class=form-group>
 				<label for=province class="col-sm-2 control-label">省</label>
 				<div class=col-sm-10>

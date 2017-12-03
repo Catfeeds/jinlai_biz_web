@@ -54,35 +54,22 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>认证ID</dt>
-		<dd><?php echo $item['identity_id'] ?></dd>
-		<dt>所属用户ID</dt>
-		<dd><?php echo $item['user_id'] ?></dd>
 		<dt>姓名</dt>
 		<dd><?php echo $item['fullname'] ?></dd>
 		<dt>身份证号</dt>
 		<dd><?php echo $item['code_ssn_owner'] ?></dd>
 		<dt>身份证照片</dt>
-		<dd><?php echo $item['url_image_owner_id'] ?></dd>
+		<dd>
+            <img src="<?php echo $item['url_image_owner_id'] ?>">
+        </dd>
 		<dt>用户持身份证照片</dt>
-		<dd><?php echo $item['url_verify_photo'] ?></dd>
+		<dd>
+            <img src="<?php echo $item['url_verify_photo'] ?>">
+        </dd>
 		<dt>开户行名称</dt>
 		<dd><?php echo $item['bank_name'] ?></dd>
 		<dt>开户行账号</dt>
 		<dd><?php echo $item['bank_account'] ?></dd>
-		<dt>创建时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
-		<dt>创建者ID</dt>
-		<dd><?php echo $item['creator_id'] ?></dd>
-		<dt>最后操作者ID</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
-		<dt>状态</dt>
-		<dd><?php echo $item['status'] ?></dd>
-
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
