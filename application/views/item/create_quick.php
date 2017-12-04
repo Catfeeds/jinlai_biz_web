@@ -56,7 +56,7 @@
 				<label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
 				<div class=col-sm-10>
 					<select class=form-control name=category_biz_id>
-						<option value="">可选</option>
+                        <option value="">不选择</option>
 						<?php foreach ($biz_categories as $option): ?>
 							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
 						<?php endforeach ?>

@@ -64,6 +64,29 @@
 				<label for=content class="col-sm-2 control-label">内容※</label>
 				<div class=col-sm-10>
                     <textarea class=form-control name=content rows=10 placeholder="文章内容，最多20000个字符" required><?php echo $item['content'] ?></textarea>
+
+                    <link rel=stylesheet media=all href="<?php echo base_url('/css/simditor.css') ?>">
+                    <script src="<?php echo base_url('/js/module.js') ?>"></script>
+                    <script src="<?php echo base_url('/js/hotkeys.js') ?>"></script>
+                    <script src="<?php echo base_url('/js/uploader.js') ?>"></script>
+                    <script src="<?php echo base_url('/js/simditor.js') ?>"></script>
+                    <script>
+                        $(function(){
+                            var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'];
+                            var editor = new Simditor({
+                                textarea: $('[name=content]'),
+                                cleanPaste: true,
+                                toolbar: toolbar,
+                                upload: {
+                                    url: '<?php echo base_url('/simditor?target=article_biz/url_images') ?>',
+                                    params: null,
+                                    fileKey: 'file0',
+                                    connectionCount: 4,
+                                    leaveConfirm: '上传尚未结束，确定要中止？'
+                                }
+                            });
+                        });
+                    </script>
 				</div>
 			</div>
 			<div class=form-group>

@@ -81,6 +81,7 @@
                 </div>
 			</div>
 
+            <!--
             <div class=form-group>
                 <label for=category_ids class="col-sm-2 control-label">主营商品类目</label>
                 <div class=col-sm-10>
@@ -100,6 +101,7 @@
                     </select>
                 </div>
             </div>
+            -->
 
 			<div class=form-group>
 				<label for=slogan class="col-sm-2 control-label">宣传语</label>

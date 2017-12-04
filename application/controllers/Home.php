@@ -4,7 +4,7 @@
 	/**
 	 * Home 类
 	 *
-	 * 首页的示例代码
+	 * 首页
 	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
@@ -53,6 +53,7 @@
 			// 获取核心数据计数
 			$data['count'] = array(
 				'item' => $this->count_table('item'),
+                'article_biz' => $this->count_table('article_biz'),
 				'order' => $this->count_table('order'),
 				'order_pay' => $this->count_table('order', array('status' => '待接单')),
 				'order_confirm' => $this->count_table('order', array('status' => '待发货')),

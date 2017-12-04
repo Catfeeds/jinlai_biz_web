@@ -118,10 +118,10 @@ $(function(){
 
 		// 若超出最大文件数量，进行提示
         var available_count = max_count - current_count;
-        console.log('最大可上传文件数：' + max_count);
-        console.log('已上传文件数：' + current_count);
-        console.log('可上传文件数：' + available_count);
-        console.log('待上传文件数：' + file_count);
+        // console.log('最大可上传文件数：' + max_count);
+        // console.log('已上传文件数：' + current_count);
+        // console.log('可上传文件数：' + available_count);
+        // console.log('待上传文件数：' + file_count);
 		if (file_count > available_count)
 		{
 			alert('最多可再上传'+ available_count +'个文件');

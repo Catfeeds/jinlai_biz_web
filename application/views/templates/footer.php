@@ -26,6 +26,10 @@
 					return false;
 				});
 			});
+
+			// 启用WebSocket
+			//var ws = new WebSocket('ws://api.517ybang.com');
+			//console.log(ws);
 		</script>
 	</body>
 </html>

@@ -158,6 +158,12 @@
 				</a>
 			</li>
             <li class="col-xs-4 col-md-2">
+                <a title="商家文章管理" href="<?php echo base_url('article_biz') ?>">
+                    <img src="/media/home/shangpin@3x.png">
+                    文章<span class=count><?php echo $count['article_biz'] ?></span>
+                </a>
+            </li>
+            <li class="col-xs-4 col-md-2">
                 <a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">
                     <img src="/media/home/fenlei@3x.png">
                     商品分类<span class=count><?php echo $count['item_category_biz'] ?></span>

@@ -57,25 +57,17 @@
 	<header>
 		<h2><?php echo $item['title'] ?></h2>
 		<ul class="list-horizontal row">
-			<li class="col-xs-12 col-sm-6 col-md-3"><?php echo $item['time_edit'] ?></li>
+            <li class="col-xs-12 col-sm-6 col-md-3">文章ID <?php echo $item['article_id'] ?></li>
 		</ul>
+
         <?php if ( !empty($item['excerpt']) ): ?>
-            <div class="excerpt well"><?php echo $item['excerpt'] ?></div>
+        <div class="excerpt well"><?php echo $item['excerpt'] ?></div>
         <?php endif ?>
 	</header>
 
 	<section><?php echo $item['content'] ?></section>
 
 	<dl id=list-info class=dl-horizontal>
-		<!--
-		<dt>文章ID</dt>
-		<dd><?php echo $item['article_id'] ?></dd>
-		<dt>分类</dt>
-		<dd><?php echo $item['category_id'] ?></dd>
-		<dt>自定义域名</dt>
-		<dd><?php echo $item['url_name'] ?></dd>
-		-->
-
         <dt>形象图</dt>
         <?php if ( !empty($item['url_images']) ): ?>
             <dd>
@@ -93,7 +85,6 @@
         <?php endif ?>
 	</dl>
 
-	<!--
 	<dl id=list-record class=dl-horizontal>
 		<dt>创建时间</dt>
 		<dd>
@@ -114,7 +105,6 @@
 		</dd>
 		<?php endif ?>
 	</dl>
-	-->
 
 	<?php endif ?>
 </div>

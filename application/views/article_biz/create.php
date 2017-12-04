@@ -21,7 +21,7 @@
     }
 </style>
 
-<script defer src="/js/create.js"></script>
+<!--<script defer src="/js/create.js"></script>-->
 
 <base href="<?php echo $this->media_root ?>">
 
@@ -42,12 +42,6 @@
         <p class=help-block>必填项以“※”符号标示</p>
 
 		<fieldset>
-			<div class=form-group>
-				<label for=category_id class="col-sm-2 control-label">分类※</label>
-				<div class=col-sm-10>
-					<input class=form-control name=category_id type=text value="<?php echo set_value('category_id') ?>" placeholder="分类">
-				</div>
-			</div>
 			<div class=form-group>
 				<label for=title class="col-sm-2 control-label">标题※</label>
 				<div class=col-sm-10>
@@ -89,18 +83,10 @@
                     </script>
 				</div>
 			</div>
-			<div class=form-group>
-				<label for=url_name class="col-sm-2 control-label">自定义域名</label>
-				<div class=col-sm-10>
-					<input class=form-control name=url_name type=text value="<?php echo set_value('url_name') ?>" placeholder="自定义域名">
-				</div>
-			</div>
 
 			<div class=form-group>
 				<label for=url_images class="col-sm-2 control-label">形象图</label>
                 <div class=col-sm-10>
-                    <p class=help-block>请上传大小在2M以内，边长不超过2048px的jpg/png图片</p>
-
                     <?php $name_to_upload = 'url_images' ?>
                     <ul class="upload_preview"></ul>
 
@@ -111,7 +97,7 @@
                         <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
                     </div>
 
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
                 </div>
 			</div>
 		</fieldset>

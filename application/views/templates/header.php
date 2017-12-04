@@ -25,7 +25,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171203">
+		<meta name=version content="revision20171204">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -213,6 +213,11 @@
     $body_class .= ($is_wechat === TRUE)? ' is_wechat': NULL;
     $body_class .= ($is_ios === TRUE)? ' is_ios': NULL;
     $body_class .= ($is_android === TRUE)? ' is_android': NULL;
+    $body_class .= ($is_wechat || $is_ios || $is_android)? ' mobile': NULL; // 移动端设备
+
+    $body_class .= ($is_mac === TRUE)? ' macos': NULL;
+    $body_class .= ($is_windows === TRUE)? ' windows': NULL;
+    $body_class .= ($is_windows || $is_mac)? ' desktop': NULL; // 非移动端设备
 ?>
 
 <!-- 内容开始 -->

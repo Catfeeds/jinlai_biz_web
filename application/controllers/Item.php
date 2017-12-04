@@ -269,7 +269,7 @@
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
 			$this->form_validation->set_rules('category_id', '系统分类', 'trim|required|is_natural_no_zero');
 			$this->form_validation->set_rules('brand_id', '品牌', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('category_biz_id', '商家分类', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('category_biz_id', '店内分类', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('name', '商品名称', 'trim|required|max_length[40]');
 			$this->form_validation->set_rules('price', '商城价/现价（元）', 'trim|required|greater_than[0]|less_than_equal_to[99999.99]');
@@ -359,7 +359,7 @@
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
 			$this->form_validation->set_rules('category_id', '系统分类', 'trim|required|is_natural_no_zero');
 			$this->form_validation->set_rules('brand_id', '品牌', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('category_biz_id', '商家分类', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('category_biz_id', '店内分类', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('code_biz', '商家自定义商品编码', 'trim|max_length[20]');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim|max_length[255]');

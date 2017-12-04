@@ -73,12 +73,12 @@
 				</div>
 			</div>
 
-			<div class=form-group>
+            <div class=form-group>
 				<label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
 				<div class=col-sm-10>
                     <?php $input_name = 'category_biz_id' ?>
                     <select class=form-control name="<?php echo $input_name ?>">
-                        <option>不选择</option>
+                        <option value="">不选择</option>
                         <?php
                             if ( !empty($biz_categories) ):
                                 $options = $biz_categories;

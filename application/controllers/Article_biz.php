@@ -2,26 +2,26 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Article 文章类
+	 * Article_biz 商家文章类
 	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
 	 * @copyright ICBG <www.bingshankeji.com>
 	 */
-	class Article extends MY_Controller
+	class Article_biz extends MY_Controller
 	{	
 		/**
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'article_id', 'category_id', 'title', 'excerpt', 'content', 'url_name', 'url_images', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'article_id', 'biz_id', 'title', 'excerpt', 'content', 'url_images', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
 		/**
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'category_id', 'title', 'excerpt', 'content', 'url_name', 'url_images',
+			'title', 'excerpt', 'content', 'url_images',
 		);
 
 		/**
@@ -51,8 +51,8 @@
 
 			// 向类属性赋值
 			$this->class_name = strtolower(__CLASS__);
-			$this->class_name_cn = '文章'; // 改这里……
-			$this->table_name = 'article'; // 和这里……
+			$this->class_name_cn = '商家文章'; // 改这里……
+			$this->table_name = 'article_biz'; // 和这里……
 			$this->id_name = 'article_id'; // 还有这里，OK，这就可以了
 			$this->view_root = $this->class_name; // 视图文件所在目录
 			$this->media_root = MEDIA_URL. $this->class_name.'/'; // 媒体文件所在目录
@@ -85,7 +85,8 @@
 			);
 
 			// 筛选条件
-			$condition['time_delete'] = 'NULL';
+            $condition['time_delete'] = 'NULL';
+			$condition['biz_id'] = $this->session->biz_id;
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
 				if ( !empty($this->input->get_post($sorter)) )
@@ -118,14 +119,12 @@
 		/**
 		 * 详情页
 		 */
-		public function detail($url_name)
+		public function detail()
 		{
 			// 检查是否已传入必要参数
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
 			if ( !empty($id) ):
 				$params['id'] = $id;
-			elseif ( !empty($url_name) ):
-				$params['url_name'] = $url_name;
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -175,7 +174,6 @@
 
 			// 筛选条件
 			$condition['biz_id'] = $this->session->biz_id;
-			$condition['time_delete'] = 'IS NOT NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
 				if ( !empty($this->input->post($sorter)) )
@@ -228,11 +226,9 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-            $this->form_validation->set_rules('category_id', '所属分类', 'trim|is_natural_no_zero');
             $this->form_validation->set_rules('title', '标题', 'trim|required|max_length[30]');
             $this->form_validation->set_rules('excerpt', '摘要', 'trim|max_length[255]');
             $this->form_validation->set_rules('content', '内容', 'trim|required|max_length[20000]');
-            $this->form_validation->set_rules('url_name', '自定义域名', 'trim|alpha_dash|max_length[30]');
             $this->form_validation->set_rules('url_images', '形象图', 'trim|max_length[255]');
 
 			// 若表单提交不成功
@@ -247,10 +243,11 @@
 				// 需要创建的数据；逐一赋值需特别处理的字段
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
+					'biz_id' => $this->session->biz_id,
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'title', 'excerpt', 'content', 'url_name', 'url_images'
+					'title', 'excerpt', 'content', 'url_images'
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -323,11 +320,9 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-            $this->form_validation->set_rules('category_id', '所属分类', 'trim|is_natural_no_zero');
             $this->form_validation->set_rules('title', '标题', 'trim|required|max_length[30]');
             $this->form_validation->set_rules('excerpt', '摘要', 'trim|max_length[255]');
             $this->form_validation->set_rules('content', '内容', 'trim|required|max_length[20000]');
-            $this->form_validation->set_rules('url_name', '自定义域名', 'trim|alpha_dash|max_length[30]');
             $this->form_validation->set_rules('url_images', '形象图', 'trim|max_length[255]');
 
 			// 若表单提交不成功
@@ -347,7 +342,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'title', 'excerpt', 'content', 'url_name', 'url_images'
+					'title', 'excerpt', 'content', 'url_images'
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -380,7 +375,7 @@
 			endif;
 		} // end edit
 
-	} // end class Article
+	} // end class Article_biz
 
-/* End of file Article.php */
-/* Location: ./application/controllers/Article.php */
+/* End of file Article_biz.php */
+/* Location: ./application/controllers/Article_biz.php */
