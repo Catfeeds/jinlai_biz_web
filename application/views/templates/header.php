@@ -1,14 +1,6 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	// 检查当前设备信息
-	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$is_wechat = strpos($user_agent, 'MicroMessenger')? TRUE: FALSE;
-	$is_ios = strpos($user_agent, 'iPhone')? TRUE: FALSE;
-	$is_android = strpos($user_agent, 'Android')? TRUE: FALSE;
-	$is_mac = strpos($user_agent, 'Macintosh;')? TRUE: FALSE;
-    $is_windows = strpos($user_agent, 'Windows ')? TRUE: FALSE;
-
 	// 生成SEO相关变量，一般为页面特定信息与在config/config.php中设置的站点通用信息拼接
 	$title = isset($title)? $title: SITE_NAME.' - '.SITE_SLOGAN;
 	$keywords = isset($keywords)? $keywords.',': NULL;
@@ -25,19 +17,19 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171204">
+		<meta name=version content="revision20171206">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
 
-		<?php if ($is_mac || $is_windows): ?>
+		<?php if ($this->user_agent['is_desktop']): ?>
         <meta name=viewport content="width=device-width,user-scalable=0">
         <?php else: ?>
 		<meta name=viewport content="width=750,user-scalable=0">
         <?php endif ?>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-		<?php //if ($is_wechat): ?>
+		<?php //if ($this->user_agent['is_wechat']): ?>
 		<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 		<script>
 			<?php
@@ -184,9 +176,9 @@
 		<script defer src="/js/file-upload.js"></script>
         <script>
             var user_agent = new Object();
-            user_agent.is_wechat = <?php echo ($is_wechat === TRUE)? 'true': 'false' ?>;
-            user_agent.is_ios = <?php echo ($is_ios === TRUE)? 'true': 'false' ?>;
-            user_agent.is_android = <?php echo ($is_android === TRUE)? 'true': 'false' ?>;
+            user_agent.is_wechat = <?php echo ($this->user_agent['is_wechat'])? 'true': 'false' ?>;
+            user_agent.is_ios = <?php echo ($this->user_agent['is_ios'])? 'true': 'false' ?>;
+            user_agent.is_android = <?php echo ($this->user_agent['is_android'])? 'true': 'false' ?>;
         </script>
 
 		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/reset.css">
@@ -210,14 +202,14 @@
 
     // 生成body的class
 	$body_class = ( isset($class) )? $class: NULL;
-    $body_class .= ($is_wechat === TRUE)? ' is_wechat': NULL;
-    $body_class .= ($is_ios === TRUE)? ' is_ios': NULL;
-    $body_class .= ($is_android === TRUE)? ' is_android': NULL;
-    $body_class .= ($is_wechat || $is_ios || $is_android)? ' mobile': NULL; // 移动端设备
+    $body_class .= ($this->user_agent['is_wechat'] === TRUE)? ' is_wechat': NULL;
+    $body_class .= ($this->user_agent['is_ios'] === TRUE)? ' is_ios': NULL;
+    $body_class .= ($this->user_agent['is_android'] === TRUE)? ' is_android': NULL;
+    $body_class .= ($this->user_agent['is_mobile'])? ' is_mobile': NULL; // 移动端设备
 
-    $body_class .= ($is_mac === TRUE)? ' macos': NULL;
-    $body_class .= ($is_windows === TRUE)? ' windows': NULL;
-    $body_class .= ($is_windows || $is_mac)? ' desktop': NULL; // 非移动端设备
+    $body_class .= ($this->user_agent['is_macos'] === TRUE)? ' is_macos': NULL;
+    $body_class .= ($this->user_agent['is_windows'] === TRUE)? ' is_windows': NULL;
+    $body_class .= ($this->user_agent['is_desktop'])? ' desktop': NULL; // 非移动端设备
 ?>
 
 <!-- 内容开始 -->
@@ -227,7 +219,10 @@
 		</noscript>
 
 		<header id=header class="navbar navbar-fixed-top" role=navigation>
-            <?php if ($class !== 'home'): ?>
+            <?php
+                // 首页不显示返回按钮
+                if ($class !== 'home'):
+            ?>
 			<a id=return href="javascript:" onclick="history.back()">
 				<i class="fa fa-chevron-left" aria-hidden=true></i>
 			</a>
@@ -236,7 +231,16 @@
 			<nav class=container-fluid>
 				<div class=navbar-header>
 					<h1>
-						<a id=logo class=ellipsis title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>"><?php echo $title ?></a>
+                        <?php
+                            // 移动端仅显当前页面标题，不跳转
+                            if ($this->user_agent['is_mobile']):
+                                echo $title;
+                            else:
+                        ?>
+                        <a id=logo class=ellipsis title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>">
+                            <?php echo SITE_NAME ?>
+                        </a>
+                        <?php endif ?>
 					</h1>
 					<button class=navbar-toggle data-toggle=collapse data-target=".navbar-collapse">
 						<span class=sr-only>展开/收起菜单</span>

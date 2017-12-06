@@ -2,29 +2,14 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Account Class
+	 * Account 账户类
 	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
 	 * @copyright ICBG <www.bingshankeji.com>
 	 */
-	class Account extends CI_Controller
+	class Account extends MY_Controller
 	{
-		/* 类名称小写，应用于多处动态生成内容 */
-		public $class_name;
-
-		/* 类名称中文，应用于多处动态生成内容 */
-		public $class_name_cn;
-
-		/* 主要相关表名 */
-		public $table_name;
-
-		/* 主要相关表的主键名*/
-		public $id_name;
-
-		/* 视图文件所在目录名 */
-		public $view_root;
-
 		public function __construct()
 		{
 			parent::__construct();

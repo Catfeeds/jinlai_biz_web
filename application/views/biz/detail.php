@@ -89,9 +89,45 @@
 	</div>
 
 	<dl id=list-info class=dl-horizontal>
-        <dt>店铺链接</dt>
+        <?php
+            // 当前项客户端URL
+            $item_url = WEB_URL.$this->class_name.'/detail?id='.$item[$this->id_name];
+        ?>
+
+        <dt>链接</dt>
         <dd>
-            <a class="btn btn-info btn-lg btn-block" href="<?php echo WEB_URL.'biz/detail?id='.$item['biz_id'] ?>">查看店铺</a>
+            <span><?php echo $item_url ?></span>
+            <a href="<?php echo $item_url ?>">查看</a>
+        </dd>
+
+        <dt>二维码</dt>
+        <dd>
+            <figure id=qrcode class="col-xs-12 col-sm-6 col-md-3"></figure>
+            <script>
+                $(function(){
+                    // 创建二维码并转换为图片格式，以使微信能识别该二维码
+                    $('#qrcode').qrcode("<?php echo $item_url ?>");
+
+                    // 将canvas转换为Base64格式的图片内容
+                    function convertCanvasToImage(canvas)
+                    {
+                        // 新Image对象，可以理解为DOM
+                        var image = new Image();
+                        // canvas.toDataURL 返回的是一串Base64编码的URL，当然,浏览器自己肯定支持
+                        // 指定格式 PNG
+                        image.src = canvas.toDataURL("image/png");
+                        return image;
+                    }
+
+                    //获取网页中的canvas对象
+                    var mycanvas = document.getElementsByTagName('canvas')[0];
+
+                    //将转换后的img标签插入到html中
+                    var img = convertCanvasToImage(mycanvas);
+                    $('#qrcode').append(img);
+                    $('#qrcode canvas').remove(); // 移除canvas格式的二维码
+                })
+            </script>
         </dd>
 
 		<dt>店铺LOGO</dt>
@@ -112,36 +148,6 @@
 		<dd><?php echo empty($item['description'])? '未填写': $item['description'] ?></dd>
 		<dt>店铺公告</dt>
 		<dd><?php echo empty($item['notification'])? '未填写': $item['notification'] ?></dd>
-
-		<dt>店铺二维码</dt>
-		<dd>
-			<figure id=qrcode class="col-xs-12 col-sm-6 col-md-3"></figure>
-			<script>
-			$(function(){
-				// 创建二维码并转换为图片格式，以使微信能识别该二维码
-				$('#qrcode').qrcode("<?php echo WEB_URL.'biz/detail?id='.$item['biz_id'] ?>");
-				
-				// 将canvas转换为Base64格式的图片内容
-				function convertCanvasToImage(canvas)
-				{
-					// 新Image对象，可以理解为DOM
-					var image = new Image();
-					// canvas.toDataURL 返回的是一串Base64编码的URL，当然,浏览器自己肯定支持 
-					// 指定格式 PNG 
-					image.src = canvas.toDataURL("image/png"); 
-					return image;
-				} 
-
-				//获取网页中的canvas对象 
-				var mycanvas = document.getElementsByTagName('canvas')[0];
-
-				//将转换后的img标签插入到html中 
-				var img = convertCanvasToImage(mycanvas); 
-				$('#qrcode').append(img);
-				$('#qrcode canvas').remove(); // 移除canvas格式的二维码
-			})
-			</script>
-		</dd>
 
         <dt>默认运费模板</dt>
         <dd>

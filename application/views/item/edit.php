@@ -232,13 +232,13 @@
 			<div class=form-group>
 				<label for=tag_price class="col-sm-2 control-label">标签价/原价（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=tag_price type=number step=0.01 max=99999.99 value="<?php echo $item['tag_price'] ?>" placeholder="留空则不显示，最高99999.99">
+					<input class=form-control name=tag_price type=number min=0 step=0.01 max=99999.99 value="<?php echo $item['tag_price'] ?>" placeholder="留空或0则不显示，最高99999.99">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=price class="col-sm-2 control-label">商城价/现价（元）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=price type=number step=0.01 max=99999.99 value="<?php echo $item['price'] ?>" placeholder="最高99999.99" required>
+					<input class=form-control name=price type=number min=1 step=0.01 max=99999.99 value="<?php echo $item['price'] ?>" placeholder="1 ~ 99999.99" required>
 				</div>
 			</div>
 		</fieldset>
@@ -253,7 +253,8 @@
 			<div class=form-group>
 				<label for=stocks class="col-sm-2 control-label">库存量※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=stocks type=number step=1 max=65535 value="<?php echo $item['stocks'] ?>" placeholder="最多65535，仅在用户支付后会减少库存" required>
+					<input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo $item['stocks'] ?>" placeholder="最高65535单位" required>
+                    <p class=help-block><?php echo SITE_NAME ?>采用付款减库存的形式；为避免超卖，商品或规格库存量低于1个单位（含）时将无法被购买</p>
 				</div>
 			</div>
 			<div class=form-group>

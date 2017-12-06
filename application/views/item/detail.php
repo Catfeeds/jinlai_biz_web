@@ -53,18 +53,24 @@
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
-        <dt>商品链接</dt>
+        <?php
+            // 当前项客户端URL
+            $item_url = WEB_URL.$this->class_name.'/detail?id='.$item[$this->id_name];
+        ?>
+
+        <dt>链接</dt>
         <dd>
-            <a class="btn btn-info btn-lg btn-block" href="<?php echo WEB_URL.'item/detail?id='.$item['item_id'] ?>">查看商品</a>
+            <span><?php echo $item_url ?></span>
+            <a href="<?php echo $item_url ?>">查看</a>
         </dd>
 
-        <dt>商品二维码</dt>
+        <dt>二维码</dt>
         <dd>
             <figure id=qrcode class="col-xs-12 col-sm-6 col-md-3"></figure>
             <script>
                 $(function(){
                     // 创建二维码并转换为图片格式，以使微信能识别该二维码
-                    $('#qrcode').qrcode("<?php echo WEB_URL.'item/detail?id='.$item['item_id'] ?>");
+                    $('#qrcode').qrcode("<?php echo $item_url ?>");
 
                     // 将canvas转换为Base64格式的图片内容
                     function convertCanvasToImage(canvas)
@@ -104,16 +110,16 @@
         <dd>
             <?php if ( !empty($item['figure_image_urls']) ): ?>
                 <ul class=upload_preview>
-                    <?php
-                    $slides = explode(',', $item['figure_image_urls']);
-                    foreach($slides as $slide):
-                        ?>
-                        <li>
-                            <figure>
-                                <img src="<?php echo $slide ?>">
-                            </figure>
-                        </li>
-                    <?php endforeach ?>
+                <?php
+                $slides = explode(',', $item['figure_image_urls']);
+                foreach($slides as $slide):
+                    ?>
+                    <li>
+                        <figure>
+                            <img src="<?php echo $slide ?>">
+                        </figure>
+                    </li>
+                <?php endforeach ?>
                 </ul>
             <?php else: ?>
                 未上传
@@ -205,7 +211,6 @@
 
 		<dt>物流信息</dt>
 		<dd>
-			<p class=help-block>以下3项择一填写即可；若填写多项，将按毛重、净重、体积重的顺序取首个有效值计算运费。</p>
 			<ul class="list-horizontal row">
                 <li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross'].' KG': '-' ?></li>
                 <li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net'].' KG': '-' ?></li>
@@ -241,8 +246,8 @@
 					</figure>
 
                     <div class="list-item-info col-xs-8">
-                        <h3><?php echo $sku['name_first'].' '.$sku['name_second'].' '.$sku['name_third'] ?></h3>
-                        <p>￥<?php echo $sku['price'] ?> / 库存<?php echo $sku['stocks'] ?></p>
+                        <h3><?php echo $sku['name_first'].' > '.$sku['name_second'].' > '.$sku['name_third'] ?></h3>
+                        <p>￥<?php echo $sku['price'] ?> &times; <?php echo $sku['stocks'] ?>单位</p>
                     </div>
 				</a>
 			</li>

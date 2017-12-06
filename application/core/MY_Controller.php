@@ -47,6 +47,9 @@
 		/* 需要显示的字段 */
 		public $data_to_display;
 
+        // 访问设备信息
+        public $user_agent = array();
+
 		// 客户端类型
 		protected $app_type;
 
@@ -59,7 +62,7 @@
 		// 设备唯一码；全小写
 		protected $device_number;
 
-		// 请求时间戳
+		// 当前时间戳
 		protected $timestamp;
 
 		// 请求签名
@@ -69,12 +72,19 @@
 	    {
 	        parent::__construct();
 
+            // 如果已经打开测试模式，则输出调试信息
+            if ($this->input->post_get('test_mode') === 'on')
+                $this->output->enable_profiler(TRUE);
+
 			// 向类属性赋值
 			$this->timestamp = time();
 			$this->app_type = 'biz';
 			$this->app_version = '0.0.1';
 			$this->device_platform = 'web';
 			$this->device_number = '';
+
+            // 检查当前设备信息
+			$this->user_agent_determine();
 	    } // end __construct
 
 		/**
@@ -82,8 +92,29 @@
 		 */
 		public function __destruct()
 		{
-			
+
 		} // end __destruct
+
+        /**
+         * 检查访问设备类型
+         */
+        protected function user_agent_determine()
+        {
+            // 获取当前设备信息
+            $user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+            // 判断是否为移动端
+            $this->user_agent['is_wechat'] = strpos($user_agent, 'MicroMessenger/')? TRUE: FALSE;
+            $this->user_agent['is_ios'] = strpos($user_agent, 'iPhone;')? TRUE: FALSE;
+            $this->user_agent['is_android'] = strpos($user_agent, 'Android;')? TRUE: FALSE;
+            $this->user_agent['is_mobile'] = ($this->user_agent['is_wechat'] || $this->user_agent['is_ios'] || $this->user_agent['is_android'])? TRUE: FALSE; // 移动端设备
+
+            // 判断是否为非移动端
+            $this->user_agent['is_macos'] = strpos($user_agent, 'Macintosh;')? TRUE: FALSE;
+            $this->user_agent['is_linux'] = strpos($user_agent, 'Linux;')? TRUE: FALSE;
+            $this->user_agent['is_windows'] = strpos($user_agent, 'Windows ')? TRUE: FALSE;
+            $this->user_agent['is_desktop'] = ( ! $this->user_agent['is_mobile'])? TRUE: FALSE; // 非移动端设备
+        } // user_agent_determine
 
 		/**
 		 * 签名有效性检查
