@@ -17,7 +17,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171206">
+		<meta name=version content="revision20171207">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -29,7 +29,7 @@
         <?php endif ?>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-		<?php //if ($this->user_agent['is_wechat']): ?>
+		<?php if ($this->user_agent['is_wechat']): ?>
 		<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 		<script>
 			<?php
@@ -168,12 +168,13 @@
 
 			});
 		</script>
-		<?php //endif ?>
+		<?php endif ?>
 
 		<script src="<?php echo CDN_URL ?>js/jquery-3.2.1.min.js"></script>
 		<script defer src="<?php echo CDN_URL ?>js/js.cookie.js"></script>
 		<script defer src="<?php echo CDN_URL ?>bootstrap/js/bootstrap.min.js"></script>
 		<script defer src="/js/file-upload.js"></script>
+        <script defer src="/js/jquery.qrcode.min.js"></script>
         <script>
             var user_agent = new Object();
             user_agent.is_wechat = <?php echo ($this->user_agent['is_wechat'])? 'true': 'false' ?>;
@@ -258,32 +259,28 @@
 								<li><a title="我的店铺" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">店铺资料</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a title="店铺装修列表" href="<?php echo base_url('ornament_biz') ?>">店铺装修</a></li>
-							</ul>
-						</li>
 
-						<?php
-						// 仅获得大于10的权限的管理员可以管理员工
-						if ($this->session->role === '管理员' && $this->session->level > 10):
-						?>
-						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>员工 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-							<ul class=dropdown-menu>
-								<li><a title="员工列表" href="<?php echo base_url('stuff') ?>">员工列表</a></li>
-								<li><a title="创建员工" href="<?php echo base_url('stuff/create') ?>">创建员工</a></li>
+                                <?php
+                                    // 仅获得大于10的权限的管理员可以管理员工
+                                    if ($this->session->role === '管理员' && $this->session->level > 10):
+                                ?>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a title="员工列表" href="<?php echo base_url('stuff') ?>">所有员工</a></li>
+                                    <li><a title="创建员工" href="<?php echo base_url('stuff/create') ?>">创建员工</a></li>
+                                <?php endif ?>
 							</ul>
 						</li>
-						<?php endif ?>
 
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>商品 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="店内分类列表" href="<?php echo base_url('item_category_biz') ?>">店内分类</a></li>
+								<li><a title="店内分类列表" href="<?php echo base_url('item_category_biz') ?>">所有店内分类</a></li>
 								<li><a title="创建店内分类" href="<?php echo base_url('item_category_biz/create') ?>">创建店内分类</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a title="运费模板列表" href="<?php echo base_url('freight_template_biz') ?>">运费模板</a></li>
+								<li><a title="运费模板列表" href="<?php echo base_url('freight_template_biz') ?>">所有运费模板</a></li>
 								<li><a title="创建运费模板" href="<?php echo base_url('freight_template_biz/create') ?>">创建运费模板</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a title="商品列表" href="<?php echo base_url('item') ?>">商品列表</a></li>
+								<li><a title="商品列表" href="<?php echo base_url('item') ?>">所有商品</a></li>
 								<li><a title="创建商品" href="<?php echo base_url('item/create') ?>">创建商品</a></li>
 								<li><a title="快速创建" href="<?php echo base_url('item/create_quick') ?>">快速创建</a></li>
 							</ul>
@@ -292,58 +289,69 @@
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>订单 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="商品订单列表" href="<?php echo base_url('order') ?>">订单列表</a></li>
+								<li><a title="商品订单列表" href="<?php echo base_url('order') ?>">所有订单</a></li>
+                                <li><a title="待接单订单" href="<?php echo base_url('order?status=待接单') ?>">待接单订单</a></li>
+                                <li><a title="待发货订单" href="<?php echo base_url('order?status=待发货') ?>">待发货订单</a></li>
 							</ul>
 						</li>
 
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>营销活动 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="店内活动列表" href="<?php echo base_url('promotion_biz') ?>">店内活动列表</a></li>
+								<li><a title="店内活动列表" href="<?php echo base_url('promotion_biz') ?>">所有店内活动</a></li>
 								<li><a title="创建店内活动" href="<?php echo base_url('promotion_biz/create') ?>">创建店内活动</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a title="平台活动列表" href="<?php echo base_url('promotion') ?>">平台活动列表</a></li>
-								<!--<li><a title="平台活动" href="<?php echo base_url('promotion/create') ?>">申请平台活动</a></li>-->
+								<li><a title="平台活动列表" href="<?php echo base_url('promotion') ?>">所有平台活动</a></li>
+								<!--<li><a title="创建平台活动" href="<?php echo base_url('promotion/create') ?>">创建平台活动</a></li>-->
 							</ul>
 						</li>
 
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>优惠券 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="优惠券模板" href="<?php echo base_url('coupon_template') ?>">优惠券模板</a></li>
+								<li><a title="优惠券模板" href="<?php echo base_url('coupon_template') ?>">所有优惠券模板</a></li>
 								<li><a title="创建优惠券模板" href="<?php echo base_url('coupon_template/create') ?>">创建优惠券模板</a></li>
 								<li role="separator" class="divider"></li>
-								<li><a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">优惠券包</a></li>
+								<li><a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">所有优惠券包</a></li>
 								<li><a title="创建优惠券包" href="<?php echo base_url('coupon_combo/create') ?>">创建优惠券包</a></li>
 							</ul>
 						</li>
 
+                        <li class=dropdown>
+                            <a href=# class=dropdown-toggle data-toggle=dropdown>文章 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <ul class=dropdown-menu>
+                                <li><a title="文章列表" href="<?php echo base_url('article_biz') ?>">所有文章</a></li>
+                                <li><a title="创建文章" href="<?php echo base_url('article_biz/create') ?>">创建文章</a></li>
+                            </ul>
+                        </li>
+
 						<!--
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>余额<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>余额 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="余额列表" href="<?php echo base_url('balance') ?>">余额列表</a></li>
+								<li><a title="余额列表" href="<?php echo base_url('balance') ?>">所有余额</a></li>
 							</ul>
 						</li>
 						
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown><i class="fa fa-file-image-o" aria-hidden=true></i> 素材<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>素材 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="素材列表" href="<?php echo base_url('material') ?>">素材列表</a></li>
+								<li><a title="素材列表" href="<?php echo base_url('material') ?>">所有素材</a></li>
 							</ul>
 						</li>
 						-->
-					
-						<?php if ( $this->session->role === '管理员' && $this->session->level > 30): ?>
-						<!--
+
+                        <!--
+                        <?php if ( $this->session->role === '管理员' && $this->session->level > 30): ?>
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown><i class="fa fa-money" aria-hidden=true></i> 积分<b class=caret></b></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>积分 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="积分列表" href="<?php echo base_url('credit') ?>">积分列表</a></li>
+								<li><a title="积分列表" href="<?php echo base_url('credit') ?>">所有积分</a></li>
 							</ul>
 						</li>
-						-->
+
 						<?php endif ?>
+						-->
 			<?php endif ?>
 					</ul>
 

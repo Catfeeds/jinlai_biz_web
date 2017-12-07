@@ -143,17 +143,21 @@
 		
 		<dt>总限量</dt>
 		<dd>
-			<?php echo empty($item['max_amount'])? '无': $item['max_amount'].'份'; ?>
+			<?php echo empty($item['max_amount'])? '不限': $item['max_amount'].'份'; ?>
 		</dd>
 		<dt>单个用户限量</dt>
-		<dd><?php echo empty($item['max_amount_user'])? '无': $item['max_amount_user'].'份'; ?></dd>
+		<dd><?php echo empty($item['max_amount_user'])? '不限': $item['max_amount_user'].'份'; ?></dd>
 
-		<dt>限用系统分类</dt>
+		<!--
+        <dt>限用系统分类</dt>
 		<dd><?php echo empty($item['category_id'])? '不限': $category['name']; ?></dd>
+		-->
 		<dt>限用店内分类</dt>
 		<dd><?php echo empty($item['category_biz_id'])? '不限': $category_biz['name']; ?></dd>
 		<dt>限用商品</dt>
-		<dd><?php echo empty($item['item_id'])? '不限': '<a class="btn btn-default btn-lg btn-block" href="'.base_url('item/detail?id='.$commodity['item_id']).'">'.$commodity['name'].'</a>'; ?></dd>
+		<dd>
+            <?php echo empty($item['item_id'])? '不限': '<a class="btn btn-default btn-lg btn-block" href="'.base_url('item/detail?id='.$commodity['item_id']).'">'.$commodity['name'].'</a>'; ?>
+        </dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

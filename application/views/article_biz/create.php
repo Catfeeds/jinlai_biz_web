@@ -66,13 +66,13 @@
                     <script src="<?php echo base_url('/js/simditor.js') ?>"></script>
                     <script>
                         $(function(){
-                            var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'];
+                            var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', '|', 'hr', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'];
                             var editor = new Simditor({
                                 textarea: $('[name=content]'),
                                 cleanPaste: true,
                                 toolbar: toolbar,
                                 upload: {
-                                    url: '<?php echo base_url('/simditor?target=article_biz/url_images') ?>',
+                                    url: '<?php echo base_url('/simditor?target='. $this->class_name. '/url_images') ?>',
                                     params: null,
                                     fileKey: 'file0',
                                     connectionCount: 4,

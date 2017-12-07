@@ -66,7 +66,7 @@
                     <script src="<?php echo base_url('/js/simditor.js') ?>"></script>
                     <script>
                         $(function(){
-                            var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'];
+                            var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', '|', 'hr', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'];
                             var editor = new Simditor({
                                 textarea: $('[name=content]'),
                                 cleanPaste: true,

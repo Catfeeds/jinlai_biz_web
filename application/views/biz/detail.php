@@ -20,8 +20,6 @@
 	}
 </style>
 
-<script src="/js/jquery.qrcode.min.js"></script>
-
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
