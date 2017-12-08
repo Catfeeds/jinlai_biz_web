@@ -21,6 +21,8 @@
 	}
 </style>
 
+<script defer src="/js/detail.js"></script>
+
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
@@ -44,14 +46,12 @@
         // 需要特定角色和权限进行该操作
         if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
             ?>
-            <li class="col-xs-12">
-                <a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a>
-            </li>
+            <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
         <?php endif ?>
     </ul>
 
 	<dl id=list-info class=dl-horizontal>
-				<dt>文章分类ID</dt>
+		<dt>文章分类ID</dt>
 		<dd><?php echo $item['category_id'] ?></dd>
 		<dt>所属分类ID</dt>
 		<dd><?php echo $item['parent_id'] ?></dd>
@@ -59,17 +59,6 @@
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>自定义域名</dt>
 		<dd><?php echo $item['url_name'] ?></dd>
-		<dt>创建时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
-		<dt>创建者ID</dt>
-		<dd><?php echo $item['creator_id'] ?></dd>
-		<dt>最后操作者ID</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
-
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

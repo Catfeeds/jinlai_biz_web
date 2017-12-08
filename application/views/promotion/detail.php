@@ -21,6 +21,8 @@
 	}
 </style>
 
+<script defer src="/js/detail.js"></script>
+
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
@@ -56,7 +58,9 @@
 		<dt>说明</dt>
 		<dd><?php echo $item['description'] ?></dd>
 		<dt>形象图</dt>
-		<dd><?php echo $item['url_images'] ?></dd>
+		<dd>
+            <img src="<?php echo $item['url_images'] ?>">
+        </dd>
 		<dt>开始时间</dt>
 		<dd><?php echo date('Y-m-d H:i:s', $item['time_start']) ?></dd>
 		<dt>结束时间</dt>

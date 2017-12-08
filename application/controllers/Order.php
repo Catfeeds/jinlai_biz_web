@@ -42,21 +42,22 @@
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'subtotal' => '小计',
+				'subtotal' => '商品小计',
 				'total' => '应支付',
 				'total_payed' => '已支付',
 				'status' => '状态',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 截止3.1.3为止，CI_Controller类无析构函数，所以无需继承相应方法
 		 */
 		public function __destruct()
 		{
-			// 调试信息输出开关
-			// $this->output->enable_profiler(TRUE);
-		}
+            // 如果已经打开测试模式，则输出调试信息
+            if ($this->input->post_get('test_mode') === 'on')
+                $this->output->enable_profiler(TRUE);
+		} // end __destruct
 
 		/**
 		 * 列表页
@@ -121,6 +122,9 @@
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content']; // 清除空元素
+
+                // 获取相关用户信息
+
 			else:
 				$data['error'] = $result['content']['error']['message'];
 			endif;

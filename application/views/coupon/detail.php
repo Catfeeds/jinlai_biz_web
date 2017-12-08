@@ -21,6 +21,8 @@
 	}
 </style>
 
+<script defer src="/js/detail.js"></script>
+
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
@@ -44,9 +46,7 @@
         // 需要特定角色和权限进行该操作
         if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
             ?>
-            <li class="col-xs-12">
-                <a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a>
-            </li>
+            <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
         <?php endif ?>
     </ul>
 
@@ -83,21 +83,12 @@
 		<dd><?php echo $item['order_id'] ?></dd>
 		<dt>使用时间</dt>
 		<dd><?php echo $item['time_used'] ?></dd>
-		<dt>创建时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
 		<dt>状态</dt>
 		<dd><?php echo $item['status'] ?></dd>
-
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
-		<dt>创建时间</dt>
-		<dd>
-			<?php echo $item['time_create'] ?>
-			<a href="<?php echo base_url('stuff/detail?id='.$item['creator_id']) ?>" target=new>查看创建者</a>
-		</dd>
+		<dt>领取时间</dt>
 
 		<?php if ( ! empty($item['time_delete']) ): ?>
 		<dt>删除时间</dt>

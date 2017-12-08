@@ -130,6 +130,8 @@ noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid r
 
 #qrcode {background-color:#fff;padding:40px;border-radius:40px;}
 
+.amap-logo {display:none;}
+
 /* 宽度在750像素以上的设备 */
 @media only screen and (min-width:751px)
 {

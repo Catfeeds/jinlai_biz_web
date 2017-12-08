@@ -60,12 +60,12 @@
 	<div class="btn-group btn-group-justified" role=group>
 		<div class=btn-group role=group>
 		    <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
-				所有 <span class="caret"></span>
+				全部 <span class="caret"></span>
 		    </button>
 		    <ul class=dropdown-menu>
 				<li>
 					<?php $style_class = empty($this->input->get('status') )? 'btn-primary': 'btn-default'; ?>
-					<a class="btn <?php echo $style_class ?>" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
+					<a class="btn <?php echo $style_class ?>" title="全部<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">全部</a>
 				</li>
 
 		  		<?php

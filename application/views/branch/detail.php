@@ -21,6 +21,8 @@
 	}
 </style>
 
+<script defer src="/js/detail.js"></script>
+
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
@@ -44,9 +46,7 @@
         // 需要特定角色和权限进行该操作
         if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
             ?>
-            <li class="col-xs-12">
-                <a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a>
-            </li>
+            <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
         <?php endif ?>
     </ul>
 
@@ -103,10 +103,10 @@
 
 		<dt>地址</dt>
 		<dd>
-			<p>
-				<?php echo $item['nation'] ?> <?php echo $item['province'] ?>省 <?php echo $item['city'] ?>市 <?php echo $item['county'] ?>区/县<br>
-				<?php echo $item['street'] ?>
-			</p>
+            <p>
+                <?php echo $item['street'] ?><br>
+                <?php echo $item['province'] ?> <?php echo $item['city'] ?> <?php echo $item['county'] ?>，<?php echo $item['nation'] ?>
+            </p>
 			
 			<?php if ( !empty($item['longitude']) && !empty($item['latitude']) ): ?>
 			<figure class="row">

@@ -21,6 +21,8 @@
 	}
 </style>
 
+<script defer src="/js/detail.js"></script>
+
 <base href="<?php echo $this->media_root ?>">
 
 <div id=breadcrumb>
@@ -49,7 +51,7 @@
 		// 需要特定角色和权限进行该操作
 		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 		?>
-		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank><i class="fa fa-edit"></i> 编辑</a></li>
+		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
 		<?php endif ?>
 	</ul>
 
@@ -86,14 +88,8 @@
         <dd>
             <img src="<?php echo $item['url_verify_photo'] ?>">
         </dd>
-		<dt>国家</dt>
-		<dd><?php echo $item['nation'] ?></dd>
-		<dt>省</dt>
-		<dd><?php echo $item['province'] ?></dd>
-		<dt>市</dt>
-		<dd><?php echo $item['city'] ?></dd>
-		<dt>区</dt>
-		<dd><?php echo $item['county'] ?></dd>
+		<dt>地区</dt>
+		<dd><?php echo $item['nation'] ?> <?php echo $item['province'] ?> <?php echo $item['city'] ?> <?php echo $item['county'] ?></dd>
 		<dt>具体地址</dt>
 		<dd><?php echo $item['street'] ?></dd>
 		<dt>开户行名称</dt>
