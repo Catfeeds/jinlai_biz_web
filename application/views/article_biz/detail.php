@@ -63,15 +63,12 @@
         <dt><?php echo $this->class_name_cn ?>链接</dt>
         <dd>
             <span><?php echo $item_url ?></span>
-            <a href="<?php echo $item_url ?>">查看</a>
+            <a href="<?php echo $item_url ?>" target=_blank>查看</a>
         </dd>
 
         <dt><?php echo $this->class_name_cn ?>二维码</dt>
         <dd>
-            <figure id=qrcode class="col-xs-12 col-sm-6 col-md-3"></figure>
-            <script>
-                qrcode_generate("<?php echo $item_url ?>")
-            </script>
+            <figure class="qrcode col-xs-12 col-sm-6 col-md-3" data-qrcode-string="<?php echo $item_url ?>"></figure>
         </dd>
 
 	<header>

@@ -116,8 +116,8 @@
 				<div id=map style="height:300px;background-color:#aaa"></div>
 			</figure>
 			
-			<script src="https://webapi.amap.com/maps?v=1.3&key=bf0fd60938b2f4f40de5ee83a90c2e0e"></script>
-			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
+			<script defer src="https://webapi.amap.com/maps?v=1.3&key=bf0fd60938b2f4f40de5ee83a90c2e0e"></script>
+			<script defer src="https://webapi.amap.com/ui/1.0/main.js"></script>
 			<script>
 				var lnglat = [<?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>];
 			    var map = new AMap.Map('map',{

@@ -63,11 +63,12 @@
 	</section>
 
     <div id=primary_actions class=action_bottom>
-        <?php if ( isset($items) && count($items) > 1): ?>
-            <span id=enter_bulk>
+        <?php if (count($items) > 1): ?>
+        <span id=enter_bulk>
             <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
         </span>
         <?php endif ?>
+
         <ul class=horizontal>
             <li>
                 <a class=bg_primary title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create?item_id='.$comodity['item_id']) ?>">创建</a>

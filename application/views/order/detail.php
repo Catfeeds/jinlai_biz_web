@@ -46,23 +46,24 @@
         // 需要特定角色和权限进行该操作
         if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
             ?>
-            <li><a title="备注" href="<?php echo base_url($this->class_name.'/note?ids='.$item[$this->id_name]) ?>" target=_blank>备注</a></li>
-
             <?php
                 $status = $item['status'];
                 if ($status === '待付款'):
             ?>
             <li><a title="改价" href="<?php echo base_url($this->class_name.'/reprice?ids='.$item[$this->id_name]) ?>" target=_blank>改价</a></li>
+            <li><a title="拒绝" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>拒绝</a></li>
             <?php endif ?>
 
             <?php if ($status === '待接单'): ?>
-            <li><a title="退单" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>退单</a></li>
             <li><a title="接单" href="<?php echo base_url($this->class_name.'/accept?ids='.$item[$this->id_name]) ?>" target=_blank>接单</a></li>
+            <li><a title="拒绝" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>拒绝</a></li>
             <?php endif ?>
 
             <?php if ($status === '待发货'): ?>
             <li><a title="发货" href="<?php echo base_url($this->class_name.'/deliver?ids='.$item[$this->id_name]) ?>" target=_blank>发货</a></li>
             <?php endif ?>
+
+            <li><a title="备注" href="<?php echo base_url($this->class_name.'/note?ids='.$item[$this->id_name]) ?>" target=_blank>备注</a></li>
         <?php endif ?>
     </ul>
 
@@ -125,8 +126,15 @@
                 <?php echo $item['province'] ?> <?php echo $item['city'] ?> <?php echo $item['county'] ?>，<?php echo $item['nation'] ?>
             </p>
             <p>
-                <?php echo $item['mobile'] ?>
-                <?php if ($this->user_agent['is_mobile']): ?><a class="btn btn-default" href="tel:<?php echo $item['mobile'] ?>">拨号</a><?php endif ?>
+                <?php if ($this->user_agent['is_mobile']): ?>
+                <a class="btn btn-default btn-lg" href="tel:<?php echo $item['mobile'] ?>">
+                    <i class="fa fa-phone" aria-hidden=true></i> <?php echo $item['mobile'] ?>
+                </a>
+                <?php
+                    else:
+                        echo $item['mobile'];
+                    endif;
+                ?>
             </p>
             <p><?php echo $item['fullname'] ?></p>
         </div>
@@ -146,8 +154,11 @@
                             <h4><?php echo $order_item['slogan'] ?></h4>
                         <?php endif ?>
                         <div>￥<?php echo $order_item['price'] ?> × <?php echo $order_item['count'] ?></div>
-                    </div>
 
+                        <?php if ($order_item['refund_status'] !== '未申请'): ?>
+                        <a class="btn btn-default" title="<?php echo $order_item['refund_status'] ?>" href="<?php echo base_url('refund/detail?order_id='.$item[$this->id_name]) ?>" target=_blank><?php echo $order_item['refund_status'] ?></a>
+                        <?php endif ?>
+                    </div>
                 </li>
             <?php endforeach ?>
         </ul>
@@ -161,40 +172,43 @@
             <dd>￥ <?php echo $item['subtotal'] ?></dd>
 
             <?php if ( isset($item['promotion_id']) ): ?>
-                <dt>营销活动ID</dt>
-                <dd><?php echo $item['promotion_id'] ?></dd>
-                <dt>优惠活动折抵</dt>
-                <dd>￥ <?php echo $item['discount_promotion'] ?></dd>
+            <dt>营销活动ID</dt>
+            <dd><?php echo $item['promotion_id'] ?></dd>
+            <dt>优惠活动折抵</dt>
+            <dd>￥ <?php echo $item['discount_promotion'] ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['coupon_id']) ): ?>
-                <dt>优惠券ID</dt>
-                <dd><?php echo $item['coupon_id'] ?></dd>
-                <dt>优惠券折抵</dt>
-                <dd>￥ <?php echo $item['discount_coupon'] ?></dd>
+            <dt>优惠券ID</dt>
+            <dd><?php echo $item['coupon_id'] ?></dd>
+            <dt>优惠券折抵</dt>
+            <dd>￥ <?php echo $item['discount_coupon'] ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['credit_id']) ): ?>
-                <dt>积分流水ID</dt>
-                <dd><?php echo $item['credit_id'] ?></dd>
-                <dt>积分折抵</dt>
-                <dd>￥ <?php echo $item['credit_payed'] ?></dd>
+            <dt>积分流水ID</dt>
+            <dd><?php echo $item['credit_id'] ?></dd>
+            <dt>积分折抵</dt>
+            <dd>￥ <?php echo $item['credit_payed'] ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['freight']) ): ?>
-                <dt>运费</dt>
-                <dd>￥ <?php echo $item['freight'] ?></dd>
+            <dt>运费</dt>
+            <dd>￥ <?php echo $item['freight'] ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['repricer_id']) ): ?>
-                <dt>改价折抵</dt>
-                <dd>￥ <?php echo $item['discount_reprice'] ?></dd>
-                <dt>改价操作者ID</dt>
-                <dd><?php echo $item['repricer_id'] ?></dd>
+            <dt>改价折抵</dt>
+            <dd>￥ <?php echo $item['discount_reprice'] ?></dd>
+            <dt>改价操作者ID</dt>
+            <dd>
+                <?php echo $item['repricer_id'] ?>
+                <a href="<?php echo base_url('stuff/detail?user_id='.$item['operator_id']) ?>" target=new>查看</a>
+            </dd>
             <?php endif ?>
 
             <dt>应支付</dt>
-            <dd><strong>￥ <?php echo $item['total'] ?></strong></dd>
+            <dd>￥ <?php echo $item['total'] ?></dd>
 
             <?php if ( !empty($item['time_pay']) ): ?>
             <dt>已支付</dt>
@@ -302,9 +316,7 @@
 			<dt>最后操作时间</dt>
 			<dd class=row>
 				<?php echo $item['time_edit'] ?>
-				<a class="col-xs-12 col-sm-6 col-md-3 btn btn-info btn-lg" href="<?php echo base_url('stuff/detail?user_id='.$item['operator_id']) ?>" target=new>
-					<i class="fa fa-info-circle fa-fw" aria-hidden=true></i>查看最后操作者
-				</a>
+				<a href="<?php echo base_url('stuff/detail?user_id='.$item['operator_id']) ?>" target=new>查看最后操作者</a>
 			</dd>
 			<?php endif ?>
 		</dl>

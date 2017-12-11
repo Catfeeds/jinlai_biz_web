@@ -71,6 +71,13 @@
 		<fieldset>
 			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
 
+            <div class=form-group>
+                <label for=note_stuff class="col-sm-2 control-label">备注</label>
+                <div class=col-sm-10>
+                    <textarea class=form-control name=note_stuff row=5 placeholder="如有必要，可备注退单原因，最多255个字符"><?php echo $item['note_stuff'] ?></textarea>
+                </div>
+            </div>
+
 			<div class=form-group>
 				<label for=password class="col-sm-2 control-label">密码</label>
 				<div class=col-sm-10>

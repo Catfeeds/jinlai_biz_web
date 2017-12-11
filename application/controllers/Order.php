@@ -184,7 +184,7 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
-			$this->form_validation->set_rules('note_stuff', '员工留言', 'trim|required');
+			$this->form_validation->set_rules('note_stuff', '员工备注', 'trim|required');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -394,6 +394,7 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+            $this->form_validation->set_rules('note_stuff', '员工备注', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -424,6 +425,8 @@
 					'ids' => $ids,
 					'password' => $password,
 					'operation' => $op_view, // 操作名称
+
+                    'note_stuff' => $this->input->post('note_stuff'),
 				);
 
 				// 向API服务器发送待创建数据

@@ -14,11 +14,18 @@ $(function(){
     } // end action_menu
 
     // 生成二维码
-    function qrcode_generate(string, dom_id)
+    $('figure.qrcode').each(function(){
+        var qrcode_string = $(this).attr('data-qrcode-string');
+        var dom = $(this);
+        qrcode_generate(qrcode_string, dom);
+    });
+    function qrcode_generate(string, dom)
     {
-        var dom_id = '#' + (dom_id || 'qrcode');
+        // 若未传入二维码容器，则默认为#qrcode
+        var dom = dom || '#qrcode';
+
         // 创建二维码并转换为图片格式，以使微信能识别该二维码
-        $(dom_id).qrcode(string);
+        $(dom).qrcode(string);
 
         // 将canvas转换为Base64格式的图片内容
         function convertCanvasToImage(canvas)
@@ -36,7 +43,7 @@ $(function(){
 
         // 将转换后的img标签插入到html中
         var img = convertCanvasToImage(mycanvas);
-        $(dom_id).append(img);
-        $(dom_id + ' canvas').remove(); // 移除canvas格式的二维码
+        $(dom).append(img);
+        dom.find('canvas').remove(); // 移除canvas格式的二维码
     }
 });

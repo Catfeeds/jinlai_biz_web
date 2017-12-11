@@ -1,6 +1,5 @@
 <style>
 
-
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
@@ -60,7 +59,7 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>对订单的留言，将只对本商家的员工可见。</p>
+		<p>对订单的备注，只有本商家的员工可以看到。</p>
 	</div>
 
 	<?php
@@ -72,9 +71,9 @@
 			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
 
 			<div class=form-group>
-				<label for=note_stuff class="col-sm-2 control-label">员工备注</label>
+				<label for=note_stuff class="col-sm-2 control-label">备注</label>
 				<div class=col-sm-10>
-					<textarea class=form-control name=note_stuff row=5 placeholder="最多255个字符" required><?php echo $item['note_stuff'] ?></textarea>
+					<textarea class=form-control name=note_stuff row=5 placeholder="最多255个字符" autofocus required><?php echo $item['note_stuff'] ?></textarea>
 				</div>
 			</div>
 
