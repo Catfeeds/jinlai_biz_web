@@ -73,8 +73,8 @@ form>.help-block {color:#ff3649;font-size:24px;text-align:center;height:84px;lin
 legend {font-size:36px;border-bottom:1px solid #efefef;padding-bottom:30px;text-align:center;}
 fieldset {background-color:#fff;padding:30px 20px 0;border-radius:20px;}
 label {margin-bottom:30px;}
-.form-control {font-size:26px;color:#9fa0a0;}
-	input.form-control {height:70px;padding:0 20px;border:2px solid #c9caca;border-radius:12px;}
+.form-control {font-size:26px;color:#9fa0a0;padding:0 20px;border:2px solid #c9caca;border-radius:12px;}
+	.form-control:not(textarea) {height:70px;}
 .help-block {font-size:22px;color:#9fa0a0;margin-top:20px;}
 .form-group {margin-bottom:50px;}
 

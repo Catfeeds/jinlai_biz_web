@@ -3,8 +3,8 @@
 	form {padding-top:2rem;}
 	fieldset {padding:0;}
 
-	#captcha-image {padding:0;min-width:100px;}
-		#captcha-image img {width:100%;height:100%;}
+    #captcha-image {padding:0;min-width:100px;height:70px;border-top-right-radius:12px;border-bottom-right-radius:12px;overflow:hidden;}
+        #captcha-image img {height:100%;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -29,7 +29,7 @@
 
 <div id=content class=container>
 	<section class="bg-info text-info">
-        <p><em>RC0.14.2</em>当前系统为beta/RC版本，仅供技术研究及开发；在不以任何形式告知的情况下，数据、功能、页面样式都将不定时变更；任何数据、业务、功能均无实际意义，且均不构成任何责任。</p>
+        <p>RC0.14.4当前系统为beta/RC版本，仅供技术研究及开发；在不以任何形式告知的情况下，数据、功能、页面样式都将不定时变更；任何数据、业务、功能均无实际意义，且不构成任何责任或义务。</p>
 	</section>
 
 	<div class="btn-group btn-group-justified" role=group>
@@ -75,7 +75,7 @@
 				</div>
 			</fieldset>
 
-			<small class="text-center">点击“确定”，即表示您已完整阅读并同意最新版<a title="查看用户协议详细内容" href="<?php echo base_url('article/user-agreement') ?>" target=_blank>《用户协议》</a>。</small>
+			<p class="text-center">点击“确定”，即表示您已完整阅读并同意最新版<a title="查看用户协议详细内容" href="<?php echo base_url('article/user-agreement') ?>" target=_blank>《用户协议》</a>。</p>
 		
 			<div class=row>
 			    <div class="col-xs-12 col-sm-offset-2 col-sm-2">

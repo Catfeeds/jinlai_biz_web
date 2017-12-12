@@ -287,9 +287,9 @@
                 // 待验证的表单项
                 $this->form_validation->set_error_delimiters('', '；');
                 // 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-                $this->form_validation->set_rules('category_ids[]', '主营商品类目', 'trim|required|max_length[255]');
                 $this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
                 $this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]|is_unique[biz.brief_name]');
+                $this->form_validation->set_rules('category_ids[]', '主营商品类目', 'trim|required|max_length[255]');
 
                 // 若表单提交不成功
                 if ($this->form_validation->run() === FALSE):

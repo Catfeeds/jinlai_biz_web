@@ -13,7 +13,7 @@
         .reprice li:first-child a {color:#ff3649;border-color:#ff3649;}
         .accept li:first-child a {color:#ff843c;border-color:#ff843c;}
         .deliver li:first-child a {color:#1a6eef;border-color:#1a6eef;}
-        .item-actions.reprice, .item-actions.accept, .item-actions.deliver {background:url('/media/order/daifukuan@3x.png') no-repeat center bottom;height:94px;background-size:710px 26px;margin-left:-20px;margin-right:-20px;padding:0 20px;}
+        .item-actions.reprice, .item-actions.accept, .item-actions.deliver {background:url('/media/order/daifukuan@3x.png') no-repeat center bottom;height:94px;background-size:100% 26px;margin-left:-20px;margin-right:-20px;padding:0 20px;}
         .item-actions.accept {background-image:url('/media/order/daijiedan@3x.png');}
         .item-actions.deliver {background-image:url('/media/order/daifahuo@3x.png');}
 
@@ -97,7 +97,10 @@
 	</blockquote>
 
 	<?php else: ?>
-        <?php if (count($items) > 1): ?>
+        <?php
+            $status = $this->input->get('status');
+            if (!empty($status) && count($items) > 1):
+        ?>
         <div id=primary_actions class=action_bottom>
             <span id=enter_bulk>
                 <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
@@ -162,7 +165,7 @@
                     <ul class="order-figures row">
                         <li class="col-xs-4">小计<span>￥<?php echo $item['subtotal'] ?></span></li>
                         <li class="col-xs-4">应支付<span>￥<?php echo $item['total'] ?></span>
-                        <li class="col-xs-4">已支付<span>￥<?php echo $item['total_payed'] ?></span>
+                        <li class="col-xs-4">已支付<span<?php echo ($item['total_payed'] < $item['total'])? ' style="color:red"': NULL ?>>￥<?php echo $item['total_payed'] ?></span>
                     </ul>
                 </a>
 
@@ -196,6 +199,10 @@
                         <?php if ($status === '待接单'): ?>
                         <li><a title="接单" href="<?php echo base_url($this->class_name.'/accept?ids='.$item[$this->id_name]) ?>" target=_blank>接单</a></li>
                         <li><a title="拒绝" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>拒绝</a></li>
+                        <?php endif ?>
+
+                        <?php if ($status === '已拒绝' && !empty($item['time_pay']) && ($item['refund_status'] === '退款中')): ?>
+                        <li><a title="退款列表" href="<?php echo base_url('refund/index?order_id='.$item[$this->id_name]) ?>" target=_blank>处理退款</a></li>
                         <?php endif ?>
 
                         <?php if ($status === '待发货'): ?>

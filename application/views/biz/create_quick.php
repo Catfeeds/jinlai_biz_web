@@ -34,8 +34,6 @@
 		<p class=help-block>必填项以“*”符号标示</p>
 
 		<fieldset>
-			<legend>基本资料</legend>
-
             <div class=form-group>
                 <label for=url_logo class="col-sm-2 control-label">店铺LOGO</label>
                 <div class=col-sm-10>
@@ -63,7 +61,7 @@
 			</div>
 
             <div class=form-group>
-                <label for=category_ids class="col-sm-2 control-label">主营商品类目</label>
+                <label for=category_ids class="col-sm-2 control-label">主营商品类目 *</label>
                 <div class=col-sm-10>
                     <?php $input_name = 'category_ids[]' ?>
                     <select class=form-control name="<?php echo $input_name ?>" multiple required>
@@ -85,7 +83,7 @@
 		</fieldset>
 
 		<div class=form-group>
-		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
+		    <div class="col-xs-12 col-sm-offset-2 col-sm-2 col-md-offset-0 col-md-12">
 				<p class=help-block>请开店后及时进行认证；未通过认证的商家，货款将暂时由<?php echo SITE_NAME ?>进行存管。点击“开店”代表您已阅读并同意<a href="<?php echo base_url('article/agreement-admission') ?>" target=_blank><?php echo SITE_NAME ?>入驻协议。</a></p>
 				<button class="btn btn-primary btn-lg btn-block" type=submit>开店</button>
 		    </div>

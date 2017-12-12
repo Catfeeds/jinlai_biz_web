@@ -13,45 +13,98 @@ $(function(){
 		// 获取当前时间戳以确保重新生成验证码图片
 		var timestamp = Date.parse(new Date()) / 1000;
 		$(this).attr('src', url_captcha + timestamp);
+        $('[name=captcha_verify]').val('').focus(); // 重置图片验证码输入框
+
+		console.log('captcha regenerated');
 	});
+
+    /**
+	 * 检查图片验证码格式
+     * @param captcha_verify 需要检查的图片验证码内容
+     * @returns {boolean}
+     */
+	function check_verify_captcha(captcha_verify) {
+        console.log('checking captcha');
+
+        if (captcha_verify.length != 4 || isNaN(captcha_verify))
+        {
+            alert('请正确填写图片验证码');
+            $('[name=captcha_verify]').val('').focus(); // 重置图片验证码输入框
+            return false;
+        } else {
+        	return true;
+		}
+    }
 
 	/**
 	 * 检查手机号格式
 	 * @param string mobile 需要接收短信的手机号
-	 * @param boolean check_length 是否需要检查字符串长度
+	 * @returns {boolean}
 	 */
-	function check_mobile(mobile, check_length)
+	function check_mobile(mobile)
 	{
-		if ( isNaN(mobile) )
+		console.log('checking mobile');
+
+		// 检查字符串长度是否有效
+		function is_valid_length()
 		{
-			alert('请输入有效手机号码');
-			$('[name=mobile]').val('').focus();
+            if (mobile.length != 11)
+            {
+                console.log('not exactly 11 characters');
+                return false;
+            } else {
+                return true;
+            }
 		}
-		if (check_length == true)
+
+		// 检查第一个字符是否为1
+		function start_with_one()
 		{
-			if (mobile.length != 11)
-			{
-				alert('请输入有效手机号码');
-				$('[name=mobile]').val('').focus();
-				return false;
-			}
-			else if (mobile.length == 11)
-			{
-				$('a#sms-send').removeAttr('disabled');
-			}
+            var first_char = mobile.substring(0, 1);
+            if (first_char != 1)
+            {
+                console.log('not start with "1"');
+                return false;
+            } else {
+                return true;
+            }
+		}
+
+        // 检查是否为数字
+        function is_number()
+        {
+            if (isNaN(mobile))
+            {
+                console.log('NaN');
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        // TODO 号段检查
+
+        if (is_valid_length() && start_with_one() && is_number())
+        {
+            $('a#sms-send').removeAttr('disabled'); // 重置发送按钮
+        }
+        else
+		{
+            alert('请填写有效手机号');
+            $('[name=mobile]').val('').focus(); // 重置手机号输入框
+            return false;
 		}
 	}
 
 	// 点击短信发送按钮后的业务流程
 	var handler = function(){
 		// 检查图片验证码是否已填写
-		var captcha_verify = $('[name=captcha_verify]').val();
-		if ( isNaN(captcha_verify) )
-		{
-			alert('请填写图片验证码');
-			$('[name=captcha_verify]').val('').focus();
-			return false;
-		}
+		console.log('captcha to be checked');
+		var captcha_verify = $.trim( $('[name=captcha_verify]').val() );
+        if (check_verify_captcha(captcha_verify) == false)
+        {
+            return false;
+        }
 
 		// 获取当前时间戳及日期（日）
 		var timestamp = Date.parse(new Date()) / 1000;
@@ -69,9 +122,9 @@ $(function(){
  			return false;
  		}
 
-		// 获取mobile字段值，验证该字段是否已被输入11位数字，设置sms_send按钮为不可用状态
+		// 获取mobile字段值，验证该字段是否为有效手机号，设置sms_send按钮为不可用状态
 		var mobile = $.trim( $('[name=mobile]').val() );
-		if (check_mobile(mobile, true) == false)
+		if (check_mobile(mobile) == false)
 		{
 			return false;
 		}
@@ -119,7 +172,7 @@ $(function(){
 				Cookies.set('sms_today', today);
 				Cookies.set('sms_today_sent', 1);
 			} else {
-				Cookies.set('sms_today_sent', Cookies.get('sms_today_sent') + 1);
+				Cookies.set('sms_today_sent', Cookies.get('sms_today_sent') += 1);
 			}
 
 			// 倒计时60秒后重新激活发送按钮
