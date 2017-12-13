@@ -54,6 +54,7 @@
 
             // 获取被选值
             var deliver_method = object.attr('data-deliver_method-value');
+            $('[name=deliver_method]').val(deliver_method);
             $('[for=deliver_biz]').text(deliver_method + '商'); // 更新服务商字段label文案
 
             // 保存被选值为默认配送方式
@@ -147,6 +148,8 @@
 			<div class=form-group>
 				<label for=deliver_method class="col-sm-2 control-label">发货方式</label>
 				<div class=col-sm-10>
+                    <input name=deliver_method type=hidden>
+
                     <ul id=deliver_method class="btn-group btn-group-justified" role=group>
 					<?php
 						$input_name = 'deliver_method';
@@ -179,7 +182,7 @@
 			<div id=waybill_id class="form-group optional-input">
 				<label for=waybill_id class="col-sm-2 control-label">运单号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=waybill_id type=text placeholder="请输入运单号">
+					<input class=form-control name=waybill_id type=number step=1 placeholder="请输入运单号">
 					<p id=waybill_notice class=help-block>同城配送商选择自营时可留空</p>
 				</div>
 			</div>

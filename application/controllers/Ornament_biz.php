@@ -14,14 +14,14 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'biz_id', 'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_logo_url', 'member_figure_url', 'member_thumb_url', 'template_id', 'home_slides', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m1_ids', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m2_ids', 'home_m3_ace_url', 'home_m3_ace_id', 'home_m3_ids', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'biz_id', 'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_logo_url', 'member_figure_url', 'member_thumb_url', 'template_id', 'home_slides', 'home_m0_ids', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m1_ids', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m2_ids', 'home_m3_ace_url', 'home_m3_ace_id', 'home_m3_ids', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
 		/**
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_logo_url', 'member_figure_url', 'member_thumb_url', 'home_json', 'home_html', 'template_id', 'home_slides', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m1_ids', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m2_ids', 'home_m3_ace_url', 'home_m3_ace_id', 'home_m3_ids',
+			'name', 'vi_color_first', 'vi_color_second', 'main_figure_url', 'member_logo_url', 'member_figure_url', 'member_thumb_url', 'home_json', 'home_html', 'template_id', 'home_slides', 'home_m0_ids', 'home_m1_ace_url', 'home_m1_ace_id', 'home_m1_ids', 'home_m2_ace_url', 'home_m2_ace_id', 'home_m2_ids', 'home_m3_ace_url', 'home_m3_ace_id', 'home_m3_ids',
 		);
 
 		/**
@@ -224,7 +224,8 @@
             $this->form_validation->set_rules('home_json', '首页JSON格式内容', 'trim|max_length[20000]');
             $this->form_validation->set_rules('home_html', '首页HTML格式内容', 'trim|max_length[20000]');
             $this->form_validation->set_rules('template_id', '装修模板', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_slides', '首页轮播图', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_slides', '顶部模块轮播图', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m0_ids[]', '顶部模块陈列商品', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_url', '模块一形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_id', '模块一首推商品', 'trim|max_length[11]|is_natural_no_zero');
             $this->form_validation->set_rules('home_m1_ids[]', '模块一陈列商品', 'trim|max_length[255]');
@@ -247,6 +248,7 @@
 				// 需要创建的数据；逐一赋值需特别处理的字段
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
+                    'home_m0_ids' => !empty($this->input->post('home_m0_ids'))? implode(',', $this->input->post('home_m0_ids')): NULL,
                     'home_m1_ids' => !empty($this->input->post('home_m1_ids'))? implode(',', $this->input->post('home_m1_ids')): NULL,
                     'home_m2_ids' => !empty($this->input->post('home_m2_ids'))? implode(',', $this->input->post('home_m2_ids')): NULL,
                     'home_m3_ids' => !empty($this->input->post('home_m3_ids'))? implode(',', $this->input->post('home_m3_ids')): NULL,
@@ -336,7 +338,8 @@
             $this->form_validation->set_rules('home_json', '首页JSON格式内容', 'trim|max_length[20000]');
             $this->form_validation->set_rules('home_html', '首页HTML格式内容', 'trim|max_length[20000]');
             $this->form_validation->set_rules('template_id', '装修模板', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_slides', '首页轮播图', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_slides', '顶部模块轮播图', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m0_ids[]', '顶部模块陈列商品', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_url', '模块一形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_id', '模块一首推商品', 'trim|max_length[11]|is_natural_no_zero');
             $this->form_validation->set_rules('home_m1_ids[]', '模块一陈列商品', 'trim|max_length[255]');
@@ -360,6 +363,7 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
+                    'home_m0_ids' => !empty($this->input->post('home_m0_ids'))? implode(',', $this->input->post('home_m0_ids')): NULL,
                     'home_m1_ids' => !empty($this->input->post('home_m1_ids'))? implode(',', $this->input->post('home_m1_ids')): NULL,
                     'home_m2_ids' => !empty($this->input->post('home_m2_ids'))? implode(',', $this->input->post('home_m2_ids')): NULL,
                     'home_m3_ids' => !empty($this->input->post('home_m3_ids'))? implode(',', $this->input->post('home_m3_ids')): NULL,
@@ -455,7 +459,8 @@
             $this->form_validation->set_rules('home_json', '首页JSON格式内容', 'trim|max_length[20000]');
             $this->form_validation->set_rules('home_html', '首页HTML格式内容', 'trim|max_length[20000]');
             $this->form_validation->set_rules('template_id', '装修模板', 'trim|max_length[11]|is_natural_no_zero');
-            $this->form_validation->set_rules('home_slides', '首页轮播图', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_slides', '顶部模块轮播图', 'trim|max_length[255]');
+            $this->form_validation->set_rules('home_m0_ids[]', '顶部模块陈列商品', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_url', '模块一形象图', 'trim|max_length[255]');
             $this->form_validation->set_rules('home_m1_ace_id', '模块一首推商品', 'trim|max_length[11]|is_natural_no_zero');
             $this->form_validation->set_rules('home_m1_ids[]', '模块一陈列商品', 'trim|max_length[255]');

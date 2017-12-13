@@ -79,7 +79,7 @@
                 <?php echo $item['user_id'] ?>
                 <a href="<?php echo base_url('user/detail?id='.$item['user_id']) ?>" target=new>查看资料</a>
             </li>
-            <li>下单设备IP地址 <?php echo $item['user_ip'] ?>（高级功能，开放试用）</li>
+            <!--<li>下单设备IP地址 <?php echo $item['user_ip'] ?>（高级功能，开放试用）</li>-->
             <li>状态 <strong><?php echo $item['status'] ?></strong></li>
             <?php if ( !empty($item['refund_status']) ): ?><li>退款状态 <?php echo $item['refund_status'] ?></li><?php endif ?>
             <li>发票 <?php echo $item['invoice_status'] ?></li>
@@ -94,9 +94,9 @@
         <div id=list-addressee>
             <?php if ( !empty($item['longitude']) && !empty($item['latitude']) ): ?>
                 <figure class="row">
-                    <figcaption>
+                    <!--<figcaption>
                         <p class=help-block>经纬度 <?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?></p>
-                    </figcaption>
+                    </figcaption>-->
                     <div id=map style="height:300px;background-color:#aaa"></div>
                 </figure>
 
@@ -141,6 +141,14 @@
                 ?>
             </p>
             <p><?php echo $item['fullname'] ?></p>
+
+            <?php if ( !empty($item['time_deliver']) ): ?>
+            <ul>
+                <li>发货方式 <?php echo $item['deliver_method'] ?></li>
+                <li>服务商 <?php echo $item['deliver_biz'] ?></li>
+                <li>运单号 <?php echo $item['waybill_id'] ?></li>
+            </ul>
+            <?php endif ?>
         </div>
     </section>
 
@@ -226,9 +234,7 @@
             <dd><strong>￥ <?php echo $item['total_refund'] ?></strong></dd>
             <?php endif ?>
         </dl>
-
     </section>
-
 
 	<?php if ( !empty($item['time_pay']) ): ?>
 	<section>
@@ -268,52 +274,47 @@
 
             <?php if ( isset($item['time_cancel']) ): ?>
 			<dt>用户取消时间</dt>
-			<dd><?php echo $item['time_cancel'] ?></dd>
+			<dd><?php echo date('Y-m-d H:i:s', $item['time_cancel']) ?>></dd>
             <?php endif ?>
 
             <?php if ( isset($item['time_expire']) ): ?>
-                <dt>自动过期时间</dt>
-                <dd><?php echo $item['time_expire'] ?></dd>
+            <dt>自动过期时间</dt>
+            <dd><?php echo date('Y-m-d H:i:s', $item['time_expire']) ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['time_pay']) ): ?>
-                <dt>用户付款时间</dt>
-                <dd><?php echo $item['time_pay'] ?></dd>
+            <dt>用户付款时间</dt>
+            <dd><?php echo date('Y-m-d H:i:s', $item['time_pay']) ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['time_refuse']) ): ?>
-                <dt>商家拒绝时间</dt>
-                <dd><?php echo $item['time_refuse'] ?></dd>
+            <dt>商家拒绝时间</dt>
+            <dd><?php echo date('Y-m-d H:i:s', $item['time_refuse']) ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['time_accept']) ): ?>
-                <dt>商家接单时间</dt>
-                <dd><?php echo $item['time_accept'] ?></dd>
+            <dt>商家接单时间</dt>
+            <dd><?php echo date('Y-m-d H:i:s', $item['time_accept']) ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['time_deliver']) ): ?>
-                <dt>商家发货时间</dt>
-                <dd><?php echo $item['time_deliver'] ?></dd>
+            <dt>商家发货时间</dt>
+            <dd><?php echo date('Y-m-d H:i:s', $item['time_deliver']) ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['time_confirm']) ): ?>
-                <dt>用户确认时间</dt>
-                <dd><?php echo $item['time_confirm'] ?></dd>
-            <?php endif ?>
-
-            <?php if ( isset($item['time_confirm_auto']) ): ?>
-                <dt>系统确认时间</dt>
-                <dd><?php echo $item['time_confirm_auto'] ?></dd>
+            <dt>用户确认时间</dt>
+            <dd><?php echo date('Y-m-d H:i:s', $item['time_confirm']) ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['time_comment']) ): ?>
-                <dt>用户评价时间</dt>
-                <dd><?php echo $item['time_comment'] ?></dd>
+            <dt>用户评价时间</dt>
+            <dd><?php echo date('Y-m-d H:i:s', $item['time_comment']) ?></dd>
             <?php endif ?>
 
             <?php if ( isset($item['time_refund']) ): ?>
-                <dt>商家退款时间</dt>
-                <dd><?php echo $item['time_refund'] ?></dd>
+            <dt>商家退款时间</dt>
+            <dd><?php echo date('Y-m-d H:i:s', $item['time_refund']) ?></dd>
             <?php endif ?>
 
 			<?php if ( ! empty($item['operator_id']) ): ?>

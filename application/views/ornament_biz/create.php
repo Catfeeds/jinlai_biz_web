@@ -150,9 +150,14 @@
                     <p class=help-block>用于会员卡列表</p>
                 </div>
             </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>顶部模块</legend>
+            <p class=help-block>请上传尺寸正确、大小合适的图片；过大的图片将导致页面打开缓慢，过小的图片则影响显示效果。</p>
 
             <div class=form-group>
-                <label for=home_slides class="col-sm-2 control-label">首页轮播图内容</label>
+                <label for=home_slides class="col-sm-2 control-label">顶部模块轮播图内容</label>
                 <div class=col-sm-10>
                     <?php $name_to_upload = 'home_slides' ?>
                     <ul class="upload_preview"></ul>
@@ -167,11 +172,32 @@
                     <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count="4" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
                 </div>
             </div>
+
+            <div class=form-group>
+                <label for=home_m1_ids class="col-sm-2 control-label">顶部模块陈列商品</label>
+                <div class=col-sm-10>
+                    <?php $input_name = 'home_m0_ids[]' ?>
+                    <select class=form-control name="<?php echo $input_name ?>" multiple>
+                        <?php
+                        $options = $comodities;
+                        $current_array = explode(',', $item['home_m0_ids']);
+                        foreach ($options as $option):
+                            if ( empty($option['time_delete']) ):
+                                ?>
+                                <option value="<?php echo $option['item_id'] ?>" <?php if ( in_array($option['item_id'], $current_array) ) echo 'selected'; ?>><?php echo $option['name'] ?></option>
+                            <?php
+                            endif;
+                        endforeach;
+                        ?>
+                    </select>
+
+                    <p class=help-block>需要进行展示的1-3款商品，下同；桌面端按住Ctrl或⌘键可多选；如果选择了3款以上，将仅示前3款</p>
+                </div>
+            </div>
         </fieldset>
 
         <fieldset>
             <legend>模块一</legend>
-            <p class=help-block>请上传尺寸正确、大小合适的图片；过大的图片将导致页面打开缓慢，过小的图片则影响显示效果。</p>
 
             <div class=form-group>
                 <label for=home_m1_ace_url class="col-sm-2 control-label">模块一形象图</label>
@@ -292,7 +318,7 @@
         </fieldset>
 
         <fieldset>
-            <legend>模块二</legend>
+            <legend>模块三</legend>
 
             <div class=form-group>
                 <label for=home_m3_ace_url class="col-sm-2 control-label">模块三形象图</label>

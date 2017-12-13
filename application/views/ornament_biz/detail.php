@@ -85,7 +85,7 @@
         <dt>会员卡列表图</dt>
         <dd><?php echo empty($item['member_thumb_url'])? '未设置': '<img src="'.$item['member_thumb_url'].'">' ?></dd>
 
-		<dt>首页轮播图内容</dt>
+		<dt>顶部模块轮播图</dt>
         <dd>
             <?php if ( !empty($item['home_slides']) ): ?>
             <ul class=upload_preview>
@@ -104,6 +104,8 @@
             未上传
             <?php endif ?>
         </dd>
+        <dt>顶部模块陈列商品</dt>
+        <dd><?php echo $item['home_m0_ids'] ?></dd>
 
 		<dt>模块一形象图</dt>
         <dd><?php echo empty($item['home_m1_ace_url'])? '未设置': '<img src="'.$item['home_m1_ace_url'].'">' ?></dd>
