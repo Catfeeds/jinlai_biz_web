@@ -51,13 +51,13 @@
         public $user_agent = array();
 
 		// 客户端类型
-		protected $app_type;
+        public $app_type;
 
 		// 客户端版本号
-		protected $app_version;
+        public $app_version;
 
 		// 设备操作系统平台ios/android；非移动客户端传空值
-		protected $device_platform;
+        public $device_platform;
 
 		// 设备唯一码；全小写
 		protected $device_number;
@@ -265,21 +265,20 @@
 		} // end permission_check
 
         /**
-         * count_table
+         * 计算特定表数据量
          *
          * @params string $table_name 需要计数的表名
          * @params array $conditions 筛选条件
          * @return int/boolean
-         **/
+         */
         protected function count_table($table_name, $conditions = NULL)
         {
-            // 获取筛选条件
-            if ( !empty($conditions) ):
-                $params = $conditions;
-            endif;
+            //$params['biz_id'] = 'NULL'; // 默认可获取不属于当前商家的数据
+            $params = array();
 
-            // 获取当前商家信息
-            $params['biz_id'] = $this->session->biz_id;
+            // 获取筛选条件
+            if ( !empty($conditions) )
+                $params = array_merge($params, $conditions);
 
             // 从API服务器获取相应列表信息
             $url = api_url($table_name. '/count');
@@ -373,7 +372,6 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
-                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -415,7 +413,6 @@
 
 				// 需要存入数据库的信息
 				$data_to_edit = array(
-                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -477,7 +474,6 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
-                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -519,7 +515,6 @@
 
 				// 需要存入数据库的信息
 				$data_to_edit = array(
-                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -554,8 +549,10 @@
         // 获取特定用户信息
         protected function get_user($id)
         {
-            // 从API服务器获取相应信息
             $params['id'] = $id;
+            $params['biz_id'] = 'NULL'; // 可获取不属于当前商家的数据
+
+            // 从API服务器获取相应信息
             $url = api_url('user/detail');
             $result = $this->curl->go($url, $params, 'array');
             if ($result['status'] === 200):
@@ -570,8 +567,7 @@
 		// 获取商品列表
 		protected function list_item()
 		{
-			// 仅可获取当前商家的商品
-			$params['biz_id'] = $this->session->biz_id;
+            $params = array();
 
 			// 从API服务器获取相应列表信息
 			$url = api_url('item/index');
@@ -588,11 +584,9 @@
 		// 获取特定商品信息
 		protected function get_item($id)
 		{
-			// 仅可获取当前商家的商品
-			$params['biz_id'] = $this->session->biz_id;
+            $params['id'] = $id;
 
 			// 从API服务器获取相应信息
-			$params['id'] = $id;
 			$url = api_url('item/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -612,12 +606,9 @@
          */
 		protected function list_sku($item_id = NULL)
 		{
-			// 仅可获取当前商家的规格
-			$params['biz_id'] = $this->session->biz_id;
-			
-			if ( !empty($item_id) ):
-				$params['item_id'] = $item_id;
-			endif;
+            $params = array();
+		    if ( !empty($item_id) )
+		        $params['item_id'] = $item_id;
 
 			// 从API服务器获取相应列表信息
 			$url = api_url('sku/index');
@@ -634,11 +625,9 @@
 		// 获取特定规格信息
 		protected function get_sku($id)
 		{
-			// 仅可获取当前商家的规格
-			$params['biz_id'] = $this->session->biz_id;
+            $params['id'] = $id;
 
 			// 从API服务器获取相应信息
-			$params['id'] = $id;
 			$url = api_url('sku/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -653,8 +642,9 @@
 		// 获取品牌列表
 		protected function list_brand()
 		{
-			// 从API服务器获取相应列表信息
-			$params = NULL;
+            $params['biz_id'] = 'NULL'; // 可获取不属于当前商家的数据
+
+            // 从API服务器获取相应列表信息
 			$url = api_url('brand/index');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -669,8 +659,10 @@
 		// 获取特定品牌信息
 		protected function get_brand($id)
 		{
+            $params['id'] = $id;
+            $params['biz_id'] = 'NULL'; // 可获取不属于当前商家的数据
+
 			// 从API服务器获取相应信息
-			$params['id'] = $id;
 			$url = api_url('brand/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -683,10 +675,12 @@
 		} // end get_brand
 
 		// 获取系统分类列表
-		protected function list_category()
+		protected function list_category($level = 1)
 		{
+            $params['biz_id'] = 'NULL'; // 可获取不属于当前商家的数据
+            $params['level'] = $level;
+
 			// 从API服务器获取相应列表信息
-			$params = NULL;
 			$url = api_url('item_category/index');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -701,8 +695,10 @@
 		// 获取特定系统分类信息
 		protected function get_category($id)
 		{
+            $params['id'] = $id;
+            $params['biz_id'] = 'NULL'; // 可获取不属于当前商家的数据
+
 			// 从API服务器获取相应信息
-			$params['id'] = $id;
 			$url = api_url('item_category/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -717,8 +713,9 @@
 		// 获取商家分类列表
 		protected function list_category_biz()
 		{
+            $params = array();
+
 			// 从API服务器获取相应列表信息
-            $params['biz_id'] = $this->session->biz_id;
 			$url = api_url('item_category_biz/index');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -733,8 +730,9 @@
 		// 获取特定商家分类信息
 		protected function get_category_biz($id)
 		{
+            $params['id'] = $id;
+
 			// 从API服务器获取相应信息
-			$params['id'] = $id;
 			$url = api_url('item_category_biz/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -749,8 +747,9 @@
         // 获取优惠券模板列表
         protected function list_coupon_template()
         {
+            $params = array();
+
             // 从API服务器获取相应列表信息
-            $params['biz_id'] = $this->session->biz_id;
             $url = api_url('coupon_template/index');
             $result = $this->curl->go($url, $params, 'array');
             if ($result['status'] === 200):
@@ -765,8 +764,9 @@
         // 获取特定优惠券模板信息
         protected function get_coupon_template($id)
         {
-            // 从API服务器获取相应信息
             $params['id'] = $id;
+
+            // 从API服务器获取相应信息
             $url = api_url('coupon_template/detail');
             $result = $this->curl->go($url, $params, 'array');
             if ($result['status'] === 200):
@@ -781,8 +781,9 @@
 		// 获取店内活动列表
 		protected function list_promotion_biz()
 		{
+            $params = array();
+
             // 从API服务器获取相应列表信息
-            $params['biz_id'] = $this->session->biz_id;
 			$url = api_url('promotion_biz/index');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -797,8 +798,9 @@
 		// 获取店内活动详情
 		protected function get_promotion_biz($id)
 		{
+            $params['id'] = $id;
+
 			// 从API服务器获取相应信息
-			$params['id'] = $id;
 			$url = api_url('promotion_biz/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -813,8 +815,9 @@
 		// 获取商家运费模板
 		protected function list_freight_template_biz()
 		{
+            $params = array();
+
             // 从API服务器获取相应列表信息
-            $params['biz_id'] = $this->session->biz_id;
 			$url = api_url('freight_template_biz/index');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
@@ -829,8 +832,9 @@
 		// 获取特定商家运费模板详情
 		protected function get_freight_template_biz($id)
 		{
+            $params['id'] = $id;
+
 			// 从API服务器获取相应信息
-			$params['id'] = $id;
 			$url = api_url('freight_template_biz/detail');
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):

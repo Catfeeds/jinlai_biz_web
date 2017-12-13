@@ -416,7 +416,13 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-            $this->form_validation->set_rules('category_ids[]', '主营商品类目', 'trim|required|max_length[255]');
+            if ($this->app_type === 'admin'):
+                $this->form_validation->set_rules('category_ids', '主营商品类目', 'trim|required|max_length[255]');
+                $this->form_validation->set_rules('name', '商家全称', 'trim|required|min_length[5]|max_length[35]');
+                $this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]');
+                $this->form_validation->set_rules('url_name', '店铺域名', 'trim|max_length[20]|alpha_dash');
+                $this->form_validation->set_rules('tel_protected_biz', '商务联系手机号', 'trim|required|exact_length[11]|is_natural');
+            endif;
 			$this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
 			$this->form_validation->set_rules('slogan', '宣传语', 'trim|max_length[30]');
 			$this->form_validation->set_rules('description', '简介', 'trim|max_length[255]');
@@ -452,7 +458,7 @@
 			$this->form_validation->set_rules('longitude', '经度', 'trim|min_length[7]|max_length[10]|decimal');
 			$this->form_validation->set_rules('latitude', '纬度', 'trim|min_length[7]|max_length[10]|decimal');
 
-            $this->form_validation->set_rules('ornament_id', '默认店铺装修方案', 'trim');
+            $this->form_validation->set_rules('ornament_id', '店铺装修', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -482,6 +488,15 @@
                 );
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
+
+                // 根据客户端类型等条件筛选可操作的字段名
+                if ($this->app_type !== 'admin'):
+                    unset($data_to_edit['category_ids']);
+                    unset($data_to_edit['name']);
+                    unset($data_to_edit['brief_name']);
+                    unset($data_to_edit['url_name']);
+                    unset($data_to_edit['tel_protected_biz']);
+                endif;
 
 				// 向API服务器发送待创建数据
 				$params = $data_to_edit;

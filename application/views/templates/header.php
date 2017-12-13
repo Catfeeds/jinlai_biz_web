@@ -17,7 +17,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171212">
+		<meta name=version content="revision20171213">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -189,13 +189,14 @@
 		<link rel=stylesheet media=all href="/css/style.css">
         <link rel=stylesheet media=all href="/css/file-upload.css">
 
-		<link rel="shortcut icon" href="<?php echo CDN_URL ?>icon/jinlai_client/icon28@3x.png">
-		<link rel=apple-touch-icon href="<?php echo CDN_URL ?>icon/jinlai_client/icon120@3x.png">
-
-		<link rel=canonical href="<?php echo current_url() ?>">
-
-		<meta name=format-detection content="telephone=yes, address=no, email=no">
-		<meta name=apple-itunes-app content="app-id=1066224229">
+        <?php if ($this->user_agent['is_desktop']): ?>
+        <link rel="shortcut icon" href="<?php echo CDN_URL ?>icon/jinlai_client/icon28@3x.png">
+        <link rel=canonical href="<?php echo current_url() ?>">
+        <?php else: ?>
+        <link rel=apple-touch-icon href="<?php echo CDN_URL ?>icon/jinlai_client/icon120@3x.png">
+        <meta name=format-detection content="telephone=yes, address=no, email=no">
+        <meta name=apple-itunes-app content="app-id=1066224229">
+        <?php endif ?>
 	</head>
 <?php
 	// 将head内容立即输出，让用户浏览器立即开始请求head中各项资源，提高页面加载速度
@@ -210,7 +211,7 @@
 
     $body_class .= ($this->user_agent['is_macos'] === TRUE)? ' is_macos': NULL;
     $body_class .= ($this->user_agent['is_windows'] === TRUE)? ' is_windows': NULL;
-    $body_class .= ($this->user_agent['is_desktop'])? ' desktop': NULL; // 非移动端设备
+    $body_class .= ($this->user_agent['is_desktop'])? ' is_desktop': NULL; // 非移动端设备
 ?>
 
 <!-- 内容开始 -->

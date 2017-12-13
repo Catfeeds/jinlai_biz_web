@@ -50,16 +50,6 @@
 		} // end __construct
 
 		/**
-		 * 截止3.1.3为止，CI_Controller类无析构函数，所以无需继承相应方法
-		 */
-		public function __destruct()
-		{
-            // 如果已经打开测试模式，则输出调试信息
-            if ($this->input->post_get('test_mode') === 'on')
-                $this->output->enable_profiler(TRUE);
-		} // end __destruct
-
-		/**
 		 * 列表页
 		 */
 		public function index()
@@ -71,7 +61,7 @@
 			);
 
 			// 筛选条件
-			$condition['biz_id'] = $this->session->biz_id;
+            $condition = array();
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
 				if ( !empty($this->input->get_post($sorter)) )
@@ -88,6 +78,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
+                $data['items'] = array();
 				$data['error'] = $result['content']['error']['message'];
 			endif;
 			
@@ -112,7 +103,6 @@
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
 			if ( !empty($id) ):
 				$params['id'] = $id;
-				$params['biz_id'] = $this->session->biz_id;
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -124,9 +114,12 @@
 				$data['item'] = $result['content']; // 清除空元素
 
                 // 获取相关用户信息
+                $data['user'] = $this->get_user($data['item']['user_id']);
 
 			else:
+                $data['item'] = array();
 				$data['error'] = $result['content']['error']['message'];
+
 			endif;
 
 			// 页面信息
@@ -167,7 +160,6 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
-                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -210,7 +202,6 @@
 
 				// 需要存入数据库的信息
 				$data_to_edit = array(
-                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -272,7 +263,6 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
-                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -315,7 +305,6 @@
 
 				// 需要存入数据库的信息
 				$data_to_edit = array(
-                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -377,7 +366,6 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
-                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -420,7 +408,6 @@
 
 				// 需要存入数据库的信息
 				$data_to_edit = array(
-                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -482,7 +469,6 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
-                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -524,7 +510,6 @@
 
 				// 需要存入数据库的信息
 				$data_to_edit = array(
-                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -557,7 +542,7 @@
 		} // end accept
 		
 		/**
-		 * TODO 发货已接单订单
+		 *
 		 *
 		 * 需添加特有字段
 		 */
@@ -586,7 +571,6 @@
 			foreach ($ids as $id):
 				// 从API服务器获取相应详情信息
 				$params['id'] = $id;
-                $params['biz_id'] = $this->session->biz_id;
 				$url = api_url($this->class_name. '/detail');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -643,7 +627,6 @@
 
 				// 需要存入数据库的信息
 				$data_to_edit = array(
-                    'biz_id' => $this->session->biz_id,
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
 					'password' => $password,
@@ -697,7 +680,7 @@
         public function delete()
         {
             exit('商家不可删除用户的订单；您意图删除用户订单的操作记录已被发送到安全中心。');
-        } // end valid
+        } // end delete
 
         /**
          * 找回订单
@@ -707,7 +690,7 @@
         public function restore()
         {
             exit('商家不可恢复用户的订单；您意图删除用户订单的操作记录已被发送到安全中心。');
-        } // end valid
+        } // end restore
 
 	} // end class Order
 

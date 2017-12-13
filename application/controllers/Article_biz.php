@@ -63,15 +63,6 @@
 				'excerpt' => '摘要',
 			);
 		}
-		
-		/**
-		 * 截止3.1.3为止，CI_Controller类无析构函数，所以无需继承相应方法
-		 */
-		public function __destruct()
-		{
-			// 调试信息输出开关
-			// $this->output->enable_profiler(TRUE);
-		}
 
 		/**
 		 * 列表页
@@ -86,7 +77,6 @@
 
 			// 筛选条件
             $condition['time_delete'] = 'NULL';
-			$condition['biz_id'] = $this->session->biz_id;
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
 				if ( !empty($this->input->get_post($sorter)) )
@@ -141,6 +131,7 @@
 
 			else:
 				// 页面信息
+                $data['item'] = array();
 				$data['title'] = $this->class_name_cn. '详情';
 				$data['class'] = $this->class_name.' detail';
 				$data['error'] = $result['content']['error']['message'];
@@ -173,7 +164,6 @@
 			);
 
 			// 筛选条件
-			$condition['biz_id'] = $this->session->biz_id;
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
 				if ( !empty($this->input->post($sorter)) )
@@ -191,6 +181,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
+                $data['items'] = array();
 				$data['error'] = $result['content']['error']['message'];
 			endif;
 
@@ -243,7 +234,6 @@
 				// 需要创建的数据；逐一赋值需特别处理的字段
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
-					'biz_id' => $this->session->biz_id,
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
