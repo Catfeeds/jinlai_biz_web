@@ -103,7 +103,7 @@
 
             // 判断是否为移动端
             $this->user_agent['is_wechat'] = strpos($user_agent, 'MicroMessenger/')? TRUE: FALSE;
-            $this->user_agent['is_ios'] = strpos($user_agent, 'iPhone;')? TRUE: FALSE;
+            $this->user_agent['is_ios'] = strpos($user_agent, 'like Mac OS')? TRUE: FALSE;
             $this->user_agent['is_android'] = strpos($user_agent, 'Android;')? TRUE: FALSE;
             $this->user_agent['is_mobile'] = ($this->user_agent['is_wechat'] || $this->user_agent['is_ios'] || $this->user_agent['is_android'])? TRUE: FALSE; // 移动端设备
 
