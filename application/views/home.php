@@ -158,6 +158,12 @@
 				</a>
 			</li>
             <li class="col-xs-4 col-md-2">
+                <a title="退款/售后管理" href="<?php echo base_url('refund') ?>">
+                    <img src="/media/home/shangpin@3x.png">
+                    退款/售后<span class=count><?php echo $count['refund'] ?></span>
+                </a>
+            </li>
+            <li class="col-xs-4 col-md-2">
                 <a title="商家文章管理" href="<?php echo base_url('article_biz') ?>">
                     <img src="/media/home/shangpin@3x.png">
                     文章<span class=count><?php echo $count['article_biz'] ?></span>

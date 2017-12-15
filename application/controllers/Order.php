@@ -123,7 +123,7 @@
 			endif;
 
 			// 页面信息
-			$data['title'] = '商品订单'. $data['item']['order_id'];
+            $data['title'] = $this->class_name_cn. (isset($data['item'])? $data['item'][$this->id_name]: '详情');
 			$data['class'] = $this->class_name.' detail';
 
 			// 输出视图
@@ -689,7 +689,7 @@
          */
         public function restore()
         {
-            exit('商家不可恢复用户的订单；您意图删除用户订单的操作记录已被发送到安全中心。');
+            exit('商家不可恢复用户的订单；您意图找回用户订单的操作记录已被发送到安全中心。');
         } // end restore
 
 	} // end class Order

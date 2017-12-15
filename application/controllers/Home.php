@@ -69,9 +69,7 @@
 				'coupon_template' => $this->count_table('coupon_template'),
 				'coupon_combo' => $this->count_table('coupon_combo'),
 
-				// 以下功能开通后可取消注释，并在视图文件中添加相应DOM
-				//'refund' => $this->count_table('refund'),
-
+				'refund' => $this->count_table('refund'),
 				'comment_item' => $this->count_table('comment_item'),
 				'comment_order' => $this->count_table('comment_order'),
 			);

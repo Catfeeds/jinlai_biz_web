@@ -182,7 +182,7 @@
 			<div id=waybill_id class="form-group optional-input">
 				<label for=waybill_id class="col-sm-2 control-label">运单号</label>
 				<div class=col-sm-10>
-					<input class=form-control name=waybill_id type=number step=1 placeholder="请输入运单号">
+					<input class=form-control name=waybill_id type=text placeholder="请输入运单号">
 					<p id=waybill_notice class=help-block>同城配送商选择自营时可留空</p>
 				</div>
 			</div>
