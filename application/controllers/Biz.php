@@ -74,13 +74,6 @@
 			);
 		}
 
-		public function __destruct()
-		{
-			parent::__destruct();
-			// 调试信息输出开关
-			// $this->output->enable_profiler(TRUE);
-		}
-
 		/**
 		 * 详情页
 		 */
@@ -104,6 +97,7 @@
                 $data['freight_template'] = $this->get_freight_template_biz($data['item']['freight_template_id']);
 
 			else:
+                $data['item'] = array();
 				$data['error'] = $result['content']['error']['message'];
 
 			endif;

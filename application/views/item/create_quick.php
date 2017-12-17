@@ -40,7 +40,7 @@
 			<p class=help-block>必填项以“※”符号标示</p>
 
 			<div class=form-group>
-				<label for=category_id class="col-sm-2 control-label">系统分类※</label>
+				<label for=category_id class="col-sm-2 control-label">系统分类 ※</label>
 				<div class=col-sm-10>
 					<select class=form-control name=category_id required>
 						<option value="">请选择</option>
@@ -75,17 +75,8 @@
 			<?php endif ?>
 
 			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">商品名称※</label>
+				<label for=url_image_main class="col-sm-2 control-label">主图 ※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="最多30个字符，中英文、数字，不可为纯数字" required>
-				</div>
-			</div>
-
-			<div class=form-group>
-				<label for=url_image_main class="col-sm-2 control-label">主图※</label>
-				<div class=col-sm-10>
-					<p class=help-block>正方形图片视觉效果最佳</p>
-
                     <?php $name_to_upload = 'url_image_main' ?>
                     <ul class="upload_preview"></ul>
 
@@ -96,9 +87,18 @@
                         <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
                     </div>
 
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/image_main" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>正方形图片视觉效果最佳</p>
 				</div>
 			</div>
+
+            <div class=form-group>
+                <label for=name class="col-sm-2 control-label">商品名称 ※</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="最多30个字符，中英文、数字，不可为纯数字" required>
+                </div>
+            </div>
 
 			<div class=form-group>
 				<label for=price class="col-sm-2 control-label">商城价/现价（元）※</label>
@@ -110,34 +110,10 @@
 			<div class=form-group>
 				<label for=stocks class="col-sm-2 control-label">库存量（单位）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo set_value('stocks') ?>" placeholder="最高65535单位" required>
-                    <p class=help-block><?php echo SITE_NAME ?>采用付款减库存的形式；为避免超卖，商品或规格库存量低于1个单位（含）时将无法被购买</p>
+                    <input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo empty(set_value('stocks'))? 0: set_value('stocks') ?>" placeholder="最高65535单位" required>
+                    <p class=help-block>库存管理方案为付款减库存，商品或规格库存量低于1个单位（含）时将不可被下单/付款；极少数情况下可能出现超卖。</p>
 				</div>
 			</div>
-
-			<div class=form-group>
-				<label for=coupon_allowed class="col-sm-2 control-label">是否可用优惠券※</label>
-				<div class=col-sm-10>
-					<select class=form-control name=coupon_allowed required>
-						<option value=1 <?php echo set_select('coupon_allowed', 1) ?>>是</option>
-						<option value=0 <?php echo set_select('coupon_allowed', 0) ?>>否</option>
-					</select>
-				</div>
-			</div>
-
-			<?php if ( !empty($biz_promotions) ): ?>
-			<div class=form-group>
-				<label for=promotion_id class="col-sm-2 control-label">店内活动</label>
-				<div class=col-sm-10>
-					<select class=form-control name=promotion_id>
-						<option value="">不参加</option>
-						<?php foreach ($biz_categories as $option): ?>
-							<option value="<?php echo $option['promotion_id'] ?>" <?php echo set_select('promotion_id', $option['promotion_id']) ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-			</div>
-			<?php endif ?>
 		</fieldset>
 
 		<div class=form-group>

@@ -17,7 +17,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171215">
+		<meta name=version content="revision20171217">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -239,7 +239,7 @@
                                 echo $title;
                             else:
                         ?>
-                        <a id=logo class=ellipsis title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>">
+                        <a id=logo title="<?php echo SITE_NAME ?>" href="<?php echo base_url() ?>">
                             <?php echo SITE_NAME ?>
                         </a>
                         <?php endif ?>

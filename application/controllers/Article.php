@@ -76,7 +76,6 @@
 			);
 
 			// 筛选条件
-            $condition['biz_id'] = 'NULL';
 			$condition['time_delete'] = 'NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
@@ -168,7 +167,6 @@
 			);
 
 			// 筛选条件
-            $condition['biz_id'] = 'NULL';
 			$condition['time_delete'] = 'IS NOT NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):

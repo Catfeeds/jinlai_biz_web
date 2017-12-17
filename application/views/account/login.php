@@ -32,7 +32,7 @@
 
 <div id=content class=container>
 	<section class="bg-info text-info">
-		<p>RC0.14.8当前系统为beta/RC版本，仅供技术研究及开发；在不以任何形式告知的情况下，数据、功能、页面样式都将不定时变更；任何数据、业务、功能均无实际意义，且不构成任何责任或义务。</p>
+		<p>RC0.14.9当前系统为beta/RC版本，仅供技术研究及开发；在不以任何形式告知的情况下，数据、功能、页面样式都将不定时变更；任何数据、业务、功能均无实际意义，且不构成任何责任或义务。</p>
 	</section>
 	
 	<div class="btn-group btn-group-justified" role=group>
@@ -55,7 +55,7 @@
 					</div>
 				</div>
 
-				<div class=form-group>
+                <div class=form-group>
 					<label for=captcha_verify>图片验证码</label>
 					<div class=input-group>
 						<input id=captcha-verify class=form-control name=captcha_verify type=number max=9999 step=1 size=4 placeholder="请输入图片验证码"<?php echo (!empty($this->input->post('mobile')) || !empty($this->input->cookie('mobile')))? ' autofocus': NULL ?> required>

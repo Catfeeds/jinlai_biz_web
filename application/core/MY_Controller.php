@@ -427,6 +427,8 @@
 					$data['title'] = $this->class_name_cn.$op_name. '成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+                    $data['operation'] = $op_view;
+                    $data['ids'] = $ids;
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -529,6 +531,8 @@
 					$data['title'] = $this->class_name_cn.$op_name. '成功';
 					$data['class'] = 'success';
 					$data['content'] = $result['content']['message'];
+                    $data['operation'] = $op_view;
+                    $data['ids'] = $ids;
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/result', $data);
@@ -550,7 +554,6 @@
         protected function get_user($id)
         {
             $params['id'] = $id;
-            $params['biz_id'] = 'NULL'; // 可获取不属于当前商家的数据
 
             // 从API服务器获取相应信息
             $url = api_url('user/detail');
@@ -565,9 +568,11 @@
         } // end get_user
 
 		// 获取商品列表
-		protected function list_item()
+		protected function list_item($params = NULL)
 		{
-            $params = array();
+            // 默认获取未删除项
+            if ( empty($params) )
+                $params['time_delete'] = 'NULL';
 
 			// 从API服务器获取相应列表信息
 			$url = api_url('item/index');
@@ -597,16 +602,21 @@
 
 			return $data['item'];
 		} // end get_item
-		
-		/**
+
+        /**
          * 获取规格列表
          *
+         * @param array $params 筛选条件
          * @param string/int $item_id 所属商品ID
-         * @return array
+         * @return null
          */
-		protected function list_sku($item_id = NULL)
+		protected function list_sku($params = NULL, $item_id = NULL)
 		{
-            $params = array();
+            // 默认获取未删除项
+            if ( empty($params) )
+                $params['time_delete'] = 'NULL';
+
+            // 限制所属商品ID
 		    if ( !empty($item_id) )
 		        $params['item_id'] = $item_id;
 
@@ -640,9 +650,11 @@
 		} // end get_sku
 		
 		// 获取品牌列表
-		protected function list_brand()
+		protected function list_brand($params = NULL)
 		{
-            $params['biz_id'] = 'NULL'; // 可获取不属于当前商家的数据
+            // 默认获取未删除项
+            if ( empty($params) )
+                $params['time_delete'] = 'NULL';
 
             // 从API服务器获取相应列表信息
 			$url = api_url('brand/index');
@@ -660,7 +672,6 @@
 		protected function get_brand($id)
 		{
             $params['id'] = $id;
-            $params['biz_id'] = 'NULL'; // 可获取不属于当前商家的数据
 
 			// 从API服务器获取相应信息
 			$url = api_url('brand/detail');
@@ -675,10 +686,14 @@
 		} // end get_brand
 
 		// 获取系统分类列表
-		protected function list_category($level = 1)
+		protected function list_category($params = NULL, $level = 1)
 		{
-            $params['biz_id'] = 'NULL'; // 可获取不属于当前商家的数据
-            $params['level'] = $level;
+            // 默认获取未删除项
+		    if ( empty($params) )
+		        $params['time_delete'] = 'NULL';
+
+            // 限制分类级别
+		    $params['level'] = $level;
 
 			// 从API服务器获取相应列表信息
 			$url = api_url('item_category/index');
@@ -696,7 +711,6 @@
 		protected function get_category($id)
 		{
             $params['id'] = $id;
-            $params['biz_id'] = 'NULL'; // 可获取不属于当前商家的数据
 
 			// 从API服务器获取相应信息
 			$url = api_url('item_category/detail');
@@ -711,9 +725,11 @@
 		} // end get_category
 		
 		// 获取商家分类列表
-		protected function list_category_biz()
+		protected function list_category_biz($params = NULL)
 		{
-            $params = array();
+            // 默认获取未删除项
+            if ( empty($params) )
+                $params['time_delete'] = 'NULL';
 
 			// 从API服务器获取相应列表信息
 			$url = api_url('item_category_biz/index');
@@ -745,9 +761,11 @@
 		} // end get_category_biz
 
         // 获取优惠券模板列表
-        protected function list_coupon_template()
+        protected function list_coupon_template($params = NULL)
         {
-            $params = array();
+            // 默认获取未删除项
+            if ( empty($params) )
+                $params['time_delete'] = 'NULL';
 
             // 从API服务器获取相应列表信息
             $url = api_url('coupon_template/index');
@@ -779,9 +797,11 @@
         } // end get_coupon_template
 
 		// 获取店内活动列表
-		protected function list_promotion_biz()
+		protected function list_promotion_biz($params = NULL)
 		{
-            $params = array();
+            // 默认获取未删除项
+            if ( empty($params) )
+                $params['time_delete'] = 'NULL';
 
             // 从API服务器获取相应列表信息
 			$url = api_url('promotion_biz/index');
@@ -813,9 +833,11 @@
 		} // end get_promotion_biz
 		
 		// 获取商家运费模板
-		protected function list_freight_template_biz()
+		protected function list_freight_template_biz($params = NULL)
 		{
-            $params = array();
+            // 默认获取未删除项
+            if ( empty($params) )
+                $params['time_delete'] = 'NULL';
 
             // 从API服务器获取相应列表信息
 			$url = api_url('freight_template_biz/index');

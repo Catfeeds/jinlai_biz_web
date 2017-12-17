@@ -254,7 +254,7 @@
 				<label for=stocks class="col-sm-2 control-label">库存量※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo $item['stocks'] ?>" placeholder="最高65535单位" required>
-                    <p class=help-block><?php echo SITE_NAME ?>采用付款减库存的形式；为避免超卖，商品或规格库存量低于1个单位（含）时将无法被购买</p>
+                    <p class=help-block>库存管理方案为付款减库存，商品或规格库存量低于1个单位（含）时将不可被下单/付款；极少数情况下可能出现超卖。</p>
 				</div>
 			</div>
 			<div class=form-group>
@@ -302,10 +302,10 @@
 				<div class=col-sm-10>
 					<?php $input_name = 'coupon_allowed' ?>
 					<label class=radio-inline>
-						<input type=radio name="<?php echo $input_name ?>" value="1" required <?php if ($item[$input_name] === '1') echo 'checked'; ?>> 是
+						<input type=radio name="<?php echo $input_name ?>" value="1" required <?php if ($item[$input_name] === '1') echo 'checked' ?>> 是
 					</label>
 					<label class=radio-inline>
-						<input type=radio name="<?php echo $input_name ?>" value="0" required <?php if ($item[$input_name] === '0') echo 'checked'; ?>> 否
+						<input type=radio name="<?php echo $input_name ?>" value="0" required <?php if ($item[$input_name] === '0') echo 'checked' ?>> 否
 					</label>
 				</div>
 			</div>

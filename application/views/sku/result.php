@@ -30,24 +30,25 @@
 
 <div id=content class=container>
 	<h2><?php echo $title ?></h2>
+
 	<?php if ( !empty($content) ): ?>
 	<section><?php echo $content ?></section>
 	<?php endif ?>
 
     <ul class=row>
-        <li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-default btn-lg" title="<?php echo $this->class_name_cn ?>列表" href="<?php echo base_url($this->class_name) ?>">返回<?php echo $this->class_name_cn ?>列表</a></li>
+        <?php if (isset($item_id)): ?>
+        <li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-default btn-lg" title="<?php echo $this->class_name_cn ?>列表" href="<?php echo base_url($this->class_name.'?item_id='.$item_id) ?>">管理相关商品<?php echo $this->class_name_cn ?></a></li>
+        <?php else: ?>
+        <li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-default btn-lg" title="<?php echo $this->class_name_cn ?>列表" href="<?php echo base_url($this->class_name) ?>">管理所有<?php echo $this->class_name_cn ?></a></li>
+        <?php endif ?>
 
-        <?php if ( !empty($operation) ): ?>
-
-            <?php if ($operation === 'create'): ?>
-                <li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="继续创建" href="<?php echo base_url($this->class_name.'/create?item_id='.$item_id) ?>">继续创建</a></li>
-                <?php
-            endif;
-            if ( in_array($operation, array('create', 'edit',)) ):
-                ?>
-                <li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="查看<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/detail?id='.$id) ?>">确认一下</a></li>
-            <?php endif ?>
-
+        <?php if ($operation === 'create'): ?>
+            <li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="继续创建" href="<?php echo base_url($this->class_name.'/create?item_id='.$item_id) ?>">继续创建</a></li>
+            <?php
+        endif;
+        if ( in_array($operation, array('create', 'edit',)) ):
+            ?>
+            <li class="col-xs-12 col-sm-6 col-sm-3"><a class="btn btn-primary btn-lg" title="查看<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/detail?id='.$id) ?>">确认一下</a></li>
         <?php endif ?>
     </ul>
 </div>

@@ -9,7 +9,7 @@
 	 * @copyright ICBG <www.bingshankeji.com>
 	 */
 	class Item extends MY_Controller
-	{	
+	{
 		/**
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
@@ -67,7 +67,7 @@
 				'price' => '商城现价',
 				'status' => '状态',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 列表页
@@ -147,7 +147,8 @@
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
 				
-				$data['skus'] = $this->list_sku($data['item']['item_id']);
+				// 获取商品规格信息
+			    $data['skus'] = $this->list_sku(NULL, $data['item']['item_id']);
 
 				// 获取系统商品分类信息
 				$data['category'] = $this->get_category($data['item']['category_id']);
@@ -225,9 +226,9 @@
 			$this->load->view('templates/footer', $data);
 		} // end trash
 
-		/**
-		 * 快速创建
-		 */
+        /**
+         * 快速创建
+         */
 		public function create_quick()
 		{
 			// 操作可能需要检查操作权限
@@ -250,9 +251,6 @@
 			// 获取商家级商品分类
 			$data['biz_categories'] = $this->list_category_biz();
 
-			// 获取店内营销活动
-			$data['biz_promotions'] = $this->list_promotion_biz();
-
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
@@ -263,8 +261,6 @@
 			$this->form_validation->set_rules('name', '商品名称', 'trim|required|max_length[40]');
             $this->form_validation->set_rules('price', '商城价/现价（元）', 'trim|required|greater_than_equal_to[1]|less_than_equal_to[99999.99]');
 			$this->form_validation->set_rules('stocks', '库存量（单位）', 'trim|required|greater_than_equal_to[0]|less_than_equal_to[65535]');
-			$this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
-			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -281,7 +277,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'brand_id', 'category_biz_id', 'url_image_main', 'name', 'price', 'stocks', 'coupon_allowed', 'promotion_id',
+					'category_id', 'brand_id', 'category_biz_id', 'url_image_main', 'name', 'price', 'stocks',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -385,8 +381,8 @@
 				// 需要创建的数据；逐一赋值需特别处理的字段
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
-					'time_to_publish' => strtotime( substr($this->input->post('time_to_publish'), 0, 16) .':00' ), // 预订上下架时间可细化到分钟，下同
-					'time_to_suspend' => strtotime( substr($this->input->post('time_to_suspend'), 0, 16) .':00' ),
+					'time_to_publish' => empty($this->input->post('time_to_publish'))? NULL: strtotime( substr($this->input->post('time_to_publish'), 0, 16) .':00' ), // 预订上下架时间可细化到分钟，下同
+					'time_to_suspend' => empty($this->input->post('time_to_suspend'))? NULL: strtotime( substr($this->input->post('time_to_suspend'), 0, 16) .':00' ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -515,8 +511,8 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
-					'time_to_publish' => strtotime( substr($this->input->post('time_to_publish'), 0, 16) .':00' ), // 预订上下架时间可细化到分钟，下同
-					'time_to_suspend' => strtotime( substr($this->input->post('time_to_suspend'), 0, 16) .':00' ),
+                    'time_to_publish' => empty($this->input->post('time_to_publish'))? NULL: strtotime( substr($this->input->post('time_to_publish'), 0, 16) .':00' ), // 预订上下架时间可细化到分钟，下同
+                    'time_to_suspend' => empty($this->input->post('time_to_suspend'))? NULL: strtotime( substr($this->input->post('time_to_suspend'), 0, 16) .':00' ),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(

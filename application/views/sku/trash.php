@@ -45,24 +45,22 @@
         <a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/index?item_id='.$comodity['item_id']) ?>">所有</a>
         <a class="btn btn-primary" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash?item_id='.$comodity['item_id']) ?>">回收站</a>
 
-        <?php if ( !empty($comodity) ): ?>
-            <a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create?item_id='.$comodity['item_id']) ?>">创建</a>
-        <?php endif ?>
+        <a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create?item_id='.$comodity['item_id']) ?>">创建</a>
     </div>
 	<?php endif ?>
-	
-	<?php if ( !empty($comodity) ): ?>
-    <section id=item-info class="row well">
-        <figure class="col-xs-4">
-            <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
-        </figure>
 
-        <div class="col-xs-8">
-            <h3><?php echo $comodity['name'] ?></h3>
-            <p>￥<?php echo $comodity['price'] ?></p>
-        </div>
+    <section id=item-info>
+        <a class=row href="<?php echo base_url('item/detail?id='.$comodity['item_id']) ?>"
+            <figure class="col-xs-4">
+                <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
+            </figure>
+
+            <div class="col-xs-8">
+                <h3><?php echo $comodity['name'] ?></h3>
+                <p>￥<?php echo $comodity['price'] ?></p>
+            </div>
+        </a>
     </section>
-	<?php endif ?>
 
 	<?php if ( empty($items) ): ?>
 	<blockquote>
@@ -90,9 +88,9 @@
 
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                    <p>名称 <?php echo $item['name_first'].$item['name_second'].$item['name_third'] ?></p>
-                    <p>商城价/现价 ￥<?php echo $item['price'] ?></p>
+                    <p><?php echo trim($item['name_first']. ' '.$item['name_second']. ' '.$item['name_third']) ?></p>
                     <p>库存 <?php echo $item['stocks'] ?>单位</p>
+                    <p>商城价/现价 ￥<?php echo $item['price'] ?></p>
                 </a>
 
                 <div class="item-actions">

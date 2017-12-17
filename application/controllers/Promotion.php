@@ -80,7 +80,6 @@
 			);
 
 			// 筛选条件
-            $condition['biz_id'] = 'NULL';
 			$condition['time_delete'] = 'NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
@@ -147,7 +146,7 @@
 		} // end detail
 		
 		/**
-		 * 平台活动报名
+		 * TODO 平台活动报名
 		 */
 		public function apply()
 		{

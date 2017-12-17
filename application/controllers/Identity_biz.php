@@ -80,7 +80,6 @@
 			);
 
 			// 筛选条件
-			$condition['user_id'] = $this->session->user_id;
 			$condition['time_delete'] = 'NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
@@ -121,7 +120,6 @@
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
 			if ( !empty($id) ):
 				$params['id'] = $id;
-				$params['user_id'] = $this->session->user_id;
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -164,7 +162,6 @@
 			);
 
 			// 筛选条件
-			$condition['user_id'] = $this->session->user_id;
 			$condition['time_delete'] = 'IS NOT NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):

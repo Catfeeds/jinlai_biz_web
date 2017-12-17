@@ -44,21 +44,16 @@
 
 			<input name=item_id type=hidden value="<?php echo $comodity['item_id'] ?>">
 
-			<div class="form-group well">
-				<label for=item_id class="col-sm-2 control-label">所属商品</label>
-				<div class=col-sm-10>
-                    <section id=item-info class=row>
-                        <figure class="col-xs-4">
-                            <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
-                        </figure>
+            <section id=item-info class=row>
+                <figure class="col-xs-4">
+                    <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
+                </figure>
 
-                        <div class="col-xs-8">
-                            <h3><?php echo $comodity['name'] ?></h3>
-                            <p>￥<?php echo $comodity['price'] ?></p>
-                        </div>
-                    </section>
-				</div>
-			</div>
+                <div class="col-xs-8">
+                    <h3><?php echo $comodity['name'] ?></h3>
+                    <p>￥<?php echo $comodity['price'] ?></p>
+                </div>
+            </section>
 
 			<div class=form-group>
 				<label for=url_image class="col-sm-2 control-label">图片</label>
@@ -73,7 +68,7 @@
                         <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
                     </div>
 
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
 
                     <p class=help-block>正方形图片视觉效果最佳</p>
                 </div>
@@ -113,8 +108,8 @@
 			<div class=form-group>
 				<label for=stocks class="col-sm-2 control-label">库存量（单位）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo set_value('stocks') ?>" placeholder="最高65535单位" required>
-                    <p class=help-block><?php echo SITE_NAME ?>采用付款减库存的形式；为避免超卖，商品或规格库存量低于1个单位（含）时将无法被购买</p>
+					<input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo empty(set_value('stocks'))? 0: set_value('stocks') ?>" placeholder="最高65535单位" required>
+                    <p class=help-block>库存管理方案为付款减库存，商品或规格库存量低于1个单位（含）时将不可被下单/付款；极少数情况下可能出现超卖。</p>
 				</div>
 			</div>
 		</fieldset>

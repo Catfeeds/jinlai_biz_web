@@ -46,28 +46,27 @@
         // 需要特定角色和权限进行该操作
         if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
             ?>
+        <li><a title="复制" href="<?php echo base_url($this->class_name.'/duplicate?id='.$item[$this->id_name]) ?>">复制</a></li>
         <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
         <?php endif ?>
     </ul>
 
-	<dl id=list-info class=dl-horizontal>
-		<dt>规格ID</dt>
-		<dd><?php echo $item['sku_id'] ?></dd>
-		<dt>所属商品</dt>
-		<dd>
-            <section id=item-info class="row well">
-                <a href="<?php echo base_url('item/detail?id='.$comodity['item_id']) ?>">
-                    <figure class="col-xs-4">
-                        <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
-                    </figure>
+    <section id=item-info class=row>
+        <a href="<?php echo base_url('item/detail?id='.$comodity['item_id']) ?>">
+            <figure class="col-xs-4">
+                <img src="<?php echo MEDIA_URL.'/item/'.$comodity['url_image_main'] ?>">
+            </figure>
 
-                    <div class="col-xs-8">
-                        <h3><?php echo $comodity['name'] ?></h3>
-                        <p>￥<?php echo $comodity['price'] ?></p>
-                    </div>
-                </a>
-            </section>
-        </dd>
+            <div class="col-xs-8">
+                <h3><?php echo $comodity['name'] ?></h3>
+                <p>￥<?php echo $comodity['price'] ?></p>
+            </div>
+        </a>
+    </section>
+
+    <dl id=list-info class=dl-horizontal>
+        <dt>规格ID</dt>
+        <dd><?php echo $item['sku_id'] ?></dd>
 
 		<dt>规格图片</dt>
 		<?php if ( !empty($item['url_image']) ): ?>

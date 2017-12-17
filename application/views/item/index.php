@@ -50,6 +50,23 @@
         <a class="btn <?php echo $this->input->get('status') === 'suspend'? 'btn-primary': 'btn-default' ?>" title="已下架商品" href="<?php echo base_url('item?status=suspend') ?>">已下架</a>
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>">回收站</a>
 	</div>
+
+    <div id=primary_actions class=action_bottom>
+        <?php if (count($items) > 1): ?>
+            <span id=enter_bulk>
+        <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
+    </span>
+        <?php endif ?>
+
+        <ul class=horizontal>
+            <li>
+                <a class=bg_second title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
+            </li>
+            <li>
+                <a class=bg_primary title="快速创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create_quick') ?>">快速创建</a>
+            </li>
+        </ul>
+    </div>
 	<?php endif ?>
 
 	<?php if ( empty($this->session->biz_id) ): ?>
@@ -58,23 +75,6 @@
 	</blockquote>
 
 	<?php else: ?>
-        <div id=primary_actions class=action_bottom>
-            <?php if (count($items) > 1): ?>
-            <span id=enter_bulk>
-                <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
-            </span>
-            <?php endif ?>
-
-            <ul class=horizontal>
-                <li>
-                    <a class=bg_second title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
-                </li>
-                <li>
-                    <a class=bg_primary title="快速创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create_quick') ?>">快速创建</a>
-                </li>
-            </ul>
-        </div>
-
 		<?php if ( $count['biz_freight_templates'] === 0 ): ?>
 		<blockquote class=row>
 			<p>您未添加运费模板，将为买家包邮。</p>
@@ -115,7 +115,7 @@
                     <span class=item-status><?php echo $item['status'] ?></span>
                     <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                         <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                        <p>名称 <?php echo $item['name'] ?></p>
+                        <p><?php echo $item['name'] ?></p>
                         <p>商城价/现价 ￥<?php echo $item['price'] ?></p>
                     </a>
 
@@ -137,10 +137,10 @@
 
                             <?php if ( !empty($item['time_suspend']) ): ?>
                             <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank>上架</a></li>
+                            <?php endif ?>
 
-                                <?php if ( empty($item['time_delete']) ): ?>
+                            <?php if ( empty($item['time_delete']) ): ?>
                             <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
-                                <?php endif ?>
                             <?php endif ?>
 
                             <li class=color_primary><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>

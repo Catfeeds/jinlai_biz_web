@@ -78,7 +78,7 @@
 			);
 
 			// 筛选条件
-			$condition['user_id'] = $this->session->user_id;
+            $condition['time_delete'] = 'IS NOT NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
 				if ( !empty($this->input->post($sorter)) )
@@ -160,7 +160,6 @@
 			);
 
 			// 筛选条件
-			$condition['user_id'] = $this->session->user_id;
 			$condition['time_delete'] = 'IS NOT NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):

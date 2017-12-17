@@ -54,53 +54,49 @@
             <?php endif ?>
         </ul>
 
-
+	<dl id=list-info class=dl-horizontal>
         <?php
         // 当前项客户端URL
         $item_url = WEB_URL.$this->class_name.'/detail?id='.$item[$this->id_name];
         ?>
-
-        <dt><?php echo $this->class_name_cn ?>链接</dt>
+        <dt>链接</dt>
         <dd>
             <span><?php echo $item_url ?></span>
             <a href="<?php echo $item_url ?>" target=_blank>查看</a>
         </dd>
 
-        <dt><?php echo $this->class_name_cn ?>二维码</dt>
+        <dt>二维码</dt>
         <dd>
             <figure class="qrcode col-xs-12 col-sm-6 col-md-3" data-qrcode-string="<?php echo $item_url ?>"></figure>
         </dd>
 
-	<header>
-		<h2><?php echo $item['title'] ?></h2>
-		<ul class="list-horizontal row">
-            <li class="col-xs-12 col-sm-6 col-md-3">文章ID <?php echo $item['article_id'] ?></li>
-		</ul>
+        <dt>文章ID</dt>
+        <dd><?php echo $item['article_id'] ?></dd>
 
-        <?php if ( !empty($item['excerpt']) ): ?>
-        <div class="excerpt well"><?php echo $item['excerpt'] ?></div>
-        <?php endif ?>
-	</header>
+        <dt>标题</dt>
+        <dd><?php echo $item['title'] ?></dd>
 
-	<section><?php echo $item['content'] ?></section>
+        <dt>摘要</dt>
+        <dd><?php echo empty($item['excerpt'])? '未填写': $item['excerpt'] ?></dd>
 
-	<dl id=list-info class=dl-horizontal>
         <dt>形象图</dt>
-        <?php if ( !empty($item['url_images']) ): ?>
-            <dd>
-                <?php $name_to_upload = 'url_images' ?>
-                <ul class=upload_preview>
-                    <li>
-                        <figure>
-                            <img src="<?php echo $item[$name_to_upload] ?>">
-                        </figure>
-                    </li>
-                </ul>
-            </dd>
+        <?php if ( empty($item['url_images']) ): ?>
+        <dd>未上传</dd>
         <?php else: ?>
-            <dd>未上传</dd>
+        <dd>
+            <?php $name_to_upload = 'url_images' ?>
+            <ul class=upload_preview>
+                <li>
+                    <figure>
+                        <img src="<?php echo $item[$name_to_upload] ?>">
+                    </figure>
+                </li>
+            </ul>
+        </dd>
         <?php endif ?>
 	</dl>
+
+    <section><?php echo $item['content'] ?></section>
 
 	<dl id=list-record class=dl-horizontal>
 		<dt>创建时间</dt>

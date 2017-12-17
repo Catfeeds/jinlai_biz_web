@@ -79,7 +79,6 @@
 			$id = $this->session->user_id? $this->session->user_id: NULL;
 			if ( !empty($id) ):
 				$params['id'] = $id;
-                $params['biz_id'] = 'NULL';
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -116,7 +115,6 @@
 			);
 
 			// 筛选条件
-            $params['biz_id'] = 'NULL';
 			$condition['time_delete'] = 'NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
@@ -149,7 +147,7 @@
 		} // end index
 
 		/**
-		 * DEPRECATED 详情页
+		 * 详情页
 		 */
 		public function detail()
 		{
@@ -157,7 +155,6 @@
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
 			if ( !empty($id) ):
 				$params['id'] = $id;
-                $params['biz_id'] = 'NULL';
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -199,7 +196,6 @@
 			);
 
 			// 筛选条件
-            $params['biz_id'] = 'NULL';
 			$condition['time_delete'] = 'IS NOT NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
