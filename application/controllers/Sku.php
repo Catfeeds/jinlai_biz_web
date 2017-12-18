@@ -144,18 +144,18 @@
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
-			else:
-                $data['item'] = array();
-				$data['error'] = $result['content']['error']['message'];
-			endif;
 
-			// 获取商品信息
-			$data['comodity'] = $this->get_item($data['item']['item_id']);
+                // 获取商品信息
+                $data['comodity'] = $this->get_item($data['item']['item_id']);
 
-			// 页面信息
-			$data['title'] = $data['item']['name_first'];
-			$data['class'] = $this->class_name.' detail';
-			//$data['keywords'] = $this->class_name.','. $data['item']['name'];
+                // 页面信息
+                $data['title'] = $this->class_name_cn. $data['item'][$this->id_name];
+                $data['class'] = $this->class_name.' detail';
+
+            else:
+                redirect( base_url('error/code_404') ); // 若缺少参数，转到错误提示页
+
+            endif;
 
 			// 输出视图
 			$this->load->view('templates/header', $data);

@@ -44,21 +44,15 @@
 	<div class="btn-group btn-group-justified" role=group>
 		<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
 	</div>
-	<?php endif ?>
 
+    <?php if (count($items) > 1): ?>
     <div id=primary_actions class=action_bottom>
-        <?php if (count($items) > 1): ?>
         <span id=enter_bulk>
             <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
         </span>
-        <?php endif ?>
-
-        <ul class=horizontal>
-            <li>
-                <a class=bg_primary title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
-            </li>
-        </ul>
     </div>
+    <?php endif ?>
+	<?php endif ?>
 
 	<?php if ( empty($items) ): ?>
 	<blockquote>
@@ -87,7 +81,6 @@
                 <span class=item-status><?php echo $item['status'] ?></span>
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                    <p>订单ID <?php echo $item['order_id'] ?></p>
                     <p>订单商品ID <?php echo $item['record_id'] ?></p>
                 </a>
 

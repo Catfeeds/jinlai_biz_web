@@ -45,7 +45,6 @@
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>">回收站</a>
 		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
 	</div>
-	<?php endif ?>
 
     <div id=primary_actions class=action_bottom>
         <?php if (count($items) > 1): ?>
@@ -60,6 +59,7 @@
             </li>
         </ul>
     </div>
+	<?php endif ?>
 
 	<?php if ( empty($items) ): ?>
 	<blockquote>

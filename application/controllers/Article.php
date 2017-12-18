@@ -125,21 +125,17 @@
 			// 从API服务器获取相应详情信息
 			$url = api_url($this->class_name. '/detail');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-				// 页面信息
-				$data['title'] = $data['item']['title'];
-				$data['class'] = $this->class_name.' detail';
-				$data['description'] = $this->class_name.','. $data['item']['excerpt'];
+            if ($result['status'] === 200):
+                $data['item'] = $result['content'];
+                $data['description'] = $this->class_name.','. $data['item']['excerpt'];
+                // 页面信息
+                $data['title'] = $this->class_name_cn. $data['item']['name'];
+                $data['class'] = $this->class_name.' detail';
 
-			else:
-				// 页面信息
-                $data['item'] = array();
-				$data['title'] = $this->class_name_cn. '详情';
-				$data['class'] = $this->class_name.' detail';
-				$data['error'] = $result['content']['error']['message'];
+            else:
+                redirect( base_url('error/code_404') ); // 若缺少参数，转到错误提示页
 
-			endif;
+            endif;
 
 			// 输出视图
 			$this->load->view('templates/header', $data);

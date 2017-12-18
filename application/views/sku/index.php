@@ -101,8 +101,11 @@
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
                     <p><?php echo trim($item['name_first']. ' '.$item['name_second']. ' '.$item['name_third']) ?></p>
-                    <p>库存 <?php echo $item['stocks'] ?>单位</p>
-                    <p>商城价/现价 ￥<?php echo $item['price'] ?></p>
+                    <p><?php echo $item['stocks'] ?>单位库存</p>
+                    <p>
+                        ￥<?php echo $item['price'] ?>
+                        <?php if ($item['tag_price'] !== '0.00') echo '<del>￥ '.$item['tag_price'].'</del>' ?>
+                    </p>
                 </a>
 
                 <div class=item-actions>

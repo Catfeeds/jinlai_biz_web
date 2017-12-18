@@ -64,7 +64,7 @@
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
 				'name' => '名称',
-				'price' => '商城现价',
+				'price' => '商城价/现价',
 				'status' => '状态',
 			);
 		} // end __construct
@@ -163,15 +163,14 @@
 					$data['promotion'] = $this->get_promotion_biz($data['item']['promotion_id']);
 				endif;
 
-			else:
-                $data['item'] = array();
-				$data['error'] = $result['content']['error']['message'];
+                // 页面信息
+                $data['title'] = $this->class_name_cn. $data['item']['name'];
+                $data['class'] = $this->class_name.' detail';
 
-			endif;
+            else:
+                redirect( base_url('error/code_404') ); // 若缺少参数，转到错误提示页
 
-			// 页面信息
-			$data['title'] = $data['item']['name'];
-			$data['class'] = $this->class_name.' detail';
+            endif;
 
 			// 输出视图
 			$this->load->view('templates/header', $data);

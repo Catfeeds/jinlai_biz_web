@@ -75,7 +75,7 @@
 
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                    <p>名称 <?php echo $item['name'] ?></p>
+                    <p><?php echo $item['name'] ?></p>
                     <p>面值 ￥<?php echo $item['amount'] ?></p>
                     <p>起用金额 ￥<?php echo $item['min_subtotal'] ?></p>
                 </a>

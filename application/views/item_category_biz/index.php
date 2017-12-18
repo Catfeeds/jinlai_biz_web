@@ -45,11 +45,10 @@
 	  	<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>">回收站</a>
 		<a class="btn btn-default" title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
 	</div>
-	<?php endif ?>
 
     <div id=primary_actions class=action_bottom>
         <?php if (count($items) > 1): ?>
-            <span id=enter_bulk>
+        <span id=enter_bulk>
             <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
         </span>
         <?php endif ?>
@@ -60,6 +59,7 @@
             </li>
         </ul>
     </div>
+	<?php endif ?>
 
 	<?php if ( empty($items) ): ?>
 	<blockquote>
@@ -87,7 +87,7 @@
             <li>
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                    <p><?php echo $this->class_name_cn ?>名称 <?php echo $item['name'] ?></p>
+                    <p><?php echo $item['name'] ?></p>
                 </a>
 
                 <div class="item-actions">

@@ -277,8 +277,11 @@
             $params = array();
 
             // 获取筛选条件
-            if ( !empty($conditions) )
+            if ( empty($conditions) ):
+                $params['time_delete'] = 'NULL';
+            else:
                 $params = array_merge($params, $conditions);
+            endif;
 
             // 从API服务器获取相应列表信息
             $url = api_url($table_name. '/count');

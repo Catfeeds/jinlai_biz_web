@@ -1,13 +1,12 @@
 <link rel=stylesheet media=all href="/css/trash.css">
 <style>
-    body {margin-bottom:202px;}
-    .action_bottom{bottom:98px;}
+    body {margin-bottom:104px;}
+    .action_bottom{bottom:0;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
         body {margin-bottom:0;}
-        .action_bottom{bottom:0;}
 	}
 	
 	/* 宽度在960像素以上的设备 */
@@ -79,7 +78,10 @@
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
                     <p><?php echo $item['name'] ?></p>
-                    <p>商城现价 ￥<?php echo $item['price'] ?></p>
+                    <p>
+                        ￥<?php echo $item['price'] ?>
+                        <?php if ($item['tag_price'] !== '0.00') echo '<del>￥ '.$item['tag_price'].'</del>' ?>
+                    </p>
                 </a>
 
                 <div class="item-actions">

@@ -132,15 +132,14 @@
 				// 获取所属商品分类信息
 				$data['category_biz'] = $this->get_category_biz($data['item']['parent_id']);
 
-			else:
-                $data['item'] = array();
-				$data['error'] = $result['content']['error']['message'];
+                // 页面信息
+                $data['title'] = $this->class_name_cn. $data['item'][$this->id_name];
+                $data['class'] = $this->class_name.' detail';
 
-			endif;
+            else:
+                redirect( base_url('error/code_404') ); // 若缺少参数，转到错误提示页
 
-			// 页面信息
-			$data['title'] = $data['item']['name'];
-			$data['class'] = $this->class_name.' detail';
+            endif;
 
 			// 输出视图
 			$this->load->view('templates/header', $data);

@@ -139,12 +139,16 @@
 				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
-				<img src="/media/home/shouhou@3x.png">
-				<a title="退款处理" href="<?php echo base_url('refund') ?>">退款/售后</a>
+                <a title="退款/售后" href="<?php echo base_url('refund') ?>">
+                    <img src="/media/home/shouhou@3x.png">
+                    退款/售后<span class=count><?php echo $count['refund'] ?></span>
+                </a>
 			</li>
 			<li class="col-xs-3 col-md-2">
-				<img src="/media/home/pingjia@3x.png">
-				<a title="商品评价" href="<?php echo base_url('comment_item') ?>">商品评价</a>
+                <a title="商品评价" href="<?php echo base_url('comment_item') ?>">
+				    <img src="/media/home/pingjia@3x.png">
+				    商品评价<span class=count><?php echo $count['comment_item'] ?></span>
+                </a>
 			</li>
 		</ul>
 	</section>

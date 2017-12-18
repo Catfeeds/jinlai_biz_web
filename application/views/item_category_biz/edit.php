@@ -37,22 +37,14 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
-		<fieldset>
-			<p class="help-block">必填项以“※”符号标示</p>
+        <p class="help-block">必填项以“※”符号标示</p>
 
+		<fieldset>
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">名称※</label>
-				<div class=col-sm-10>
-					<input class=form-control name=name type=text value="<?php echo $item['name'] ?>" placeholder="最多20个字符" required>
-				</div>
-			</div>
-			<div class=form-group>
 				<label for=url_image class="col-sm-2 control-label">分类图片</label>
                 <div class=col-sm-10>
-                    <p class=help-block>正方形图片视觉效果最佳</p>
-
                     <?php $name_to_upload = 'url_image' ?>
                     <ul class=upload_preview>
                         <?php if ( !empty($item[$name_to_upload]) ): ?>
@@ -76,9 +68,18 @@
                         <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
                     </div>
 
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>正方形图片视觉效果最佳</p>
                 </div>
 			</div>
+
+            <div class=form-group>
+                <label for=name class="col-sm-2 control-label">名称 ※</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=name type=text value="<?php echo $item['name'] ?>" placeholder="最多20个字符" required>
+                </div>
+            </div>
 		</fieldset>
 
 		<div class=form-group>

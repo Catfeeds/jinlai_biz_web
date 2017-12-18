@@ -13,9 +13,9 @@
         .reprice li:first-child a {color:#ff3649;border-color:#ff3649;}
         .accept li:first-child a {color:#ff843c;border-color:#ff843c;}
         .deliver li:first-child a {color:#1a6eef;border-color:#1a6eef;}
-        .item-actions.reprice, .item-actions.accept, .item-actions.deliver {background:url('/media/order/daifukuan@3x.png') no-repeat center bottom;height:94px;background-size:100% 26px;margin-left:-20px;margin-right:-20px;padding:0 20px;}
-        .item-actions.accept {background-image:url('/media/order/daijiedan@3x.png');}
-        .item-actions.deliver {background-image:url('/media/order/daifahuo@3x.png');}
+        .reprice, .accept, .deliver {background:url('/media/order/daifukuan@3x.png') no-repeat center bottom;height:94px;background-size:100% 26px;margin-left:-20px;margin-right:-20px;padding:0 20px;}
+        .accept {background-image:url('/media/order/daijiedan@3x.png');}
+        .deliver {background-image:url('/media/order/daifahuo@3x.png');}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)

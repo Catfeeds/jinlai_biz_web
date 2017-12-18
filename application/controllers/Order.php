@@ -116,15 +116,14 @@
                 // 获取相关用户信息
                 $data['user'] = $this->get_user($data['item']['user_id']);
 
+                // 页面信息
+                $data['title'] = $this->class_name_cn. $data['item'][$this->id_name];
+                $data['class'] = $this->class_name.' detail';
+
 			else:
-                $data['item'] = array();
-				$data['error'] = $result['content']['error']['message'];
+                redirect( base_url('error/code_404') ); // 若缺少参数，转到错误提示页
 
 			endif;
-
-			// 页面信息
-            $data['title'] = $this->class_name_cn. (isset($data['item'])? $data['item'][$this->id_name]: '详情');
-			$data['class'] = $this->class_name.' detail';
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -280,6 +279,7 @@
 			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
 			$this->form_validation->set_rules('discount_reprice', '改价折扣金额', 'trim|required|greater_than[0.01]|less_than_equal_to[99999.99]');
+            $this->form_validation->set_rules('note_stuff', '员工备注', 'trim');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -311,6 +311,7 @@
 					'operation' => $op_view, // 操作名称
 
 					'discount_reprice' => $this->input->post('discount_reprice'),
+                    'note_stuff' => $this->input->post('note_stuff'),
 				);
 
 				// 向API服务器发送待创建数据
@@ -540,12 +541,10 @@
 
 			endif;
 		} // end accept
-		
-		/**
-		 *
-		 *
-		 * 需添加特有字段
-		 */
+
+        /**
+         * 发货已付款订单
+         */
 		public function deliver()
 		{
             // 操作可能需要检查操作权限

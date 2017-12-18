@@ -75,8 +75,8 @@
 
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                    <p>商品名称 <?php echo $item['name'] ?></p>
-                    <p>商城现价 ￥<?php echo $item['price'] ?></p>
+                    <p>用户ID <?php echo $item['user_id'] ?></p>
+                    <p>优惠券模板ID <?php echo $item['template_id'] ?></p>
                 </a>
 
                 <div class="item-actions">

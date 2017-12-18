@@ -75,8 +75,8 @@
 
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                    <p>姓名 <?php echo $item['fullname'] ?></p>
-                    <p>手机号 <?php echo $item['mobile'] ?></p>
+                    <p><?php echo $item['fullname'] ?></p>
+                    <p><?php echo $item['mobile'] ?></p>
                     <p>角色 <?php echo $item['role'] ?></p>
                     <p>级别 <?php echo $item['level'] ?></p>
                 </a>

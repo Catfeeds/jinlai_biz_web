@@ -74,7 +74,7 @@
             <li>
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                    <p>商品名称 <?php echo $item['name'] ?></p>
+                    <p><?php echo $item['name'] ?></p>
                     <p>类型 <?php echo $item['type'] ?></p>
                 </a>
 

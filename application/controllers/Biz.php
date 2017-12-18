@@ -96,16 +96,14 @@
                 // 获取商家运费模板详情
                 $data['freight_template'] = $this->get_freight_template_biz($data['item']['freight_template_id']);
 
-			else:
-                $data['item'] = array();
-				$data['error'] = $result['content']['error']['message'];
+                // 页面信息
+                $data['title'] = $this->class_name_cn. $data['item']['brief_name'];
+                $data['class'] = $this->class_name.' detail';
 
-			endif;
+            else:
+                redirect( base_url('error/code_404') ); // 若缺少参数，转到错误提示页
 
-			// 页面信息
-			$data['title'] = isset($data['item'])? $data['item']['brief_name']: '商家详情';
-			$data['class'] = $this->class_name.' detail';
-			//$data['keywords'] = $this->class_name.','. $data['item']['name'];
+            endif;
 
 			// 输出视图
 			$this->load->view('templates/header', $data);

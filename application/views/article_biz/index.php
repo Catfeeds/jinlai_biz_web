@@ -48,9 +48,9 @@
 
     <div id=primary_actions class=action_bottom>
         <?php if (count($items) > 1): ?>
-            <span id=enter_bulk>
-        <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
-    </span>
+        <span id=enter_bulk>
+            <i class="fa fa-pencil-square-o" aria-hidden=true></i>批量
+        </span>
         <?php endif ?>
 
         <ul class=horizontal>
