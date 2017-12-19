@@ -45,22 +45,64 @@
 			$role_allowed = array('管理员', '经理');
 			$level_allowed = 30;
 			if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+                $status = $item['status'];
 			?>
 		    <ul id=item-actions class=list-unstyled>
-				<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
+                <li><a title="备注" href="<?php echo base_url($this->class_name.'/note?ids='.$item[$this->id_name]) ?>" target=_blank>备注</a></li>
+
+                <?php if ($status === '待处理'): ?>
+                <li><a title="拒绝" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>拒绝</a></li>
+                <li><a title="同意" href="<?php echo base_url($this->class_name.'/accept?ids='.$item[$this->id_name]) ?>" target=_blank>同意</a></li>
+                <?php endif ?>
+
+                <?php if ($status === '待退货'): ?>
+                <li><a title="收货" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>收货</a></li>
+                <?php endif ?>
 		    </ul>
 	<?php endif ?>
 
-	<dl id=list-info class=dl-horizontal>
+    <section id=list-items>
+        <h2>订单商品</h2>
+        <?php $order_item = $item['order_item'] ?>
+        <a href="<?php echo base_url('order/detail?id='.$order_item['order_id']) ?>">
+            <ul>
+                <li class=row>
+                    <figure class=col-xs-2>
+                        <img src="<?php echo empty($order_item['item_image'])? MEDIA_URL.'sku/'.$order_item['sku_image']: $order_item['item_image'] ?>">
+                    </figure>
+                    <div class="item-name col-xs-10">
+                        <h3><?php echo $order_item['name'] ?></h3>
+                        <?php if ( isset($order_item['slogan']) ): ?>
+                        <h4><?php echo $order_item['slogan'] ?></h4>
+                        <?php endif ?>
+                        <div>￥<?php echo $order_item['price'] ?> × <?php echo $order_item['count'] ?></div>
+                    </div>
+                </li>
+            </ul>
+        </a>
+    </section>
+
+    <section id="info-user">
+        <h2>用户</h2>
+        <?php $user = $item['user'] ?>
+        <a href="<?php echo base_url('user/detail?id='.$user['user_id']) ?>">
+            <div class="row">
+                <figure class=col-xs-2>
+                    <img src="<?php echo MEDIA_URL.'user/'.$user['avatar'] ?>">
+                </figure>
+                <div class="item-name col-xs-10">
+                    <h3><?php echo $user['nickname'] ?></h3>
+                </div>
+            </div>
+        </a>
+    </section>
+
+    <dl id=list-info class=dl-horizontal>
 		<dt><?php echo $this->class_name_cn ?>ID</dt>
 		<dd><?php echo $item[$this->id_name] ?></dd>
 
 		<dt>相关订单ID</dt>
 		<dd><?php echo $item['order_id'] ?></dd>
-		<dt>相关用户ID</dt>
-		<dd><?php echo $item['user_id'] ?></dd>
-		<dt>订单商品ID</dt>
-		<dd><?php echo $item['record_id'] ?></dd>
 		<dt>类型</dt>
 		<dd><?php echo $item['type'] ?></dd>
 		<dt>货物状态</dt>
@@ -84,22 +126,28 @@
                 foreach($figure_image_urls as $url):
                     ?>
                     <li class="col-xs-6 col-sm-4 col-md-3">
-                        <img src="<?php echo $url ?>">
+                        <img src="<?php echo MEDIA_URL.'refund/'.$url ?>">
                     </li>
                 <?php endforeach ?>
             </ul>
             <?php endif ?>
         </dd>
 
-		<dt>申请退款金额（元）</dt>
+		<dt>申请金额</dt>
 		<dd>￥ <?php echo $item['total_applied'] ?></dd>
 
         <?php if ($item['total_approved'] !== '0.00'): ?>
-		<dt>实际退款金额（元）</dt>
+		<dt>同意金额</dt>
 		<dd>￥ <?php echo $item['total_approved'] ?></dd>
         <?php endif ?>
 
-		<dt>发货方式</dt>
+        <?php if ($item['total_payed'] !== '0.00'): ?>
+        <dt>已退金额</dt>
+        <dd>￥ <?php echo $item['total_payed'] ?></dd>
+        <?php endif ?>
+
+        <?php if ( ! empty($item['deliver_method'])): ?>
+        <dt>发货方式</dt>
 		<dd><?php echo $item['deliver_method'] ?></dd>
 		<dt>物流服务商</dt>
 		<dd><?php echo $item['deliver_biz'] ?></dd>
@@ -107,33 +155,34 @@
 		<dd><?php echo $item['waybill_id'] ?></dd>
 		<dt>状态</dt>
 		<dd><?php echo $item['status'] ?></dd>
+        <?php endif ?>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
 		<dt>用户创建时间</dt>
 		<dd><?php echo date('Y-m-d H:i:s', $item['time_create']) ?></dd>
 
-        <?php if ( ! empty($item['time_delete']) ): ?>
+        <?php if ( ! empty($item['time_cancel']) ): ?>
         <dt>用户取消时间</dt>
         <dd><?php echo date('Y-m-d H:i:s', $item['time_cancel']) ?></dd>
         <?php endif ?>
 
-        <?php if ( ! empty($item['time_delete']) ): ?>
+        <?php if ( ! empty($item['time_close']) ): ?>
         <dt>关闭时间</dt>
         <dd><?php echo date('Y-m-d H:i:s', $item['time_close']) ?></dd>
         <?php endif ?>
 
-        <?php if ( ! empty($item['time_delete']) ): ?>
+        <?php if ( ! empty($item['time_refuse']) ): ?>
         <dt>商家拒绝时间</dt>
         <dd><?php echo date('Y-m-d H:i:s', $item['time_refuse']) ?></dd>
         <?php endif ?>
 
-        <?php if ( ! empty($item['time_delete']) ): ?>
+        <?php if ( ! empty($item['time_accept']) ): ?>
         <dt>商家同意时间</dt>
         <dd><?php echo date('Y-m-d H:i:s', $item['time_accept']) ?></dd>
         <?php endif ?>
 
-        <?php if ( ! empty($item['time_delete']) ): ?>
+        <?php if ( ! empty($item['time_refund']) ): ?>
         <dt>商家退款时间</dt>
         <dd><?php echo date('Y-m-d H:i:s', $item['time_refund']) ?></dd>
         <?php endif ?>

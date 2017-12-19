@@ -17,7 +17,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171217">
+		<meta name=version content="revision20171219">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -293,6 +293,8 @@
 								<li><a title="商品订单列表" href="<?php echo base_url('order') ?>">所有订单</a></li>
                                 <li><a title="待接单订单" href="<?php echo base_url('order?status=待接单') ?>">待接单订单</a></li>
                                 <li><a title="待发货订单" href="<?php echo base_url('order?status=待发货') ?>">待发货订单</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a title="退款/售后列表" href="<?php echo base_url('refund') ?>">所有退款/售后</a></li>
 							</ul>
 						</li>
 

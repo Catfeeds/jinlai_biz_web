@@ -1,5 +1,5 @@
 <style>
-	
+
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -60,31 +60,37 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>确定要<?php echo $title ?>？</p>
+		<p>将拒绝退款给用户。</p>
 	</div>
 
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-delete form-horizontal', 'role' => 'form');
-		echo form_open($this->class_name.'/delete', $attributes);
+		$attributes = array('class' => 'form-'.$this->class_name.'-reprice form-horizontal', 'role' => 'form');
+		echo form_open($this->class_name.'/reprice', $attributes);
 	?>
 		<fieldset>
 			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
 
+            <div class=form-group>
+                <label for=note_stuff class="col-sm-2 control-label">备注</label>
+                <div class=col-sm-10>
+                    <textarea class=form-control name=note_stuff row=5 placeholder="如有必要，可备注拒绝退款原因，最多255个字符" autofocus><?php echo $item['note_stuff'] ?></textarea>
+                </div>
+            </div>
+
 			<div class=form-group>
 				<label for=password class="col-sm-2 control-label">密码</label>
 				<div class=col-sm-10>
-					<input class=form-control name=password type=password placeholder="请输入您的登录密码" autofocus required>
+					<input class=form-control name=password type=password placeholder="请输入您的登录密码" required>
 				</div>
 			</div>
 		</fieldset>
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
-				<button class="btn btn-danger btn-lg btn-block" type=submit>删除</button>
+				<button class="btn btn-warning btn-lg btn-block" type=submit>确定</button>
 		    </div>
 		</div>
 
 	</form>
-
 </div>

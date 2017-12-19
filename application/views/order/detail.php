@@ -158,7 +158,7 @@
             <?php foreach ($item['order_items'] as $order_item): ?>
                 <li class=row>
                     <figure class=col-xs-2>
-                        <img src="<?php echo $order_item['item_image'] ?>">
+                        <img src="<?php echo empty($order_item['item_image'])? MEDIA_URL.'sku/'.$order_item['sku_image']: $order_item['item_image'] ?>">
                     </figure>
                     <div class="item-name col-xs-10">
                         <h3><?php echo $order_item['name'] ?></h3>
