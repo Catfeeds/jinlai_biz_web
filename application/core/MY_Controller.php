@@ -345,6 +345,23 @@
 			return $ids;
 		} // end parse_ids_array
 
+        /**
+         * 将可读日期转为精确到分钟的Unix时间戳
+         *
+         * @param $time_string 'Y-m-d H:i'或'Y-m-d H:i:s'格式，例如2018-01-01 06:06:06
+         * @return string
+         */
+        public function strto_minute($time_string)
+        {
+            if (strlen($time_string) === 16):
+                $timestamp = strtotime($time_string. ':00');
+            else:
+                $timestamp = strtotime(substr($time_string, 0, 16) .':00');
+            endif;
+
+            return $timestamp;
+        } // end strto_minute
+
 		/**
 		 * 删除单行或多行项目
 		 *

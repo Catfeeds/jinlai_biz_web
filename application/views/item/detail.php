@@ -46,6 +46,19 @@
 		// 需要特定角色和权限进行该操作
 		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 		?>
+
+        <?php if ( empty($item['time_suspend']) ): ?>
+        <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
+        <?php endif ?>
+
+        <?php if ( empty($item['time_publish']) ): ?>
+        <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank>上架</a></li>
+        <?php endif ?>
+
+        <?php if ( empty($item['time_delete']) ): ?>
+        <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
+        <?php endif ?>
+
         <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
 		<?php endif ?>
 	</ul>
@@ -162,25 +175,20 @@
         </dd>
 
 		<dt>每单最高限量</dt>
-		<dd><?php echo !empty($item['quantity_max'])? $item['quantity_max'].' 份': '不限'; ?></dd>
+		<dd><?php echo $item['quantity_max'] ?></dd>
 		<dt>每单最低限量</dt>
-		<dd><?php echo !empty($item['quantity_min'])? $item['quantity_min'].' 份': 1; ?></dd>
-		<dt>是否可用优惠券</dt>
-		<dd><?php echo ($item['coupon_allowed'] === '1')? '是': '否'; ?></dd>
+		<dd><?php echo $item['quantity_min'] ?></dd>
+
 		<dt>积分抵扣率</dt>
 		<dd><?php echo $item['discount_credit'] * 100 ?>%</dd>
 		<dt>佣金比例/提成率</dt>
 		<dd><?php echo $item['commission_rate'] * 100 ?>%</dd>
 
-		<?php if ( ! empty($item['time_suspend']) ): ?>
 		<dt>预定上架时间</dt>
 		<dd><?php echo empty($item['time_to_publish'])? '未设置': date('Y-m-d H:i:s', $item['time_to_publish']); ?></dd>
-		<?php endif ?>
 
-		<?php if ( ! empty($item['time_publish']) ): ?>
 		<dt>预定下架时间</dt>
 		<dd><?php echo empty($item['time_to_suspend'])? '未设置': date('Y-m-d H:i:s', $item['time_to_suspend']); ?></dd>
-		<?php endif ?>
 
 		<dt>物流信息</dt>
 		<dd>
@@ -191,7 +199,10 @@
 			</ul>
 		</dd>
 
-		<dt>店内活动</dt>
+        <dt>是否可用优惠券</dt>
+        <dd><?php echo ($item['coupon_allowed'] === '1')? '是': '否'; ?></dd>
+
+        <dt>店内活动</dt>
 		<dd>
 			<?php if ( ! empty($item['promotion_id']) ): ?>
 			<strong><?php echo $promotion['name'] ?></strong>
@@ -207,7 +218,7 @@
         <?php if ( !empty($skus) ): ?>
 		<ul class=row>
 			<?php foreach ($skus as $sku): ?>
-			<li class="col-xs-12 col-sm-6 col-md-4">
+			<li class="col-xs-12 col-sm-6">
 				<a href="<?php echo base_url('sku/detail?id='.$sku['sku_id']) ?>">
 
 					<figure class="list-item-figure col-xs-4">

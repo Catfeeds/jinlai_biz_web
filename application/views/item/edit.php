@@ -122,10 +122,8 @@
 			</div>
 
 			<div class=form-group>
-				<label for=url_image_main class="col-sm-2 control-label">主图※</label>
+				<label for=url_image_main class="col-sm-2 control-label">主图 ※</label>
 				<div class=col-sm-10>
-					<p class=help-block>正方形图片视觉效果最佳</p>
-
                     <?php $name_to_upload = 'url_image_main' ?>
                     <ul class=upload_preview>
 					<?php if ( !empty($item[$name_to_upload]) ): ?>
@@ -149,15 +147,15 @@
                         <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
                     </div>
 
-					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/image_main" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>正方形图片视觉效果最佳</p>
 				</div>
 			</div>
 
 			<div class=form-group>
 				<label for=figure_image_urls class="col-sm-2 control-label">形象图</label>
 				<div class=col-sm-10>
-					<p class=help-block>最多可上传4张</p>
-					
 					<?php $name_to_upload = 'figure_image_urls' ?>
 					<ul class=upload_preview>
 					<?php if ( !empty($item[$name_to_upload]) ): ?>
@@ -186,7 +184,9 @@
                         <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
                     </div>
 
-					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/image_figure" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="4" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=4 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>最多可上传4张</p>
 				</div>
 			</div>
 
@@ -202,11 +202,7 @@
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">商品描述</label>
 				<div class=col-sm-10>
-					<?php
-						$user_agent = $_SERVER['HTTP_USER_AGENT'];
-						$is_wechat = strpos($user_agent, 'MicroMessenger')? TRUE: FALSE;
-						if ( !$is_wechat):
-					?>
+					<?php if ( ! $this->user_agent['is_wechat']): ?>
 					<textarea id=detail_editior name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo $item['description'] ?></textarea>
 					<!-- ueditor 1.4.3.3 -->
 					<link rel="stylesheet" media=all href="<?php echo base_url('ueditor/themes/default/css/ueditor.min.css') ?>">
@@ -251,7 +247,7 @@
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=stocks class="col-sm-2 control-label">库存量※</label>
+				<label for=stocks class="col-sm-2 control-label">库存量 ※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo $item['stocks'] ?>" placeholder="最高65535单位" required>
                     <p class=help-block>库存管理方案为付款减库存，商品或规格库存量低于1个单位（含）时将不可被下单/付款；极少数情况下可能出现超卖。</p>
@@ -298,19 +294,6 @@
 
 		<fieldset>
 			<div class=form-group>
-				<label for=coupon_allowed class="col-sm-2 control-label">是否可用优惠券※</label>
-				<div class=col-sm-10>
-					<?php $input_name = 'coupon_allowed' ?>
-					<label class=radio-inline>
-						<input type=radio name="<?php echo $input_name ?>" value="1" required <?php if ($item[$input_name] === '1') echo 'checked' ?>> 是
-					</label>
-					<label class=radio-inline>
-						<input type=radio name="<?php echo $input_name ?>" value="0" required <?php if ($item[$input_name] === '0') echo 'checked' ?>> 否
-					</label>
-				</div>
-			</div>
-
-			<div class=form-group>
 				<label for=discount_credit class="col-sm-2 control-label">积分抵扣率</label>
 				<div class=col-sm-10>
 					<input class=form-control name=discount_credit type=number step=0.01 min=0.00 max=0.99 value="<?php echo $item['discount_credit'] ?>" placeholder="留空则默认为0">
@@ -325,27 +308,36 @@
 				</div>
 			</div>
 
-			<?php if ( ! empty($item['time_suspend']) ): ?>
 			<div class=form-group>
 				<label for=time_to_publish class="col-sm-2 control-label">预定上架时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_to_publish type=datetime value="<?php echo empty($item['time_to_publish'])? NULL: date('Y-m-d H:i:s', $item['time_to_publish']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+8days')) ?>">
-					<p class=help-block>最小可限定到分钟级别；若填写了此项，则商品在保存后将处于下架状态</p>
+					<input class=form-control name=time_to_publish type=datetime value="<?php echo empty($item['time_to_publish'])? NULL: date('Y-m-d H:i', $item['time_to_publish']) ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+8days')) ?>">
+                    <p class=help-block>需详细到分，且晚于当前时间1分钟后；若填写了此项，则商品在创建后将处于下架状态。</p>
 				</div>
 			</div>
-			<?php endif ?>
 
-			<?php if ( ! empty($item['time_publish']) ): ?>
 			<div class=form-group>
 				<label for=time_to_suspend class="col-sm-2 control-label">预定下架时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_to_suspend type=datetime readonly value="<?php echo empty($item['time_to_suspend'])? NULL: date('Y-m-d H:i', $item['time_to_suspend']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+10days')) ?>">
-					<p class=help-block>最小可限定到分钟级别；若填写了此项，则商品在保存后将处于上架状态</p>
+					<input class=form-control name=time_to_suspend type=datetime value="<?php echo empty($item['time_to_suspend'])? NULL: date('Y-m-d H:i', $item['time_to_suspend']) ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+10days')) ?>">
+                    <p class=help-block>需详细到分，且晚于当前时间1分钟后。</p>
 				</div>
 			</div>
-			<?php endif ?>
 
-			<?php if ( !empty($biz_promotions) ): ?>
+            <div class=form-group>
+                <label for=coupon_allowed class="col-sm-2 control-label">是否可用优惠券※</label>
+                <div class=col-sm-10>
+                    <?php $input_name = 'coupon_allowed' ?>
+                    <label class=radio-inline>
+                        <input type=radio name="<?php echo $input_name ?>" value="1" required <?php if ($item[$input_name] === '1') echo 'checked' ?>> 是
+                    </label>
+                    <label class=radio-inline>
+                        <input type=radio name="<?php echo $input_name ?>" value="0" required <?php if ($item[$input_name] === '0') echo 'checked' ?>> 否
+                    </label>
+                </div>
+            </div>
+
+            <?php if ( !empty($biz_promotions) ): ?>
 			<div class=form-group>
 				<label for=promotion_id class="col-sm-2 control-label">店内活动</label>
 				<div class=col-sm-10>

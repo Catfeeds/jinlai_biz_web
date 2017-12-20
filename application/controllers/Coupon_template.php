@@ -254,8 +254,8 @@
 			$this->form_validation->set_rules('period', '有效期', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
-			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
-			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
+            $this->form_validation->set_message('time_start', '有效期开始时间需详细到分，且晚于当前时间1分钟后');
+            $this->form_validation->set_message('time_end', '有效期结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -269,9 +269,10 @@
 				// 需要创建的数据；逐一赋值需特别处理的字段
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
-					'time_start' => strtotime( $this->input->post('time_start') ),
-					'time_end' => strtotime( $this->input->post('time_end') ),
-				);
+                    'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
+                    'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
+
+                );
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
 					'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'max_amount_user', 'min_subtotal', 'amount', 'period',
@@ -364,8 +365,8 @@
 			$this->form_validation->set_rules('period', '有效期', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
-			$this->form_validation->set_message('time_start', '开始时间需详细到分，且晚于当前时间1分钟后');
-			$this->form_validation->set_message('time_end', '结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
+			$this->form_validation->set_message('time_start', '有效期开始时间需详细到分，且晚于当前时间1分钟后');
+			$this->form_validation->set_message('time_end', '有效期结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
             $this->form_validation->set_rules('category_id', '限用系统商品分类', 'trim');
             $this->form_validation->set_rules('category_biz_id', '限用商家商品分类', 'trim');
             $this->form_validation->set_rules('item_id', '限用商品', 'trim');
@@ -383,9 +384,10 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
-					'time_start' => strtotime( $this->input->post('time_start') ),
-					'time_end' => strtotime( $this->input->post('time_end') ),
-				);
+                    'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
+                    'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
+
+                );
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
 					'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'max_amount_user', 'min_subtotal', 'amount', 'period',
@@ -462,7 +464,7 @@
 					return false;
 
 				// 若已设置开始时间，不可早于开始时间一分钟以内
-				elseif ( !empty($this->input->post('time_start')) && $time_to_check <= strtotime($this->input->post('time_start')) + 60):
+				elseif ( !empty($this->input->post('time_start')) && $time_to_check < strtotime($this->input->post('time_start')) + 60):
 					return false;
 
 				else:

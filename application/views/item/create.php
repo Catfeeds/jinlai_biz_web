@@ -62,7 +62,7 @@
 
 		<fieldset>
 			<div class=form-group>
-				<label for=category_id class="col-sm-2 control-label">系统分类※</label>
+				<label for=category_id class="col-sm-2 control-label">系统分类 ※</label>
 				<div class=col-sm-10>
 					<select class=form-control name=category_id required>
 						<option value="">请选择</option>
@@ -110,7 +110,7 @@
 			<?php endif ?>
 
 			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">商品名称※</label>
+				<label for=name class="col-sm-2 control-label">商品名称 ※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="最多30个字符，中英文、数字，不可为纯数字" required>
 				</div>
@@ -131,7 +131,7 @@
 			</div>
 			
 			<div class=form-group>
-				<label for=url_image_main class="col-sm-2 control-label">主图※</label>
+				<label for=url_image_main class="col-sm-2 control-label">主图 ※</label>
 				<div class=col-sm-10>
 					<?php $name_to_upload = 'url_image_main' ?>
                     <ul class="upload_preview"></ul>
@@ -180,11 +180,7 @@
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">商品描述</label>
 				<div class=col-sm-10>
-					<?php
-						$user_agent = $_SERVER['HTTP_USER_AGENT'];
-						$is_wechat = strpos($user_agent, 'MicroMessenger')? TRUE: FALSE;
-						if ( !$is_wechat):
-					?>
+                    <?php if ( ! $this->user_agent['is_wechat']): ?>
 					<textarea id=detail_editior name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo set_value('description') ?></textarea>
 					<!-- ueditor 1.4.3.3 -->
 					<link rel="stylesheet" media=all href="<?php echo base_url('ueditor/themes/default/css/ueditor.min.css') ?>">
@@ -281,19 +277,6 @@
 
 		<fieldset>
 			<div class=form-group>
-				<label for=coupon_allowed class="col-sm-2 control-label">是否可用优惠券※</label>
-				<div class=col-sm-10>
-					<?php $input_name = 'coupon_allowed' ?>
-					<label class=radio-inline>
-						<input type=radio name="<?php echo $input_name ?>" value="1" required <?php echo set_radio($input_name, 1, TRUE) ?>> 是
-					</label>
-					<label class=radio-inline>
-						<input type=radio name="<?php echo $input_name ?>" value="0" required <?php echo set_radio($input_name, 0) ?>> 否
-					</label>
-				</div>
-			</div>
-
-			<div class=form-group>
 				<label for=discount_credit class="col-sm-2 control-label">积分抵扣率</label>
 				<div class=col-sm-10>
 					<input class=form-control name=discount_credit type=number step=0.01 min=0.00 max=0.50 value="<?php echo set_value('discount_credit') ?>" placeholder="留空则默认为0">
@@ -308,22 +291,36 @@
 				</div>
 			</div>
 
-            <!--
 			<div class=form-group>
 				<label for=time_to_publish class="col-sm-2 control-label">预定上架时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_to_publish type=datetime value="<?php echo set_value('time_to_publish') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+8days')) ?>">
-					<p class=help-block>最小可限定到分钟级别；若填写了此项，则商品在创建后将处于下架状态</p>
+					<p class=help-block>需详细到分，且晚于当前时间1分钟后；若填写了此项，则商品在创建后将处于下架状态。</p>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=time_to_suspend class="col-sm-2 control-label">预定下架时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_to_suspend type=datetime value="<?php echo set_value('time_to_suspend') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+10days')) ?>">
-					<p class=help-block>最小可限定到分钟级别；若填写了此项，则商品在创建后将处于上架状态</p>
+					<p class=help-block>需详细到分，且晚于当前时间1分钟后。</p>
 				</div>
 			</div>
-			-->
+
+            <!--
+            <div class=form-group>
+                <label for=coupon_allowed class="col-sm-2 control-label">是否可用优惠券 ※</label>
+                <div class=col-sm-10>
+                    <?php $input_name = 'coupon_allowed' ?>
+                    <label class=radio-inline>
+                        <input type=radio name="<?php echo $input_name ?>" value="1" required <?php echo set_radio($input_name, 1, TRUE) ?>> 是
+                    </label>
+                    <label class=radio-inline>
+                        <input type=radio name="<?php echo $input_name ?>" value="0" required <?php echo set_radio($input_name, 0) ?>> 否
+                    </label>
+                </div>
+            </div>
+            -->
 
 			<?php if ( !empty($biz_promotions) ): ?>
 			<div class=form-group>

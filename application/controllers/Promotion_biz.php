@@ -271,13 +271,13 @@
 				// 需要创建的数据；逐一赋值需特别处理的字段
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
-                    'time_start' => empty($this->input->post('time_start'))? time(): strtotime( $this->input->post('time_start') ),
-                    'time_end' => empty($this->input->post('time_end'))? time() + 2592000: strtotime( $this->input->post('time_end') ),
-					'time_book_start' => strtotime( $this->input->post('time_book_start') ),
-					'time_book_end' => strtotime( $this->input->post('time_book_end') ),
-					'time_complete_start' => strtotime( $this->input->post('time_complete_start') ),
-					'time_complete_end' => strtotime( $this->input->post('time_complete_end') ),
-				);
+                    'time_start' => empty($this->input->post('time_start'))? time(): $this->strto_minute($this->input->post('time_start')),
+                    'time_end' => empty($this->input->post('time_end'))? time() + 2592000: $this->strto_minute($this->input->post('time_end')),
+                    'time_book_start' => empty($this->input->post('time_book_start'))? NULL: $this->strto_minute($this->input->post('time_book_start')), // 时间仅保留到分钟，下同
+                    'time_book_end' => empty($this->input->post('time_book_end'))? NULL: $this->strto_minute($this->input->post('time_book_end')),
+                    'time_complete_start' => empty($this->input->post('time_complete_start'))? NULL: $this->strto_minute($this->input->post('time_complete_start')),
+                    'time_complete_end' => empty($this->input->post('time_complete_end'))? NULL: $this->strto_minute($this->input->post('time_complete_end')),
+                );
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
 					'name', 'description', 'fold_allowed', 'type', 'discount', 'present_trigger_amount', 'present', 'reduction_trigger_amount', 'reduction_trigger_count', 'reduction_amount', 'reduction_amount_time', 'reduction_discount', 'coupon_id', 'coupon_combo_id', 'deposit', 'balance', 'groupbuy_order_amount', 'groupbuy_quantity_max',
@@ -402,12 +402,12 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
-                    'time_start' => empty($this->input->post('time_start'))? time(): strtotime( $this->input->post('time_start') ),
-                    'time_end' => empty($this->input->post('time_end'))? time() + 2592000: strtotime( $this->input->post('time_end') ),
-					'time_book_start' => strtotime( $this->input->post('time_book_start') ),
-					'time_book_end' => strtotime( $this->input->post('time_book_end') ),
-					'time_complete_start' => strtotime( $this->input->post('time_complete_start') ),
-					'time_complete_end' => strtotime( $this->input->post('time_complete_end') ),
+                    'time_start' => empty($this->input->post('time_start'))? time(): $this->strto_minute($this->input->post('time_start')),
+                    'time_end' => empty($this->input->post('time_end'))? time() + 2592000: $this->strto_minute($this->input->post('time_end')),
+                    'time_book_start' => empty($this->input->post('time_book_start'))? NULL: $this->strto_minute($this->input->post('time_book_start')), // 时间仅保留到分钟，下同
+                    'time_book_end' => empty($this->input->post('time_book_end'))? NULL: $this->strto_minute($this->input->post('time_book_end')),
+                    'time_complete_start' => empty($this->input->post('time_complete_start'))? NULL: $this->strto_minute($this->input->post('time_complete_start')),
+                    'time_complete_end' => empty($this->input->post('time_complete_end'))? NULL: $this->strto_minute($this->input->post('time_complete_end')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -445,16 +445,16 @@
 		} // end edit
 		
 		/**
-		 * // TODO 激活
+		 * 开始
 		 */
-		public function active()
+		public function publish()
 		{
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
-			$op_name = '激活'; // 操作的名称
+			$op_name = '开始'; // 操作的名称
 			$op_view = 'publish'; // 视图文件名
 
 			// 页面信息
@@ -564,16 +564,16 @@
 		} // end publish
 		
 		/**
-		 * 禁用
+		 * 结束
 		 */
-		public function deactive()
+		public function suspend()
 		{
 			// 操作可能需要检查操作权限
 			// $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
-			$op_name = '禁用'; // 操作的名称
+			$op_name = '结束'; // 操作的名称
 			$op_view = 'suspend'; // 视图文件名
 
 			// 页面信息
@@ -729,7 +729,7 @@
 					return false;
 
 				// 若已设置开始时间，不可早于开始时间一分钟以内
-				elseif ( !empty($this->input->post('time_start')) && $time_to_check <= strtotime($this->input->post('time_start')) + 60):
+				elseif ( !empty($this->input->post('time_start')) && $time_to_check < strtotime($this->input->post('time_start')) + 60):
 					return false;
 
 				else:
@@ -781,7 +781,7 @@
 					return false;
 
 				// 若已设置开始时间，不可早于开始时间一分钟以内
-				elseif ( !empty($this->input->post('time_book_start')) && $time_to_check <= strtotime($this->input->post('time_book_start')) + 60):
+				elseif ( !empty($this->input->post('time_book_start')) && $time_to_check < strtotime($this->input->post('time_book_start')) + 60):
 					return false;
 
 				else:
@@ -833,7 +833,7 @@
 					return false;
 
 				// 若已设置开始时间，不可早于开始时间一分钟以内
-				elseif ( !empty($this->input->post('time_complete_start')) && $time_to_check <= strtotime($this->input->post('time_complete_start')) + 60):
+				elseif ( !empty($this->input->post('time_complete_start')) && $time_to_check < strtotime($this->input->post('time_complete_start')) + 60):
 					return false;
 
 				else:
