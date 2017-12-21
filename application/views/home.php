@@ -162,9 +162,47 @@
 				</a>
 			</li>
             <li class="col-xs-4 col-md-2">
-                <a title="退款/售后管理" href="<?php echo base_url('refund') ?>">
-                    <img src="/media/home/shangpin@3x.png">
-                    退款/售后<span class=count><?php echo $count['refund'] ?></span>
+                <a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">
+                    <img src="/media/home/fenlei@3x.png">
+                    商品分类<span class=count><?php echo $count['item_category_biz'] ?></span>
+                </a>
+            </li>
+            <li class="col-xs-4 col-md-2">
+                <a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">
+                    <img src="/media/home/moban@3x.png">
+                    运费模板<span class=count><?php echo $count['freight_template_biz'] ?></span>
+                </a>
+            </li>
+
+            <li class="col-xs-4 col-md-2">
+                <a title="店铺装修" href="<?php echo base_url('ornament_biz') ?>">
+                    <img src="/media/home/fenlei@3x.png">
+                    店铺装修<span class=count><?php echo $count['ornament_biz'] ?></span>
+                </a>
+            </li>
+            <li class="col-xs-4 col-md-2">
+                <a title="店内活动" href="<?php echo base_url('promotion_biz') ?>">
+                    <img src="/media/home/huodong-biz@3x.png">
+                    店内活动<span class=count><?php echo $count['promotion_biz'] ?></span>
+                </a>
+            </li>
+            <li class="col-xs-4 col-md-2">
+                <a title="平台活动" href="<?php echo base_url('promotion') ?>">
+                    <img src="/media/home/huodong-platform@3x.png">
+                    平台活动<span class=count><?php echo $count['promotion'] ?></span>
+                </a>
+            </li>
+
+            <li class="col-xs-4 col-md-2">
+                <a title="优惠券" href="<?php echo base_url('coupon_template') ?>">
+                    <img src="/media/home/coupon@3x.png">
+                    优惠券<span class=count><?php echo $count['coupon_template'] ?></span>
+                </a>
+            </li>
+            <li class="col-xs-4 col-md-2">
+                <a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">
+                    <img src="/media/home/combo@3x.png">
+                    优惠券包<span class=count><?php echo $count['coupon_combo'] ?></span>
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
@@ -173,60 +211,20 @@
                     文章<span class=count><?php echo $count['article_biz'] ?></span>
                 </a>
             </li>
+
             <li class="col-xs-4 col-md-2">
-                <a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">
-                    <img src="/media/home/fenlei@3x.png">
-                    商品分类<span class=count><?php echo $count['item_category_biz'] ?></span>
+                <a title="门店管理" href="<?php echo base_url('branch') ?>">
+                    <img src="/media/home/mendian@3x.png">
+                    门店/仓库<span class=count><?php echo $count['branch'] ?></span>
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
-                <a title="店铺装修" href="<?php echo base_url('ornament_biz') ?>">
-                    <img src="/media/home/fenlei@3x.png">
-                    店铺装修<span class=count><?php echo $count['ornament_biz'] ?></span>
-                </a>
-            </li>
-			<li class="col-xs-4 col-md-2">
 				<a title="团队管理" href="<?php echo base_url('stuff') ?>">
 					<img src="/media/home/tuandui@3x.png">
 					团队<span class=count><?php echo $count['stuff'] ?></span>
 				</a>
 			</li>
-			<li class="col-xs-4 col-md-2">
-				<a title="门店管理" href="<?php echo base_url('branch') ?>">
-					<img src="/media/home/mendian@3x.png">
-					门店/仓库<span class=count><?php echo $count['branch'] ?></span>
-				</a>
-			</li>
-			<li class="col-xs-4 col-md-2">
-				<a title="平台活动" href="<?php echo base_url('promotion') ?>">
-					<img src="/media/home/huodong-platform@3x.png">
-					平台活动<span class=count><?php echo $count['promotion'] ?></span>
-				</a>
-			</li>
-			<li class="col-xs-4 col-md-2">
-				<a title="店内活动" href="<?php echo base_url('promotion_biz') ?>">
-					<img src="/media/home/huodong-biz@3x.png">
-					店内活动<span class=count><?php echo $count['promotion_biz'] ?></span>
-				</a>
-			</li>
-			<li class="col-xs-4 col-md-2">
-				<a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">
-					<img src="/media/home/moban@3x.png">
-					运费模板<span class=count><?php echo $count['freight_template_biz'] ?></span>
-				</a>
-			</li>
-			<li class="col-xs-4 col-md-2">
-				<a title="优惠券" href="<?php echo base_url('coupon_template') ?>">
-					<img src="/media/home/coupon@3x.png">
-					优惠券<span class=count><?php echo $count['coupon_template'] ?></span>
-				</a>
-			</li>
-			<li class="col-xs-4 col-md-2">
-				<a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">
-					<img src="/media/home/combo@3x.png">
-					优惠券包<span class=count><?php echo $count['coupon_combo'] ?></span>
-				</a>
-			</li>
+
 		</ul>
 	</section>
 		<?php endif //if ($biz['status'] !== '冻结'): ?>

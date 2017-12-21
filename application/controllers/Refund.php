@@ -13,41 +13,12 @@
 	 * @copyright ICBG <www.bingshankeji.com>
 	 */
 	class Refund extends MY_Controller
-	{	
+	{
 		/**
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
 			'order_id', 'biz_id', 'user_id', 'record_id', 'type', 'cargo_status', 'reason', 'description', 'url_images', 'total_applied', 'total_approved', 'deliver_method', 'deliver_biz', 'waybill_id', 'time_create', 'time_cancel', 'time_close', 'time_refuse', 'time_accept', 'time_refund', 'time_edit', 'operator_id', 'status',
-		);
-
-		/**
-		 * 可被编辑的字段名
-		 */
-		protected $names_edit_allowed = array(
-			'type', 'cargo_status', 'reason', 'description', 'url_images', 'total_applied', 'total_approved', 'deliver_method', 'deliver_biz', 'waybill_id',
-		);
-
-		/**
-		 * 完整编辑单行时必要的字段名
-		 */
-		protected $names_edit_required = array(
-			'id',
-			'type', 'cargo_status', 'reason', 'description', 'url_images', 'total_applied', 'total_approved', 'deliver_method', 'deliver_biz', 'waybill_id',
-		);
-		
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
 		);
 
 		public function __construct()
@@ -70,7 +41,7 @@
 				'order_id' => '订单ID',
 				'record_id' => '订单商品ID',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 列表页
@@ -462,6 +433,26 @@
 
             endif;
         } // end confirm
+
+        /**
+         * 删除
+         *
+         * 商家不可删除
+         */
+        public function delete()
+        {
+            exit('商家不可删除用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+        } // end delete
+
+        /**
+         * 找回
+         *
+         * 商家不可找回
+         */
+        public function restore()
+        {
+            exit('商家不可找回用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+        } // end restore
 
 	} // end class Refund
 

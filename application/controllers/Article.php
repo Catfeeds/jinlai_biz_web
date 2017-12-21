@@ -30,20 +30,6 @@
 		protected $names_edit_required = array(
 			'id', 'title', 'excerpt', 'content'
 		);
-		
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
 
 		public function __construct()
 		{
@@ -62,7 +48,7 @@
 				'title' => '标题',
 				'excerpt' => '摘要',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 列表页
@@ -129,7 +115,7 @@
                 $data['item'] = $result['content'];
                 $data['description'] = $this->class_name.','. $data['item']['excerpt'];
                 // 页面信息
-                $data['title'] = $this->class_name_cn. $data['item']['name'];
+                $data['title'] = $this->class_name_cn. $data['item']['title'];
                 $data['class'] = $this->class_name.' detail';
 
             else:

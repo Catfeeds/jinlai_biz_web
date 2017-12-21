@@ -35,7 +35,7 @@
 			// 初始化模型
 			$this->basic_model->table_name = $this->table_name;
 			$this->basic_model->id_name = $this->id_name;
-		}
+		} // end __construct
 
 		// 输出验证码图片
 		public function __destruct()

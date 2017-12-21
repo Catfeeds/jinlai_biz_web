@@ -32,20 +32,6 @@
 			'id',
 		);
 
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
-
 		public function __construct()
 		{
 			parent::__construct();
@@ -66,7 +52,7 @@
 				'mobile' => '手机号',
 				'nickname' => '昵称',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 我的
@@ -165,7 +151,7 @@
             if ($result['status'] === 200):
                 $data['item'] = $result['content'];
                 // 页面信息
-                $data['title'] = $this->class_name_cn. $data['item']['fullname'];
+                $data['title'] = $this->class_name_cn. $data['item']['nickname'];
                 $data['class'] = $this->class_name.' detail';
 
             else:

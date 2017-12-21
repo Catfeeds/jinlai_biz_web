@@ -48,20 +48,6 @@
 			'id', 'name', 'time_start', 'time_end',
 		);
 
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
-
 		public function __construct()
 		{
 			parent::__construct();
@@ -82,7 +68,7 @@
 				'name' => '名称',
 				'type' => '类型',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 列表页

@@ -18,13 +18,6 @@
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
-
 		public function __construct()
 		{
 			parent::__construct();
@@ -660,7 +653,7 @@
 
 			endif;
 		} // end deliver
-		
+
 		/**
 		 * TODO 商家验证
 		 *
@@ -672,23 +665,23 @@
 		} // end valid
 
         /**
-         * 删除订单
+         * 删除
          *
-         * 商家不可删除订单
+         * 商家不可删除
          */
         public function delete()
         {
-            exit('商家不可删除用户的订单；您意图删除用户订单的操作记录已被发送到安全中心。');
+            exit('商家不可删除用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
         } // end delete
 
         /**
-         * 找回订单
+         * 找回
          *
-         * 商家不可找回订单
+         * 商家不可找回
          */
         public function restore()
         {
-            exit('商家不可恢复用户的订单；您意图找回用户订单的操作记录已被发送到安全中心。');
+            exit('商家不可找回用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
         } // end restore
 
 	} // end class Order

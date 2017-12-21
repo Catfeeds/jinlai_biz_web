@@ -37,20 +37,6 @@
 		protected $names_edit_required = array(
 			'id', 'tel_public', 'fullname_owner', 'code_license', 'code_ssn_owner',
 		);
-		
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
 
 		public function __construct()
 		{
@@ -72,7 +58,7 @@
 				'name' => '商家全称',
 				'brief_name' => '店铺名称',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 详情页

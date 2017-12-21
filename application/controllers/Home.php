@@ -26,7 +26,7 @@
             $this->table_name = NULL; // 和这里……
             $this->id_name = NULL;  // 还有这里，OK，这就可以了
             $this->view_root = $this->class_name;
-        }
+        } // end __construct
 
 		// 首页
 		public function index()

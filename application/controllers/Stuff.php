@@ -32,20 +32,6 @@
 			'id', 'fullname', 'role', 'level',
 		);
 
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
-
 		public function __construct()
 		{
 			parent::__construct();
@@ -68,7 +54,7 @@
 				'role' => '角色',
 				'level' => '级别',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 列表页

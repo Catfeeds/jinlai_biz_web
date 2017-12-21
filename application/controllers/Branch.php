@@ -30,20 +30,6 @@
 		protected $names_edit_required = array(
 			'id', 'name', 'province', 'city', 'street',
 		);
-		
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
 
 		public function __construct()
 		{
@@ -67,7 +53,7 @@
 				'city' => '市',
 				'county' => '区/县',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 列表页

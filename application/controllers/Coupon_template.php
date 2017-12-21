@@ -32,20 +32,6 @@
 			'id', 'name', 'amount',
 		);
 
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
-
 		public function __construct()
 		{
 			parent::__construct();
@@ -67,7 +53,7 @@
 				'amount' => '面值（元）',
 				'min_subtotal' => '起用金额（元）',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 列表页

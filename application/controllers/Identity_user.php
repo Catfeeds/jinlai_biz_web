@@ -31,20 +31,6 @@
 			'id',
 			'fullname', 'code_ssn_owner', 'url_image_owner_id', 'url_verify_photo', 'bank_name', 'bank_account',
 		);
-		
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
 
 		public function __construct()
 		{
@@ -66,7 +52,7 @@
 				'name' => '名称',
 				'description' => '描述',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 列表页

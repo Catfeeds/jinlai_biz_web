@@ -32,20 +32,6 @@
 			'id', 'item_id', 'name_first', 'price', 'stocks',
 		);
 
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
-
 		public function __construct()
 		{
 			parent::__construct();
@@ -69,7 +55,7 @@
 				'price' => '商城价/现价',
 				'stocks' => '库存',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 列表页

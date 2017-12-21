@@ -31,20 +31,6 @@
 		protected $names_edit_required = array(
 			'id', 'name',
 		);
-		
-		/**
-		 * 编辑单行特定字段时必要的字段名
-		 */
-		protected $names_edit_certain_required = array(
-			'id', 'name', 'value',
-		);
-
-		/**
-		 * 编辑多行特定字段时必要的字段名
-		 */
-		protected $names_edit_bulk_required = array(
-			'ids', 'password',
-		);
 
 		public function __construct()
 		{
@@ -66,7 +52,7 @@
 				'name' => '名称',
 				'description' => '说明',
 			);
-		}
+		} // end __construct
 
 		/**
 		 * 列表页
