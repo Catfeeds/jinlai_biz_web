@@ -47,12 +47,10 @@
 		if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 		?>
 
-        <?php if ( empty($item['time_suspend']) ): ?>
-        <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
-        <?php endif ?>
-
         <?php if ( empty($item['time_publish']) ): ?>
         <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank>上架</a></li>
+        <?php else: ?>
+        <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
         <?php endif ?>
 
         <?php if ( empty($item['time_delete']) ): ?>
@@ -112,10 +110,11 @@
             <?php endif ?>
         </dd>
 
-		<dt>形象视频</dt>
-        <dd>高级功能，请联系品类负责人确认开通条件。</dd>
         <!--
+        <dt>形象视频</dt>
 		<dd>
+		    <p>高级功能，请联系品类负责人确认开通条件。</p>
+
 			<?php if ( !empty($item['figure_video_urls']) ): ?>
 			<ul class=row>
 				<?php
@@ -174,6 +173,15 @@
             <p class="help-block">若商品存在规格，则可销售库存量以各规格相应库存量为准</p>
         </dd>
 
+        <dt>物流信息</dt>
+        <dd>
+            <ul class="list-horizontal row">
+                <li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross'].' KG': '-' ?></li>
+                <li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net'].' KG': '-' ?></li>
+                <li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume'].' KG': '-' ?></li>
+            </ul>
+        </dd>
+
 		<dt>每单最高限量</dt>
 		<dd><?php echo $item['quantity_max'] ?></dd>
 		<dt>每单最低限量</dt>
@@ -189,15 +197,6 @@
 
 		<dt>预定下架时间</dt>
 		<dd><?php echo empty($item['time_to_suspend'])? '未设置': date('Y-m-d H:i:s', $item['time_to_suspend']); ?></dd>
-
-		<dt>物流信息</dt>
-		<dd>
-			<ul class="list-horizontal row">
-                <li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross'].' KG': '-' ?></li>
-                <li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net'].' KG': '-' ?></li>
-				<li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume'].' KG': '-' ?></li>
-			</ul>
-		</dd>
 
         <dt>是否可用优惠券</dt>
         <dd><?php echo ($item['coupon_allowed'] === '1')? '是': '否'; ?></dd>

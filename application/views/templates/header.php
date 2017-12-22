@@ -17,8 +17,8 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20171219">
-		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&amp;技术部">
+		<meta name=version content="revision20171222">
+		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
 
@@ -223,7 +223,7 @@
 		<header id=header class="navbar navbar-fixed-top" role=navigation>
             <?php
                 // 首页不显示返回按钮
-                if ($class !== 'home'):
+                if ($class !== 'home' || $class !== 'success'):
             ?>
 			<a id=return href="javascript:" onclick="history.back()">
 				<i class="fa fa-chevron-left" aria-hidden=true></i>

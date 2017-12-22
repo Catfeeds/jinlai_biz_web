@@ -134,12 +134,10 @@
                             // 需要特定角色和权限进行该操作
                             if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
                         ?>
-                            <?php if ( empty($item['time_suspend']) ): ?>
-                            <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
-                            <?php endif ?>
-
                             <?php if ( empty($item['time_publish']) ): ?>
                             <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank>上架</a></li>
+                            <?php else: ?>
+                            <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
                             <?php endif ?>
 
                             <?php if ( empty($item['time_delete']) ): ?>

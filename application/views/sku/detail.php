@@ -96,15 +96,14 @@
 		<dt>库存量</dt>
 		<dd><?php echo $item['stocks'] ?>单位</dd>
 
-		<dt>物流信息</dt>
-		<dd>
-			<p class="bg-info text-info text-center">以下3项中若填写了多项，将以毛重为准进行运费计算</p>
-			<ul class="list-horizontal row">
+        <dt>物流信息</dt>
+        <dd>
+            <ul class="list-horizontal row">
                 <li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross'].' KG': '-' ?></li>
                 <li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net'].' KG': '-' ?></li>
                 <li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume'].' KG': '-' ?></li>
-			</ul>
-		</dd>
+            </ul>
+        </dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
