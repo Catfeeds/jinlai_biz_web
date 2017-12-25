@@ -151,7 +151,7 @@
             if ($result['status'] === 200):
                 $data['item'] = $result['content'];
                 // 页面信息
-                $data['title'] = $this->class_name_cn. $data['item']['nickname'];
+                $data['title'] = ( $id === $this->session->user_id )? '我的资料': $data['item']['nickname'];
                 $data['class'] = $this->class_name.' detail';
 
             else:
@@ -253,12 +253,13 @@
 
 				// 待验证的表单项
 				$this->form_validation->set_error_delimiters('', '；');
+                $this->form_validation->set_rules('avatar', '头像', 'trim|max_length[255]');
 				$this->form_validation->set_rules('nickname', '昵称', 'trim|max_length[12]');
 				$this->form_validation->set_rules('lastname', '姓氏', 'trim|max_length[9]');
 				$this->form_validation->set_rules('firstname', '名', 'trim|max_length[6]');
 				$this->form_validation->set_rules('gender', '性别', 'trim|in_list[男,女]');
-				$this->form_validation->set_rules('dob', '出生日期', 'trim|exact_length[10]');
-				$this->form_validation->set_rules('avatar', '头像', 'trim|max_length[255]');
+				$this->form_validation->set_rules('dob', '生日（公历/阳历）', 'trim|exact_length[10]|callback_time_dob');
+                $this->form_validation->set_message('time_dob', SITE_NAME.'目前仅面向14-120岁之间的用户进行服务');
 
 				// 若表单提交不成功
 				if ($this->form_validation->run() === FALSE):
@@ -310,6 +311,29 @@
 
 			endif;
 		} // end edit
+
+        // 检查生日有效性时间
+        public function time_dob($value)
+        {
+            if ( empty($value) ):
+                return true;
+
+            elseif (strlen($value) !== 10):
+                return false;
+
+            else:
+                $eldest_dob = strtotime("- 120 years"); // 120岁
+                $youngest_dob = strtotime("- 14 years"); // 14岁
+
+                // 不可超出上述限制
+                if ($value < $eldest_dob || $value > $youngest_dob):
+                    return false;
+                else:
+                    return true;
+                endif;
+
+            endif;
+        } // end time_start
 
 	} // end class User
 

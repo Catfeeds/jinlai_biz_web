@@ -73,7 +73,10 @@
 			);
 
 			// 若存在商品，则获取商品列表
-			if ($data['count']['item'] !== 0):
+			if ($data['count']['item'] === 0):
+                $data['items'] = array();
+
+            else:
 				// 筛选条件
 				$condition['time_delete'] = 'NULL';
 				// （可选）遍历筛选条件

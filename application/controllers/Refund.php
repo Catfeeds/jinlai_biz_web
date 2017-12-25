@@ -39,7 +39,7 @@
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
 				'order_id' => '订单ID',
-				'record_id' => '订单商品ID',
+				'total_applied' => '申请退款金额',
 			);
 		} // end __construct
 
@@ -64,7 +64,6 @@
 
 			// 排序条件
 			$order_by = NULL;
-			//$order_by['name'] = 'value';
 
 			// 从API服务器获取相应列表信息
 			$params = $condition;
@@ -76,9 +75,6 @@
 				$data['items'] = array();
 				$data['error'] = $result['content']['error']['message'];
 			endif;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -155,9 +151,6 @@
                     $data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
                 endif;
             endforeach;
-
-            // 将需要显示的数据传到视图以备使用
-            $data['data_to_display'] = $this->data_to_display;
 
             // 待验证的表单项
             $this->form_validation->set_error_delimiters('', '；');

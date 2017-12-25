@@ -56,7 +56,7 @@
                 <?php endif ?>
 
                 <?php if ($status === '待退货'): ?>
-                <li><a title="收货" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>收货</a></li>
+                <li><a title="收货" href="<?php echo base_url($this->class_name.'/confirm?ids='.$item[$this->id_name]) ?>" target=_blank>收货</a></li>
                 <?php endif ?>
 		    </ul>
 	<?php endif ?>

@@ -1,3 +1,4 @@
+<link rel=stylesheet media=all href="/css/result.css">
 <style>
 
 
@@ -21,10 +22,13 @@
 </style>
 
 <div id=content class=container>
-	<?php if ( !empty($content) ): ?>
-	<p><?php echo $content ?></p>
-	<?php endif ?>
+    <h2><?php echo $title ?></h2>
+    <?php if ( !empty($content) ): ?>
+        <section><?php echo $content ?></section>
+    <?php endif ?>
 
-	<a title="我的" class="btn btn-block btn-default" href="<?php echo base_url('mine') ?>">我的</a>
-	<a title="首页" class="btn btn-block btn-primary" href="<?php echo base_url('home') ?>">首页</a>
+    <ul class=row>
+        <li class="col-xs-12 col-sm-6 col-sm-3"><a title="个人中心" class="btn btn-default btn-lg" href="<?php echo base_url('mine') ?>">个人中心</a></li>
+        <li class="col-xs-12 col-sm-6 col-sm-3"><a title="首页" class="btn btn-primary btn-lg" href="<?php echo base_url('home') ?>">首页</a></li>
+    </ul>
 </div>

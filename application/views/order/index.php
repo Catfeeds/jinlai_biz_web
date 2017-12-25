@@ -49,6 +49,43 @@
 </div>
 
 <div id=content class=container>
+    <?php
+    // 需要特定角色和权限进行该操作
+    $current_role = $this->session->role; // 当前用户角色
+    $current_level = $this->session->level; // 当前用户级别
+    $role_allowed = array('管理员', '经理');
+    $level_allowed = 30;
+    if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+        ?>
+        <div class="btn-group btn-group-justified" role=group>
+            <div class=btn-group role=group>
+                <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
+                    全部 <span class="caret"></span>
+                </button>
+                <ul class=dropdown-menu>
+                    <li>
+                        <?php $style_class = empty($this->input->get('status') )? 'btn-primary': 'btn-default'; ?>
+                        <a class="btn <?php echo $style_class ?>" title="全部<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">全部</a>
+                    </li>
+
+                    <?php
+                    $status_to_mark = array('待付款', '已取消', '待接单', '已拒绝', '待发货', '待收货', '待使用', '待评价', '已完成', '已关闭');
+                    foreach ($status_to_mark as $status):
+                        // 页面URL
+                        $url = ($status === NULL)? base_url('order'): base_url('order?status='.$status);
+                        // 链接样式
+                        $style_class = ($this->input->get('status') !== $status)? 'btn-default': 'btn-primary';
+                        echo '<li><a class="btn '. $style_class. '" title="'. $status. '订单" href="'. $url. '">'. $status. '</a> </li>';
+                    endforeach;
+                    ?>
+                </ul>
+            </div>
+
+            <a class="btn <?php echo $this->input->get('status') === '待接单'? 'btn-primary': 'btn-default' ?>" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
+            <a class="btn <?php echo $this->input->get('status') === '待发货'? 'btn-primary': 'btn-default' ?>" title="待发货商品订单" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
+        </div>
+    <?php endif ?>
+    
 	<?php if ( empty($this->session->biz_id) ): ?>
 	<blockquote>
 		<p>您需要成为已入驻企业的员工，或者提交入驻申请，才可进行订单管理</p>
@@ -60,43 +97,6 @@
 	</blockquote>
 
 	<?php else: ?>
-        <?php
-        // 需要特定角色和权限进行该操作
-        $current_role = $this->session->role; // 当前用户角色
-        $current_level = $this->session->level; // 当前用户级别
-        $role_allowed = array('管理员', '经理');
-        $level_allowed = 30;
-        if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-            ?>
-            <div class="btn-group btn-group-justified" role=group>
-                <div class=btn-group role=group>
-                    <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
-                        全部 <span class="caret"></span>
-                    </button>
-                    <ul class=dropdown-menu>
-                        <li>
-                            <?php $style_class = empty($this->input->get('status') )? 'btn-primary': 'btn-default'; ?>
-                            <a class="btn <?php echo $style_class ?>" title="全部<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">全部</a>
-                        </li>
-
-                        <?php
-                        $status_to_mark = array('待付款', '已取消', '待接单', '已拒绝', '待发货', '待收货', '待使用', '待评价', '已完成', '已关闭');
-                        foreach ($status_to_mark as $status):
-                            // 页面URL
-                            $url = ($status === NULL)? base_url('order'): base_url('order?status='.$status);
-                            // 链接样式
-                            $style_class = ($this->input->get('status') !== $status)? 'btn-default': 'btn-primary';
-                            echo '<li><a class="btn '. $style_class. '" title="'. $status. '订单" href="'. $url. '">'. $status. '</a> </li>';
-                        endforeach;
-                        ?>
-                    </ul>
-                </div>
-
-                <a class="btn <?php echo $this->input->get('status') === '待接单'? 'btn-primary': 'btn-default' ?>" title="待接单商品订单" href="<?php echo base_url('order?status=待接单') ?>">待接单</a>
-                <a class="btn <?php echo $this->input->get('status') === '待发货'? 'btn-primary': 'btn-default' ?>" title="待发货商品订单" href="<?php echo base_url('order?status=待发货') ?>">待发货</a>
-            </div>
-        <?php endif ?>
-
         <?php if (empty($this->input->get_post('status'))): ?>
         <blockquote>
             <p>已取消、已拒绝，及已关闭的订单不在此处列出，您可通过上方筛选菜单查看</p>
@@ -116,7 +116,6 @@
 
 	<form method=get target=_blank>
         <?php
-            $status = $this->input->get('status');
             if (!empty($status) && count($items) > 1):
         ?>
         <div id=bulk_action class=action_bottom>
@@ -154,8 +153,7 @@
                 <?php endif ?>
             </ul>
         </div>
-            <?php endif ?>
-        <?php //endif ?>
+        <?php endif ?>
 
 		<ul id=item-list class=row>
 			<?php
@@ -163,7 +161,7 @@
 					$status = $item['status'];
 			?>
 			<li>
-                <span class=item-status><?php echo $item['status'] ?></span>
+                <span class=item-status><?php echo $status ?></span>
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
                     <p>下单时间 <?php echo date('Y-m-d H:i:s', $item['time_create']) ?></p>
@@ -171,7 +169,7 @@
                     <ul class="order-figures row">
                         <li class="col-xs-4">小计<span>￥<?php echo $item['subtotal'] ?></span></li>
                         <li class="col-xs-4">应支付<span>￥<?php echo $item['total'] ?></span>
-                        <li class="col-xs-4">已支付<span<?php echo ($item['total_payed'] < $item['total'])? ' style="color:red"': NULL ?>>￥<?php echo $item['total_payed'] ?></span>
+                        <li class="col-xs-4">已支付<span<?php echo ($item['total_payed'] !== '0.00' && $item['total_payed'] < $item['total'])? ' style="color:red"': ' style="color:#c9caca"' ?>>￥<?php echo $item['total_payed'] ?></span>
                     </ul>
                 </a>
 

@@ -40,7 +40,7 @@
 	$current_level = $this->session->level; // 当前用户级别
 	$role_allowed = array('管理员', '经理');
 	$level_allowed = 30;
-	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) && $item['user_id'] !== $this->session->user_id):
 	?>
 	<div class="btn-group btn-group-justified" role=group>
 		<a class="btn btn-default" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
@@ -59,52 +59,60 @@
 
 	<dl id=list-info class=dl-horizontal>
 		<dt>头像</dt>
-		<?php if ( !empty($item['avatar']) ): ?>
+		<?php if ( empty($item['avatar']) ): ?>
+        <dd>未上传</dd>
+        <?php else: ?>
 		<dd class=row>
 			<figure class="col-xs-12 col-sm-6 col-md-4">
 				<img class=img-circle src="<?php echo $item['avatar'] ?>">
 			</figure>
 		</dd>
-		<?php else: ?>
-		<dd>未上传</dd>
 		<?php endif ?>
+
 		<dt>用户ID</dt>
 		<dd><?php echo $item['user_id'] ?></dd>
 		<dt>昵称</dt>
 		<dd><?php echo $item['nickname'] ?></dd>
-        <!--
-		<dt>姓氏</dt>
-		<dd><?php echo $item['lastname'] ?></dd>
-		<dt>名</dt>
-		<dd><?php echo $item['firstname'] ?></dd>
+        <dt>性别</dt>
+        <dd><?php echo empty($item['gender'])? '未设置': $item['gender'] ?></dd>
+        <dt>生日</dt>
+        <dd><?php echo empty($item['dob'])? '未填写': $item['dob'] ?></dd>
+
+        <?php
+        // 部分信息仅本人可见
+        if ( $item['user_id'] === $this->session->user_id ):
+        ?>
+		<dt>姓名</dt>
+		<dd><?php echo $item['lastname'].$item['firstname'] ?></dd>
 		<dt>身份证号</dt>
 		<dd><?php echo $item['code_ssn'] ?></dd>
 		<dt>身份证照片</dt>
-		<dd><?php echo $item['url_image_id'] ?></dd>
-		-->
-		<dt>性别</dt>
-		<dd><?php echo $item['gender'] ?></dd>
-		<dt>出生日期</dt>
-		<dd><?php echo $item['dob'] ?></dd>
+        <?php if ( empty($item['url_image_id']) ): ?>
+        <dd>未上传</dd>
+        <?php else: ?>
+        <dd class=row>
+            <figure class="col-xs-12 col-sm-6 col-md-4">
+                <img class=img-circle src="<?php echo $item['url_image_id'] ?>">
+            </figure>
+        </dd>
+        <?php endif ?>
 
-        <!--
         <dt>手机号</dt>
 		<dd><?php echo $item['mobile'] ?></dd>
 		<dt>电子邮件地址</dt>
 		<dd><?php echo $item['email'] ?></dd>
-        <dt>默认地址</dt>
-		<dd><?php echo $item['address_id'] ?></dd>
 		<dt>开户行名称</dt>
 		<dd><?php echo $item['bank_name'] ?></dd>
 		<dt>开户行账号</dt>
 		<dd><?php echo $item['bank_account'] ?></dd>
 		<dt>注册时间</dt>
 		<dd><?php echo $item['time_create'] ?></dd>
+
 		<dt>最后登录时间</dt>
 		<dd><?php echo $item['last_login_timestamp'] ?></dd>
 		<dt>最后登录IP地址</dt>
 		<dd><?php echo $item['last_login_ip'] ?></dd>
-		-->
+        <?php endif ?>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

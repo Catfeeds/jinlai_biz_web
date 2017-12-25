@@ -23,6 +23,7 @@
 
 <base href="<?php echo $this->media_root ?>">
 
+<!--
 <link href="<?php echo CDN_URL ?>css/datepicker.min.css" rel="stylesheet">
 <script src="<?php echo CDN_URL ?>js/datepicker.min.js"></script>
 <script>
@@ -37,6 +38,7 @@
 		)
 	});
 </script>
+-->
 
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
@@ -53,15 +55,11 @@
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<fieldset>
-			<legend>基本信息</legend>
-
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 			
 			<div class=form-group>
 				<label for=avatar class="col-sm-2 control-label">头像</label>
                 <div class=col-sm-10>
-                    <p class=help-block>正方形图片视觉效果最佳</p>
-
                     <?php $name_to_upload = 'avatar' ?>
                     <ul class=upload_preview>
                         <?php if ( !empty($item[$name_to_upload]) ): ?>
@@ -85,7 +83,9 @@
                         <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
                     </div>
 
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+
+                    <p class=help-block>正方形图片视觉效果最佳</p>
                 </div>
 			</div>
 			
@@ -131,9 +131,10 @@
 			</div>
 
 			<div class=form-group>
-				<label for=dob class="col-sm-2 control-label">出生日期</label>
+				<label for=dob class="col-sm-2 control-label">生日</label>
 				<div class=col-sm-10>
 					<input class="form-control" name=dob type=date min=<?php echo date('Y-m-d', strtotime("-120years")) ?> max=<?php echo date('Y-m-d', strtotime("-14years")) ?> value="<?php echo $item['dob'] ?>" placeholder="例如：1994-07-28">
+                    <p class=help-block>请输入公历/阳历生日</p>
 				</div>
 			</div>
 		</fieldset>
