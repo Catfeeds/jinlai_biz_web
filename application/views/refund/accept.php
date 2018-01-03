@@ -66,7 +66,7 @@
     <?php
     if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
     $attributes = array('class' => 'form-'.$this->class_name.'-reprice form-horizontal', 'role' => 'form');
-    echo form_open($this->class_name.'/reprice', $attributes);
+    echo form_open($this->class_name.'/accept', $attributes);
     ?>
         <fieldset>
             <input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">

@@ -76,6 +76,10 @@
                         <h4><?php echo $order_item['slogan'] ?></h4>
                         <?php endif ?>
                         <div>￥<?php echo $order_item['price'] ?> × <?php echo $order_item['count'] ?></div>
+
+                        <?php if ($order_item['refund_status'] !== '未申请'): ?>
+                            <a class="btn btn-default" title="<?php echo $order_item['refund_status'] ?>" href="<?php echo base_url('refund/detail?record_id='.$order_item['record_id']) ?>" target=_blank><?php echo $order_item['refund_status'] ?></a>
+                        <?php endif ?>
                     </div>
                 </li>
             </ul>

@@ -155,24 +155,24 @@
     <section>
         <h2>订单商品</h2>
         <ul id=list-items>
-            <?php foreach ($item['order_items'] as $order_item): ?>
-                <li class=row>
-                    <figure class=col-xs-2>
-                        <img src="<?php echo empty($order_item['item_image'])? MEDIA_URL.'sku/'.$order_item['sku_image']: $order_item['item_image'] ?>">
-                    </figure>
-                    <div class="item-name col-xs-10">
-                        <h3><?php echo $order_item['name'] ?></h3>
-                        <?php if ( isset($order_item['slogan']) ): ?>
-                            <h4><?php echo $order_item['slogan'] ?></h4>
-                        <?php endif ?>
-                        <div>￥<?php echo $order_item['price'] ?> × <?php echo $order_item['count'] ?></div>
+        <?php foreach ($item['order_items'] as $order_item): ?>
+            <li class=row>
+                <figure class=col-xs-2>
+                    <img src="<?php echo empty($order_item['item_image'])? MEDIA_URL.'sku/'.$order_item['sku_image']: $order_item['item_image'] ?>">
+                </figure>
+                <div class="item-name col-xs-10">
+                    <h3><?php echo $order_item['name'] ?></h3>
+                    <?php if ( isset($order_item['slogan']) ): ?>
+                        <h4><?php echo $order_item['slogan'] ?></h4>
+                    <?php endif ?>
+                    <div>￥<?php echo $order_item['price'] ?> × <?php echo $order_item['count'] ?></div>
 
-                        <?php if ($order_item['refund_status'] !== '未申请'): ?>
-                        <a class="btn btn-default" title="<?php echo $order_item['refund_status'] ?>" href="<?php echo base_url('refund/detail?order_id='.$item[$this->id_name]) ?>" target=_blank><?php echo $order_item['refund_status'] ?></a>
-                        <?php endif ?>
-                    </div>
-                </li>
-            <?php endforeach ?>
+                    <?php if ($order_item['refund_status'] !== '未申请'): ?>
+                    <a class="btn btn-default" title="<?php echo $order_item['refund_status'] ?>" href="<?php echo base_url('refund/detail?record_id='.$order_item['record_id']) ?>" target=_blank><?php echo $order_item['refund_status'] ?></a>
+                    <?php endif ?>
+                </div>
+            </li>
+        <?php endforeach ?>
         </ul>
     </section>
 

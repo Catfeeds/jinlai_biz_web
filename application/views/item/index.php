@@ -75,13 +75,6 @@
 	</blockquote>
 
 	<?php else: ?>
-		<?php if ( $count['biz_freight_templates'] === 0 ): ?>
-		<blockquote class=row>
-			<p>您未添加运费模板，将为买家包邮。</p>
-			<a class="col-xs-12 col-sm-6 col-md-3 btn btn-default btn-lg" href="<?php echo base_url('freight_template_biz') ?>">创建运费模板</a>
-		</blockquote>
-		<?php endif ?>
-
 		<?php if ( empty($items) ): ?>
 		<blockquote class=row>
 			<p>您的货架空空如也，快点添加商品吧！</p>
@@ -134,14 +127,14 @@
                             // 需要特定角色和权限进行该操作
                             if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
                         ?>
+                            <?php if ( empty($item['time_delete']) ): ?>
+                            <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
+                            <?php endif ?>
+
                             <?php if ( empty($item['time_publish']) ): ?>
                             <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank>上架</a></li>
                             <?php else: ?>
                             <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
-                            <?php endif ?>
-
-                            <?php if ( empty($item['time_delete']) ): ?>
-                            <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
                             <?php endif ?>
 
                             <li class=color_primary><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>

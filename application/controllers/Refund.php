@@ -89,8 +89,11 @@
 		{
 			// 检查是否已传入必要参数
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
+            $record_id = $this->input->get_post('record_id')? $this->input->get_post('record_id'): NULL;
 			if ( !empty($id) ):
 				$params['id'] = $id;
+			elseif (!empty($record_id)):
+                $params['record_id'] = $record_id;
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -151,6 +154,9 @@
                     $data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
                 endif;
             endforeach;
+
+            // 将需要显示的数据传到视图以备使用
+            $data['data_to_display'] = $this->data_to_display;
 
             // 待验证的表单项
             $this->form_validation->set_error_delimiters('', '；');

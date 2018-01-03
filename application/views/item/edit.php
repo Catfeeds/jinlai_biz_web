@@ -312,7 +312,7 @@
 				<label for=time_to_publish class="col-sm-2 control-label">预定上架时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_to_publish type=datetime value="<?php echo empty($item['time_to_publish'])? NULL: date('Y-m-d H:i', $item['time_to_publish']) ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+8days')) ?>">
-                    <p class=help-block>需详细到分，且晚于当前时间1分钟后；若填写了此项，则商品在创建后将处于下架状态。</p>
+                    <p class=help-block>需详细到分，且晚于当前时间1分钟后；若填写了此项，则商品将下架。</p>
 				</div>
 			</div>
 

@@ -69,7 +69,7 @@
 			// 获取信息计数
 			$data['count'] = array(
 				'item' => $this->count_table('item'),
-				'biz_freight_templates' => $this->count_table('freight_template_biz'),
+				// 'biz_freight_templates' => $this->count_table('freight_template_biz'),
 			);
 
 			// 若存在商品，则获取商品列表
@@ -374,7 +374,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'brand_id', 'category_biz_id', 'code_biz', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'stocks', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'promotion_id', 'freight_template_id',
+					'category_id', 'brand_id', 'category_biz_id', 'code_biz', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'stocks', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'discount_credit', 'commission_rate', 'coupon_allowed', 'promotion_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);

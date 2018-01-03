@@ -53,9 +53,34 @@
 	$level_allowed = 30;
 	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
-	<div class="btn-group btn-group-justified" role=group>
-		<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
-	</div>
+        <div class="btn-group btn-group-justified" role=group>
+            <div class=btn-group role=group>
+                <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
+                    全部 <span class="caret"></span>
+                </button>
+                <ul class=dropdown-menu>
+                    <li>
+                        <?php $style_class = empty($this->input->get('status') )? 'btn-primary': 'btn-default'; ?>
+                        <a class="btn <?php echo $style_class ?>" title="全部<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">全部</a>
+                    </li>
+
+                    <?php
+                    $status_to_mark = array('待处理', '已取消', '已拒绝', '待退货', '待退款', '已退款', '已关闭');
+                    foreach ($status_to_mark as $status):
+                        // 页面URL
+                        $url = ($status === NULL)? base_url($this->class_name): base_url($this->class_name. '?status='.$status);
+                        // 链接样式
+                        $style_class = ($this->input->get('status') !== $status)? 'btn-default': 'btn-primary';
+                        echo '<li><a class="btn '. $style_class. '" title="'. $status. '退款" href="'. $url. '">'. $status. '</a> </li>';
+                    endforeach;
+                    ?>
+                </ul>
+            </div>
+
+            <a class="btn <?php echo $this->input->get('status') === '待处理'? 'btn-primary': 'btn-default' ?>" title="待处理退款" href="<?php echo base_url($this->class_name. '?status=待处理') ?>">待处理</a>
+            <a class="btn <?php echo $this->input->get('status') === '待退货'? 'btn-primary': 'btn-default' ?>" title="待退货退款" href="<?php echo base_url($this->class_name. '?status=待退货') ?>">待退货</a>
+            <a class="btn <?php echo $this->input->get('status') === '待退款'? 'btn-primary': 'btn-default' ?>" title="待退款退款" href="<?php echo base_url($this->class_name. '?status=待退款') ?>">待退款</a>
+        </div>
 
         <?php
             $status = $this->input->get('status');

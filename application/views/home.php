@@ -175,25 +175,6 @@
             </li>
 
             <li class="col-xs-4 col-md-2">
-                <a title="店铺装修" href="<?php echo base_url('ornament_biz') ?>">
-                    <img src="/media/home/fenlei@3x.png">
-                    店铺装修<span class=count><?php echo $count['ornament_biz'] ?></span>
-                </a>
-            </li>
-            <li class="col-xs-4 col-md-2">
-                <a title="店内活动" href="<?php echo base_url('promotion_biz') ?>">
-                    <img src="/media/home/huodong-biz@3x.png">
-                    店内活动<span class=count><?php echo $count['promotion_biz'] ?></span>
-                </a>
-            </li>
-            <li class="col-xs-4 col-md-2">
-                <a title="平台活动" href="<?php echo base_url('promotion') ?>">
-                    <img src="/media/home/huodong-platform@3x.png">
-                    平台活动<span class=count><?php echo $count['promotion'] ?></span>
-                </a>
-            </li>
-
-            <li class="col-xs-4 col-md-2">
                 <a title="优惠券" href="<?php echo base_url('coupon_template') ?>">
                     <img src="/media/home/coupon@3x.png">
                     优惠券<span class=count><?php echo $count['coupon_template'] ?></span>
@@ -209,6 +190,25 @@
                 <a title="商家文章管理" href="<?php echo base_url('article_biz') ?>">
                     <img src="/media/home/shangpin@3x.png">
                     文章<span class=count><?php echo $count['article_biz'] ?></span>
+                </a>
+            </li>
+
+            <li class="col-xs-4 col-md-2">
+                <a title="店内活动" href="<?php echo base_url('promotion_biz') ?>">
+                    <img src="/media/home/huodong-biz@3x.png">
+                    店内活动<span class=count><?php echo $count['promotion_biz'] ?></span>
+                </a>
+            </li>
+            <li class="col-xs-4 col-md-2">
+                <a title="平台活动" href="<?php echo base_url('promotion') ?>">
+                    <img src="/media/home/huodong-platform@3x.png">
+                    平台活动<span class=count><?php echo $count['promotion'] ?></span>
+                </a>
+            </li>
+            <li class="col-xs-4 col-md-2">
+                <a title="店铺装修" href="<?php echo base_url('ornament_biz') ?>">
+                    <img src="/media/home/fenlei@3x.png">
+                    店铺装修<span class=count><?php echo $count['ornament_biz'] ?></span>
                 </a>
             </li>
 
