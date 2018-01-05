@@ -76,9 +76,8 @@
 			endif;
 			
 			// 根据状态筛选值确定页面标题
-			if ( !empty($condition['status'] ) ):
-				$data['title'] = $condition['status']. '订单';
-			endif;
+			if ( !empty($condition['status'] ) )
+			    $data['title'] = $condition['status']. '订单';
 
 			// 输出视图
 			$this->load->view('templates/header', $data);

@@ -61,8 +61,10 @@
             Cookies.set('default_deliver_method', deliver_method);
 
             $('.optional-input').hide(); // 隐藏所有可选字段
-            if (deliver_method !== '用户自提')
+            if (deliver_method === '用户自提')
             {
+                $('[name=password]').focus();
+            } else {
                 $('#deliver_biz, #waybill_id').show();
                 $('[name=waybill_id]').focus();
             }

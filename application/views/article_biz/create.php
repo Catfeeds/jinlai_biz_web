@@ -57,8 +57,12 @@
 			<div class=form-group>
 				<label for=content class="col-sm-2 control-label">内容 ※</label>
 				<div class=col-sm-10>
-                    <textarea class=form-control name=content rows=10 placeholder="10-20000个字符" required><?php echo set_value('content') ?></textarea>
 
+                    <?php if ($this->user_agent['is_mobile']): ?>
+                    <input class=form-control name=content type=text value="<?php echo set_value('content') ?>" placeholder="10-20000个字符" required>
+
+                    <?php else: ?>
+                    <textarea class=form-control name=content rows=10 placeholder="10-20000个字符" required><?php echo set_value('content') ?></textarea>
                     <link rel=stylesheet media=all href="<?php echo base_url('/css/simditor.css') ?>">
                     <script src="<?php echo base_url('/js/module.js') ?>"></script>
                     <script src="<?php echo base_url('/js/hotkeys.js') ?>"></script>
@@ -66,7 +70,7 @@
                     <script src="<?php echo base_url('/js/simditor.js') ?>"></script>
                     <script>
                         $(function(){
-                            var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', '|', 'hr', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'];
+                            var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', '|', 'hr', 'ol', 'ul', 'blockquote', 'table', '|', 'image', '|', 'indent', 'outdent', 'alignment'];
                             var editor = new Simditor({
                                 textarea: $('[name=content]'),
                                 cleanPaste: true,
@@ -81,6 +85,7 @@
                             });
                         });
                     </script>
+                    <?php endif ?>
 				</div>
 			</div>
 

@@ -365,7 +365,7 @@
          * @param $time_string 'Y-m-d H:i'或'Y-m-d H:i:s'格式，例如2018-01-01 06:06:06
          * @return string
          */
-        public function strto_minute($time_string)
+        protected function strto_minute($time_string)
         {
             if (strlen($time_string) === 16):
                 $timestamp = strtotime($time_string. ':00');

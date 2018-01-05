@@ -60,7 +60,7 @@
 	</table>
 
     <div class="alert alert-warning" role=alert>
-        <p>将原路退还相应金额，请确认；若为批量退款，同意退款金额将以申请退款金额为准。</p>
+        <p>将原路退还申请退款金额，请确认；若为批量退款，同意退款金额将以申请退款金额为准。</p>
     </div>
 
     <?php
@@ -71,13 +71,6 @@
         <fieldset>
             <input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
 
-            <div class=form-group>
-                <label for=note_stuff class="col-sm-2 control-label">备注</label>
-                <div class=col-sm-10>
-                    <textarea class=form-control name=note_stuff row=5 placeholder="如有必要，可备注退款原因，最多255个字符"><?php echo $item['note_stuff'] ?></textarea>
-                </div>
-            </div>
-
             <?php if (count($items) === 1): ?>
             <div class=form-group>
                 <label for=total_approved class="col-sm-2 control-label">同意退款金额</label>
@@ -86,6 +79,13 @@
                 </div>
             </div>
             <?php endif ?>
+
+            <div class=form-group>
+                <label for=note_stuff class="col-sm-2 control-label">备注</label>
+                <div class=col-sm-10>
+                    <textarea class=form-control name=note_stuff row=5 placeholder="如有必要，可备注退款原因，最多255个字符"><?php echo $item['note_stuff'] ?></textarea>
+                </div>
+            </div>
 
             <div class=form-group>
                 <label for=password class="col-sm-2 control-label">密码</label>

@@ -6,6 +6,8 @@
 @charset "utf-8";
 @viewport{width:device-width;}
 
+#maincontainer {margin-bottom:98px;}
+
 #nav-main {display:none;}
 
 #item-actions {background-color:#fff;position:fixed;left:0;right:0;bottom:0;height:98px;line-height:98px;z-index:101;}

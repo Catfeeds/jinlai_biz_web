@@ -39,6 +39,7 @@
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
 				'order_id' => '订单ID',
+                'cargo_status' => '货物状态',
 				'total_applied' => '申请退款金额',
 			);
 		} // end __construct
@@ -58,8 +59,8 @@
 			$condition['time_delete'] = 'NULL';
 			// （可选）遍历筛选条件
 			foreach ($this->names_to_sort as $sorter):
-				if ( !empty($this->input->post($sorter)) )
-					$condition[$sorter] = $this->input->post($sorter);
+                if ( !empty($this->input->get_post($sorter)) )
+                    $condition[$sorter] = $this->input->get_post($sorter);
 			endforeach;
 
 			// 排序条件
@@ -75,6 +76,10 @@
 				$data['items'] = array();
 				$data['error'] = $result['content']['error']['message'];
 			endif;
+
+            // 根据状态筛选值确定页面标题
+            if ( !empty($condition['status'] ) )
+                $data['title'] = $condition['status']. '退款';
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -117,6 +122,109 @@
 			$this->load->view($this->view_root.'/detail', $data);
 			$this->load->view('templates/footer', $data);
 		} // end detail
+
+        /**
+         * 商家备注
+         */
+        public function note()
+        {
+            // 操作可能需要检查操作权限
+            // $role_allowed = array('管理员', '经理'); // 角色要求
+// 			$min_level = 30; // 级别要求
+// 			$this->basic->permission_check($role_allowed, $min_level);
+
+            $op_name = '备注'; // 操作的名称
+            $op_view = 'note'; // 视图文件名
+
+            // 页面信息
+            $data = array(
+                'title' => $op_name,
+                'class' => $this->class_name. ' '. $op_view,
+                'error' => '', // 预设错误提示
+            );
+
+            // 赋值视图中需要用到的待操作项数据
+            $data['ids'] = $ids = $this->parse_ids_array();
+
+            // 获取待操作项数据
+            $data['items'] = array();
+            foreach ($ids as $id):
+                // 从API服务器获取相应详情信息
+                $params['id'] = $id;
+                $url = api_url($this->class_name. '/detail');
+                $result = $this->curl->go($url, $params, 'array');
+                if ($result['status'] === 200):
+                    $data['items'][] = $result['content'];
+                else:
+                    $data['error'] .= 'ID'.$id.'项不可操作，“'.$result['content']['error']['message'].'”';
+                endif;
+            endforeach;
+
+            // 将需要显示的数据传到视图以备使用
+            $data['data_to_display'] = $this->data_to_display;
+
+            // 待验证的表单项
+            $this->form_validation->set_error_delimiters('', '；');
+            $this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
+            $this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+            $this->form_validation->set_rules('note_stuff', '员工备注', 'trim|required');
+
+            // 若表单提交不成功
+            if ($this->form_validation->run() === FALSE):
+                $data['error'] .= validation_errors();
+
+                $this->load->view('templates/header', $data);
+                $this->load->view($this->view_root.'/'.$op_view, $data);
+                $this->load->view('templates/footer', $data);
+
+            else:
+                // 检查必要参数是否已传入
+                $required_params = $this->names_edit_bulk_required;
+                foreach ($required_params as $param):
+                    ${$param} = $this->input->post($param);
+                    if ( empty( ${$param} ) ):
+                        $data['error'] = '必要的请求参数未全部传入';
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/'.$op_view, $data);
+                        $this->load->view('templates/footer', $data);
+                        exit();
+                    endif;
+                endforeach;
+
+                // 需要存入数据库的信息
+                $data_to_edit = array(
+                    'user_id' => $this->session->user_id,
+                    'ids' => $ids,
+                    'password' => $password,
+                    'operation' => $op_view, // 操作名称
+
+                    'note_stuff' => $this->input->post('note_stuff'),
+                );
+
+                // 向API服务器发送待创建数据
+                $params = $data_to_edit;
+                $url = api_url($this->class_name. '/edit_bulk');
+                $result = $this->curl->go($url, $params, 'array');
+                if ($result['status'] === 200):
+                    $data['title'] = $this->class_name_cn.$op_name. '成功';
+                    $data['class'] = 'success';
+                    $data['content'] = $result['content']['message'];
+
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/result', $data);
+                    $this->load->view('templates/footer', $data);
+
+                else:
+                    // 若创建失败，则进行提示
+                    $data['error'] .= $result['content']['error']['message'];
+
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/'.$op_view, $data);
+                    $this->load->view('templates/footer', $data);
+                endif;
+
+            endif;
+        } // end note
 
         /**
          * 拒绝退款
@@ -374,7 +482,21 @@
             $this->form_validation->set_error_delimiters('', '；');
             $this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
             $this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
-            $this->form_validation->set_rules('note_stuff', '员工备注', 'trim');
+            $this->form_validation->set_rules('deliver_method', '发货方式', 'trim|required|max_length[30]');
+
+            // 若用户自提，不需要填写服务商
+            if ($this->input->post('deliver_method') === '用户自提'):
+                $this->form_validation->set_rules('deliver_biz', '物流服务商', 'trim|max_length[30]');
+            else:
+                $this->form_validation->set_rules('deliver_biz', '物流服务商', 'trim|required|max_length[30]');
+            endif;
+
+            // 用户自提，或同城配送的服务商选择自营时，不需要填写运单号
+            if ($this->input->post('deliver_method') === '用户自提' || $this->input->post('deliver_biz') === '自营'):
+                $this->form_validation->set_rules('waybill_id', '物流运单号', 'trim|max_length[30]');
+            else:
+                $this->form_validation->set_rules('waybill_id', '物流运单号', 'trim|required|max_length[30]');
+            endif;
 
             // 若表单提交不成功
             if ($this->form_validation->run() === FALSE):
@@ -405,7 +527,9 @@
                     'password' => $password,
                     'operation' => $op_view, // 操作名称
 
-                    'note_stuff' => $this->input->post('note_stuff'),
+                    'deliver_method' => $this->input->post('deliver_method'),
+                    'deliver_biz' => $this->input->post('deliver_biz'),
+                    'waybill_id' => $this->input->post('waybill_id'),
                 );
 
                 // 向API服务器发送待创建数据
