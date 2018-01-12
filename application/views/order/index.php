@@ -69,7 +69,7 @@
                     </li>
 
                     <?php
-                    $status_to_mark = array('待付款', '已取消', '待接单', '已拒绝', '待发货', '待收货', '待使用', '待评价', '已完成', '已关闭');
+                    $status_to_mark = array('待付款', '已取消', '已拒绝', '待发货', '待收货', '待评价', '已完成', '已关闭');
                     foreach ($status_to_mark as $status):
                         // 页面URL
                         $url = ($status === NULL)? base_url($this->class_name): base_url($this->class_name. '?status='.$status);
@@ -81,7 +81,8 @@
                 </ul>
             </div>
 
-            <a class="btn <?php echo $this->input->get('status') === '待接单'? 'btn-primary': 'btn-default' ?>" title="待接单商品订单" href="<?php echo base_url($this->class_name. '?status=待接单') ?>">待接单</a>
+            <!--<a class="btn <?php echo $this->input->get('status') === '待接单'? 'btn-primary': 'btn-default' ?>" title="待接单商品订单" href="<?php echo base_url($this->class_name. '?status=待接单') ?>">待接单</a>-->
+            <a class="btn <?php echo $this->input->get('status') === '待付款'? 'btn-primary': 'btn-default' ?>" title="待发货商品订单" href="<?php echo base_url($this->class_name. '?status=待付款') ?>">待付款</a>
             <a class="btn <?php echo $this->input->get('status') === '待发货'? 'btn-primary': 'btn-default' ?>" title="待发货商品订单" href="<?php echo base_url($this->class_name. '?status=待发货') ?>">待发货</a>
         </div>
     <?php endif ?>

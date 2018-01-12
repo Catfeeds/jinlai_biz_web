@@ -1,4 +1,23 @@
 $(function(){
+	/*
+	 * 获取通过attr属性传入的参数
+	 */
+	function get_attr(attr_name)
+	{
+		var data_name = 'data-' + attr_name; // 完整属性名
+        var attr_carrier = $('script['+ data_name + ']').eq(0); // 使用eq方法获取jQuery对象，以使用attr方法
+        var attr_value = attr_carrier.attr(data_name);
+
+        console.log(attr_carrier);
+        console.log(attr_value);
+
+        return attr_value;
+	}
+
+	// 是否需要验证图片验证码
+	var captcha_assess = get_attr('captcha_assess');
+    //console.log(captcha_assess);
+
 	// 图片验证码URL
 	var url_captcha = 'https://biz.517ybang.com/captcha?';
 
@@ -15,7 +34,7 @@ $(function(){
 		$(this).attr('src', url_captcha + timestamp);
         $('[name=captcha_verify]').val('').focus(); // 重置图片验证码输入框
 
-		console.log('captcha regenerated');
+		//console.log('captcha regenerated');
 	});
 
     /**
@@ -24,7 +43,7 @@ $(function(){
      * @returns {boolean}
      */
 	function check_verify_captcha(captcha_verify) {
-        console.log('checking captcha');
+        //console.log('checking captcha');
 
         if (captcha_verify.length != 4 || isNaN(captcha_verify))
         {
@@ -38,6 +57,7 @@ $(function(){
 
 	/**
 	 * 检查手机号格式
+	 *
 	 * @param string mobile 需要接收短信的手机号
 	 * @returns {boolean}
 	 */
@@ -99,12 +119,15 @@ $(function(){
 	// 点击短信发送按钮后的业务流程
 	var handler = function(){
 		// 检查图片验证码是否已填写
-		console.log('captcha to be checked');
-		var captcha_verify = $.trim( $('[name=captcha_verify]').val() );
-        if (check_verify_captcha(captcha_verify) == false)
-        {
-            return false;
-        }
+		if (captcha_assess == true)
+		{
+            console.log('captcha to be checked');
+            var captcha_verify = $.trim( $('[name=captcha_verify]').val() );
+            if (check_verify_captcha(captcha_verify) == false)
+            {
+                return false;
+            }
+		}
 
 		// 获取当前时间戳及日期（日）
 		var timestamp = Date.parse(new Date()) / 1000;

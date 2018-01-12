@@ -266,7 +266,12 @@
 
 	<section>
 		<h2>交易记录</h2>
-        <p class="help-block">系统将自动清除已关闭或已取消3天（含）以上的订单</p>
+        <?php
+            $status_auto_delete = array('已关闭', '已取消',);
+            if ( in_array($item['status'], $status_auto_delete) ):
+        ?>
+        <p class="help-block">系统将自动清除<?php echo $item['status'] ?>3天（含）以上的订单</p>
+        <?php endif ?>
 
 		<dl id=list-time class=dl-horizontal>
 			<dt>用户下单时间</dt>
