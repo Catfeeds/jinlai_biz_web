@@ -42,38 +42,22 @@
 	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
 	?>
     <div class="btn-group btn-group-justified" role=group>
-        <div class=btn-group role=group>
-            <button type=button class="btn btn-default dropdown-toggle" data-toggle=dropdown aria-haspopup=true aria-expanded=false>
-                全部 <span class="caret"></span>
-            </button>
-            <ul class=dropdown-menu>
-                <li>
-                    <?php $style_class = empty($this->input->get('status') )? 'btn-primary': 'btn-default'; ?>
-                    <a class="btn <?php echo $style_class ?>" title="全部<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">全部</a>
-                </li>
+        <?php $style_class = empty($this->input->get('score_max') )? 'btn-primary': 'btn-default' ?>
+        <a class="btn <?php echo $style_class ?>" title="全部<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">全部</a>
 
-                <?php
-                $status_to_mark = array('待付款',);
-                foreach ($status_to_mark as $status):
-                    // 页面URL
-                    $url = ($status === NULL)? base_url($this->class_name): base_url($this->class_name. '?status='.$status);
-                    // 链接样式
-                    $style_class = ($this->input->get('status') !== $status)? 'btn-default': 'btn-primary';
-                    echo '<li><a class="btn '. $style_class. '" title="'. $status. '订单" href="'. $url. '">'. $status. '</a> </li>';
-                endforeach;
-                ?>
-            </ul>
-        </div>
-
-        <a class="btn <?php echo $this->input->get('status') === '待接单'? 'btn-primary': 'btn-default' ?>" title="待接单商品订单" href="<?php echo base_url($this->class_name. '?status=待接单') ?>">待接单</a>
+        <a class="btn <?php echo $this->input->get('score_max') === '3'? 'btn-primary': 'btn-default' ?>" title="中评商品订单" href="<?php echo base_url($this->class_name. '?score_max=3&score_min=2') ?>">中评</a>
+        <a class="btn <?php echo $this->input->get('score_max') === '1'? 'btn-primary': 'btn-default' ?>" title="差评商品订单" href="<?php echo base_url($this->class_name. '?score_max=1') ?>">差评</a>
+    </div>
 	<?php endif ?>
 
 	<?php if ( empty($items) ): ?>
 	<blockquote>
-		<p>这里空空如也，快点添加<?php echo $this->class_name_cn ?>吧</p>
+		<p>没有<?php echo (empty($this->input->get('score_max') )? NULL: '该种'). $this->class_name_cn ?></p>
 	</blockquote>
 
 	<?php else: ?>
+    <form method=get target=_blank>
+
         <ul id=item-list class=row>
             <?php foreach ($items as $item): ?>
             <li>

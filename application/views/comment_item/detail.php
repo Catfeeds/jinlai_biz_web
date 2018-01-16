@@ -56,8 +56,11 @@
 
 		<dt>所属订单ID</dt>
 		<dd><?php echo $item['order_id'] ?></dd>
-		<dt>所属用户ID</dt>
-		<dd><?php echo $item['user_id'] ?></dd>
+		<dt>所属用户</dt>
+		<dd>
+            <?php echo $item['user_id'] ?>
+            <a href="<?php echo base_url('user/detail?id='.$item['user_id']) ?>" target=new>查看资料</a>
+        </dd>
 		<dt>相关商家ID</dt>
 		<dd><?php echo $item['biz_id'] ?></dd>
 		<dt>相关商品ID</dt>

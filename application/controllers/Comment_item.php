@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'comment_id', 'order_id', 'user_id', 'biz_id', 'item_id', 'score', 'content', 'image_urls', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+			'comment_id', 'order_id', 'user_id', 'biz_id', 'item_id', 'score', 'content', 'image_urls', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id', 'score_max', 'score_min',
 		);
 
 		/**
@@ -37,7 +37,7 @@
 			parent::__construct();
 
 			// （可选）未登录用户转到登录页
-			//($this->session->time_expire_login > time()) OR redirect( base_url('login') );
+			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
 
 			// 向类属性赋值
 			$this->class_name = strtolower(__CLASS__);
@@ -198,7 +198,6 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('comment_id', '评论ID', 'trim|required');
 			$this->form_validation->set_rules('order_id', '所属订单ID', 'trim|required');
 			$this->form_validation->set_rules('user_id', '所属用户ID', 'trim|required');
 			$this->form_validation->set_rules('biz_id', '相关商家ID', 'trim|required');
@@ -206,11 +205,6 @@
 			$this->form_validation->set_rules('score', '描述相符', 'trim|');
 			$this->form_validation->set_rules('content', '最多255个字符', 'trim|');
 			$this->form_validation->set_rules('image_urls', '图片URL们', 'trim|');
-			$this->form_validation->set_rules('time_create', '创建时间', 'trim|required');
-			$this->form_validation->set_rules('time_delete', '删除时间', 'trim|');
-			$this->form_validation->set_rules('time_edit', '最后操作时间', 'trim|required');
-			$this->form_validation->set_rules('creator_id', '创建者ID', 'trim|');
-			$this->form_validation->set_rules('operator_id', '最后操作者ID', 'trim|');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -227,7 +221,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'comment_id', 'order_id', 'user_id', 'biz_id', 'item_id', 'score', 'content', 'image_urls', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+					'order_id', 'user_id', 'biz_id', 'item_id', 'score', 'content', 'image_urls',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);

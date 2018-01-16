@@ -111,7 +111,7 @@
 				if ($result['status'] !== 200):
 					$data['error'] = $result['content']['error']['message'];
 
-				    // 记录失败次数
+				    // 记录失败次数，并判断是否需要验证码
                     $this->record_failure('failed_login_count');
 
 				else:
@@ -490,11 +490,12 @@
 
 
         /**
-         * 记录操作失败次数
+         * 记录操作失败次数，并评估是否需要图片验证码
          *
          * @param string $session_name 存储失败次数的SESSION项名称
+         * @param int $trigger_count 失败几次之后开始使用图片验证码，默认2
          */
-        private function record_failure($session_name)
+        private function record_failure($session_name, $trigger_count = 2)
         {
             // 获取已失败次数
             $origin_data = isset($this->session->{$session_name})? $this->session->{$session_name}: 0;
@@ -503,6 +504,9 @@
             $failed_count = $origin_data +1;
 
             $this->session->set_userdata($session_name, $failed_count);
+
+            // 评估是否需要图片验证码
+            $this->captcha_assess($session_name, $trigger_count);
         } // end record_failure
 
         /**
@@ -514,9 +518,11 @@
         private function captcha_assess($session_name, $trigger_count = 2)
         {
             if ($this->session->{$session_name} >= $trigger_count):
-                $this->form_validation->set_rules('captcha_verify', '图片验证码', 'trim|required|exact_length[4]|callback_captcha_verify');
+                // 更新类属性，供视图文件判断是否显示图片验证码
+                $this->captcha_assess = TRUE;
 
-                $this->captcha_assess = TRUE; // 更新类属性，供视图文件判断是否显示图片验证码
+                // 设置图片验证码字段的校验规则
+                $this->form_validation->set_rules('captcha_verify', '图片验证码', 'trim|required|exact_length[4]|callback_captcha_verify');
             endif;
         } // end captcha_assess
 
