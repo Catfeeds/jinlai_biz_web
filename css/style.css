@@ -27,7 +27,7 @@ a {font-size:26px;color:#3e3a39;text-decoration:none;/* 清理BootStrap样式 */
 #maincontainer p>a {color:#3e3a39;padding:0 0.5rem;font-weight:transparent;}
 #content {padding:0 20px;}
 
-/* 修复BootStrap样式 */
+/* 重置BootStrap样式 */
 	p {font-size:26px;}
 	ul,ol {margin-bottom:0;}
 	.row {margin-left:0;margin-right:0;}
@@ -130,6 +130,11 @@ noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid r
 		.datepicker--time-sliders {margin-right:40px !important;}
 		.datepicker--time-current-hours, .datepicker--time-current-minutes {font-size:32px !important;}
 		.datepicker--time-row {height:64px !important;}
+
+/* 需要垂直及水平居中的容器 */
+.centered_xy {display:flex;justify-content:center;align-items:center;}
+.centered_x {display:flex;align-items:center;}
+.centered_y {display:flex;justify-content:center;}
 
 #qrcode {background-color:#fff;padding:40px;border-radius:40px;}
 

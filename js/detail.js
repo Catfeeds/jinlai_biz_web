@@ -8,7 +8,7 @@ $(function(){
         var actions = $('#item-actions>li');
         var action_count = actions.length;
         var percentage = 1 / action_count * 100;
-        console.log(percentage);
+        //console.log(percentage); // 调试用，输出每个菜单项宽度百分比整数值
 
         actions.css('width', percentage + '%');
     } // end action_menu

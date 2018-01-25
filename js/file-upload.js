@@ -3,7 +3,7 @@
  *
  * 处理AJAX文件上传
  *
- * @version beta20170601
+ * @version beta20180125
  * @author Kamas 'Iceberg' Lau <https://github.com/kamaslau/ajaxupload>
  * @copyright Kamas 'Iceberg' Lau <kamaslau@outlook.com>
  */
@@ -113,7 +113,7 @@ $(function(){
             current_value.split(','),
             function(n) {return $.trim(n).length > 0;}
         ); // 清除空数组元素，后同
-        console.log(current_array);
+        //console.log(current_array);
         var current_count = current_array.length; // 当前已上传项数
 
 		// 若超出最大文件数量，进行提示
@@ -278,7 +278,7 @@ $(function(){
         	current_array,
 			function(n) {return $.trim(n).length > 0;}
 		);
-        console.log(current_array);
+        //console.log(current_array);
 
 		if (current_array.length < button.attr('data-max-count')){
             button.siblings('.selector_zone').show();
@@ -295,7 +295,7 @@ $(function(){
 
 		// 删除相应字段值
 		var current_value = $('[name='+ input_name +']').val();
-		current_value = current_value.replace(item_url, '');
+		//current_value = current_value.replace(item_url, '');
         var current_array = $.grep(
             current_value.split(','),
             function(n) {return $.trim(n).length > 0;}

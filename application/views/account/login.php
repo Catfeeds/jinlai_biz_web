@@ -31,10 +31,6 @@
 <script src="/js/form.js" data-captcha_assess="<?php echo ($this->captcha_assess === FALSE)? 'false': 'true' ?>"></script>
 
 <div id=content class=container>
-	<section class="bg-info text-info">
-		<p>RC0.15.8 当前系统为beta/RC版本，仅供技术研究及开发；在不以任何形式告知的情况下，数据、功能、页面样式都将不定时变更；任何数据、业务、功能均无实际意义，且不构成任何责任或义务。</p>
-	</section>
-	
 	<div class="btn-group btn-group-justified" role=group>
 		<span class="btn btn-primary">密码登录</span>
 		<a class="btn btn-default" href="<?php echo base_url('login_sms') ?>">短信登录/注册</a>

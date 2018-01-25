@@ -133,7 +133,7 @@
 			<div class=form-group>
 				<label for=dob class="col-sm-2 control-label">生日</label>
 				<div class=col-sm-10>
-					<input class="form-control" name=dob type=date min=<?php echo date('Y-m-d', strtotime("-120years")) ?> max=<?php echo date('Y-m-d', strtotime("-14years")) ?> value="<?php echo $item['dob'] ?>" placeholder="例如：1994-07-28">
+					<input class="form-control" name=dob type=date min="<?php echo date('Y-m-d', strtotime("-120years")) ?>" max="<?php echo date('Y-m-d', strtotime("-14years")) ?>" value="<?php echo $item['dob'] ?>" placeholder="例如：<?php echo date('Y-m-d', strtotime("-24years")) ?>">
                     <p class=help-block>请输入公历/阳历生日</p>
 				</div>
 			</div>

@@ -376,6 +376,34 @@
             return $timestamp;
         } // end strto_minute
 
+        /**
+         * 检查生日字符串格式是否正确
+         *
+         * @param string $value 生日字符串；Y-m-d格式，例如"1989-07-28"
+         * @return boolean
+         */
+        public function time_dob($value)
+        {
+            if ( empty($value) ):
+                return true;
+
+            elseif (strlen($value) !== 10):
+                return false;
+
+            else:
+                $eldest_dob = strtotime("- 120 years"); // 120岁
+                $youngest_dob = strtotime("- 14 years"); // 14岁
+
+                // 不可超出上述限制
+                if ($value < $eldest_dob || $value > $youngest_dob):
+                    return false;
+                else:
+                    return true;
+                endif;
+
+            endif;
+        } // end time_dob
+
 		/**
 		 * 删除单行或多行项目
 		 *

@@ -17,7 +17,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180116">
+		<meta name=version content="revision20180125">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -171,10 +171,12 @@
 		<?php endif ?>
 
 		<script src="<?php echo CDN_URL ?>js/jquery-3.2.1.min.js"></script>
+        <script src="/js/common.js"></script>
 		<script defer src="<?php echo CDN_URL ?>js/js.cookie.js"></script>
 		<script defer src="<?php echo CDN_URL ?>bootstrap/js/bootstrap.min.js"></script>
 		<script defer src="/js/file-upload.js"></script>
         <script defer src="/js/jquery.qrcode.min.js"></script>
+
         <script>
             var user_agent = new Object();
             user_agent.is_wechat = <?php echo ($this->user_agent['is_wechat'])? 'true': 'false' ?>;
