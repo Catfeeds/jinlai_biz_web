@@ -92,10 +92,9 @@
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
-		<dt>创建时间</dt>
+		<dt>评价时间</dt>
 		<dd>
 			<?php echo $item['time_create'] ?>
-			<a href="<?php echo base_url('stuff/detail?id='.$item['creator_id']) ?>" target=new>查看创建者</a>
 		</dd>
 
 		<?php if ( ! empty($item['time_delete']) ): ?>

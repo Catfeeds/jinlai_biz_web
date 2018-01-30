@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'category_id', 'brand_id', 'biz_id', 'category_biz_id', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'stocks', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'time_to_publish', 'time_to_suspend', 'promotion_id', 'status',
+			'category_id', 'brand_id', 'biz_id', 'category_biz_id', 'code_biz', 'barcode', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'stocks', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'time_to_publish', 'time_to_suspend', 'promotion_id', 'status',
 			'time_create', 'time_delete', 'time_publish', 'time_suspend', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -22,7 +22,7 @@
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'category_biz_id', 'code_biz', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'stocks', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'time_to_publish', 'time_to_suspend', 'promotion_id',  'freight_template_id',
+			'category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'stocks', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'time_to_publish', 'time_to_suspend', 'promotion_id',  'freight_template_id',
 		);
 
 		/**
@@ -124,8 +124,11 @@
 		{
 			// 检查是否已传入必要参数
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
-			if ( !empty($id) ):
+            $barcode = $this->input->get_post('barcode')? $this->input->get_post('barcode'): NULL;
+			if ( ! empty($id) ):
 				$params['id'] = $id;
+			elseif ( ! empty($barcode)):
+                $params['barcode'] = $barcode;
 			else:
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
@@ -333,6 +336,7 @@
 			$this->form_validation->set_rules('brand_id', '品牌', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('category_biz_id', '店内分类', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('code_biz', '商家自定义商品编码', 'trim|max_length[20]');
+            $this->form_validation->set_rules('barcode', '商品二维码', 'trim|exact_length[13]|is_natural');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim|max_length[255]');
 			$this->form_validation->set_rules('figure_video_urls', '形象视频', 'trim|max_length[255]');
@@ -374,7 +378,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'brand_id', 'category_biz_id', 'code_biz', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'stocks', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'discount_credit', 'commission_rate', 'coupon_allowed', 'promotion_id',
+					'category_id', 'brand_id', 'category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'stocks', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'discount_credit', 'commission_rate', 'coupon_allowed', 'promotion_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -442,6 +446,7 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('category_biz_id', '商家分类', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('code_biz', '商家自定义商品编码', 'trim|max_length[20]');
+            $this->form_validation->set_rules('barcode', '商品二维码', 'trim|exact_length[13]|is_natural');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim|max_length[255]');
 			$this->form_validation->set_rules('figure_video_urls', '形象视频', 'trim|max_length[255]');
@@ -504,7 +509,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_biz_id', 'code_biz', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'stocks', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'promotion_id',
+					'category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'stocks', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'promotion_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
