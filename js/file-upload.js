@@ -274,11 +274,11 @@ $(function(){
         var input_name = button.attr('data-input-name');
         var current_value = $('[name='+ input_name +']').val(); // 相应字段值
         var current_array = current_value.split(','); // 相应字段值数组
+        //console.log(current_array);
         current_array = $.grep(
         	current_array,
 			function(n) {return $.trim(n).length > 0;}
 		);
-        //console.log(current_array);
 
 		if (current_array.length < button.attr('data-max-count')){
             button.siblings('.selector_zone').show();
@@ -295,7 +295,7 @@ $(function(){
 
 		// 删除相应字段值
 		var current_value = $('[name='+ input_name +']').val();
-		//current_value = current_value.replace(item_url, '');
+		current_value = current_value.replace(item_url, '');
         var current_array = $.grep(
             current_value.split(','),
             function(n) {return $.trim(n).length > 0;}
