@@ -1,10 +1,9 @@
+@charset "utf-8";@viewport{width:device-width;}
 /**
  * style.css
  *
  * 适用于整站的样式规则
  */
-@charset "utf-8";
-@viewport{width:device-width;}
 
 /* Flat-UI清理 */
 h1,h2,h3 {margin:0;font-weight:400;}
@@ -14,7 +13,7 @@ h3 {font-size:22px;}
 .login {color:#111;background:none;padding:0;margin-bottom:0;}
 
 body {color:#3e3a39;background-color:#f6f6f6;font-size:26px;z-index:100;margin-top:88px;margin-bottom:98px;}
-.container {width:100%;padding:0;/* 去掉BootStrap默认的左右内边距 */}
+.container, .container-fluid {width:100%;padding:0;/* 去掉BootStrap默认的左右内边距 */}
 
 th, td {text-align:center;}
 td:first-child {text-align:left;}
@@ -60,6 +59,7 @@ a {font-size:26px;color:#3e3a39;text-decoration:none;/* 清理BootStrap样式 */
 #header .navbar-toggle {height:88px;line-height:88px;margin:-88px 20px 0 0;padding:0;}
 	#header .navbar-toggle::before {display:none;}
 
+	#header .navbar {padding:0;}
 #header .navbar-nav>li {border-top:1px solid #e1e1e1;padding:0 20px;}
 	#header .navbar-nav>li>a {font-size:26px;padding:0 20px;line-height:88px;}
 #header .navbar-nav .dropdown.open .dropdown-menu {overflow:hidden;margin-top:-30px !important;padding:0 20px;}
@@ -130,11 +130,6 @@ noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid r
 		.datepicker--time-sliders {margin-right:40px !important;}
 		.datepicker--time-current-hours, .datepicker--time-current-minutes {font-size:32px !important;}
 		.datepicker--time-row {height:64px !important;}
-
-/* 需要垂直及水平居中的容器 */
-.centered_xy {display:flex;justify-content:center;align-items:center;}
-.centered_x {display:flex;align-items:center;}
-.centered_y {display:flex;justify-content:center;}
 
 #qrcode {background-color:#fff;padding:40px;border-radius:40px;}
 

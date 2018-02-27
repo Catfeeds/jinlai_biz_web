@@ -1,5 +1,5 @@
-            <section class="bg-info text-info">
-                <small>RC0.15.10 当前系统仅供技术研究及开发；数据、功能、页面样式等的变更均可能不做任何告知；任何数据、业务、功能均无实际意义，不构成任何责任、义务，或权利的侵犯。</small>
+            <section>
+                <p class="text-info">RC0.15.10 当前系统仅供技术研究及开发；数据、功能、页面样式等的变更均可能不做任何告知；任何数据、业务、功能均无实际意义，不构成任何责任、义务，或权利的侵犯。</p>
             </section>
 
         </main>
@@ -18,7 +18,7 @@
 				</div>
 			</div>
 
-			<a id=totop title="回到页首" href="#"><i class="fa fa-chevron-up" aria-hidden=true></i></a>
+			<a id=totop title="回到页首" href="#"><i class="far fa-chevron-up" aria-hidden=true></i></a>
 		</footer>
 
 		<script>
@@ -30,10 +30,6 @@
 					return false;
 				});
 			});
-
-			// 启用WebSocket
-			//var ws = new WebSocket('ws://api.517ybang.com');
-			//console.log(ws);
 		</script>
 	</body>
 </html>

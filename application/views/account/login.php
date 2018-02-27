@@ -46,7 +46,7 @@
 				<div class=form-group>
 					<label for=mobile>手机号</label>
 					<div class=input-group>
-						<span class=input-group-addon><i class="fa fa-mobile fa-fw" aria-hidden=true></i></span>
+						<span class=input-group-addon><i class="far fa-mobile-alt fa-fw"></i></span>
 						<input class=form-control name=mobile type=tel value="<?php echo $this->input->post('mobile')? set_value('mobile'): $this->input->cookie('mobile') ?>" size=11 pattern="\d{11}" placeholder="手机号" required>
 					</div>
 				</div>
@@ -66,7 +66,7 @@
 				<div class=form-group>
 					<label for=password>密码</label>
 					<div class=input-group>
-						<span class=input-group-addon><i class="fa fa-key fa-fw" aria-hidden=true></i></span>
+						<span class=input-group-addon><i class="far fa-key fa-fw" aria-hidden=true></i></span>
 						<input class=form-control name=password type=password <?php if ($this->input->cookie('mobile')) echo 'autofocus'; ?> placeholder="密码" required>
 					</div>
 				</div>

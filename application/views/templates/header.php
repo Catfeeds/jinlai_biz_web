@@ -17,7 +17,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180130">
+		<meta name=version content="revision20180227">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -170,12 +170,15 @@
 		</script>
 		<?php endif ?>
 
-		<script src="<?php echo CDN_URL ?>js/jquery-3.2.1.min.js"></script>
+		<script src="<?php echo CDN_URL ?>js/jquery-3.3.1.min.js"></script>
         <script src="/js/common.js"></script>
 		<script defer src="<?php echo CDN_URL ?>js/js.cookie.js"></script>
 		<script defer src="<?php echo CDN_URL ?>bootstrap/js/bootstrap.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.7/fontawesome-all.min.js"></script>
+        <?php if (isset($this->session->time_expire_login) ): ?>
 		<script defer src="/js/file-upload.js"></script>
         <script defer src="/js/jquery.qrcode.min.js"></script>
+        <?php endif ?>
 
         <script>
             var user_agent = new Object();
@@ -184,12 +187,13 @@
             user_agent.is_android = <?php echo ($this->user_agent['is_android'])? 'true': 'false' ?>;
         </script>
 
-		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/reset.css">
-		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>bootstrap/css/bootstrap.min.css">
-		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/flat-ui.min.css">
-		<link rel=stylesheet media=all href="<?php echo CDN_URL ?>font-awesome/css/font-awesome.min.css">
+        <link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/reset.css">
+        <link rel=stylesheet media=all href="<?php echo CDN_URL ?>bootstrap/css/bootstrap.min.css">
+        <link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/flat-ui.min.css">
 		<link rel=stylesheet media=all href="/css/style.css">
+        <?php if (isset($this->session->time_expire_login) ): ?>
         <link rel=stylesheet media=all href="/css/file-upload.css">
+        <?php endif ?>
 
         <?php if ($this->user_agent['is_desktop']): ?>
         <link rel="shortcut icon" href="<?php echo CDN_URL ?>icon/jinlai_client/icon28@3x.png">
@@ -197,7 +201,7 @@
         <?php else: ?>
         <link rel=apple-touch-icon href="<?php echo CDN_URL ?>icon/jinlai_client/icon120@3x.png">
         <meta name=format-detection content="telephone=yes, address=no, email=no">
-        <meta name=apple-itunes-app content="app-id=1066224229">
+        <meta name=apple-itunes-app content="app-id=<?php echo IOS_APP_ID ?>">
         <?php endif ?>
 	</head>
 <?php
@@ -228,7 +232,7 @@
                 if (strpos($class,'home') === FALSE && $class !== 'success'):
             ?>
 			<a id=return href="javascript:" onclick="history.back()">
-				<i class="fa fa-chevron-left" aria-hidden=true></i>
+				<i class="far fa-chevron-left" aria-hidden=true></i>
 			</a>
             <?php endif ?>
 
@@ -248,7 +252,7 @@
 					</h1>
 					<button class=navbar-toggle data-toggle=collapse data-target=".navbar-collapse">
 						<span class=sr-only>展开/收起菜单</span>
-						<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+						<i class="far fa-ellipsis-h" aria-hidden="true"></i>
 					</button>
 				</div>
 				<div class="navbar-collapse collapse">

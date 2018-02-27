@@ -1,9 +1,9 @@
+@charset "utf-8";
 /**
  * upload.css
  *
  * 文件上传控件的样式
  */
-@charset "utf-8";
 
 .selector_zone {width:152px;height:152px;display:inline-block;position:relative;}
     input[type=file] {_background:transparent;overflow:hidden;display:inline-block;}

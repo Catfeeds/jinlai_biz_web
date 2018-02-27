@@ -59,6 +59,9 @@ define('WEPAY_URL_NATIVE', BASE_URL.'/payment/wepay/example/native.php?showwxpay
 // 支付宝参数
 define('ALIPAY_URL', BASE_URL.'/payment/alipay/alipayapi.php?');
 
+// APPLE开发平台参数
+define('IOS_APP_ID', '1066224229');
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
