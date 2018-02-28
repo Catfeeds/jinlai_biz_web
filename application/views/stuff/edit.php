@@ -51,14 +51,14 @@
 			</div>
 
 			<div class=form-group>
-				<label for=fullname class="col-sm-2 control-label">姓名※</label>
+				<label for=fullname class="col-sm-2 control-label">姓名 ※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=fullname type=text value="<?php echo $item['fullname'] ?>" placeholder="姓名" required>
 				</div>
 			</div>
 
 			<div class=form-group>
-				<label for=role class="col-sm-2 control-label">角色※</label>
+				<label for=role class="col-sm-2 control-label">角色 ※</label>
 				<?php if ($item['user_id'] !== $this->session->user_id): ?>
 				<div class=col-sm-10>
 					<?php $input_name = 'role' ?>
@@ -82,7 +82,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=level class="col-sm-2 control-label">级别※</label>
+				<label for=level class="col-sm-2 control-label">级别 ※</label>
 				<div class=col-sm-10>
 					<?php if ($item['user_id'] !== $this->session->user_id): ?>
 					<input class=form-control name=level type=number step=1 max=30 value="<?php echo $item['level'] ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
@@ -94,7 +94,7 @@
 			</div>
 
 			<div class=form-group>
-				<label for=status class="col-sm-2 control-label">状态※</label>
+				<label for=status class="col-sm-2 control-label">状态 ※</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'status' ?>
 					<select class=form-control name="<?php echo $input_name ?>" required>

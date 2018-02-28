@@ -62,7 +62,7 @@
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 			
 			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">名称※</label>
+				<label for=name class="col-sm-2 control-label">名称 ※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=name type=text value="<?php echo $item['name'] ?>" placeholder="最多20个字符" required>
 				</div>

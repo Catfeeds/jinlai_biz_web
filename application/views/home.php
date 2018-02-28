@@ -72,20 +72,19 @@
 		<p>如果负责日常业务对接的不是法人本人，则另需：</p>
 		<ul>
 			<li>经办人身份证影印件</li>
-			<li>授权书 <small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>" target=_blank><i class="fa fa-info-circle" aria-hidden=true></i> 授权书示例</a></small></li>
+			<li>授权书 <small><a title="进来商城经办人授权书" href="<?php echo base_url('article/auth-doc-for-join-application') ?>" target=_blank><i class="far fa-info-circle" aria-hidden=true></i> 授权书示例</a></small></li>
 		</ul>
 	</div>
 
     <a id=to_admission title="快速创建" class="btn btn-default btn-lg col-xs-6" href="<?php echo base_url('biz/create_quick') ?>">以后补充，先开店吧</a>
     <a id=to_admission title="创建商家" class="btn btn-primary btn-lg col-xs-6" href="<?php echo base_url('biz/create') ?>">准备好了，申请入驻</a>
 
-	<?php elseif ( empty($biz) ): ?>
-	<p>员工关系状态异常，请尝试重新登录</p>
-	<a class="btn btn-primary btn-block btn-lg" href="<?php echo base_url('logout') ?>">重新登录</a>
-
 	<?php else: ?>
 	<section id=biz-info>
-		<span id=biz-status><i class="fa fa-info-circle" aria-hidden=true></i> <?php echo $biz['status'] ?></span>
+		<span id=biz-status>
+            <i class="far fa-info-circle" aria-hidden=true></i> <?php echo $biz['status'] ?>
+            <?php echo empty($biz['identity_id'])? '未认证': '已认证'; ?>
+        </span>
 
 		<a title="商家详情" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">
 			<?php if ( ! empty($biz['url_logo']) ): ?>

@@ -133,17 +133,11 @@
 			<div class=form-group>
 				<label for=url_image_main class="col-sm-2 control-label">主图 ※</label>
 				<div class=col-sm-10>
-					<?php $name_to_upload = 'url_image_main' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone>
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" required>
-
-                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+					<?php
+                        require_once(APPPATH. 'views/templates/file-uploader.php');
+                        $name_to_upload = 'url_image_main';
+                        generate_html($name_to_upload, $this->class_name);
+                    ?>
 
                     <p class=help-block>正方形图片视觉效果最佳</p>
 				</div>
@@ -152,17 +146,10 @@
 			<div class=form-group>
 				<label for=figure_image_urls class="col-sm-2 control-label">形象图</label>
 				<div class=col-sm-10>
-                    <?php $name_to_upload = 'figure_image_urls' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone>
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
-
-                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-					<button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=4 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'figure_image_urls';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 4);
+                    ?>
 
                     <p class=help-block>最多可上传4张，选择时按住“ctrl”或“⌘”键可选多张</p>
 				</div>
@@ -196,7 +183,7 @@
 					</script>
 
 					<?php else: ?>
-					<p class="help-block">在电脑上编辑可添加更丰富内容</p>
+					<p class=help-block>在电脑上编辑可添加更丰富内容</p>
 					<textarea class=form-control name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo set_value('description') ?></textarea>
 
 					<?php endif ?>

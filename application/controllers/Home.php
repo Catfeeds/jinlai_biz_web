@@ -12,11 +12,10 @@
 	 */
 	class Home extends MY_Controller
 	{
-        
         public function __construct()
         {
             parent::__construct();
-			
+
 			// 未登录用户转到登录页
 			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
 
@@ -37,18 +36,9 @@
 				'class' => $this->class_name, // 页面body标签的class属性值
 			);
 
-			// 若当前用户是某商家员工，获取该商家信息
-			if ( !empty($this->session->biz_id) ):
-				// 从API服务器获取相应详情信息
-				$params['id'] = $this->session->biz_id;
-				$url = api_url('biz/detail');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['biz'] = $result['content'];
-				else:
-					$data['error'] = $result['content']['error']['message'];
-				endif;
-			endif;
+            // 若当前用户是某商家员工，获取该商家信息
+            if ( ! empty($this->session->biz_id) )
+                $data['biz'] = $this->get_biz($this->session->biz_id);
 
 			// 获取核心数据计数
 			$data['count'] = array(

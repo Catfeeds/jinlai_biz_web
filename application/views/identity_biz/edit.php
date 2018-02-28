@@ -52,111 +52,128 @@
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
             <div class=form-group>
-                <label for=name class="col-sm-2 control-label">主体名称</label>
+                <label for=name class="col-sm-2 control-label">主体名称 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=name type=text value="<?php echo $item['name'] ?>" placeholder="主体名称" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=fullname_owner class="col-sm-2 control-label">法人姓名</label>
+                <label for=fullname_owner class="col-sm-2 control-label">法人姓名 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=fullname_owner type=text value="<?php echo $item['fullname_owner'] ?>" placeholder="法人姓名" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=fullname_auth class="col-sm-2 control-label">经办人姓名</label>
+                <label for=fullname_auth class="col-sm-2 control-label">经办人姓名 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=fullname_auth type=text value="<?php echo $item['fullname_auth'] ?>" placeholder="经办人姓名" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=code_license class="col-sm-2 control-label">工商注册号</label>
+                <label for=code_license class="col-sm-2 control-label">工商注册号 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=code_license type=text value="<?php echo $item['code_license'] ?>" placeholder="工商注册号" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号</label>
+                <label for=code_ssn_owner class="col-sm-2 control-label">法人身份证号 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=code_ssn_owner type=text value="<?php echo $item['code_ssn_owner'] ?>" placeholder="法人身份证号" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号</label>
+                <label for=code_ssn_auth class="col-sm-2 control-label">经办人身份证号 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=code_ssn_auth type=text value="<?php echo $item['code_ssn_auth'] ?>" placeholder="经办人身份证号" required>
                 </div>
             </div>
+
             <div class=form-group>
-                <label for=url_image_license class="col-sm-2 control-label">营业执照</label>
+                <label for=url_image_license class="col-sm-2 control-label">营业执照 ※</label>
                 <div class=col-sm-10>
-                    <input class=form-control name=url_image_license type=text value="<?php echo $item['url_image_license'] ?>" placeholder="营业执照" required>
+                    <?php
+                    require_once(APPPATH. 'views/templates/file-uploader.php');
+                    $name_to_upload = 'url_image_license';
+                    generate_html($name_to_upload, $this->class_name, TRUE, 1, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
             <div class=form-group>
-                <label for=url_image_owner_id class="col-sm-2 control-label">法人身份证</label>
+                <label for=url_image_owner_ssn class="col-sm-2 control-label">法人身份证 ※</label>
                 <div class=col-sm-10>
-                    <input class=form-control name=url_image_owner_id type=text value="<?php echo $item['url_image_owner_id'] ?>" placeholder="法人身份证" required>
+                    <?php
+                    $name_to_upload = 'url_image_owner_ssn';
+                    generate_html($name_to_upload, $this->class_name, TRUE, 1, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
             <div class=form-group>
-                <label for=url_image_auth_id class="col-sm-2 control-label">经办人身份证</label>
+                <label for=url_image_auth_ssn class="col-sm-2 control-label">经办人身份证 ※</label>
                 <div class=col-sm-10>
-                    <input class=form-control name=url_image_auth_id type=text value="<?php echo $item['url_image_auth_id'] ?>" placeholder="经办人身份证" required>
+                    <?php
+                    $name_to_upload = 'url_image_auth_ssn';
+                    generate_html($name_to_upload, $this->class_name, TRUE, 1, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
             <div class=form-group>
-                <label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书</label>
+                <label for=url_image_auth_doc class="col-sm-2 control-label">经办人授权书 ※</label>
                 <div class=col-sm-10>
-                    <input class=form-control name=url_image_auth_doc type=text value="<?php echo $item['url_image_auth_doc'] ?>" placeholder="经办人授权书" required>
+                    <?php
+                    $name_to_upload = 'url_image_auth_doc';
+                    generate_html($name_to_upload, $this->class_name, TRUE, 1, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
             <div class=form-group>
-                <label for=url_verify_photo class="col-sm-2 control-label">经办人持身份证照片</label>
+                <label for=url_verify_photo class="col-sm-2 control-label">经办人持身份证照片 ※</label>
                 <div class=col-sm-10>
-                    <input class=form-control name=url_verify_photo type=text value="<?php echo $item['url_verify_photo'] ?>" placeholder="经办人持身份证照片" required>
+                    <?php
+                    $name_to_upload = 'url_verify_photo';
+                    generate_html($name_to_upload, $this->class_name, TRUE, 1, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
             <!--
             <div class=form-group>
-                <label for=nation class="col-sm-2 control-label">国家</label>
+                <label for=nation class="col-sm-2 control-label">国家 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=nation type=text value="<?php echo $item['nation'] ?>" placeholder="国家" required>
                 </div>
             </div>
             -->
             <div class=form-group>
-                <label for=province class="col-sm-2 control-label">省</label>
+                <label for=province class="col-sm-2 control-label">省 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=province type=text value="<?php echo $item['province'] ?>" placeholder="省" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=city class="col-sm-2 control-label">市</label>
+                <label for=city class="col-sm-2 control-label">市 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=city type=text value="<?php echo $item['city'] ?>" placeholder="市" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=county class="col-sm-2 control-label">区</label>
+                <label for=county class="col-sm-2 control-label">区 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=street class="col-sm-2 control-label">具体地址</label>
+                <label for=street class="col-sm-2 control-label">具体地址 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=street type=text value="<?php echo $item['street'] ?>" placeholder="具体地址" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=bank_name class="col-sm-2 control-label">开户行名称</label>
+                <label for=bank_name class="col-sm-2 control-label">开户行名称 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="开户行名称" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=bank_account class="col-sm-2 control-label">开户行账号</label>
+                <label for=bank_account class="col-sm-2 control-label">开户行账号 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=bank_account type=text value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号" required>
                 </div>

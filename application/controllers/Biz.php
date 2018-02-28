@@ -135,7 +135,7 @@
 				// 待验证的表单项
 				$this->form_validation->set_error_delimiters('', '；');
 				// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-                $this->form_validation->set_rules('category_ids[]', '主营商品类目', 'trim|required|max_length[255]');
+                $this->form_validation->set_rules('category_id', '主营商品类目', 'trim|required|is_natural_no_zero');
                 $this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
                 $this->form_validation->set_rules('name', '商家全称', 'trim|required|min_length[5]|max_length[35]|is_unique[biz.name]');
 				$this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]|is_unique[biz.brief_name]');
@@ -174,7 +174,6 @@
 					// 需要创建的数据；逐一赋值需特别处理的字段
 					$data_to_create = array(
 						'user_id' => $this->session->user_id,
-                        'category_ids' => !empty($this->input->post('category_ids'))? implode(',', $this->input->post('category_ids')): NULL,
                         'tel_public' => empty($this->input->post('tel_public'))? $this->session->mobile: $this->input->post('tel_public'),
                         'tel_protected_biz' => $this->session->mobile,
                         'tel_protected_fiscal' => $this->session->mobile,
@@ -182,7 +181,7 @@
 					);
 					// 自动生成无需特别处理的数据
 					$data_need_no_prepare = array(
-                        'url_logo', 'name', 'brief_name',
+                        'category_id', 'url_logo', 'name', 'brief_name',
 						'description', 'bank_name', 'bank_account',
 						'fullname_owner', 'fullname_auth',
 						'code_license', 'code_ssn_owner', 'code_ssn_auth',
@@ -204,7 +203,8 @@
 						$data['id'] = $result['content']['id']; // 创建后的信息ID
 
 						// 更新本地商家信息
-						$this->session->biz_id = $data['id'];
+                        $this->session->stuff_id = $result['content']['stuff_id'];
+                        $this->session->biz_id = $result['content']['id'];
 						$this->session->role = '管理员';
 						$this->session->level = '100';
 
@@ -264,10 +264,9 @@
 
                 // 待验证的表单项
                 $this->form_validation->set_error_delimiters('', '；');
-                // 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-                $this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
+                $this->form_validation->set_rules('category_id', '主营商品类目', 'trim|required|is_natural_no_zero');
                 $this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]|is_unique[biz.brief_name]');
-                $this->form_validation->set_rules('category_ids[]', '主营商品类目', 'trim|required|max_length[255]');
+                $this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
 
                 // 若表单提交不成功
                 if ($this->form_validation->run() === FALSE):
@@ -282,11 +281,10 @@
                     $data_to_create = array(
                         'user_id' => $this->session->user_id,
                         'tel_public' => $this->session->mobile,
-                        'category_ids' => !empty($this->input->post('category_ids'))? implode(',', $this->input->post('category_ids')): NULL,
                     );
                     // 自动生成无需特别处理的数据
                     $data_need_no_prepare = array(
-                        'url_logo', 'brief_name',
+                        'url_logo', 'brief_name', 'category_id',
                     );
                     foreach ($data_need_no_prepare as $name)
                         $data_to_create[$name] = $this->input->post($name);
@@ -302,8 +300,9 @@
                         $data['operation'] = 'create';
                         $data['id'] = $result['content']['id']; // 创建后的信息ID
 
-                        // 更新本地商家信息
-                        $this->session->biz_id = $data['id'];
+                        // 更新本地信息
+                        $this->session->stuff_id = $result['content']['stuff_id'];
+                        $this->session->biz_id = $result['content']['id'];
                         $this->session->role = '管理员';
                         $this->session->level = '100';
 
@@ -395,7 +394,7 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
             if ($this->app_type === 'admin'):
-                $this->form_validation->set_rules('category_ids', '主营商品类目', 'trim|required|max_length[255]');
+                $this->form_validation->set_rules('category_id', '主营商品类目', 'trim|required|is_natural_no_zero');
                 $this->form_validation->set_rules('name', '商家全称', 'trim|required|min_length[5]|max_length[35]');
                 $this->form_validation->set_rules('brief_name', '店铺名称', 'trim|required|max_length[20]');
                 $this->form_validation->set_rules('url_name', '店铺域名', 'trim|max_length[20]|alpha_dash');
@@ -451,11 +450,10 @@
 				$data_to_edit = array(
 					'id' => $id,
 					'user_id' => $this->session->user_id,
-                    'category_ids' => !empty($this->input->post('category_ids'))? implode(',', $this->input->post('category_ids')): NULL,
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'url_logo', 'slogan', 'description', 'notification',
+					'category_id', 'url_logo', 'slogan', 'description', 'notification',
 					'tel_public', 'tel_protected_fiscal', 'tel_protected_order',
 					'fullname_owner', 'fullname_auth', 
 					'code_license', 'code_ssn_owner',  'code_ssn_auth',
@@ -469,7 +467,7 @@
 
                 // 根据客户端类型等条件筛选可操作的字段名
                 if ($this->app_type !== 'admin'):
-                    unset($data_to_edit['category_ids']);
+                    unset($data_to_edit['category_id']);
                     unset($data_to_edit['name']);
                     unset($data_to_edit['brief_name']);
                     unset($data_to_edit['url_name']);
@@ -543,7 +541,7 @@
 			// 动态设置待验证字段名及字段值
 			$data_to_validate["{$name}"] = $value;
 			$this->form_validation->set_data($data_to_validate);
-            $this->form_validation->set_rules('category_ids[]', '主营商品类目', 'trim|required|max_length[255]');
+            $this->form_validation->set_rules('category_id', '主营商品类目', 'trim|required|is_natural_no_zero');
 			$this->form_validation->set_rules('url_logo', '店铺LOGO', 'trim|max_length[255]');
 			$this->form_validation->set_rules('slogan', '宣传语', 'trim|max_length[30]');
 			$this->form_validation->set_rules('description', '简介', 'trim|max_length[255]');

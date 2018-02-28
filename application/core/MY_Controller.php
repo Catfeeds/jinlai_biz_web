@@ -47,6 +47,9 @@
 		/* 需要显示的字段 */
 		public $data_to_display;
 
+		/* 当前用户员工信息 */
+		public $stuff = array();
+
         // 访问设备信息
         public $user_agent = array();
 
@@ -92,6 +95,10 @@
 			$this->app_version = '0.0.1';
 			$this->device_platform = 'web';
 			$this->device_number = '';
+
+            // 若当前用户是某商家员工，获取该员工身份信息
+            if ( ! empty($this->session->stuff_id) )
+                $this->stuff = $this->get_stuff($this->session->stuff_id, FALSE);
 
             // 检查当前设备信息
 			$this->user_agent_determine();
@@ -613,6 +620,23 @@
 			endif;
 		} // end restore
 
+        // 获取特定商家信息
+        protected function get_biz($id)
+        {
+            // 从API服务器获取相应详情信息
+            $params['id'] = $id;
+
+            $url = api_url('biz/detail');
+            $result = $this->curl->go($url, $params, 'array');
+            if ($result['status'] === 200):
+                $data['item'] = $result['content'];
+            else:
+                $data['item'] = $result['content']['error']['message'];
+            endif;
+
+            return $data['item'];
+        } // end get_biz
+
         // 获取特定用户信息
         protected function get_user($id)
         {
@@ -629,6 +653,28 @@
 
             return $data['item'];
         } // end get_user
+
+        // 获取特定员工信息
+        protected function get_stuff($id, $allow_deleted = TRUE)
+        {
+            $params['id'] = $id;
+
+            // 从API服务器获取相应信息
+            $url = api_url('user/detail');
+            $result = $this->curl->go($url, $params, 'array');
+            if ($result['status'] === 200):
+                // 若不允许已删除项
+                if ($allow_deleted === FALSE && !empty($data['item']['time_delete'])):
+                    $data['item'] = NULL;
+                else:
+                    $data['item'] = $result['content'];
+                endif;
+            else:
+                $data['item'] = NULL;
+            endif;
+
+            return $data['item'];
+        } // end get_stuff
 
 		// 获取商品列表
 		protected function list_item($params = NULL)

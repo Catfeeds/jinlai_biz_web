@@ -261,7 +261,6 @@
 		<dt>开户行账号</dt>
 		<dd><?php echo empty($item['bank_account'])? '未填写': $item['bank_account'] ?></dd>
 	</dl>
-	-->
 
 	<h2>联系地址</h2>
 	<dl class=dl-horizontal>
@@ -274,13 +273,11 @@
 
 			<?php if ( !empty($item['longitude']) && !empty($item['latitude']) ): ?>
 			<figure class="row">
-				<!--
 				<figcaption>
 					<p class="bg-info text-info text-center">
 						经纬度 <?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>
 					</p>
 				</figcaption>
-				-->
 				<div id=map style="height:300px;background-color:#999"></div>
 			</figure>
 
@@ -311,6 +308,7 @@
 			<?php endif ?>
 		</dd>
 	</dl>
+    -->
 
 	<dl id=list-record class=dl-horizontal>
 		<dt>创建时间</dt>

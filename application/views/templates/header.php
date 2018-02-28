@@ -17,7 +17,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180227">
+		<meta name=version content="revision20180301">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -28,6 +28,15 @@
 		<meta name=viewport content="width=750,user-scalable=0">
         <?php endif ?>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <?php
+            if (!empty($this->session->stuff_id) && empty($this->stuff)):
+        ?>
+        <script>
+            alert('员工关系状态异常，请重新登录')
+            location.href = "<?php echo base_url('logout') ?>";
+        </script>
+        <?php exit();endif; ?>
 
 		<?php if ($this->user_agent['is_wechat']): ?>
 		<script src="https://res.wx.qq.com/open/js/jweixin-1.3.0.js"></script>
@@ -165,7 +174,6 @@
 						alert('您未完成分享');
 				    }
 				});
-
 			});
 		</script>
 		<?php endif ?>
@@ -173,7 +181,7 @@
 		<script src="<?php echo CDN_URL ?>js/jquery-3.3.1.min.js"></script>
         <script src="/js/common.js"></script>
 		<script defer src="<?php echo CDN_URL ?>js/js.cookie.js"></script>
-		<script defer src="<?php echo CDN_URL ?>bootstrap/js/bootstrap.min.js"></script>
+		<script defer src="<?php echo CDN_URL ?>bootstrap/v3.3.7/bootstrap.min.js"></script>
         <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.7/fontawesome-all.min.js"></script>
         <?php if (isset($this->session->time_expire_login) ): ?>
 		<script defer src="/js/file-upload.js"></script>
@@ -266,6 +274,9 @@
 								<li><a title="我的店铺" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">店铺资料</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a title="店铺装修列表" href="<?php echo base_url('ornament_biz') ?>">店铺装修</a></li>
+
+                                <li role="separator" class="divider"></li>
+                                <li><a title="门店列表" href="<?php echo base_url('branch') ?>">门店</a></li>
 
                                 <?php
                                     // 仅获得大于10的权限的管理员可以管理员工

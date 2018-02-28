@@ -78,17 +78,11 @@
             <div class=form-group>
                 <label for=main_figure_url class="col-sm-2 control-label">主形象图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'main_figure_url' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    require_once(APPPATH. 'views/templates/file-uploader.php');
+                    $name_to_upload = 'main_figure_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE);
+                    ?>
 
                     <p class=help-block>用于商家店铺首页、商家会员卡详情页</p>
                 </div>
@@ -97,17 +91,10 @@
             <div class=form-group>
                 <label for=member_logo_url class="col-sm-2 control-label">会员卡LOGO</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'member_logo_url' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone>
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
-
-                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'member_logo_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE);
+                    ?>
 
                     <p class=help-block>用于会员卡相关页面；若不上传，则默认以商家LOGO作为会员卡LOGO</p>
                 </div>
@@ -116,17 +103,10 @@
             <div class=form-group>
                 <label for=member_figure_url class="col-sm-2 control-label">会员卡封图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'member_figure_url' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'member_figure_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE);
+                    ?>
 
                     <p class=help-block>用于会员卡领取页、详情页</p>
                 </div>
@@ -135,17 +115,10 @@
             <div class=form-group>
                 <label for=member_thumb_url class="col-sm-2 control-label">会员卡列表图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'member_thumb_url' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'member_thumb_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE);
+                    ?>
 
                     <p class=help-block>用于会员卡列表</p>
                 </div>
@@ -154,22 +127,16 @@
 
         <fieldset>
             <legend>顶部模块</legend>
-            <p class=help-block>请上传尺寸正确、大小合适的图片；过大的图片将导致页面打开缓慢，过小的图片则影响显示效果。</p>
 
             <div class=form-group>
                 <label for=home_slides class="col-sm-2 control-label">顶部模块轮播图内容</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'home_slides' ?>
-                    <ul class="upload_preview"></ul>
+                    <?php
+                    $name_to_upload = 'home_slides';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 4);
+                    ?>
 
-                    <div class=selector_zone>
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
-
-                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=4 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <p class=help-block>请上传尺寸正确、大小合适的图片；过大的图片将导致页面打开缓慢，过小的图片则影响显示效果。</p>
                 </div>
             </div>
 
@@ -202,17 +169,10 @@
             <div class=form-group>
                 <label for=home_m1_ace_url class="col-sm-2 control-label">模块一形象图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'home_m1_ace_url' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'home_m1_ace_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE);
+                    ?>
                 </div>
             </div>
             <div class=form-group>
@@ -265,19 +225,13 @@
             <div class=form-group>
                 <label for=home_m2_ace_url class="col-sm-2 control-label">模块二形象图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'home_m2_ace_url' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'home_m2_ace_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE);
+                    ?>
                 </div>
             </div>
+
             <div class=form-group>
                 <label for=home_m2_ace_id class="col-sm-2 control-label">模块二首推商品</label>
                 <div class=col-sm-10>
@@ -296,6 +250,7 @@
                     </select>
                 </div>
             </div>
+
             <div class=form-group>
                 <label for=home_m2_ids class="col-sm-2 control-label">模块二陈列商品</label>
                 <div class=col-sm-10>
@@ -323,17 +278,10 @@
             <div class=form-group>
                 <label for=home_m3_ace_url class="col-sm-2 control-label">模块三形象图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'home_m3_ace_url' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'home_m3_ace_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE);
+                    ?>
                 </div>
             </div>
             <div class=form-group>
@@ -377,18 +325,18 @@
 
         <fieldset>
             <legend>开发者功能（高级功能，免费试用）</legend>
-            <p class=help-block>请勿更改此处内容，除非您清楚地知道自己在做什么</p>
+            <p class=help-block>请勿随意更改此处内容，除非您清楚地知道自己在做什么</p>
 
             <div class=form-group>
                 <label for=home_json class="col-sm-2 control-label">首页内容（JSON）</label>
                 <div class=col-sm-10>
-                    <textarea class="form-control" name="home_json" rows=5 placeholder="JSON格式内容，10-20000个字符"><?php echo set_value('home_json') ?></textarea>
+                    <textarea class="form-control" name=home_json rows=5 placeholder="JSON格式内容，10-20000个字符"><?php echo set_value('home_json') ?></textarea>
                 </div>
             </div>
             <div class=form-group>
                 <label for=home_html class="col-sm-2 control-label">首页内容（HTML）</label>
                 <div class=col-sm-10>
-                    <textarea class="form-control" name="home_html" rows=5 placeholder="HTML格式内容，10-20000个字符"><?php echo set_value('home_html') ?></textarea>
+                    <textarea class="form-control" name=home_html rows=5 placeholder="HTML格式内容，10-20000个字符"><?php echo set_value('home_html') ?></textarea>
                 </div>
             </div>
         </fieldset>

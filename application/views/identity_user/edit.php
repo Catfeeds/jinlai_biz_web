@@ -52,37 +52,45 @@
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
             <div class=form-group>
-                <label for=fullname class="col-sm-2 control-label">姓名</label>
+                <label for=fullname class="col-sm-2 control-label">姓名 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=fullname type=text value="<?php echo $item['fullname'] ?>" placeholder="姓名" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=code_ssn_owner class="col-sm-2 control-label">身份证号</label>
+                <label for=code_ssn_owner class="col-sm-2 control-label">身份证号 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=code_ssn_owner type=text value="<?php echo $item['code_ssn_owner'] ?>" placeholder="身份证号" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=url_image_owner_id class="col-sm-2 control-label">身份证照片</label>
+                <label for=url_image_owner_ssn class="col-sm-2 control-label">身份证照片 ※</label>
                 <div class=col-sm-10>
-                    <input class=form-control name=url_image_owner_id type=text value="<?php echo $item['url_image_owner_id'] ?>" placeholder="身份证照片" required>
+                    <?php
+                    require_once(APPPATH. 'views/templates/file-uploader.php');
+                    $name_to_upload = 'url_image_owner_ssn';
+                    generate_html($name_to_upload, $this->class_name, TRUE, 1, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
             <div class=form-group>
-                <label for=url_verify_photo class="col-sm-2 control-label">用户持身份证照片</label>
+                <label for=url_verify_photo class="col-sm-2 control-label">用户持身份证照片 ※</label>
                 <div class=col-sm-10>
-                    <input class=form-control name=url_verify_photo type=text value="<?php echo $item['url_verify_photo'] ?>" placeholder="用户持身份证照片" required>
+                    <?php
+                    $name_to_upload = 'url_verify_photo';
+                    generate_html($name_to_upload, $this->class_name, TRUE, 1, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
+
             <div class=form-group>
-                <label for=bank_name class="col-sm-2 control-label">开户行名称</label>
+                <label for=bank_name class="col-sm-2 control-label">开户行名称 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="开户行名称" required>
                 </div>
             </div>
             <div class=form-group>
-                <label for=bank_account class="col-sm-2 control-label">开户行账号</label>
+                <label for=bank_account class="col-sm-2 control-label">开户行账号 ※</label>
                 <div class=col-sm-10>
                     <input class=form-control name=bank_account type=text value="<?php echo $item['bank_account'] ?>" placeholder="开户行账号" required>
                 </div>

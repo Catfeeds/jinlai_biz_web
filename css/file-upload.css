@@ -5,21 +5,24 @@
  * 文件上传控件的样式
  */
 
+.file-uploader {overflow:hidden}
+
 .selector_zone {width:152px;height:152px;display:inline-block;position:relative;}
-    input[type=file] {_background:transparent;overflow:hidden;display:inline-block;}
+    input[type=file] {overflow:hidden;display:inline-block;}
     .file_selector {color:#ff3649;text-align:center;background-color:#fff;width:100%;height:100%;line-height:152px;border:2px solid #ff3649;border-radius:12px;display:inline-block;position:absolute;top:0;left:0;}
 
-.upload_preview {clear:both;overflow:hidden;}
-    .upload_preview li {position:relative;width:152px;height:152px;margin-right:20px;border-radius:12px;padding:0;display:inline-block;float:left;overflow:hidden;}
+.upload_preview {clear:both;}
+    .upload_preview li {background-color:#ddd;position:relative;width:152px;height:152px;margin-right:20px;border-radius:12px;padding:0;display:inline-block;float:left;overflow:hidden;}
         .upload_preview li:nth-child(4n+0) {margin-right:0;}
 
-        .upload_preview figure {width:100%;height:100%;display:flex;justify-content:center;align-items:center;}
-        .upload_preview i {color:#fff;font-size:20px;text-align:center;background-color:rgba(0,0,0,0.5);width:50%;height:50px;line-height:50px;cursor:pointer;position:absolute;}
-        .upload_preview i.remove {background-color:#ff3649;width:30px;height:30px;line-height:30px;border-radius:15px;right:4px;top:4px;}
-        .upload_preview i.left {left:0;bottom:0;}
-        .upload_preview li:not(:last-child) i.left:after {content:"";background-color:rgba(255,255,255,0.5);width:1px;height:16px;position:absolute;left:76px;bottom:17px;z-index:10;}
-        .upload_preview i.right {right:0;bottom:0;}
-        .upload_preview li:first-child i.right, .upload_preview li:last-child i.left {width:100%;left:0;right:0;}
-        .upload_preview li:first-child i.left, .upload_preview li:last-child i.right {display:none;}
+        .upload_preview figure {width:100%;height:100%;display:flex;justify-content:center;align-items:center}
+        .upload_preview .adjuster {color:#fff;font-size:20px;text-align:center;background-color:rgba(0,0,0,0.5);width:50%;height:50px;line-height:50px;cursor:pointer;position:absolute;bottom:0;z-index:100;}
+            .adjuster:not(.remove) {padding:15px;}
+        .upload_preview .remove {background-color:#ff3649;width:30px;height:30px;line-height:30px;border-radius:15px;right:4px;top:4px;}
+        .upload_preview .left {left:0;}
+        .upload_preview .right {right:0;}
+        .upload_preview li:not(:last-child) .left:after {content:"";background-color:rgba(255,255,255,0.5);width:1px;height:16px;position:absolute;left:76px;bottom:17px;z-index:101;}
+        .upload_preview li:first-child .right, .upload_preview li:last-child .left {width:100%;left:0;right:0;}
+        .upload_preview li:first-child .left, .upload_preview li:last-child .right {display:none;}
 
-        button.file-upload {display:none;}
+button.file-upload {display:none;}

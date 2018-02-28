@@ -3,7 +3,7 @@
  *
  * 处理AJAX文件上传
  *
- * @version beta20180125
+ * @version beta20180301
  * @author Kamas 'Iceberg' Lau <https://github.com/kamaslau/ajaxupload>
  * @copyright Kamas 'Iceberg' Lau <kamaslau@outlook.com>
  */
@@ -53,7 +53,7 @@ $(function(){
 	function button_disable(button)
 	{
 		button.attr('disabled', 'disabled');
-		button.html('<i class="fa fa-refresh" aria-hidden=true></i> 正在上传');
+		button.html('<i class="far fa-refresh" aria-hidden=true></i> 正在上传');
 		console.log('正在上传');
 	}
 
@@ -61,7 +61,7 @@ $(function(){
 	function button_restore(button)
 	{
 		button.removeAttr('disabled');
-		button.html('<i class="fa fa-upload" aria-hidden=true></i> 上传');
+		button.html('<i class="far fa-upload" aria-hidden=true></i> 上传');
 		console.log('结束上传');
 	}
 
@@ -180,10 +180,10 @@ $(function(){
 					{
 						// 更新预览区
 						var item_content =
-						'<li class=col-xs-3 data-input-name="' + button.attr('data-input-name') + '" data-item-url="'+ item.content + '">' +
-						'	<i class="remove fa fa-minus"></i>' +
-						'	<i class="left fa fa-arrow-left"></i>' +
-						'	<i class="right fa fa-arrow-right"></i>' +
+						'<li data-input-name="' + button.attr('data-input-name') + '" data-item-url="'+ item.content + '">' +
+						'	<i class="adjuster remove far fa-minus"></i>' +
+						'	<i class="adjuster left far fa-arrow-left"></i>' +
+						'	<i class="adjuster right far fa-arrow-right"></i>' +
 						'	<figure>' +
 						'		<img src="' + item.content +'">' +
 						'	</figure>' +

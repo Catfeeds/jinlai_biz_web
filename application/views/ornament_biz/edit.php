@@ -76,30 +76,11 @@
             <div class=form-group>
                 <label for=main_figure_url class="col-sm-2 control-label">主形象图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'main_figure_url' ?>
-                    <ul class=upload_preview>
-                        <?php if ( !empty($item[$name_to_upload]) ): ?>
-
-                            <li style="width:670px;height:322px;" data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
-                                <i class="remove fa fa-minus"></i>
-                                <i class="left fa fa-arrow-left"></i>
-                                <i class="right fa fa-arrow-right"></i>
-                                <figure>
-                                    <img src="<?php echo $item[$name_to_upload] ?>">
-                                </figure>
-                            </li>
-
-                        <?php endif ?>
-                    </ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    require_once(APPPATH. 'views/templates/file-uploader.php');
+                    $name_to_upload = 'main_figure_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 1, $item[$name_to_upload]);
+                    ?>
 
                     <p class=help-block>用于商家店铺首页、商家会员卡详情页</p>
                 </div>
@@ -108,30 +89,10 @@
             <div class=form-group>
                 <label for=member_logo_url class="col-sm-2 control-label">会员卡LOGO</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'member_logo_url' ?>
-                    <ul class=upload_preview>
-                        <?php if ( !empty($item[$name_to_upload]) ): ?>
-
-                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
-                                <i class="remove fa fa-minus"></i>
-                                <i class="left fa fa-arrow-left"></i>
-                                <i class="right fa fa-arrow-right"></i>
-                                <figure>
-                                    <img src="<?php echo $item[$name_to_upload] ?>">
-                                </figure>
-                            </li>
-
-                        <?php endif ?>
-                    </ul>
-
-                    <div class=selector_zone>
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
-
-                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'member_logo_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 1, $item[$name_to_upload]);
+                    ?>
 
                     <p class=help-block>用于会员卡相关页面；若不上传，则默认以商家LOGO作为会员卡LOGO</p>
                 </div>
@@ -140,30 +101,10 @@
             <div class=form-group>
                 <label for=member_figure_url class="col-sm-2 control-label">会员卡封图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'member_figure_url' ?>
-                    <ul class=upload_preview>
-                        <?php if ( !empty($item[$name_to_upload]) ): ?>
-
-                            <li style="width:670px;height:322px;" data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
-                                <i class="remove fa fa-minus"></i>
-                                <i class="left fa fa-arrow-left"></i>
-                                <i class="right fa fa-arrow-right"></i>
-                                <figure>
-                                    <img src="<?php echo $item[$name_to_upload] ?>">
-                                </figure>
-                            </li>
-
-                        <?php endif ?>
-                    </ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'member_figure_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 1, $item[$name_to_upload]);
+                    ?>
 
                     <p class=help-block>用于会员卡领取页、详情页</p>
                 </div>
@@ -172,30 +113,10 @@
             <div class=form-group>
                 <label for=member_thumb_url class="col-sm-2 control-label">会员卡列表图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'member_thumb_url' ?>
-                    <ul class=upload_preview>
-                        <?php if ( !empty($item[$name_to_upload]) ): ?>
-
-                            <li style="width:670px;height:322px;" data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
-                                <i class="remove fa fa-minus"></i>
-                                <i class="left fa fa-arrow-left"></i>
-                                <i class="right fa fa-arrow-right"></i>
-                                <figure>
-                                    <img src="<?php echo $item[$name_to_upload] ?>">
-                                </figure>
-                            </li>
-
-                        <?php endif ?>
-                    </ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'member_thumb_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 1, $item[$name_to_upload]);
+                    ?>
 
                     <p class=help-block>用于会员卡列表</p>
                 </div>
@@ -209,30 +130,10 @@
             <div class=form-group>
                 <label for=home_slides class="col-sm-2 control-label">顶部模块轮播图内容</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'home_slides' ?>
-                    <ul class=upload_preview>
-                        <?php if ( !empty($item[$name_to_upload]) ): ?>
-
-                            <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
-                                <i class="remove fa fa-minus"></i>
-                                <i class="left fa fa-arrow-left"></i>
-                                <i class="right fa fa-arrow-right"></i>
-                                <figure>
-                                    <img src="<?php echo $item[$name_to_upload] ?>">
-                                </figure>
-                            </li>
-
-                        <?php endif ?>
-                    </ul>
-
-                    <div class=selector_zone>
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
-
-                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=4 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'home_slides';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 4, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
 
@@ -265,32 +166,13 @@
             <div class=form-group>
                 <label for=home_m1_ace_url class="col-sm-2 control-label">模块一形象图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'home_m1_ace_url' ?>
-                    <ul class=upload_preview>
-                    <?php if ( !empty($item[$name_to_upload]) ): ?>
-
-                        <li style="width:670px;height:322px;" data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
-                            <i class="remove fa fa-minus"></i>
-                            <i class="left fa fa-arrow-left"></i>
-                            <i class="right fa fa-arrow-right"></i>
-                            <figure>
-                                <img src="<?php echo $item[$name_to_upload] ?>">
-                            </figure>
-                        </li>
-
-                    <?php endif ?>
-                    </ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'home_m1_ace_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 1, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
+
             <div class=form-group>
                 <label for=home_m1_ace_id class="col-sm-2 control-label">模块一首推商品</label>
                 <div class=col-sm-10>
@@ -339,32 +221,13 @@
             <div class=form-group>
                 <label for=home_m2_ace_url class="col-sm-2 control-label">模块二形象图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'home_m2_ace_url' ?>
-                    <ul class=upload_preview>
-                        <?php if ( !empty($item[$name_to_upload]) ): ?>
-
-                            <li style="width:670px;height:322px;" data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
-                                <i class="remove fa fa-minus"></i>
-                                <i class="left fa fa-arrow-left"></i>
-                                <i class="right fa fa-arrow-right"></i>
-                                <figure>
-                                    <img src="<?php echo $item[$name_to_upload] ?>">
-                                </figure>
-                            </li>
-
-                        <?php endif ?>
-                    </ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'home_m2_ace_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 1, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
+
             <div class=form-group>
                 <label for=home_m2_ace_id class="col-sm-2 control-label">模块二首推商品</label>
                 <div class=col-sm-10>
@@ -385,6 +248,7 @@
                     </select>
                 </div>
             </div>
+
             <div class=form-group>
                 <label for=home_m2_ids class="col-sm-2 control-label">模块二陈列商品</label>
                 <div class=col-sm-10>
@@ -412,32 +276,13 @@
             <div class=form-group>
                 <label for=home_m3_ace_url class="col-sm-2 control-label">模块三形象图</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'home_m3_ace_url' ?>
-                    <ul class=upload_preview>
-                        <?php if ( !empty($item[$name_to_upload]) ): ?>
-
-                            <li style="width:670px;height:322px;" data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $item[$name_to_upload] ?>">
-                                <i class="remove fa fa-minus"></i>
-                                <i class="left fa fa-arrow-left"></i>
-                                <i class="right fa fa-arrow-right"></i>
-                                <figure>
-                                    <img src="<?php echo $item[$name_to_upload] ?>">
-                                </figure>
-                            </li>
-
-                        <?php endif ?>
-                    </ul>
-
-                    <div class=selector_zone style="width:670px;height:322px;">
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
-
-                        <div class=file_selector style="line-height:322px;"><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    $name_to_upload = 'home_m3_ace_url';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 1, $item[$name_to_upload]);
+                    ?>
                 </div>
             </div>
+
             <div class=form-group>
                 <label for=home_m3_ace_id class="col-sm-2 control-label">模块三首推商品</label>
                 <div class=col-sm-10>
@@ -456,6 +301,7 @@
                     </select>
                 </div>
             </div>
+
             <div class=form-group>
                 <label for=home_m3_ids class="col-sm-2 control-label">模块三陈列商品</label>
                 <div class=col-sm-10>

@@ -52,7 +52,7 @@
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">名称※</label>
+				<label for=name class="col-sm-2 control-label">名称 ※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=name type=text value="<?php echo $item['name'] ?>" placeholder="例如：全场包邮、满2件包邮、满2公斤包邮等" required>
 				</div>
@@ -110,21 +110,21 @@
                 </div>
                 -->
                 <div class=form-group>
-                    <label for=province class="col-sm-2 control-label">省※</label>
+                    <label for=province class="col-sm-2 control-label">省 ※</label>
                     <div class=col-sm-10>
                         <input class=form-control name=province type=text value="<?php echo $item['province'] ?>" placeholder="省" required>
                     </div>
                 </div>
                 <div class=form-group>
-                    <label for=city class="col-sm-2 control-label">市※</label>
+                    <label for=city class="col-sm-2 control-label">市 ※</label>
                     <div class=col-sm-10>
                         <input class=form-control name=city type=text value="<?php echo $item['city'] ?>" placeholder="市" required>
                     </div>
                 </div>
                 <div class=form-group>
-                    <label for=county class="col-sm-2 control-label">区/县※</label>
+                    <label for=county class="col-sm-2 control-label">区/县 ※</label>
                     <div class=col-sm-10>
-                        <input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区/县">
+                        <input class=form-control name=county type=text value="<?php echo $item['county'] ?>" placeholder="区/县" required>
                     </div>
                 </div>
             </fieldset>

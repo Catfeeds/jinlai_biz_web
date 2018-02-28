@@ -68,17 +68,11 @@
             <div class=form-group>
                 <label for=url_logo class="col-sm-2 control-label">店铺LOGO</label>
                 <div class=col-sm-10>
-                    <?php $name_to_upload = 'url_logo' ?>
-                    <ul class=upload_preview></ul>
-
-                    <div class=selector_zone>
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
-
-                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/<?php echo $name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                    <?php
+                    require_once(APPPATH. 'views/templates/file-uploader.php');
+                    $name_to_upload = 'url_logo';
+                    generate_html($name_to_upload, $this->class_name);
+                    ?>
 
                     <p class=help-block>正方形图片视觉效果最佳</p>
                 </div>

@@ -42,7 +42,7 @@
 			<a class="btn btn-default btn-lg" title="返回首页" href="<?php echo base_url() ?>">返回首页</a>
 		</li>
         <li class="col-xs-12 col-sm-6 col-sm-3">
-            <a class="btn btn-primary btn-lg" title="快速创建商品" href="<?php echo base_url($this->class_name.'/create-quick') ?>">添加我的第一个商品</a>
+            <a class="btn btn-primary btn-lg" title="快速创建商品" href="<?php echo base_url('item/create-quick') ?>">去添加第一个商品</a>
         </li>
 	</ul>
 </div>

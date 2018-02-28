@@ -62,14 +62,14 @@
 			<p class=help-block>必填项以“※”符号标示</p>
 
 			<div class=form-group>
-				<label for=name class="col-sm-2 control-label">名称※</label>
+				<label for=name class="col-sm-2 control-label">名称 ※</label>
 				<div class=col-sm-10>
 					<input class=form-control name=name type=text value="<?php echo set_value('name') ?>" placeholder="最多20个字符" required>
 				</div>
 			</div>
 
 			<div class=form-group>
-				<label for=template_ids class="col-sm-2 control-label">所含优惠券※</label>
+				<label for=template_ids class="col-sm-2 control-label">所含优惠券 ※</label>
 				<div class=col-sm-10>
                     <?php $input_name = 'template_ids[]' ?>
                     <select class=form-control name="<?php echo $input_name ?>" multiple required>
