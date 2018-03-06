@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $origin = isset($_SERVER['HTTP_ORIGIN'])? $_SERVER['HTTP_ORIGIN']: NULL;
 $allow_origin = array(
     'https://biz.517ybang.com',
+	'https://www.517ybang.com',
 );
 if ( in_array($origin, $allow_origin) ):
     header('Access-Control-Allow-Origin:'.$origin);
