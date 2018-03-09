@@ -40,8 +40,6 @@
                 if ( ! isset($params['biz_id']))
                     $params['biz_id'] = $this->CI->session->biz_id;
 
-                //var_dump($params); // 输出最终请求参数以便调试
-
 				curl_setopt($curl, CURLOPT_POST, count($params));
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
 			endif;
@@ -63,8 +61,9 @@
 			endif;
 
 			return $result;
-		}
-	}
+		} // end go
+		
+	} // end class Curl
 	
 /* End of file Curl.php */
 /* Location: ./application/libraries/Curl.php */

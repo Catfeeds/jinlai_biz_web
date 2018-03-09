@@ -191,7 +191,7 @@
 		// 上传到CDN；目前采用的是又拍云
 		private function upload_to_cdn()
 		{
-			$upyun_config = new Config('jinlaisandbox-images', 'jinlaisandbox', 'jinlaisandbox');
+			$upyun_config = new Config(UPYUN_BUCKETNAME, UPYUN_USERNAME, UPYUN_USERPASSWORD);
 			$upyun = new Upyun($upyun_config);
  
 			// 待上传到的又拍云URL

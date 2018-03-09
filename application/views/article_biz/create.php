@@ -63,11 +63,11 @@
 
                     <?php else: ?>
                     <textarea class=form-control name=content rows=10 placeholder="10-20000个字符" required><?php echo set_value('content') ?></textarea>
-                    <link rel=stylesheet media=all href="<?php echo base_url('/css/simditor.css') ?>">
-                    <script src="<?php echo base_url('/js/module.js') ?>"></script>
-                    <script src="<?php echo base_url('/js/hotkeys.js') ?>"></script>
-                    <script src="<?php echo base_url('/js/uploader.js') ?>"></script>
-                    <script src="<?php echo base_url('/js/simditor.js') ?>"></script>
+					
+                    <?php
+						require_once(APPPATH. 'views/templates/simditor.php');
+						$name_to_upload = 'content';
+					?>
                     <script>
                         $(function(){
                             var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', '|', 'hr', 'ol', 'ul', 'blockquote', 'table', '|', 'image', '|', 'indent', 'outdent', 'alignment'];
@@ -76,7 +76,7 @@
                                 cleanPaste: true,
                                 toolbar: toolbar,
                                 upload: {
-                                    url: '<?php echo base_url('/simditor?target='. $this->class_name. '/url_images') ?>',
+                                    url: '<?php echo base_url('/simditor?target='.$this->class_name.'/'.$name_to_upload) ?>',
                                     params: null,
                                     fileKey: 'file0',
                                     connectionCount: 4,

@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'record_id', 'refund_id', 'biz_id', 'user_id', 'content', 'time_create', 'time_delete', 'time_edit', 'operator_id',
+			'refund_id', 'biz_id', 'user_id', 'content', 'time_create', 'time_delete', 'time_edit', 'operator_id',
 		);
 
 		public function __construct()
@@ -148,6 +148,46 @@
 				
 			endif;
 		} // end create
+		
+		/**
+		 * 编辑单行
+		 */
+		public function edit()
+		{
+            exit('商家不可修改'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+		} // end edit
+
+		/**
+		 * 修改单项
+		 */
+		public function edit_certain()
+		{
+            exit('商家不可修改'.$this->class_name_cn.'单项信息；您意图违规操作的记录已被发送到安全中心。');
+		} // end edit_certain
+
+        /**
+         * 删除
+         *
+         * 商家不可删除
+         */
+        public function delete()
+        {
+            exit('商家不可删除用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+        } // end delete
+
+        /**
+         * 找回
+         *
+         * 商家不可找回
+         */
+        public function restore()
+        {
+            exit('商家不可找回用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+        } // end restore
+		
+		/**
+		 * 以下为工具类方法
+		 */
 
 	} // end class Refund_record
 

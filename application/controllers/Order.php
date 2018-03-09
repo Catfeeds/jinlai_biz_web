@@ -15,7 +15,6 @@
 		 */
 		protected $names_to_sort = array(
 			'user_id', 'user_ip', 'subtotal', 'promotion_id', 'discount_promotion', 'coupon_id', 'discount_coupon', 'credit_id', 'discount_credit', 'freight', 'total', 'discount_teller', 'teller_id', 'total_payed', 'total_refund', 'addressee_fullname', 'addressee_mobile', 'addressee_province', 'addressee_city', 'addressee_county', 'addressee_address', 'payment_type', 'payment_account', 'payment_id', 'note_user', 'note_stuff', 'commission_rate', 'commission', 'promoter_id', 'time_create', 'time_cancel', 'time_expire', 'time_pay', 'time_refuse', 'time_deliver', 'time_confirm', 'time_confirm_auto', 'time_comment', 'time_refund', 'time_delete', 'time_edit', 'operator_id', 'invoice_status', 'status',
-			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
 		public function __construct()
@@ -663,6 +662,22 @@
 
 		} // end valid
 
+		/**
+		 * 编辑单行
+		 */
+		public function edit()
+		{
+            exit('商家不可修改'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+		} // end edit
+
+		/**
+		 * 修改单项
+		 */
+		public function edit_certain()
+		{
+            exit('商家不可修改'.$this->class_name_cn.'单项信息；您意图违规操作的记录已被发送到安全中心。');
+		} // end edit_certain
+
         /**
          * 删除
          *
@@ -682,6 +697,10 @@
         {
             exit('商家不可找回用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
         } // end restore
+		
+		/**
+		 * 以下为工具类方法
+		 */
 
 	} // end class Order
 
