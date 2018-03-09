@@ -50,25 +50,25 @@
 		/* 当前用户员工信息 */
 		public $stuff = array();
 
-        // 访问设备信息
+        /* 访问设备信息 */
         public $user_agent = array();
 
-		// 客户端类型
+		/* 客户端类型 */
         public $app_type;
 
-		// 客户端版本号
+		/* 客户端版本号 */
         public $app_version;
 
-		// 设备操作系统平台ios/android；非移动客户端传空值
+		/* 设备操作系统平台ios/android；非移动客户端传空值 */
         public $device_platform;
 
-		// 设备唯一码；全小写
+		/* 设备唯一码；全小写 */
 		protected $device_number;
 
-		// 当前时间戳
+		/* 当前时间戳 */
 		protected $timestamp;
 
-		// 请求签名
+		/* 请求签名 */
 		private $sign;
 
         /**
@@ -648,7 +648,7 @@
             if ($result['status'] === 200):
                 $data['item'] = $result['content'];
             else:
-                $data['item'] = NULL;
+                $data['item'] = $result['content']['error']['message'];
             endif;
 
             return $data['item'];
@@ -670,7 +670,7 @@
                     $data['item'] = $result['content'];
                 endif;
             else:
-                $data['item'] = NULL;
+                $data['item'] = $result['content']['error']['message'];
             endif;
 
             return $data['item'];
@@ -680,8 +680,7 @@
 		protected function list_item($params = NULL)
 		{
             // 默认获取未删除项
-            if ( empty($params) )
-                $params['time_delete'] = 'NULL';
+            if ( empty($params) ) $params['time_delete'] = 'NULL';
 
 			// 从API服务器获取相应列表信息
 			$url = api_url('item/index');
@@ -689,7 +688,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-				$data['items'] = NULL;
+                $data['items'] = $result['content']['error']['message'];
 			endif;
 			
 			return $data['items'];
@@ -706,7 +705,7 @@
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
 			else:
-				$data['item'] = NULL;
+                $data['item'] = $result['content']['error']['message'];
 			endif;
 
 			return $data['item'];
@@ -735,7 +734,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-				$data['items'] = NULL;
+                $data['items'] = $result['content']['error']['message'];
 			endif;
 			
 			return $data['items'];
@@ -752,7 +751,7 @@
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
 			else:
-				$data['item'] = NULL;
+                $data['item'] = $result['content']['error']['message'];
 			endif;
 			
 			return $data['item'];
@@ -771,7 +770,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-				$data['items'] = NULL;
+                $data['items'] = $result['content']['error']['message'];
 			endif;
 
 			return $data['items'];
@@ -810,7 +809,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-				$data['items'] = NULL;
+                $data['items'] = $result['content']['error']['message'];
 			endif;
 			
 			return $data['items'];
@@ -827,7 +826,7 @@
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
 			else:
-				$data['item'] = NULL;
+                $data['item'] = $result['content']['error']['message'];
 			endif;
 			
 			return $data['item'];
@@ -846,7 +845,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-				$data['items'] = NULL;
+                $data['items'] = $result['content']['error']['message'];
 			endif;
 			
 			return $data['items'];
@@ -863,7 +862,7 @@
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
 			else:
-				$data['item'] = NULL;
+                $data['item'] = $result['content']['error']['message'];
 			endif;
 			
 			return $data['item'];
@@ -882,7 +881,7 @@
             if ($result['status'] === 200):
                 $data['items'] = $result['content'];
             else:
-                $data['items'] = NULL;
+                $data['items'] = $result['content']['error']['message'];
             endif;
 
             return $data['items'];
@@ -899,7 +898,7 @@
             if ($result['status'] === 200):
                 $data['item'] = $result['content'];
             else:
-                $data['item'] = NULL;
+                $data['item'] = $result['content']['error']['message'];
             endif;
 
             return $data['item'];
@@ -918,7 +917,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-				$data['items'] = NULL;
+                $data['items'] = $result['content']['error']['message'];
 			endif;
 
 			return $data['items'];
@@ -935,7 +934,7 @@
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
 			else:
-				$data['item'] = NULL;
+                $data['item'] = $result['content']['error']['message'];
 			endif;
 			
 			return $data['item'];
@@ -954,7 +953,7 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-				$data['items'] = NULL;
+                $data['items'] = $result['content']['error']['message'];
 			endif;
 
 			return $data['items'];
@@ -971,7 +970,7 @@
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
 			else:
-				$data['item'] = NULL;
+                $data['item'] = $result['content']['error']['message'];
 			endif;
 
 			return $data['item'];

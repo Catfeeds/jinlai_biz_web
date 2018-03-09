@@ -483,11 +483,29 @@
 			endif;
 		} // end register
 
+        /**
+         * 删除
+         *
+         * 商家不可删除
+         */
+        public function delete()
+        {
+            exit('不可删除'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+        } // end delete
 
         /**
-         * 以下为工具方法
+         * 找回
+         *
+         * 商家不可找回
          */
+        public function restore()
+        {
+            exit('不可找回'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+        } // end restore
 
+        /**
+         * 以下为工具类方法
+         */
 
         /**
          * 记录操作失败次数，并评估是否需要图片验证码
