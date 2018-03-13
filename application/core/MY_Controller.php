@@ -628,13 +628,8 @@
 
             $url = api_url('biz/detail');
             $result = $this->curl->go($url, $params, 'array');
-            if ($result['status'] === 200):
-                $data['item'] = $result['content'];
-            else:
-                $data['item'] = $result['content']['error']['message'];
-            endif;
 
-            return $data['item'];
+            return ($result['status'] === 200)? $result['content']: NULL;
         } // end get_biz
 
         // 获取特定用户信息
@@ -645,13 +640,8 @@
             // 从API服务器获取相应信息
             $url = api_url('user/detail');
             $result = $this->curl->go($url, $params, 'array');
-            if ($result['status'] === 200):
-                $data['item'] = $result['content'];
-            else:
-                $data['item'] = $result['content']['error']['message'];
-            endif;
 
-            return $data['item'];
+            return ($result['status'] === 200)? $result['content']: NULL;
         } // end get_user
 
         // 获取特定员工信息
@@ -670,7 +660,7 @@
                     $data['item'] = $result['content'];
                 endif;
             else:
-                $data['item'] = $result['content']['error']['message'];
+                $data['item'] = NULL;
             endif;
 
             return $data['item'];
@@ -685,13 +675,8 @@
 			// 从API服务器获取相应列表信息
 			$url = api_url('item/index');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-                $data['items'] = $result['content']['error']['message'];
-			endif;
-			
-			return $data['items'];
+
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end list_item
 
 		// 获取特定商品信息
@@ -702,13 +687,8 @@
 			// 从API服务器获取相应信息
 			$url = api_url('item/detail');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-                $data['item'] = $result['content']['error']['message'];
-			endif;
 
-			return $data['item'];
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end get_item
 
         /**
@@ -731,13 +711,8 @@
 			// 从API服务器获取相应列表信息
 			$url = api_url('sku/index');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-                $data['items'] = $result['content']['error']['message'];
-			endif;
-			
-			return $data['items'];
+
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end list_sku
 
 		// 获取特定规格信息
@@ -748,13 +723,8 @@
 			// 从API服务器获取相应信息
 			$url = api_url('sku/detail');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-                $data['item'] = $result['content']['error']['message'];
-			endif;
-			
-			return $data['item'];
+
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end get_sku
 		
 		// 获取品牌列表
@@ -767,13 +737,8 @@
             // 从API服务器获取相应列表信息
 			$url = api_url('brand/index');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-                $data['items'] = $result['content']['error']['message'];
-			endif;
 
-			return $data['items'];
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end list_brand
 		
 		// 获取特定品牌信息
@@ -784,13 +749,8 @@
 			// 从API服务器获取相应信息
 			$url = api_url('brand/detail');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-				$data['item'] = NULL;
-			endif;
-			
-			return $data['item'];
+
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end get_brand
 
 		// 获取系统分类列表
@@ -806,13 +766,8 @@
 			// 从API服务器获取相应列表信息
 			$url = api_url('item_category/index');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-                $data['items'] = $result['content']['error']['message'];
-			endif;
-			
-			return $data['items'];
+
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end list_category
 		
 		// 获取特定系统分类信息
@@ -823,13 +778,8 @@
 			// 从API服务器获取相应信息
 			$url = api_url('item_category/detail');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-                $data['item'] = $result['content']['error']['message'];
-			endif;
-			
-			return $data['item'];
+
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end get_category
 		
 		// 获取商家分类列表
@@ -842,13 +792,8 @@
 			// 从API服务器获取相应列表信息
 			$url = api_url('item_category_biz/index');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-                $data['items'] = $result['content']['error']['message'];
-			endif;
-			
-			return $data['items'];
+
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end list_category_biz
 		
 		// 获取特定商家分类信息
@@ -859,13 +804,8 @@
 			// 从API服务器获取相应信息
 			$url = api_url('item_category_biz/detail');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-                $data['item'] = $result['content']['error']['message'];
-			endif;
-			
-			return $data['item'];
+
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end get_category_biz
 
         // 获取优惠券模板列表
@@ -878,13 +818,8 @@
             // 从API服务器获取相应列表信息
             $url = api_url('coupon_template/index');
             $result = $this->curl->go($url, $params, 'array');
-            if ($result['status'] === 200):
-                $data['items'] = $result['content'];
-            else:
-                $data['items'] = $result['content']['error']['message'];
-            endif;
 
-            return $data['items'];
+            return ($result['status'] === 200)? $result['content']: NULL;
         } // end list_coupon_template
 
         // 获取特定优惠券模板信息
@@ -895,13 +830,8 @@
             // 从API服务器获取相应信息
             $url = api_url('coupon_template/detail');
             $result = $this->curl->go($url, $params, 'array');
-            if ($result['status'] === 200):
-                $data['item'] = $result['content'];
-            else:
-                $data['item'] = $result['content']['error']['message'];
-            endif;
 
-            return $data['item'];
+            return ($result['status'] === 200)? $result['content']: NULL;
         } // end get_coupon_template
 
 		// 获取店内活动列表
@@ -914,13 +844,8 @@
             // 从API服务器获取相应列表信息
 			$url = api_url('promotion_biz/index');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-                $data['items'] = $result['content']['error']['message'];
-			endif;
 
-			return $data['items'];
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end list_promotion_biz
 		
 		// 获取店内活动详情
@@ -931,13 +856,8 @@
 			// 从API服务器获取相应信息
 			$url = api_url('promotion_biz/detail');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-                $data['item'] = $result['content']['error']['message'];
-			endif;
-			
-			return $data['item'];
+
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end get_promotion_biz
 		
 		// 获取商家运费模板
@@ -950,13 +870,8 @@
             // 从API服务器获取相应列表信息
 			$url = api_url('freight_template_biz/index');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-                $data['items'] = $result['content']['error']['message'];
-			endif;
 
-			return $data['items'];
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end list_freight_template_biz
 
 		// 获取特定商家运费模板详情
@@ -967,13 +882,8 @@
 			// 从API服务器获取相应信息
 			$url = api_url('freight_template_biz/detail');
 			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['item'] = $result['content'];
-			else:
-                $data['item'] = $result['content']['error']['message'];
-			endif;
 
-			return $data['item'];
+            return ($result['status'] === 200)? $result['content']: NULL;
 		} // end get_freight_template_biz
 
 	} // end class MY_Controller

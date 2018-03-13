@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'user_id', 'password', 'nickname', 'lastname', 'firstname', 'code_ssn', 'url_image_id', 'gender', 'dob', 'avatar', 'mobile', 'email', 'wechat_union_id', 'address_id', 'bank_name', 'bank_account', 'last_login_timestamp', 'last_login_ip',
+			'password', 'nickname', 'lastname', 'firstname', 'code_ssn', 'url_image_id', 'gender', 'dob', 'avatar', 'mobile', 'email', 'wechat_union_id', 'address_id', 'bank_name', 'bank_account', 'last_login_timestamp', 'last_login_ip',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -61,13 +61,8 @@
 		 */
 		public function mine()
 		{
-			// 检查是否已传入必要参数
-			$id = $this->session->user_id? $this->session->user_id: NULL;
-			if ( !empty($id) ):
-				$params['id'] = $id;
-			else:
-				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-			endif;
+		    // 获取当前用户信息
+            $params['id'] = $this->session->user_id;
 
 			// 从API服务器获取相应详情信息
 			$url = api_url($this->class_name. '/detail');
@@ -80,8 +75,8 @@
 			endif;
 
 			// 页面信息
-			$data['title'] = $data['item']['mobile'];
-			$data['class'] = $this->class_name.' detail';
+            $data['title'] = $data['item']['nickname'];
+			$data['class'] = $this->class_name.' mine';
 
 			// 输出视图
 			$this->load->view('templates/header', $data);
@@ -145,13 +140,16 @@
 				redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
 			endif;
 
+			// 若为当前用户，则转到我的页面
+			if ($id = $this->session->user_id) redirect(base_url('user/mine'));
+
             // 从API服务器获取相应详情信息
             $url = api_url($this->class_name. '/detail');
             $result = $this->curl->go($url, $params, 'array');
             if ($result['status'] === 200):
                 $data['item'] = $result['content'];
                 // 页面信息
-                $data['title'] = ( $id === $this->session->user_id )? '我的资料': $data['item']['nickname'];
+                $data['title'] = $data['item']['nickname'];
                 $data['class'] = $this->class_name.' detail';
 
             else:

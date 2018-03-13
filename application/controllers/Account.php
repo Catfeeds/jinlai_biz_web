@@ -26,47 +26,13 @@
 		}
 
 		/**
-		 * TODO 我的
+		 * 我的
 		 *
 		 * 个人中心页
 		 */
 		public function mine()
 		{
-			// 若未登录，转到密码登录页
-			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
-
-			// 若当前用户未设置密码，转到密码设置页
-			if ( empty($this->session->password) )
-				redirect( base_url('password_set') );
-
-			// 页面信息
-			$data = array(
-				'title' => '我的', // 页面标题
-				'class' => $this->class_name.' mine', // 页面body标签的class属性值
-			);
-
-			// 筛选条件
-			$condition['user_id'] = $this->session->user_id;
-
-			// 排序条件
-			$order_by = NULL;
-			//$order_by['name'] = 'value';
-
-			// 从API服务器获取相应列表信息
-			$params = $condition;
-			$url = api_url($this->class_name. '/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-				//TODO redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
-			endif;
-
-			// 输出视图
-			$this->load->view('templates/header', $data);
-			$this->load->view($this->view_root.'/mine', $data);
-			$this->load->view('templates/nav-main', $data);
-			$this->load->view('templates/footer', $data);
+			redirect(base_url('user/mine'));
 		} // end mine
 
 		/**

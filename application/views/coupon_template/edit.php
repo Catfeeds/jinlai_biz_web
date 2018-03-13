@@ -147,15 +147,17 @@
             <div class=form-group>
 				<label for=time_start class="col-sm-2 control-label">有效期开始时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_start type=datetime value="<?php echo empty($item['time_start'])? NULL: date('Y-m-d H:i', $item['time_start']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>">
+					<input class=form-control name=time_start type=datetime value="<?php echo empty($item['time_start'])? NULL: date('Y-m-d H:i', $item['time_start']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+1days')) ?>">
                     <p class=help-block>若指定了开始时间，则有效期将从该时间开始</p>
+                    <?php require_once(APPPATH. 'views/templates/time_start_hint.php') ?>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=time_end class="col-sm-2 control-label">有效期结束时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_end type=datetime value="<?php echo empty($item['time_end'])? NULL: date('Y-m-d H:i', $item['time_end']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>">
+					<input class=form-control name=time_end type=datetime value="<?php echo empty($item['time_end'])? NULL: date('Y-m-d H:i', $item['time_end']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+31days')) ?>">
                     <p class=help-block>若指定了结束时间，则将忽略领取后有效期</p>
+                    <?php require_once(APPPATH. 'views/templates/time_end_hint.php') ?>
 				</div>
 			</div>
 			-->

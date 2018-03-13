@@ -106,13 +106,15 @@
 			<div class=form-group>
 				<label for=time_start class="col-sm-2 control-label">领取开始时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_start type=datetime value="<?php echo empty($item['time_start'])? NULL: date('Y-m-d H:i', $item['time_start']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+2days')) ?>；留空则马上开放领取">
+					<input class=form-control name=time_start type=datetime value="<?php echo empty($item['time_start'])? NULL: date('Y-m-d H:i', $item['time_start']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+1days')) ?>；留空则马上开放领取">
+					<?php require_once(APPPATH. 'views/templates/time_start_hint.php') ?>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=time_end class="col-sm-2 control-label">领取结束时间</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_end type=datetime value="<?php echo empty($item['time_end'])? NULL: date('Y-m-d H:i', $item['time_end']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+5days')) ?>；留空则长期有效">
+					<input class=form-control name=time_end type=datetime value="<?php echo empty($item['time_end'])? NULL: date('Y-m-d H:i', $item['time_end']); ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+31days')) ?>；留空则长期有效">
+					<?php require_once(APPPATH. 'views/templates/time_end_hint.php') ?>
 				</div>
 			</div>
 		</fieldset>
