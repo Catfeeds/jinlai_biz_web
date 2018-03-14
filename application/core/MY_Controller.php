@@ -425,13 +425,15 @@
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
 			$op_name = '删除'; // 操作的名称
-			$op_view = 'delete'; // 视图文件名
+			$op_view = 'delete'; // 操作名、视图文件名
 
 			// 页面信息
 			$data = array(
 				'title' => $op_name. $this->class_name_cn,
 				'class' => $this->class_name. ' '. $op_view,
 				'error' => '', // 预设错误提示
+
+                'op_name' => $op_view,
 			);
 
 			// 赋值视图中需要用到的待操作项数据
@@ -489,7 +491,7 @@
 					'operation' => $op_view, // 操作名称
 				);
 
-				// 向API服务器发送待创建数据
+				// 向API服务器发送待修改数据
 				$params = $data_to_edit;
 				$url = api_url($this->class_name. '/edit_bulk');
 				$result = $this->curl->go($url, $params, 'array');
@@ -505,7 +507,7 @@
 					$this->load->view('templates/footer', $data);
 
 				else:
-					// 若创建失败，则进行提示
+					// 若修改失败，则进行提示
 					$data['error'] .= $result['content']['error']['message'];
 
 					$this->load->view('templates/header', $data);
@@ -529,13 +531,15 @@
 // 			$this->basic->permission_check($role_allowed, $min_level);
 
 			$op_name = '恢复'; // 操作的名称
-			$op_view = 'restore'; // 视图文件名
+			$op_view = 'restore'; // 操作名、视图文件名
 
 			// 页面信息
 			$data = array(
 				'title' => $op_name. $this->class_name_cn,
 				'class' => $this->class_name. ' '. $op_view,
 				'error' => '', // 预设错误提示
+
+                'op_name' => $op_view,
 			);
 
 			// 赋值视图中需要用到的待操作项数据
@@ -593,7 +597,7 @@
 					'operation' => $op_view, // 操作名称
 				);
 
-				// 向API服务器发送待创建数据
+				// 向API服务器发送待修改数据
 				$params = $data_to_edit;
 				$url = api_url($this->class_name. '/edit_bulk');
 				$result = $this->curl->go($url, $params, 'array');
@@ -609,7 +613,7 @@
 					$this->load->view('templates/footer', $data);
 
 				else:
-					// 若创建失败，则进行提示
+					// 若修改失败，则进行提示
 					$data['error'] .= $result['content']['error']['message'];
 
 					$this->load->view('templates/header', $data);

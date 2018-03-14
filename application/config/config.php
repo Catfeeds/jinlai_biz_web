@@ -24,7 +24,7 @@ endif;
 define('SITE_NAME', '进来商家中心'); // 站点名称
 define('SITE_SLOGAN', '进来，是你想要的'); // 站点广告语
 define('SITE_KEYWORDS', '进来,进来商城,品控,网购,网购平台,网上商城'); // 站点关键词
-define('SITE_DESCRIPTION', '「进来」是首款需要严苛标准认证的品控网购平台，是国内互联网购物的一片净土，是高质量产品的输送桥梁。我们旨在联盟最优质的商家，为消费者带来最具品质的商品和服务。 '); // 站点描述
+define('SITE_DESCRIPTION', '「进来」是本地商家严选平台，构建严选商圈生态、共享超级用户圈，深度服务本地商家。 '); // 站点描述
 define('ICP_NUMBER', '鲁ICP备15023233号-7'); // ICP备案号码，没有请留空
 
 define('BASE_URL', 'https://'. $_SERVER['SERVER_NAME']); // 可对外使用的站点URL；在本地测试时须替换为类似“localhost/BasicCodeigniter”形式
