@@ -375,14 +375,6 @@
 			endif;
 		} // end edit
 
-		/**
-		 * 修改单项
-		 */
-		public function edit_certain()
-		{
-            exit('商家不可修改'.$this->class_name_cn.'单项信息；您意图违规操作的记录已被发送到安全中心。');
-		} // end edit_certain
-
         /**
          * 删除
          *
@@ -390,7 +382,7 @@
          */
         public function delete()
         {
-            exit('商家不可删除用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+            exit('不可删除用户；您意图违规操作的记录已被发送到安全中心。');
         } // end delete
 
         /**
@@ -400,8 +392,12 @@
          */
         public function restore()
         {
-            exit('商家不可找回用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+            exit('不可找回用户；您意图违规操作的记录已被发送到安全中心。');
         } // end restore
+
+        /**
+         * 以下为工具类方法
+         */
 
 	} // end class Branch
 

@@ -71,6 +71,30 @@
 			$this->load->view('templates/footer', $data);
 		} // end index
 
+        /**
+         * 删除
+         *
+         * 不可删除
+         */
+        public function delete()
+        {
+            exit('不可删除首页；您意图违规操作的记录已被发送到安全中心。');
+        } // end delete
+
+        /**
+         * 找回
+         *
+         * 商家不可找回
+         */
+        public function restore()
+        {
+            exit('不可找回首页；您意图违规操作的记录已被发送到安全中心。');
+        } // end restore
+
+        /**
+         * 以下为工具类方法
+         */
+
 	} // end class Home
 
 /* End of file Home.php */

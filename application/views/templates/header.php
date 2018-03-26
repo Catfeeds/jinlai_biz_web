@@ -3,10 +3,8 @@
 
 	// 生成SEO相关变量，一般为页面特定信息与在config/config.php中设置的站点通用信息拼接
 	$title = isset($title)? $title: SITE_NAME.' - '.SITE_SLOGAN;
-	$keywords = isset($keywords)? $keywords.',': NULL;
-	$keywords .= SITE_KEYWORDS;
-	$description = isset($description)? $description: NULL;
-	$description .= SITE_DESCRIPTION;
+    $keywords = (isset($keywords)? $keywords.',': NULL). SITE_KEYWORDS;
+    $description = (isset($description)? $description: NULL). SITE_DESCRIPTION;
 ?>
 <!doctype html>
 <html lang=zh-cn>
@@ -17,7 +15,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180314">
+		<meta name=version content="revision20180326">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -183,11 +181,6 @@
 		<script defer src="<?php echo CDN_URL ?>js/js.cookie.js"></script>
 		<script defer src="<?php echo CDN_URL ?>bootstrap/v3.3.7/bootstrap.min.js"></script>
         <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.8/fontawesome-all.min.js"></script>
-        <?php if (isset($this->session->time_expire_login) ): ?>
-		<script defer src="/js/file-upload.js"></script>
-        <script defer src="<?php echo CDN_URL ?>js/jquery.qrcode.min.js"></script>
-        <?php endif ?>
-
         <script>
             var user_agent = new Object();
             user_agent.is_wechat = <?php echo ($this->user_agent['is_wechat'])? 'true': 'false' ?>;
@@ -199,7 +192,10 @@
         <link rel=stylesheet media=all href="<?php echo CDN_URL ?>bootstrap/v3.3.7/bootstrap.min.css">
         <link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/flat-ui.min.css">
 		<link rel=stylesheet media=all href="/css/style.css">
+
         <?php if (isset($this->session->time_expire_login) ): ?>
+        <script defer src="/js/file-upload.js"></script>
+        <script defer src="<?php echo CDN_URL ?>js/jquery.qrcode.min.js"></script>
         <link rel=stylesheet media=all href="/css/file-upload.css">
         <?php endif ?>
 
@@ -213,9 +209,6 @@
         <?php endif ?>
 	</head>
 <?php
-	// 将head内容立即输出，让用户浏览器立即开始请求head中各项资源，提高页面加载速度
-	ob_flush();flush();
-
     // 生成body的class
 	$body_class = ( isset($class) )? $class: NULL;
     $body_class .= ($this->user_agent['is_wechat'] === TRUE)? ' is_wechat': NULL;

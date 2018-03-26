@@ -409,14 +409,6 @@
 			endif;
 		} // end edit
 
-		/**
-		 * 修改单项
-		 */
-		public function edit_certain()
-		{
-            exit('商家不可修改'.$this->class_name_cn.'单项信息；您意图违规操作的记录已被发送到安全中心。');
-		} // end edit_certain
-
         /**
          * 删除
          *
