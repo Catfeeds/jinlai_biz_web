@@ -48,10 +48,10 @@
 			$this->media_root = MEDIA_URL. $this->class_name.'/'; // 媒体文件所在目录
 
 			// 设置需要自动在视图文件中生成显示的字段
-			$this->data_to_display = array(
-				'name' => '名称',
-				'description' => '描述',
-			);
+            $this->data_to_display = array(
+                'order_id' => '所属订单ID',
+                'content' => '评价内容',
+            );
 		} // end __construct
 
 		/**
@@ -273,6 +273,10 @@
         {
             exit('商家不可找回用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
         } // end restore
+
+        /**
+         * 以下为工具类方法
+         */
 
 	} // end class Comment_item
 

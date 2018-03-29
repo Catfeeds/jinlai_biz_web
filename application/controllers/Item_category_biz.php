@@ -2,7 +2,7 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Item_category_biz 店内分类
+	 * Item_category_biz/IBK 店内商品分类
 	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
@@ -362,26 +362,6 @@
 
 			endif;
 		} // end edit
-
-        /**
-         * 删除
-         *
-         * 商家不可删除
-         */
-        public function delete()
-        {
-            exit('商家不可删除用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
-        } // end delete
-
-        /**
-         * 找回
-         *
-         * 商家不可找回
-         */
-        public function restore()
-        {
-            exit('商家不可找回用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
-        } // end restore
 		
 		/**
 		 * 以下为工具类方法

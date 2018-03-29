@@ -2,7 +2,7 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Identity_user 个人认证类
+	 * Identity_user/IDU 个人认证类
 	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
@@ -452,7 +452,7 @@
          */
         public function delete()
         {
-            exit('商家不可删除用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+            exit('商家不可删除的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
         } // end delete
 
         /**
@@ -462,7 +462,7 @@
          */
         public function restore()
         {
-            exit('商家不可找回用户的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
+            exit('商家不可找回的'.$this->class_name_cn.'；您意图违规操作的记录已被发送到安全中心。');
         } // end restore
 		
 		/**

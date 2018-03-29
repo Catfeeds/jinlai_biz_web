@@ -2,7 +2,7 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Coupon 优惠券类
+	 * Coupon/CPN 优惠券类
 	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
@@ -14,7 +14,8 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'user_id', 'combo_id', 'template_id', 'category_id', 'biz_id', 'category_biz_id', 'item_id', 'name', 'description', 'amount', 'min_subtotal', 'time_start', 'time_end', 'time_expire', 'order_id', 'time_used', 'time_create', 'time_delete', 'status',
+			'user_id', 'combo_id', 'template_id', 'category_id', 'biz_id', 'category_biz_id', 'item_id', 'name', 'description', 'amount', 'min_subtotal', 'time_start', 'time_end', 'time_expire', 'order_id', 'time_used',
+            'time_create', 'time_delete', 'status',
 		);
 
 		public function __construct()
@@ -34,8 +35,9 @@
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'name' => '名称',
-				'description' => '描述',
+                'name' => '名称',
+                'user_id' => '用户ID',
+                'template_id' => '优惠券模板ID',
 			);
 		} // end __construct
 

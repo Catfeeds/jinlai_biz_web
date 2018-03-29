@@ -376,26 +376,6 @@
 		} // end edit
 
         /**
-         * 删除
-         *
-         * 商家不可删除
-         */
-        public function delete()
-        {
-            exit('不可删除用户；您意图违规操作的记录已被发送到安全中心。');
-        } // end delete
-
-        /**
-         * 找回
-         *
-         * 商家不可找回
-         */
-        public function restore()
-        {
-            exit('不可找回用户；您意图违规操作的记录已被发送到安全中心。');
-        } // end restore
-
-        /**
          * 以下为工具类方法
          */
 

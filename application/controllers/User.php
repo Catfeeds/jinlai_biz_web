@@ -15,7 +15,7 @@
 		 */
 		protected $names_to_sort = array(
 			'password', 'nickname', 'lastname', 'firstname', 'code_ssn', 'url_image_id', 'gender', 'dob', 'avatar', 'mobile', 'email', 'wechat_union_id', 'address_id', 'bank_name', 'bank_account', 'last_login_timestamp', 'last_login_ip',
-			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+            'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
 		/**
