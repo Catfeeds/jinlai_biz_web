@@ -20,6 +20,8 @@
 	}
 </style>
 
+<base href="<?php echo $this->media_root ?>">
+
 <div id=breadcrumb>
 	<ol class="breadcrumb container">
 		<li><a href="<?php echo base_url() ?>">首页</a></li>
@@ -63,11 +65,11 @@
 
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-restore form-horizontal', 'role' => 'form');
-		echo form_open($this->class_name.'/restore', $attributes);
+		$attributes = array('class' => 'form-'.$this->class_name.'-'.$op_name.' form-horizontal', 'role' => 'form');
+		echo form_open($this->class_name.'/'.$op_name, $attributes);
 	?>
 		<fieldset>
-			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
+			<input name=ids type=hidden value="<?php echo $ids ?>">
 
 			<div class=form-group>
 				<label for=password class="col-sm-2 control-label">密码</label>

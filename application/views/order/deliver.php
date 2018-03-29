@@ -136,16 +136,17 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>确定要发货？请选择发货方式，并填写相应信息。</p>
+		<p>确定要发货？</p>
+        <p>请选择发货方式，并填写相应信息。</p>
 	</div>
 
-	<?php
-		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-deliver form-horizontal', 'role' => 'form');
-		echo form_open($this->class_name.'/deliver', $attributes);
-	?>
-		<fieldset>
-			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
+    <?php
+    if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
+    $attributes = array('class' => 'form-'.$this->class_name.'-'.$op_name.' form-horizontal', 'role' => 'form');
+    echo form_open($this->class_name.'/'.$op_name, $attributes);
+    ?>
+    <fieldset>
+        <input name=ids type=hidden value="<?php echo $ids ?>">
 
 			<div class=form-group>
 				<label for=deliver_method class="col-sm-2 control-label">发货方式</label>

@@ -60,17 +60,17 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>所有已被用户领取且未使用过的优惠券将一并被删除且无法被恢复，建议您做好相关客诉预案；若平台接到相关客诉且有明确证据（包括但不限于录音、录像、政府相关部门处罚记录等）显示您未妥善解释、处理相关事宜，根据平台入驻协议等相关合同约定，您将被按有效客诉人次核减保证金。</p>
 		<p>确定要<?php echo $title ?>？</p>
+        <p>所有已被用户领取且未使用过的优惠券将一并被删除，且无法被恢复，建议您做好相关客诉预案。</p>
 	</div>
 
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-delete form-horizontal', 'role' => 'form');
-		echo form_open($this->class_name.'/delete', $attributes);
+		$attributes = array('class' => 'form-'.$this->class_name.'-'.$op_name.' form-horizontal', 'role' => 'form');
+		echo form_open($this->class_name.'/'.$op_name, $attributes);
 	?>
 		<fieldset>
-			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
+			<input name=ids type=hidden value="<?php echo $ids ?>">
 
 			<div class=form-group>
 				<label for=password class="col-sm-2 control-label">密码</label>

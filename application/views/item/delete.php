@@ -1,8 +1,8 @@
 <style>
 	
 
-	/* 宽度在768像素以上的设备 */
-	@media only screen and (min-width:769px)
+	/* 宽度在750像素以上的设备 */
+	@media only screen and (min-width:751px)
 	{
 
 	}
@@ -60,16 +60,17 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>确定要<?php echo $title ?>？被删除商品将同时被标记为已下架。</p>
+		<p>确定要<?php echo $title ?>？</p>
+        <p>被删除商品将同时被标记为已下架。</p>
 	</div>
 
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-delete form-horizontal', 'role' => 'form');
-		echo form_open($this->class_name.'/delete', $attributes);
+		$attributes = array('class' => 'form-'.$this->class_name.'-'.$op_name.' form-horizontal', 'role' => 'form');
+		echo form_open($this->class_name.'/'.$op_name, $attributes);
 	?>
 		<fieldset>
-			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
+			<input name=ids type=hidden value="<?php echo $ids ?>">
 
 			<div class=form-group>
 				<label for=password class="col-sm-2 control-label">密码</label>
@@ -84,6 +85,7 @@
 				<button class="btn btn-danger btn-lg btn-block" type=submit>删除</button>
 		    </div>
 		</div>
+
 	</form>
 
 </div>

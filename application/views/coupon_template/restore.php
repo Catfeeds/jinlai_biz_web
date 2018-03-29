@@ -60,17 +60,17 @@
 	</table>
 
 	<div class="alert alert-warning" role=alert>
-		<p>您仅可恢复优惠券模板以重新向用户发放，但不可恢复用户领取后被删除的优惠券。</p>
 		<p>确定要<?php echo $title ?>？</p>
+        <p>您仅可恢复优惠券模板以重新向用户发放，但不可恢复用户领取后被删除的优惠券。</p>
 	</div>
 
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-restore form-horizontal', 'role' => 'form');
-		echo form_open($this->class_name.'/restore', $attributes);
+		$attributes = array('class' => 'form-'.$this->class_name.'-'.$op_name.' form-horizontal', 'role' => 'form');
+		echo form_open($this->class_name.'/'.$op_name, $attributes);
 	?>
 		<fieldset>
-			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
+			<input name=ids type=hidden value="<?php echo $ids ?>">
 
 			<div class=form-group>
 				<label for=password class="col-sm-2 control-label">密码</label>

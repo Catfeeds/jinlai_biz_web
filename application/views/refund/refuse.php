@@ -63,13 +63,13 @@
 		<p>将拒绝退款给用户。</p>
 	</div>
 
-	<?php
-		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-reprice form-horizontal', 'role' => 'form');
-		echo form_open($this->class_name.'/refuse', $attributes);
-	?>
-		<fieldset>
-			<input name=ids type=hidden value="<?php echo implode(',', $ids) ?>">
+    <?php
+    if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
+    $attributes = array('class' => 'form-'.$this->class_name.'-'.$op_name.' form-horizontal', 'role' => 'form');
+    echo form_open($this->class_name.'/'.$op_name, $attributes);
+    ?>
+    <fieldset>
+        <input name=ids type=hidden value="<?php echo $ids ?>">
 
             <div class=form-group>
                 <label for=note_stuff class="col-sm-2 control-label">备注</label>
