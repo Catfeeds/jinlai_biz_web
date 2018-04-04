@@ -119,7 +119,7 @@
 				$data['category_biz'] = $this->get_category_biz($data['item']['parent_id']);
 
                 // 页面信息
-                $data['title'] = $this->class_name_cn. $data['item'][$this->id_name];
+                $data['title'] = $this->class_name_cn. ' "'.$data['item']['name']. '"';
                 $data['class'] = $this->class_name.' detail';
 
             else:

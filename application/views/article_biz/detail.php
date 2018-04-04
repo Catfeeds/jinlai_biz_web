@@ -50,6 +50,7 @@
             // 需要特定角色和权限进行该操作
             if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
                 ?>
+                <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>">删除</a></li>
                 <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
             <?php endif ?>
         </ul>

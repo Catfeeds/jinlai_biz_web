@@ -120,8 +120,9 @@
 			$result = $this->curl->go($url, $params, 'array');
             if ($result['status'] === 200):
                 $data['item'] = $result['content'];
+
                 // 页面信息
-                $data['title'] = $this->class_name_cn. $data['item'][$this->id_name];
+                $data['title'] = $this->class_name_cn. ' "'.$data['item']['fullname']. '"';
                 $data['class'] = $this->class_name.' detail';
 
             else:

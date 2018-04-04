@@ -59,7 +59,7 @@
 			// 设置目标路径
 			chmod($this->target_directory, 0777); // 设置权限为可写
 			$this->target_url = $_SERVER['DOCUMENT_ROOT']. '/'. $this->target_directory;
-		}
+		} // end __construct
 
 		/**
 		 * 析构时将待输出的内容以json格式返回
@@ -74,9 +74,8 @@
             endif;
 
 			header("Content-type:application/json;charset=utf-8");
-			$output_json = json_encode($this->result);
-			echo $output_json;
-		}
+			echo json_encode($this->result);
+		} // end __destruct
 
 		// 上传入口
 		public function index()

@@ -238,8 +238,6 @@
 		</fieldset>
 
 		<fieldset>
-            <p class=help-block>请填写与店铺<a href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">默认运费模板</a>计费方式相符的重量信息</p>
-
             <div class=form-group>
                 <label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
                 <div class=col-sm-10>
@@ -270,6 +268,7 @@
 					<p class=help-block>若允许使用积分抵扣，则需填写此项；例如允许5%的金额使用积分抵扣则为0.05，10%为0.1，最高0.5</p>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=commission_rate class="col-sm-2 control-label">佣金比例/提成率</label>
 				<div class=col-sm-10>

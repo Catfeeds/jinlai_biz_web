@@ -35,32 +35,20 @@
 			);
 
             // 若当前用户是某商家员工，获取该商家信息
-            if ( ! empty($this->session->biz_id) )
+            if ( ! empty($this->session->biz_id) ):
                 $data['biz'] = $this->get_biz($this->session->biz_id);
 
-			// 获取核心数据计数
-			$data['count'] = array(
-				'item' => $this->count_table('item'),
-                'article_biz' => $this->count_table('article_biz'),
-				'order' => $this->count_table('order'),
-				'order_pay' => $this->count_table('order', array('status' => '待接单')),
-				'order_confirm' => $this->count_table('order', array('status' => '待发货')),
+                // 获取核心数据计数
+                $data['count'] = array(
+                    'item' => $this->count_table('item'),
 
-                'ornament_biz' => $this->count_table('ornament_biz'),
-                'item_category_biz' => $this->count_table('item_category_biz'),
-				'freight_template_biz' => $this->count_table('freight_template_biz'),
-				'stuff' => $this->count_table('stuff'),
-				'branch' => $this->count_table('branch'),
+                    //'order' => $this->count_table('order'),
+                    'order_pay' => $this->count_table('order', array('status' => '待接单')),
+                    'order_confirm' => $this->count_table('order', array('status' => '待发货')),
 
-				'promotion' => $this->count_table('promotion'),
-				'promotion_biz' => $this->count_table('promotion_biz'),
-				'coupon_template' => $this->count_table('coupon_template'),
-				'coupon_combo' => $this->count_table('coupon_combo'),
-
-				'refund' => $this->count_table('refund'),
-				'comment_item' => $this->count_table('comment_item'),
-				'comment_order' => $this->count_table('comment_order'),
-			);
+                    'refund' => $this->count_table('refund'),
+                );
+			endif;
 
 			// 载入视图
 			$this->load->view('templates/header', $data);

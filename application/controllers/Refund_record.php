@@ -54,7 +54,6 @@
 
 			// 排序条件
 			$order_by = NULL;
-			//$order_by['name'] = 'value';
 
 			// 从API服务器获取相应列表信息
 			$params = $condition;

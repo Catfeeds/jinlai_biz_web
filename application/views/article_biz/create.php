@@ -57,24 +57,20 @@
 			<div class=form-group>
 				<label for=content class="col-sm-2 control-label">内容 ※</label>
 				<div class=col-sm-10>
+                    <textarea class=form-control name=content rows=10 placeholder="10 - 20000个字符" required><?php echo set_value('content') ?></textarea>
 
-                    <?php if ($this->user_agent['is_mobile']): ?>
-                    <input class=form-control name=content type=text value="<?php echo set_value('content') ?>" placeholder="10-20000个字符" required>
-
-                    <?php else: ?>
-                    <textarea class=form-control name=content rows=10 placeholder="10-20000个字符" required><?php echo set_value('content') ?></textarea>
-					
                     <?php
-						require_once(APPPATH. 'views/templates/simditor.php');
-						$name_to_upload = 'content';
-					?>
+                    require_once(APPPATH. 'views/templates/simditor.php');
+                    $name_to_upload = 'content';
+                    ?>
                     <script>
                         $(function(){
-                            var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', '|', 'hr', 'ol', 'ul', 'blockquote', 'table', '|', 'image', '|', 'indent', 'outdent', 'alignment'];
+                            var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'];
                             var editor = new Simditor({
                                 textarea: $('[name=content]'),
-                                cleanPaste: true,
+                                placeholder: '10 - 20000个字符',
                                 toolbar: toolbar,
+                                cleanPaste: true,
                                 upload: {
                                     url: '<?php echo base_url('/simditor?target='.$this->class_name.'/'.$name_to_upload) ?>',
                                     params: null,
@@ -85,7 +81,6 @@
                             });
                         });
                     </script>
-                    <?php endif ?>
 				</div>
 			</div>
 

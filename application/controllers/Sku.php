@@ -135,7 +135,7 @@
                 $data['comodity'] = $this->get_item($data['item']['item_id']);
 
                 // 页面信息
-                $data['title'] = $this->class_name_cn. $data['item'][$this->id_name];
+                $data['title'] = $this->class_name_cn. ' "'.trim($data['item']['name_first'].'-'.$data['item']['name_second'].'-'.$data['item']['name_third'], '-'). '"';
                 $data['class'] = $this->class_name.' detail';
 
             else:

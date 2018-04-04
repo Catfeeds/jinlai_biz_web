@@ -81,7 +81,7 @@
 
 	<?php else: ?>
 	<section id=biz-info>
-		<span id=biz-status>
+		<span id=biz-status data-biz_id="<?php echo $biz['biz_id'] ?>">
             <i class="far fa-info-circle" aria-hidden=true></i> <?php echo $biz['status'] ?>
             <?php echo empty($biz['identity_id'])? '未认证': '已认证'; ?>
         </span>
@@ -146,7 +146,7 @@
 			<li class="col-xs-3 col-md-2">
                 <a title="商品评价" href="<?php echo base_url('comment_item') ?>">
 				    <img src="/media/home/pingjia@3x.png">
-				    商品评价<span class=count><?php echo $count['comment_item'] ?></span>
+				    商品评价
                 </a>
 			</li>
 		</ul>
@@ -163,64 +163,64 @@
             <li class="col-xs-4 col-md-2">
                 <a title="店内分类" href="<?php echo base_url('item_category_biz') ?>">
                     <img src="/media/home/fenlei@3x.png">
-                    商品分类<span class=count><?php echo $count['item_category_biz'] ?></span>
+                    商品分类
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
                 <a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">
                     <img src="/media/home/moban@3x.png">
-                    运费模板<span class=count><?php echo $count['freight_template_biz'] ?></span>
+                    运费模板
                 </a>
             </li>
 
             <li class="col-xs-4 col-md-2">
                 <a title="优惠券" href="<?php echo base_url('coupon_template') ?>">
                     <img src="/media/home/coupon@3x.png">
-                    优惠券<span class=count><?php echo $count['coupon_template'] ?></span>
+                    优惠券
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
                 <a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">
                     <img src="/media/home/combo@3x.png">
-                    优惠券包<span class=count><?php echo $count['coupon_combo'] ?></span>
+                    优惠券包
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
                 <a title="商家文章管理" href="<?php echo base_url('article_biz') ?>">
                     <img src="/media/home/shangpin@3x.png">
-                    文章<span class=count><?php echo $count['article_biz'] ?></span>
+                    文章
                 </a>
             </li>
 
             <li class="col-xs-4 col-md-2">
                 <a title="店内活动" href="<?php echo base_url('promotion_biz') ?>">
                     <img src="/media/home/huodong-biz@3x.png">
-                    店内活动<span class=count><?php echo $count['promotion_biz'] ?></span>
+                    店内活动
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
                 <a title="平台活动" href="<?php echo base_url('promotion') ?>">
                     <img src="/media/home/huodong-platform@3x.png">
-                    平台活动<span class=count><?php echo $count['promotion'] ?></span>
+                    平台活动
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
                 <a title="店铺装修" href="<?php echo base_url('ornament_biz') ?>">
                     <img src="/media/home/fenlei@3x.png">
-                    店铺装修<span class=count><?php echo $count['ornament_biz'] ?></span>
+                    店铺装修
                 </a>
             </li>
 
             <li class="col-xs-4 col-md-2">
                 <a title="门店管理" href="<?php echo base_url('branch') ?>">
                     <img src="/media/home/mendian@3x.png">
-                    门店/仓库<span class=count><?php echo $count['branch'] ?></span>
+                    门店/仓库
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
 				<a title="团队管理" href="<?php echo base_url('stuff') ?>">
 					<img src="/media/home/tuandui@3x.png">
-					团队<span class=count><?php echo $count['stuff'] ?></span>
+					团队
 				</a>
 			</li>
 

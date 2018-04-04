@@ -2,6 +2,13 @@
 /* 需要在此文件之外调用的方法，必须以变量声明的方式提升该方法的作用域为全局 */
 
 $(function(){
+    // AJAX参数
+    var ajax_root = 'https://api.517ybang.com/'; // AJAX根URL
+    $.ajaxSetup({
+        dataType: "JSON",
+        global: false
+    });
+
     /**
      * 格式化：以分隔符格式化文本
      *

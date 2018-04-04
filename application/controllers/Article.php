@@ -113,10 +113,11 @@
 			$result = $this->curl->go($url, $params, 'array');
             if ($result['status'] === 200):
                 $data['item'] = $result['content'];
-                $data['description'] = $this->class_name.','. $data['item']['excerpt'];
+
                 // 页面信息
-                $data['title'] = $this->class_name_cn. $data['item']['title'];
+                $data['title'] = $this->class_name_cn. ' "'.$data['item']['title']. '"';
                 $data['class'] = $this->class_name.' detail';
+                $data['description'] = $this->class_name.','. $data['item']['excerpt'];
 
             else:
                 redirect( base_url('error/code_404') ); // 若缺少参数，转到错误提示页

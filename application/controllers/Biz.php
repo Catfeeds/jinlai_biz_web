@@ -83,7 +83,7 @@
                 $data['freight_template'] = $this->get_freight_template_biz($data['item']['freight_template_id']);
 
                 // 页面信息
-                $data['title'] = $this->class_name_cn. $data['item']['brief_name'];
+                $data['title'] = $this->class_name_cn. ' "'.$data['item']['brief_name']. '"';
                 $data['class'] = $this->class_name.' detail';
 
             else:

@@ -74,16 +74,24 @@
         </dd>
 
         <dt>主形象图</dt>
-        <dd><?php echo empty($item['main_figure_url'])? '未设置': '<img src="'.$item['main_figure_url'].'">' ?></dd>
+        <dd>
+            <?php echo empty($item['main_figure_url'])? '未设置': '<img src="'.$item['main_figure_url'].'">' ?>
+        </dd>
 
         <dt>会员卡LOGO</dt>
-        <dd><?php echo empty($item['member_logo_url'])? '未设置': '<img src="'.$item['member_logo_url'].'">' ?></dd>
+        <dd>
+            <?php echo empty($item['member_logo_url'])? '未设置': '<img src="'.$item['member_logo_url'].'">' ?>
+        </dd>
 
         <dt>会员卡封图</dt>
-        <dd><?php echo empty($item['member_figure_url'])? '未设置': '<img src="'.$item['member_figure_url'].'">' ?></dd>
+        <dd>
+            <?php echo empty($item['member_figure_url'])? '未设置': '<img src="'.$item['member_figure_url'].'">' ?>
+        </dd>
 
         <dt>会员卡列表图</dt>
-        <dd><?php echo empty($item['member_thumb_url'])? '未设置': '<img src="'.$item['member_thumb_url'].'">' ?></dd>
+        <dd>
+            <?php echo empty($item['member_thumb_url'])? '未设置': '<img src="'.$item['member_thumb_url'].'">' ?>
+        </dd>
 
 		<dt>顶部模块轮播图</dt>
         <dd>
@@ -106,28 +114,36 @@
         </dd>
         <dt>顶部模块陈列商品</dt>
         <dd><?php echo $item['home_m0_ids'] ?></dd>
+    </dl>
 
+    <dl class=dl-horizontal>
 		<dt>模块一形象图</dt>
         <dd><?php echo empty($item['home_m1_ace_url'])? '未设置': '<img src="'.$item['home_m1_ace_url'].'">' ?></dd>
 		<dt>模块一首推商品</dt>
 		<dd><?php echo $item['home_m1_ace_id'] ?></dd>
 		<dt>模块一陈列商品</dt>
 		<dd><?php echo $item['home_m1_ids'] ?></dd>
+    </dl>
 
+    <dl class=dl-horizontal>
 		<dt>模块二形象图</dt>
         <dd><?php echo empty($item['home_m2_ace_url'])? '未设置': '<img src="'.$item['home_m2_ace_url'].'">' ?></dd>
 		<dt>模块二首推商品</dt>
 		<dd><?php echo $item['home_m2_ace_id'] ?></dd>
 		<dt>模块二陈列商品</dt>
 		<dd><?php echo $item['home_m2_ids'] ?></dd>
+    </dl>
 
+    <dl class=dl-horizontal>
 		<dt>模块三形象图</dt>
         <dd><?php echo empty($item['home_m3_ace_url'])? '未设置': '<img src="'.$item['home_m3_ace_url'].'">' ?></dd>
 		<dt>模块三首推商品</dt>
 		<dd><?php echo $item['home_m3_ace_id'] ?></dd>
 		<dt>模块三陈列商品</dt>
 		<dd><?php echo $item['home_m3_ids'] ?></dd>
+    </dl>
 
+    <dl class=dl-horizontal>
         <dt>首页内容（JSON格式）</dt>
         <dd><?php echo empty($item['home_json'])? '未设置': $item['home_json']; ?></dd>
 

@@ -80,9 +80,9 @@
                     </a>
 
                     <div class="item-actions">
-                    <span>
-                        <input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
-                    </span>
+                        <span>
+                            <input name=ids[] class=form-control type=checkbox value="<?php echo $item[$this->id_name] ?>">
+                        </span>
 
                         <ul class=horizontal>
                             <?php
