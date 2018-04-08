@@ -15,7 +15,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180404">
+		<meta name=version content="revision20180408">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -37,7 +37,7 @@
         <?php exit();endif; ?>
 
 		<?php if ($this->user_agent['is_wechat']): ?>
-		<script src="https://res.wx.qq.com/open/js/jweixin-1.3.0.js"></script>
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
 		<script>
 			<?php
 				function curl($url, $params = NULL, $return = 'array', $method = 'get')
@@ -179,8 +179,7 @@
 		<script src="<?php echo CDN_URL ?>js/jquery-3.3.1.min.js"></script>
         <script src="/js/common.js"></script>
 		<script defer src="<?php echo CDN_URL ?>js/js.cookie.js"></script>
-		<script defer src="<?php echo CDN_URL ?>bootstrap/v3.3.7/bootstrap.min.js"></script>
-        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.8/fontawesome-all.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.9/fontawesome-all.min.js"></script>
         <script>
             // AJAX参数
             var ajax_root = '<?php echo API_URL ?>'

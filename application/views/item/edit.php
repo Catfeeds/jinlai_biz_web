@@ -65,14 +65,15 @@
 			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">系统分类</label>
 				<div class=col-sm-10>
-					<p class=form-control-static><?php echo $category['name'] ?></p>
-					<p class=help-block>系统分类仅可在创建商品时指定</p>
+                    <p class=form-control-static>
+                        <?php echo $category['name'] ?> <span class="text-muted">系统分类仅可在创建商品时指定</span>
+                    </p>
 				</div>
 			</div>
 
 			<div class=form-group>
 				<label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
-				<div class=col-sm-10>
+                <div class="col-sm-10 input-group">
 					<?php $input_name = 'category_biz_id' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
                         <option value="">不选择</option>
@@ -88,7 +89,9 @@
                         ?>
 					</select>
 
-                    <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('item_category_biz') ?>">管理店内分类</a>
+                    <div class="input-group-addon">
+                        <a href="<?php echo base_url('item_category_biz') ?>">管理</a>
+                    </div>
 				</div>
 			</div>
 

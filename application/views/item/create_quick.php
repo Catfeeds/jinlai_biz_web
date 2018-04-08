@@ -22,82 +22,14 @@
 
 <script>
 $(function(){
-    // 多级选择器
-    $('[data-ms-level]').change(function(){
-        // 获取必要参数
-        var current_id = $(this).find('option:selected').val(); // 当前已选中值，将作为待操作选项的parent_id
-        var current_level = $(this).attr('data-ms-level'); // 操作中选项等级
-        var next_level = 1 + Number(current_level); // 待操作选项等级
-
-        var selector = $(this).closest('select'); // 操作中选择器
-        var ms_selector = $(this).closest('.multi-selector'); // 当前多级选择器
-        var next_selector = ms_selector.find('[data-ms-level='+ next_level +']'); // 待操作选择器
-        var ms_api_url = ms_selector.attr('data-ms-api_url'); // 当前多级选择器数据源
-
-        // 若选择了空选项，则清空/删除所有下级选择器
-        if (current_id === '')
-        {
-            // TODO 清空所有下级选择器
-            alert('请选择');
-        }
-        else
-        {
-            // 初始化参数
-            params = common_params;
-            params.level = next_level;
-            params.parent_id = current_id;
-
-            // 拼合完整API路径
-            api_url = ajax_root + ms_api_url;
-
-            // AJAX获取结果并生成相关HTML
-            $.post(
-                api_url,
-                params,
-                function(result)
-                {
-                    //console.log(result); // 输出回调数据到控制台
-
-                    if (result.status == 200)
-                    {
-                        var content = result.content
-
-                        // 生成数据
-                        var html_options = '<option value="">请选择</option>';
-                        $.each(
-                            content,
-                            function(i, item){
-                                html_options += '<option value=' + item.category_id + '>' + item.name + '</option>'
-                            }
-                        );
-
-                        // 清空下级选择器并生成数据，并激活
-                        next_selector.html('').html(html_options);
-                        next_selector.attr('disabled', false);
-                    }
-                    else
-                    {
-                        // 若失败，进行提示
-                        alert(result.content.error.message);
-                    }
-                },
-                "JSON"
-            );
-        }
-
-        return false;
-    });
-
+    // 管理商家级商品分类
     $('#api-item_category_biz-index').click(function(){
         // 初始化参数
         params = common_params;
 
-        // 拼合完整API路径
-        api_url = ajax_root + 'item_category_biz/index';
-
         // AJAX获取结果并生成相关HTML
         $.post(
-            api_url,
+            ajax_root + ms_api_url, // 拼合完整API路径
             params,
             function(result)
             {
@@ -146,43 +78,22 @@ $(function(){
 				<div class=col-sm-10>
                     <input name=category_id type=hidden value="" required>
 
-                    <div class="multi-selector row" data-ms-api_url="item_category/index">
+                    <div class="multi-selector row" data-ms-name=category_id data-ms-api_url="item_category/index">
                         <div class=col-xs-4>
-                            <select data-ms-level=1 required>
+                            <select class=form-control data-ms-level=1 required>
                                 <option value="">请选择</option>
                                 <?php foreach ($categories as $option): ?>
                                     <option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
-
-                        <div class=col-xs-4>
-                            <select data-ms-level=2 required disabled>
-                                <option value="">请选择</option>
-                            </select>
-                        </div>
-
-                        <div class=col-xs-4>
-                            <select data-ms-level=3 required disabled>
-                                <option value="">请选择</option>
-                            </select>
-                        </div>
                     </div>
-
-					<!--
-                    <select class=form-control name=category_id required>
-						<option value="">请选择</option>
-						<?php foreach ($categories as $option): ?>
-							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-					-->
 				</div>
 			</div>
 
 			<div class=form-group>
 				<label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
-				<div class="input-group col-sm-10">
+				<div class="col-sm-10 input-group">
 					<select class=form-control name=category_biz_id>
                         <option value="">不选择</option>
                         <?php

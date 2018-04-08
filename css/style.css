@@ -5,7 +5,7 @@
  * 适用于整站的样式规则
  */
 
-/* Flat-UI清理 */
+/* 调整Flat-UI样式 */
 h1,h2,h3 {margin:0;font-weight:400;}
 h1 {font-size:34px;}
 h2 {font-size:28px;}
@@ -26,7 +26,7 @@ a {font-size:26px;color:#3e3a39;text-decoration:none;/* 清理BootStrap样式 */
 #maincontainer p>a {color:#3e3a39;padding:0 0.5rem;font-weight:transparent;}
 #content {padding:0 20px;}
 
-/* 重置BootStrap样式 */
+/* 调整BootStrap样式 */
 	p {font-size:26px;}
 	ul,ol {margin-bottom:0;}
 	.row {margin-left:0;margin-right:0;}
@@ -40,6 +40,8 @@ a {font-size:26px;color:#3e3a39;text-decoration:none;/* 清理BootStrap样式 */
 		.btn-primary {background-color:#ff3649;}
 	.btn-group {border-radius:12px;margin:20px 0;}
 		.btn-group .btn-default {color:#3e3a39;background-color:#fff;}
+
+	.input-group[class*="col-"] {padding-left:15px;padding-right:15px;}
 
 	#content .btn-group:first-of-type {}
 		#content .btn-group:first-of-type * {color:#3e3a39;background-color:#fff;font-weight:bold;}

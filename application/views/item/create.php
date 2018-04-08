@@ -61,39 +61,46 @@
 		<p class=help-block>必填项以“※”符号标示</p>
 
 		<fieldset>
-			<div class=form-group>
-				<label for=category_id class="col-sm-2 control-label">系统分类 ※</label>
-				<div class=col-sm-10>
-					<select class=form-control name=category_id required>
-						<option value="">请选择</option>
-						<?php foreach ($categories as $option): ?>
-							<option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
-						<?php endforeach ?>
-					</select>
-				</div>
-			</div>
+            <div class=form-group>
+                <label for=category_id class="col-sm-2 control-label">系统分类 ※</label>
+                <div class=col-sm-10>
+                    <input name=category_id type=hidden value="" required>
+
+                    <div class="multi-selector row" data-ms-name=category_id data-ms-api_url="item_category/index">
+                        <div class=col-xs-4>
+                            <select class=form-control data-ms-level=1 required>
+                                <option value="">请选择</option>
+                                <?php foreach ($categories as $option): ?>
+                                    <option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class=form-group>
-				<label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
-				<div class=col-sm-10>
-                    <?php $input_name = 'category_biz_id' ?>
-                    <select class=form-control name="<?php echo $input_name ?>">
+                <label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
+                <div class="col-sm-10 input-group">
+                    <select class=form-control name=category_biz_id>
                         <option value="">不选择</option>
                         <?php
-                            if ( !empty($biz_categories) ):
-                                $options = $biz_categories;
-                                foreach ($options as $option):
+                        if ( !empty($biz_categories) ):
+                            $options = $biz_categories;
+                            foreach ($options as $option):
+                                ?>
+                                <option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
+                            <?php
+                            endforeach;
+                        endif;
                         ?>
-                        <option value="<?php echo $option['category_id'] ?>" <?php echo set_select($input_name, $option['category_id']) ?>><?php echo $option['name'] ?></option>
-                        <?php
-                                endforeach;
-                            endif;
-                        ?>
-					</select>
+                    </select>
 
-                    <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('item_category_biz') ?>">管理店内分类</a>
-				</div>
-			</div>
+                    <div class="input-group-addon">
+                        <a id=api-item_category_biz-index href="<?php echo base_url('item_category_biz') ?>">管理</a>
+                    </div>
+                </div>
+            </div>
 
 			<?php if ( !empty($brands) ): ?>
 			<div class=form-group>

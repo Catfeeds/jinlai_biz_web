@@ -99,9 +99,9 @@
         <dt>物流信息</dt>
         <dd>
             <ul class="list-horizontal row">
-                <li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross'].' KG': '-' ?></li>
-                <li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net'].' KG': '-' ?></li>
-                <li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume'].' KG': '-' ?></li>
+                <li class="col-xs-12 col-sm-4">毛重 <?php echo ($item['weight_gross'] !== '0.00')? $item['weight_gross'].' KG': 'N/A' ?></li>
+                <li class="col-xs-12 col-sm-4">净重 <?php echo ($item['weight_net'] !== '0.00')? $item['weight_net'].' KG': 'N/A' ?></li>
+                <li class="col-xs-12 col-sm-4">体积重 <?php echo ($item['weight_volume'] !== '0.00')? $item['weight_volume'].' KG': 'N/A' ?></li>
             </ul>
         </dd>
 	</dl>

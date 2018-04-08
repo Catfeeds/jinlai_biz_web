@@ -69,7 +69,6 @@
 			// 获取信息计数
 			$data['count'] = array(
 				'item' => $this->count_table('item'),
-				// 'biz_freight_templates' => $this->count_table('freight_template_biz'),
 			);
 
 			// 若存在商品，则获取商品列表
@@ -93,7 +92,7 @@
 				endforeach;
 
 				// 排序条件
-				$order_by = NULL;
+				$condition['orderby_time_create'] = 'DESC';
 
 				// 从API服务器获取相应列表信息
 				$params = $condition;
