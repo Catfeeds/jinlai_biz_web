@@ -54,7 +54,7 @@ function api_url($api_name)
 }
 
 // APPLE开发平台参数
-define('IOS_APP_ID', '1066224229');
+define('IOS_APP_ID', '1234502207');
 
 // 微信公众平台参数
 define('WECHAT_APP_ID', 'wxba173a67df14c087');

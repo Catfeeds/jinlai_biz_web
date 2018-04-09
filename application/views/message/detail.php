@@ -37,20 +37,7 @@
 	<?php if ( empty($item) ): ?>
 	<p><?php echo $error ?></p>
 
-	<?php
-		else:
-			// 需要特定角色和权限进行该操作
-			$current_role = $this->session->role; // 当前用户角色
-			$current_level = $this->session->level; // 当前用户级别
-			$role_allowed = array('管理员', '经理');
-			$level_allowed = 30;
-			if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-			?>
-		    <ul id=item-actions class=list-unstyled>
-				<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
-		    </ul>
-			<?php endif ?>
-
+	<?php else: ?>
 	<dl id=list-info class=dl-horizontal>
 		<dt><?php echo $this->class_name_cn ?>ID</dt>
 		<dd><?php echo $item[$this->id_name] ?></dd>
@@ -116,14 +103,6 @@
 		<dd><?php echo $item['url_page'] ?></dd>
 		<dt>网页标题</dt>
 		<dd><?php echo $item['title'] ?></dd>
-		<dt>创建时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
-		<dt>删除时间</dt>
-		<dd><?php echo $item['time_delete'] ?></dd>
-		<dt>最后操作时间</dt>
-		<dd><?php echo $item['time_edit'] ?></dd>
-		<dt>最后操作者ID</dt>
-		<dd><?php echo $item['operator_id'] ?></dd>
 
 	</dl>
 

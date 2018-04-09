@@ -33,14 +33,6 @@
 </div>
 
 <div id=content class=container>
-	<?php
-	// 需要特定角色和权限进行该操作
-	$current_role = $this->session->role; // 当前用户角色
-	$current_level = $this->session->level; // 当前用户级别
-	$role_allowed = array('管理员', '经理');
-	$level_allowed = 30;
-	if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-	?>
     <div class="btn-group btn-group-justified" role=group>
         <?php $style_class = empty($this->input->get('score_max') )? 'btn-primary': 'btn-default' ?>
         <a class="btn <?php echo $style_class ?>" title="全部<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">全部</a>
@@ -48,7 +40,6 @@
         <a class="btn <?php echo $this->input->get('score_max') === '3'? 'btn-primary': 'btn-default' ?>" title="中评商品订单" href="<?php echo base_url($this->class_name. '?score_max=3&score_min=2') ?>">中评</a>
         <a class="btn <?php echo $this->input->get('score_max') === '1'? 'btn-primary': 'btn-default' ?>" title="差评商品订单" href="<?php echo base_url($this->class_name. '?score_max=1') ?>">差评</a>
     </div>
-	<?php endif ?>
 
 	<?php if ( empty($items) ): ?>
 	<blockquote>

@@ -68,12 +68,12 @@
                             var editor = new Simditor({
                                 textarea: $('[name=content]'),
                                 placeholder: '10 - 20000个字符',
-                                toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'],
+                                toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'],
                                 cleanPaste: true,
                                 upload: {
                                     url: '<?php echo base_url('/simditor?target='.$this->class_name.'/'.$name_to_upload) ?>',
                                     params: null,
-                                    fileKey: 'file',
+                                    fileKey: 'file0',
                                     connectionCount: 4,
                                     leaveConfirm: '上传尚未结束，确定要中止？'
                                 }

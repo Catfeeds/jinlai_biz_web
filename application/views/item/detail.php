@@ -164,13 +164,13 @@
 		<dt>商品宣传语/卖点</dt>
 		<dd><?php echo !empty($item['slogan'])? $item['slogan']: '未设置'; ?></dd>
 		<dt>标签价/原价</dt>
-		<dd><?php echo ($item['tag_price'] !== '0.00')? '<del>￥ '.$item['tag_price'].'</del>': '未设置'; ?></dd>
+		<dd><?php echo ($item['tag_price'] !== '0.00')? '<del>￥ '.$item['tag_price'].'</del>': 'N/A'; ?></dd>
 		<dt>商城价/现价</dt>
 		<dd><strong>￥ <?php echo $item['price'] ?></strong></dd>
 
-		<?php $unit_name = !empty($item['unit_name'])? $item['unit_name']: '份（默认单位）' ?>
-		<dt>库存量</dt>
-		<dd>
+        <dt>库存量</dt>
+        <dd>
+            <?php $unit_name = !empty($item['unit_name'])? $item['unit_name']: '份（默认单位）' ?>
             <strong><?php echo $item['stocks'].' '. $unit_name ?></strong>
             <p class=help-block>若商品存在规格，则可销售库存量以各规格相应库存量为准</p>
         </dd>

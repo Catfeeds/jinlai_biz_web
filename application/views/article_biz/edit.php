@@ -65,11 +65,11 @@
 					?>
                     <script>
                         $(function(){
-                            var toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough', '|', 'hr', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'];
                             var editor = new Simditor({
                                 textarea: $('[name=content]'),
+                                placeholder: '10 - 20000个字符',
+                                toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'],
                                 cleanPaste: true,
-                                toolbar: toolbar,
                                 upload: {
                                     url: '<?php echo base_url('/simditor?target='.$this->class_name.'/'.$name_to_upload) ?>',
                                     params: null,

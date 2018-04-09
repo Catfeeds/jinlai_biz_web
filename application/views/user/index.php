@@ -40,7 +40,6 @@
 	?>
 	<div class="btn-group btn-group-justified" role=group>
 		<a class="btn btn-primary" title="所有<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">所有</a>
-	  	<!--<a class="btn btn-default" title="<?php echo $this->class_name_cn ?>回收站" href="<?php echo base_url($this->class_name.'/trash') ?>"><i class="fa fa-trash fa-fw" aria-hidden=true></i> 回收站</a>-->
 	</div>
 	<?php endif ?>
 
