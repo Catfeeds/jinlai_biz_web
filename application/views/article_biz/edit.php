@@ -66,7 +66,7 @@
                     <script>
                         $(function(){
                             var editor = new Simditor({
-                                textarea: $('[name=content]'),
+                                textarea: $('textarea[name=content]'), // 若只使用属性选择器，有可能误选中meta等其它含有相应属性的DOM
                                 placeholder: '10 - 20000个字符',
                                 toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'],
                                 cleanPaste: true,

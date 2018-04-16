@@ -8,4 +8,4 @@
 <script src="<?php echo $simditor_base_url ?>/module.js"></script>
 <script src="<?php echo $simditor_base_url ?>/hotkeys.js"></script>
 <script src="<?php echo $simditor_base_url ?>/uploader.js"></script>
-<script src="<?php echo $simditor_base_url ?>/simditor.js"></script>
+<script src="<?php echo $simditor_base_url ?>/simditor.min.js"></script>

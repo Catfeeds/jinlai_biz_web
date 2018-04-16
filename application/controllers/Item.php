@@ -244,8 +244,8 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
+            $this->form_validation->set_rules('brand_id', '品牌', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('category_id', '系统分类', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('brand_id', '品牌', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('category_biz_id', '店内分类', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('name', '商品名称', 'trim|required|max_length[40]');
@@ -267,7 +267,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'brand_id', 'category_biz_id', 'url_image_main', 'name', 'price', 'stocks',
+                    'brand_id', 'category_id', 'category_biz_id', 'url_image_main', 'name', 'price', 'stocks',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -331,9 +331,9 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('category_id', '系统分类', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('brand_id', '品牌', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('category_biz_id', '店内分类', 'trim|is_natural_no_zero');
+            $this->form_validation->set_rules('brand_id', '品牌', 'trim|is_natural_no_zero');
+            $this->form_validation->set_rules('category_id', '系统分类', 'trim|required|is_natural_no_zero');
+            $this->form_validation->set_rules('category_biz_id', '店内分类', 'trim|is_natural_no_zero');
 			$this->form_validation->set_rules('code_biz', '商家自定义商品编码', 'trim|max_length[20]');
             $this->form_validation->set_rules('barcode', '商品二维码', 'trim|exact_length[13]|is_natural');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
@@ -355,8 +355,8 @@
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
             $this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[16]|callback_time_start');
             $this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[16]|callback_time_end');
-            $this->form_validation->set_message('time_start', '预定上架时间需详细到分，且晚于当前时间1分钟后');
-            $this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后，亦不可早于预订上架时间（若有）');
+            $this->form_validation->set_message('time_to_publish', '预定上架时间需详细到分，且不可晚于预订下架时间');
+            $this->form_validation->set_message('time_to_suspend', '预定下架时间需详细到分，且不可早于预订上架时间');
             $this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
             $this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 
@@ -377,7 +377,7 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_id', 'brand_id', 'category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'stocks', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'discount_credit', 'commission_rate', 'coupon_allowed', 'promotion_id',
+                    'brand_id', 'category_id', 'category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'stocks', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'discount_credit', 'commission_rate', 'coupon_allowed', 'promotion_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -465,8 +465,8 @@
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[16]|callback_time_end');
-			$this->form_validation->set_message('time_start', '预定上架时间需详细到分，且晚于当前时间1分钟后');
-			$this->form_validation->set_message('time_end', '预定下架时间需详细到分，且晚于当前时间1分钟后，亦不可早于预订上架时间（若有）');
+            $this->form_validation->set_message('time_to_publish', '预定上架时间需详细到分，且不可晚于预订下架时间');
+            $this->form_validation->set_message('time_to_suspend', '预定下架时间需详细到分，且不可早于预订上架时间');
             $this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 
@@ -760,12 +760,18 @@
 				// 将精确到分的输入值拼合上秒值
 				$time_to_check = strtotime($value.':00');
 
-				// 该时间不可早于当前时间一分钟以内
-				if ($time_to_check <= time() + 60):
-					return false;
-				else:
-					return true;
-				endif;
+                // 若已设置结束时间，不可晚于结束时间
+                $time_end = $this->input->post('time_to_suspend');
+                if (
+                    !empty($time_end)
+                    && ($time_to_check > strtotime($time_end.':00'))
+                ):
+                    return false;
+
+                else:
+                    return true;
+
+                endif;
 
 			endif;
 		} // end time_start
@@ -783,12 +789,12 @@
 				// 将精确到分的输入值拼合上秒值
 				$time_to_check = strtotime($value.':00');
 
-				// 该时间不可早于当前时间一分钟以内
-				if ($time_to_check <= time() + 60):
-					return false;
-
-				// 若已设置开始时间，不可早于开始时间一分钟以内
-				elseif ( !empty($this->input->post('time_to_publish')) && $time_to_check < strtotime($this->input->post('time_to_publish')) + 60):
+				// 若已设置开始时间，不可早于开始时间
+                $time_start = $this->input->post('time_to_publish');
+				if (
+				    !empty($time_start)
+                    && ($time_to_check < strtotime($time_start.':00'))
+                ):
 					return false;
 
 				else:

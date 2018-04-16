@@ -107,7 +107,7 @@
 			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">商品名称 ※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=name type=text value="<?php echo $item['name'] ?>" placeholder="最多30个字符，中英文、数字，不可为纯数字" required>
+					<input class=form-control name=name type=text value="<?php echo empty(set_value('name'))? $item['name']: set_value('name') ?>" placeholder="最多30个字符，中英文、数字，不可为纯数字" required>
 				</div>
 			</div>
 			<div class=form-group>
@@ -161,26 +161,29 @@
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">商品描述</label>
 				<div class=col-sm-10>
-					<?php if ( ! $this->user_agent['is_wechat']): ?>
 					<textarea id=detail_editior name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo $item['description'] ?></textarea>
-					<!-- ueditor 1.4.3.3 -->
-					<link rel="stylesheet" media=all href="<?php echo base_url('ueditor/themes/default/css/ueditor.min.css') ?>">
-					<script src="<?php echo base_url('ueditor/ueditor.config.js') ?>"></script>
-					<script src="<?php echo base_url('ueditor/ueditor.all.min.js') ?>"></script>
-					<script>
-						var ue = UE.getEditor(
-							'detail_editior',
-							{
-								serverUrl: '<?php echo base_url('ueditor/php/controller.php?target='.$this->class_name) ?>',
-							}
-						);
-					</script>
 
-					<?php else: ?>
-					<p class=help-block>在电脑上编辑可添加更丰富内容</p>
-					<textarea class=form-control name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo set_value('description') ?></textarea>
-
-					<?php endif ?>
+                    <?php
+                    require_once(APPPATH. 'views/templates/simditor.php');
+                    $name_to_upload = 'description';
+                    ?>
+                    <script>
+                        $(function(){
+                            var editor = new Simditor({
+                                textarea: $('textarea[name=description]'), // 若只使用属性选择器，有可能误选中meta等其它含有相应属性的DOM
+                                placeholder: '10 - 20000个字符',
+                                toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'],
+                                cleanPaste: true,
+                                upload: {
+                                    url: '<?php echo base_url('/simditor?target='.$this->class_name.'/'.$name_to_upload) ?>',
+                                    params: null,
+                                    fileKey: 'file0',
+                                    connectionCount: 4,
+                                    leaveConfirm: '上传尚未结束，确定要中止？'
+                                }
+                            });
+                        });
+                    </script>
 					
 				</div>
 			</div>

@@ -244,9 +244,6 @@
 	<section id=description class=well>
 		<h2>商品描述</h2>
 		<?php if ( !empty($item['description']) ): ?>
-			<div class="bg-info text-info">
-				<p class="text-center">以下仅为内容及格式预览，实际样式请以前台相应页面为准。</p>
-			</div>
 			<div id=description-content class=row>
 				<?php echo $item['description'] ?>
 			</div>

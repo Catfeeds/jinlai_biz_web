@@ -21,26 +21,7 @@
     }
 </style>
 
-<script defer src="/js/create.js"></script>
-
-<!--
-<link href="<?php echo CDN_URL ?>css/datepicker.min.css" rel="stylesheet">
-<script src="<?php echo CDN_URL ?>js/datepicker.min.js"></script>
-<script>
-	$(function(){
-		// 初始化日期选择器
-		$('[type=datetime]').datepicker(
-			{
-			    language: 'cn', // 本地化语言在js/main.js中
-			    minDate: new Date("<?php echo date('Y-m-d H:i') ?>"),
-				maxDate: new Date("<?php echo date('Y-m-d H:i', strtotime("+31 days")) ?>"),
-				timepicker: true, // 时间选择器
-				timeFormat: "hh:ii"
-			}
-		)
-	});
-</script>
--->
+<!--<script defer src="/js/create.js"></script>-->
 
 <base href="<?php echo $this->media_root ?>">
 
@@ -173,28 +154,35 @@
 
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">商品描述</label>
-				<div class=col-sm-10>
+                <div class=col-sm-10>
+                    <textarea class=form-control name=description rows=10 placeholder="10 - 20000个字符"><?php echo set_value('description') ?></textarea>
                     <?php if ( ! $this->user_agent['is_wechat']): ?>
-					<textarea id=detail_editior name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo set_value('description') ?></textarea>
-					<!-- ueditor 1.4.3.3 -->
-					<link rel="stylesheet" media=all href="<?php echo base_url('ueditor/themes/default/css/ueditor.min.css') ?>">
-					<script src="<?php echo base_url('ueditor/ueditor.config.js') ?>"></script>
-					<script src="<?php echo base_url('ueditor/ueditor.all.min.js') ?>"></script>
-					<script>
-						var ue = UE.getEditor(
-							'detail_editior',
-							{
-								serverUrl: '<?php echo base_url('ueditor/php/controller.php?target='.$this->class_name) ?>',
-							}
-						);
-					</script>
 
-					<?php else: ?>
-					<p class=help-block>在电脑上编辑可添加更丰富内容</p>
-					<textarea class=form-control name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo set_value('description') ?></textarea>
+                    <?php else: ?>
 
-					<?php endif ?>
-				</div>
+                    <?php
+                    require_once(APPPATH. 'views/templates/simditor.php');
+                    $name_to_upload = 'description';
+                    ?>
+                    <script>
+                        $(function(){
+                            var editor = new Simditor({
+                                textarea: $('textarea[name=description]'), // 若只使用属性选择器，有可能误选中meta等其它含有相应属性的DOM
+                                placeholder: '10 - 20000个字符',
+                                toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'],
+                                cleanPaste: true,
+                                upload: {
+                                    url: '<?php echo base_url('/simditor?target='.$this->class_name.'/'.$name_to_upload) ?>',
+                                    params: null,
+                                    fileKey: 'file0',
+                                    connectionCount: 4,
+                                    leaveConfirm: '上传尚未结束，确定要中止？'
+                                }
+                            });
+                        });
+                    </script>
+                    <?php endif ?>
+                </div>
 			</div>
 
 			<div class=form-group>
