@@ -54,7 +54,7 @@
     <div id=primary_actions class=action_bottom>
         <?php if (count($items) > 1): ?>
         <span id=enter_bulk>
-            <i class="far fa-circle" aria-hidden=true></i>批量
+            <i class="far fa-edit"></i>批量
         </span>
         <?php endif ?>
 
@@ -85,7 +85,7 @@
             <?php if (count($items) > 1): ?>
             <div id=bulk_action class=action_bottom>
                 <span id="bulk_selector" data-bulk-selector=off>
-                    <i class="far fa-check-circle" aria-hidden=true></i>全选
+                    <i class="far fa-circle"></i>全选
                 </span>
                 <span id=exit_bulk>取消</span>
                 <ul class=horizontal>
@@ -121,23 +121,23 @@
                         </span>
 
                         <ul class=horizontal>
-                            <li class=color_warning><a title="规格管理" href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>规格 <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                            <li class=color_warning><a href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>规格 <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 
                         <?php
                             // 需要特定角色和权限进行该操作
                             if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
                         ?>
                             <?php if ( empty($item['time_delete']) ): ?>
-                            <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
+                            <li><a href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
                             <?php endif ?>
 
                             <?php if ( empty($item['time_publish']) ): ?>
-                            <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank>上架</a></li>
+                            <li><a href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank>上架</a></li>
                             <?php else: ?>
-                            <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
+                            <li><a href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
                             <?php endif ?>
 
-                            <li class=color_primary><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
+                            <li><a href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
                         <?php endif ?>
                         </ul>
                     </div>

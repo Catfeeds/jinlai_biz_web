@@ -231,15 +231,6 @@
 				'title' => '快速创建'.$this->class_name_cn,
 				'class' => $this->class_name.' create',
 			);
-			
-			// 获取品牌
-			$data['brands'] = $this->list_brand();
-
-			// 获取系统级商品分类
-			$data['categories'] = $this->list_category();
-
-			// 获取商家级商品分类
-			$data['biz_categories'] = $this->list_category_biz();
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
@@ -254,6 +245,15 @@
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
+                // 获取品牌
+                $data['brands'] = $this->list_brand();
+
+                // 获取平台商品分类
+                $data['categories'] = $this->list_category();
+
+                // 获取店内商品分类
+                $data['biz_categories'] = $this->list_category_biz();
+
 				$data['error'] = validation_errors();
 
 				$this->load->view('templates/header', $data);
@@ -316,18 +316,6 @@
 				'class' => $this->class_name.' create',
 			);
 
-			// 获取品牌
-			$data['brands'] = $this->list_brand();
-
-			// 获取系统级商品分类
-			$data['categories'] = $this->list_category();
-
-			// 获取商家级商品分类
-			$data['biz_categories'] = $this->list_category_biz();
-
-			// 获取店内营销活动
-			$data['biz_promotions'] = $this->list_promotion_biz();
-
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
@@ -362,6 +350,18 @@
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
+                // 获取品牌
+                $data['brands'] = $this->list_brand();
+
+                // 获取平台商品分类
+                $data['categories'] = $this->list_category();
+
+                // 获取店内商品分类
+                $data['biz_categories'] = $this->list_category_biz();
+
+                // 获取店内营销活动
+                $data['biz_promotions'] = $this->list_promotion_biz();
+
 				$data['error'] = validation_errors();
 
 				$this->load->view('templates/header', $data);
@@ -435,12 +435,6 @@
 				'error' => '',
 			);
 
-			// 获取商家商品分类列表
-			$data['biz_categories'] = $this->list_category_biz();
-
-			// 获取店内活动列表
-			$data['biz_promotions'] = $this->list_promotion_biz();
-
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('category_biz_id', '商家分类', 'trim|is_natural_no_zero');
@@ -494,6 +488,12 @@
 			if ($this->form_validation->run() === FALSE):
 				$data['error'] .= validation_errors();
 
+                // 获取商家商品分类列表
+                $data['biz_categories'] = $this->list_category_biz();
+
+                // 获取店内活动列表
+                $data['biz_promotions'] = $this->list_promotion_biz();
+
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/edit', $data);
 				$this->load->view('templates/footer', $data);
@@ -503,6 +503,7 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
+
                     'time_to_publish' => empty($this->input->post('time_to_publish'))? NULL: $this->strto_minute($this->input->post('time_to_publish')), // 时间仅保留到分钟，下同
                     'time_to_suspend' => empty($this->input->post('time_to_suspend'))? NULL: $this->strto_minute($this->input->post('time_to_suspend')),
 				);

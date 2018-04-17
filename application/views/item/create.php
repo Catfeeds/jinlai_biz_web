@@ -63,14 +63,15 @@
             <div class=form-group>
                 <label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
                 <div class="col-sm-10 input-group">
-                    <select class=form-control name=category_biz_id>
+                    <?php $input_name = 'category_id' ?>
+                    <select class=form-control name="<?php echo $input_name ?>">
                         <option value="">不选择</option>
                         <?php
                         if ( !empty($biz_categories) ):
                             $options = $biz_categories;
                             foreach ($options as $option):
                                 ?>
-                                <option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
+                                <option value="<?php echo $option['category_id'] ?>" <?php echo set_select($input_name, $option['category_id']) ?>><?php echo $option['name'] ?></option>
                             <?php
                             endforeach;
                         endif;
