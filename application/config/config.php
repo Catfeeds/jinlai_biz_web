@@ -12,7 +12,7 @@ define('ROOT_URL', ROOT_DOMAIN.'/');
 // 允许响应指定URL的跨域请求
 $origin = isset($_SERVER['HTTP_ORIGIN'])? $_SERVER['HTTP_ORIGIN']: NULL;
 $allow_origin = array(
-    'https://biz'.ROOT_DOMAIN,
+    'https://'. $_SERVER['SERVER_NAME']
 );
 if ( in_array($origin, $allow_origin) ):
     header('Access-Control-Allow-Origin:'.$origin);
@@ -28,7 +28,10 @@ define('SITE_DESCRIPTION', '「进来」是本地商家严选平台，构建严�
 define('ICP_NUMBER', '鲁ICP备15023233号-7'); // ICP备案号码，没有请留空
 
 define('BASE_URL', 'https://'. $_SERVER['SERVER_NAME']); // 可对外使用的站点URL；在本地测试时须替换为类似“localhost/BasicCodeigniter”形式
-define('WEB_URL', 'https://www'.ROOT_URL); // 客户端URL
+define('API_URL', '//api'.ROOT_URL); // API URL
+define('WEB_URL', '//www'.ROOT_URL); // 客户端 URL
+define('BIZ_URL', '//biz'.ROOT_URL); // 商家端 URL
+define('ADMIN_URL', '//admin'.ROOT_URL); // 管理端 URL
 
 // （可选）JS、CSS等非当前站点特有资源所在URL，可用于配合又拍云等第三方存储
 define('CDN_URL', 'https://cdn-remote'.ROOT_URL); // 生产环境
@@ -39,19 +42,11 @@ define('DEFAULT_IMAGE', NULL); // 默认图片URL
 define('MEDIA_URL', 'https://jinlaisandbox-images.b0.upaiyun.com/'); // 测试环境
 
 // COOKIE & SESSION相关
-define('COOKIE_DOMAIN', 'biz'.ROOT_DOMAIN); // cookie存储路径；方便起见可让所有子域共享，若需分离可自行配置
+define('COOKIE_DOMAIN', $_SERVER['SERVER_NAME']); // cookie存储路径；方便起见可让所有子域共享，若需分离可自行配置
 define('SESSION_COOKIE_NAME', 'ci_sessions_biz'); // 用于cookie存储的session名（设置此值后，前后台session互不影响）
 define('SESSION_TABLE', 'ci_sessions_biz'); // 用于session存储的数据库表名
 define('SESSION_PERIOD', 2592000); // session有效期秒数，此处设为30天，即60秒*60分*24小时*30天
 define('ENCRYPTION_KEY', ''); // 秘钥用于加密相关功能，可为空
-
-// RESTful API
-define('API_TOKEN', '7C4l7JLaM3Fq5biQurtmk9nFS');
-define('API_URL', 'https://api'.ROOT_URL);
-function api_url($api_name)
-{
-    return API_URL. $api_name;
-}
 
 // APPLE开发平台参数
 define('IOS_APP_ID', '1234502207');
