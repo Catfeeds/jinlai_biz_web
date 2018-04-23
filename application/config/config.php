@@ -1,12 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-// 当前环境及版本号
-define('CURRENT_ENV', 'DEVELOP'); // 开发环境PRODUCTION，生产环境DEVELOP
-define('CURRENT_VERSION', '0.17.1');
+// 当前版本号，仅适用于生产环境
+define('CURRENT_VERSION', '0.0.1');
+define('CURRENT_VERSION_MAJOR', 0); // 主版本号
+define('CURRENT_VERSION_UPDATE', 0); // 副版本号，功能新增
+define('CURRENT_VERSION_SUPPORT', 1); // 支持版本号，功能调整
 
 // 根域名及URL
 define('ROOT_DOMAIN', '.517ybang.com');
+//define('ROOT_DOMAIN', '.jinlaimall.com'); // 生产环境
 define('ROOT_URL', ROOT_DOMAIN.'/');
 
 // 允许响应指定URL的跨域请求
@@ -28,10 +31,14 @@ define('SITE_DESCRIPTION', '「进来」是本地商家严选平台，构建严�
 define('ICP_NUMBER', '鲁ICP备15023233号-7'); // ICP备案号码，没有请留空
 
 define('BASE_URL', 'https://'. $_SERVER['SERVER_NAME']); // 可对外使用的站点URL；在本地测试时须替换为类似“localhost/BasicCodeigniter”形式
-define('API_URL', '//api'.ROOT_URL); // API URL
-define('WEB_URL', '//www'.ROOT_URL); // 客户端 URL
-define('BIZ_URL', '//biz'.ROOT_URL); // 商家端 URL
-define('ADMIN_URL', '//admin'.ROOT_URL); // 管理端 URL
+define('API_URL', 'https://api'.ROOT_URL); // API URL
+define('WEB_URL', 'https://www'.ROOT_URL); // 客户端 URL
+define('BIZ_URL', 'https://biz'.ROOT_URL); // 商家端 URL
+define('ADMIN_URL', 'https://admin'.ROOT_URL); // 管理端 URL
+function api_url($api_name)
+{
+    return API_URL. $api_name;
+}
 
 // （可选）JS、CSS等非当前站点特有资源所在URL，可用于配合又拍云等第三方存储
 define('CDN_URL', 'https://cdn-remote'.ROOT_URL); // 生产环境
@@ -47,6 +54,9 @@ define('SESSION_COOKIE_NAME', 'ci_sessions_biz'); // 用于cookie存储的sessio
 define('SESSION_TABLE', 'ci_sessions_biz'); // 用于session存储的数据库表名
 define('SESSION_PERIOD', 2592000); // session有效期秒数，此处设为30天，即60秒*60分*24小时*30天
 define('ENCRYPTION_KEY', ''); // 秘钥用于加密相关功能，可为空
+
+// 原生应用scheme
+define('APP_SCHEME', 'jinlaiadmin');
 
 // APPLE开发平台参数
 define('IOS_APP_ID', '1234502207');

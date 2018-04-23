@@ -43,16 +43,22 @@
 
 		<fieldset>
             <div class=form-group>
-                <label for=category_id class="col-sm-2 control-label">系统分类 ※</label>
+                <label for=category_id class="col-sm-2 control-label">平台分类 ※</label>
                 <div class=col-sm-10>
                     <input name=category_id type=hidden value="" required>
 
-                    <div class="multi-selector row" data-ms-name=category_id data-ms-api_url="item_category/index">
+                    <div
+                            class="multi-selector row"
+                            data-ms-name=category_id
+                            data-ms-api_url="item_category/index"
+                            data-ms-min_level=2
+                            data-ms-max_level=2
+                    >
                         <div class=col-xs-4>
                             <select class=form-control data-ms-level=1 required>
                                 <option value="">请选择</option>
                                 <?php foreach ($categories as $option): ?>
-                                    <option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['name'] ?></option>
+                                    <option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['nature'].'-'.$option['name'] ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>

@@ -11,7 +11,7 @@
 	{
 		/**
 		 * 数据库表名
-		 *
+         *
 		 * @var string $table_name 表名
 		 */
 		public $table_name;
@@ -23,15 +23,18 @@
 		 */
 		public $id_name;
 
+		public $limit = NULL;
+		public $offset = NULL;
+
 		/**
-		 * 初始化类
-		 * @param void
-		 * @return void
+		 * 构造函数
+         *
+         * @param void
 		 */
 		public function __construct()
 		{
-			parent::__construct();
-		}
+			// CI_Model类无构造函数，无需继承
+		} // end __construct
 
 		/**
 		 * 返回符合单一条件的数据（单行）
@@ -48,7 +51,7 @@
 
 			$query = $this->db->get($this->table_name);
 			return $query->row_array();
-		}
+		} // end find
 
 		/**
 		 * 返回符合多个条件的数据（单行）
@@ -62,21 +65,7 @@
 		{
 			$query = $this->db->get_where($this->table_name, $data_to_search);
 			return $query->row_array();
-		}
-
-		// 根据当前用户的id验证密码是否正确，用于操作验证等情景
-		// 应用于后台时，需要将user_id替换为stuff_id
-		// 此方法应用频繁，不适合进一步抽象进前述match方法
-		public function password_check()
-		{
-			$data = array(
-				'stuff_id' => $this->session->stuff_id,
-				'password' => sha1( $this->input->post('password') ),
-			);
-
-			$query = $this->db->get_where('stuff', $data);
-			return $query->row_array();
-		}
+		} // end match
 
 		/**
 		 * 统计数量
@@ -85,13 +74,17 @@
 		 * @param boolean $include_deleted 是否计算被标记为已删除状态的行
 		 * @return int 满足条件的行的数量
 		 */
-		public function count($condition = NULL, $include_deleted = FALSE)
+		public function count($condition = NULL, $include_deleted = TRUE)
 		{
-			// 若存在统计条件，则按条件统计数量
+			// 拆分筛选条件（若有）
 			if ($condition !== NULL):
-				foreach($condition as $name => $value):
-					if ($value === 'IS NOT NULL'):
+				foreach ($condition as $name => $value):
+					if ($value === 'NULL'):
+						$this->db->where("$name IS NULL");
+
+					elseif ($value === 'IS NOT NULL'):
 						$this->db->where("$name IS NOT NULL");
+					
 					else:
 						$this->db->where($name, $value);
 					endif;
@@ -100,13 +93,13 @@
 
 			// 默认不计算被标记为已删除状态的行
 			if ($include_deleted === FALSE)
-				$this->db->where("`time_delete` IS NOT NULL");
+				$this->db->where("`time_delete` IS NULL");
 
 			return $this->db->count_all_results($this->table_name);
-		}
+		} // end count
 
 		/**
-		 * 根据条件获取列表，默认不返回已删除项
+		 * 根据条件获取列表，默认可返回已删除项
 		 *
 		 * @param int $limit 需获取的行数，通过get或post方式传入
 		 * @param int $offset 需跳过的行数，与$limit参数配合做分页功能，通过get或post方式传入
@@ -116,18 +109,32 @@
 		 * @param bool $allow_deleted 是否在返回结果中包含被标注为删除状态的行；默认为FALSE
 		 * @return array 结果数组（默认为多维数组，$return_ids为TRUE时返回一维数组）
 		 */
-		public function select($condition = NULL, $order_by = NULL, $return_ids = FALSE, $allow_deleted = FALSE)
+		public function select($condition = NULL, $order_by = NULL, $return_ids = FALSE, $allow_deleted = TRUE)
 		{
-			$limit = $this->input->get_post('limit')? $this->input->get_post('limit'): NULL; // 需要从数据库获取的数据行数
-			$offset = $this->input->get_post('offset')? $this->input->get_post('offset'): NULL; // 需要从数据库获取的数据起始行数（与$limit配合可用于分页等功能）
+            // 需要从数据库获取的数据行数
+            if ($this->limit === NULL && !empty($this->input->get_post('limit'))):
+                $this->limit = $this->input->get_post('limit');
+            endif;
+
+            // 需要从数据库获取的数据起始行数（与$limit配合可用于分页等功能）
+            if ($this->offset === NULL && !empty($this->input->get_post('offset'))):
+                $this->offset = $this->input->get_post('offset');
+            endif;
+
+            $this->db->limit($this->limit, $this->offset);
 
 			// 拆分筛选条件（若有）
 			if ($condition !== NULL):
 				foreach ($condition as $name => $value):
-					if ($value === 'IS NOT NULL'):
+					if ($value === 'NULL'):
+						$this->db->where("$name IS NULL");
+
+					elseif ($value === 'IS NOT NULL'):
 						$this->db->where("$name IS NOT NULL");
+
 					else:
 						$this->db->where($name, $value);
+
 					endif;
 				endforeach;
 			endif;
@@ -137,38 +144,38 @@
 				foreach ($order_by as $column_name => $value):
 					$this->db->order_by($column_name, $value);
 				endforeach;
-			// 若未指定排序条件，则默认按照ID倒序排列
-			else:
-				$this->db->order_by($this->id_name, 'DESC');
 			endif;
-			
-			// 默认不返回已删除项
-			if ($allow_deleted === FALSE) $this->db->where('time_delete', NULL);
 
-			if ($return_ids === TRUE) $this->db->select($this->id_name);
+			// 默认可返回已删除项
+            if ($allow_deleted === FALSE && !isset($condition['time_delete']))
+                $this->db->where("time_delete IS NULL");
 
-			$this->db->limit($limit, $offset);
+            // 获取数据
+            $query = $this->db->get($this->table_name);
 
-			$query = $this->db->get($this->table_name);
-			return $query->result_array();
+            // 可选择仅返回符合条件项的ID列表
+            if ($return_ids === FALSE):
+                return $query->result_array();
 
-			if ($return_ids === TRUE):
-				// 多维数组转换为一维数组
-				$ids = array();
-				foreach ($results as $item):
-					$ids[] = $item[$this->id_name]; // 返回当前行的主键
-				endforeach;
+            else:
+                // 多维数组转换为一维数组
+                $ids = array();
+                $result = $query->result_array();
 
-				// 释放原结果数组以节省内存
-				unset($results);
+                foreach ($result as $item):
+                    $ids[] = $item[$this->id_name]; // 返回当前行的主键
+                endforeach;
 
-				// 返回数组
-				return $ids;
-			endif;
-		}
+                unset($result); // 释放原结果数组以节省内存
+
+                // 返回数组
+                return $ids;
+
+            endif;
+		} // end select
 
 		/**
-		 * 根据ID获取特定项，默认不返回已删除项
+		 * 根据ID获取特定项，默认可返回已删除项
 		 *
 		 * @param int $id 需获取的行的ID
 		 * @param bool $allow_deleted 是否可返回被标注为删除状态的行；默认为TRUE
@@ -176,14 +183,56 @@
 		 */
 		public function select_by_id($id, $allow_deleted = TRUE)
 		{
-			// 默认不返回已删除项
+			// 默认可返回已删除项
 			if ($allow_deleted === FALSE) $this->db->where('time_delete', NULL);
 
 			$this->db->where($this->id_name, $id);
 
 			$query = $this->db->get($this->table_name);
 			return $query->row_array();
-		}
+		} // end select_by_id
+
+        /**
+         * 根据CSV格式的ID们字符串获取列表，默认可返回已删除项
+         *
+         * @param string $ids
+         * @param array $condition
+         * @param bool $allow_deleted
+         * @return mixed
+         */
+		public function select_by_ids($ids, $condition = NULL, $allow_deleted = TRUE)
+		{
+            // 拆分筛选条件（若有）
+            if ($condition !== NULL):
+                foreach ($condition as $name => $value):
+                    if ($value === 'NULL'):
+                        $this->db->where("$name IS NULL");
+
+                    elseif ($value === 'IS NOT NULL'):
+                        $this->db->where("$name IS NOT NULL");
+
+                    else:
+                        $this->db->where($name, $value);
+
+                    endif;
+                endforeach;
+            endif;
+
+            // 默认可返回已删除项
+            if ($allow_deleted === FALSE && !isset($condition['time_delete']))
+                $this->db->where("time_delete IS NULL");
+
+			// 拆分字符串为数组
+			$ids = explode(',', trim($ids, ',')); // 清除多余的前后半角逗号
+            $this->db->group_start();
+			foreach ($ids as $id):
+				$this->db->or_where($this->id_name, $id);
+			endforeach;
+            $this->db->group_end();
+
+			$query = $this->db->get($this->table_name);
+			return $query->result_array();
+		} // end select_by_ids
 
 		/**
 		 * 获取已删除项列表
@@ -197,9 +246,17 @@
 		 */
 		public function select_trash($condition = NULL, $order_by = NULL, $return_ids = FALSE)
 		{
-			$limit = $this->input->get_post('limit')? $this->input->get_post('limit'): NULL; // 需要从数据库获取的数据行数
-			$offset = $this->input->get_post('offset')? $this->input->get_post('offset'): NULL; // 需要从数据库获取的数据起始行数（与$limit配合可用于分页等功能）
+            // 需要从数据库获取的数据行数
+            if ($this->limit === NULL && !empty($this->input->get_post('limit'))):
+                $this->limit = $this->input->get_post('limit');
+            endif;
 
+            // 需要从数据库获取的数据起始行数（与$limit配合可用于分页等功能）
+            if ($this->offset === NULL && !empty($this->input->get_post('offset'))):
+                $this->offset = $this->input->get_post('offset');
+            endif;
+
+            $this->db->limit($this->limit, $this->offset);
 			// 拆分筛选条件（若有）
 			if ($condition !== NULL):
 				foreach ($condition as $column_name => $value):
@@ -219,26 +276,30 @@
 
 			if ($return_ids === TRUE) $this->db->select($this->id_name);
 
-			$this->db->where('time_delete !=', NULL)
-					->limit($limit, $offset);
+			$this->db->where('time_delete IS NOT NULL');
 
-			$query = $this->db->get($this->table_name);
-			return $query->result_array();
-			
-			if ($return_ids === TRUE):
-				// 多维数组转换为一维数组
-				$ids = array();
-				foreach ($results as $item):
-					$ids[] = $item[$this->id_name]; // 返回当前行的主键
-				endforeach;
+            $query = $this->db->get($this->table_name);
 
-				// 释放原结果数组以节省内存
-				unset($results);
+            // 可选择仅返回符合条件项的ID列表
+            if ($return_ids === FALSE):
+                return $query->result_array();
 
-				// 返回数组
-				return $ids;
-			endif;
-		}
+            else:
+                // 多维数组转换为一维数组
+                $ids = array();
+                $result = $query->result_array();
+
+                foreach ($result as $item):
+                    $ids[] = $item[$this->id_name]; // 返回当前行的主键
+                endforeach;
+
+                unset($result); // 释放原结果数组以节省内存
+
+                // 返回数组
+                return $ids;
+
+            endif;
+		} // end select_trash
 
 		/**
 		 * 创建
@@ -249,12 +310,9 @@
 		 */
 		public function create($data, $return_id = FALSE)
 		{
-			// 更新创建时间为当前时间，创建者和最后操作者为当前用户
-			$data['time_create'] = date('Y-m-d H:i:s');
-			if ( isset($this->session->stuff_id)):
-				$data['creator_id'] = $this->session->stuff_id;
-				$data['operator_id'] = $this->session->stuff_id;
-			endif;
+			// 未传入创建时间时，默认创建时间为当前时间，创建者和最后操作者为当前用户
+			if ( !isset($data['time_create']) )
+				$data['time_create'] = date('Y-m-d H:i:s');
 
 			// 尝试写入
 			$insert_result = $this->db->insert($this->table_name, $data);
@@ -265,7 +323,7 @@
 			else:
 				return $insert_result;
 			endif;
-		}
+		} // end create
 
 		/**
 		 * 修改
@@ -277,11 +335,6 @@
 		 */
 		public function edit($id, $data, $return_rows = FALSE)
 		{
-			// 更新最后操作者为当前用户
-			if (isset($this->session->stuff_id)):
-				$data['operator_id'] = $this->session->stuff_id;
-			endif;
-
 			// 尝试更新
 			$this->db->where($this->id_name, $id);
 			$update_result = $this->db->update($this->table_name, $data);
@@ -292,8 +345,23 @@
 			else:
 				return $update_result;
 			endif;
-		}
-	}
+		} // end edit
+
+        // TODO 待应用到具体业务并测试
+        // 根据当前用户的id验证密码是否正确，用于操作验证等情景
+        // 此方法应用频繁，不适合进一步抽象进前述match方法
+        public function password_check($id_name = 'stuff')
+        {
+            $data = array(
+                "{$id_name}_id" => $this->session->{$id_name.'_id'},
+                'password' => sha1( $this->input->post('password') ),
+            );
+
+            $query = $this->db->get_where($id_name, $data);
+            return $query->row_array();
+        } // end password_check
+
+	} // end Class Basic_model
 
 /* End of file Basic_model.php */
 /* Location: ./application/models/Basic_model.php */

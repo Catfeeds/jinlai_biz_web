@@ -63,7 +63,7 @@
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>
-				<label for=category_id class="col-sm-2 control-label">系统分类</label>
+				<label for=category_id class="col-sm-2 control-label">平台分类</label>
 				<div class=col-sm-10>
                     <p class=form-control-static>
                         <?php echo $category['name'] ?> <span class="text-muted">系统分类仅可在创建商品时指定</span>

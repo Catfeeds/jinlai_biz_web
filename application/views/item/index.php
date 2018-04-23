@@ -121,7 +121,7 @@
                         </span>
 
                         <ul class=horizontal>
-                            <li class=color_warning><a href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>规格 <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                            <li class=color_warning><a href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>规格 <i class="far fa-angle-right"></i></a></li>
 
                         <?php
                             // 需要特定角色和权限进行该操作

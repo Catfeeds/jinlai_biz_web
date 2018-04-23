@@ -11,9 +11,6 @@ $(function(){
 
     // 多级选择器
     $('.multi-selector').on('change', '[data-ms-level]', function(){
-        // 最高层级
-        var ms_max_level = 2;
-
         // 获取必要参数
         var current_id = $(this).find('option:selected').val(); // 当前已选中值，将作为待操作选项的parent_id
         var current_level = $(this).attr('data-ms-level'); // 操作中选项等级
@@ -25,13 +22,16 @@ $(function(){
         var ms_api_url = ms_selector.attr('data-ms-api_url'); // 当前多级选择器数据源
         var ms_name = ms_selector.attr('data-ms-name'); // 当前多级选择器对应字段name属性
 
+        var ms_min_level = ms_selector.attr('data-ms-min_level'); // 可提交表单的最低层级
+        var ms_max_level = ms_selector.attr('data-ms-max_level'); // 最高层级
+
         // 若选择了空选项，则清空/删除所有下级选择器
-        if (current_id === '')
+        if (current_id === '' && current_level < ms_min_level)
         {
             alert('请选择');
             next_selector.closest('div').remove();
         }
-        else if (current_level == ms_max_level) // 若为最大级别选择器，赋值到相应字段
+        else if (current_level == ms_max_level || current_level >= ms_min_level) // 若为最大级别选择器，赋值到相应字段
         {
             $('[name='+ ms_name +']').val(current_id);
         }
@@ -56,8 +56,8 @@ $(function(){
 
                         // 生成数据
                         var html_options = '<div class=col-xs-4>' +
-                            '   <select class=form-control data-ms-level='+ next_level +' required>' +
-                            '<option value="">请选择</option>';
+                            '   <select class=form-control data-ms-level='+ next_level +'>' +
+                            '<option value="">可选择</option>';
                         $.each(
                             content,
                             function(i, item){

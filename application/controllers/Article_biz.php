@@ -59,6 +59,7 @@
 			$data = array(
 				'title' => $this->class_name_cn. '列表',
 				'class' => $this->class_name.' index',
+                'items' => array(),
 			);
 
 			// 筛选条件
@@ -80,7 +81,6 @@
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
-                $data['items'] = array();
 				$data['error'] = $result['content']['error']['message'];
 			endif;
 

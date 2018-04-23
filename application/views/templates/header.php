@@ -5,6 +5,17 @@
 	$title = isset($title)? $title: SITE_NAME.' - '.SITE_SLOGAN;
     $keywords = (isset($keywords)? $keywords.',': NULL). SITE_KEYWORDS;
     $description = (isset($description)? $description: NULL). SITE_DESCRIPTION;
+
+    // 生成body的class
+    $body_class = ( isset($class) )? $class: NULL;
+    $body_class .= ($this->user_agent['is_wechat'] === TRUE)? ' is_wechat': NULL;
+    $body_class .= ($this->user_agent['is_ios'] === TRUE)? ' is_ios': NULL;
+    $body_class .= ($this->user_agent['is_android'] === TRUE)? ' is_android': NULL;
+    $body_class .= ($this->user_agent['is_mobile'])? ' is_mobile': NULL; // 移动端设备
+
+    $body_class .= ($this->user_agent['is_macos'] === TRUE)? ' is_macos': NULL;
+    $body_class .= ($this->user_agent['is_windows'] === TRUE)? ' is_windows': NULL;
+    $body_class .= ($this->user_agent['is_desktop'])? ' is_desktop': NULL; // 非移动端设备
 ?>
 <!doctype html>
 <html lang=zh-cn>
@@ -15,7 +26,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180417">
+		<meta name=version content="revision20180423">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -205,6 +216,8 @@
         <link rel=stylesheet media=all href="/css/file-upload.css">
         <script defer src="/js/file-upload.js"></script>
         <script defer src="<?php echo CDN_URL ?>js/jquery.qrcode.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>jquery/jquery.lazyload.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>jquery/stupidtable.min.js"></script>
         <?php endif ?>
 
         <?php if ($this->user_agent['is_desktop']): ?>
@@ -217,16 +230,8 @@
         <?php endif ?>
 	</head>
 <?php
-    // 生成body的class
-	$body_class = ( isset($class) )? $class: NULL;
-    $body_class .= ($this->user_agent['is_wechat'] === TRUE)? ' is_wechat': NULL;
-    $body_class .= ($this->user_agent['is_ios'] === TRUE)? ' is_ios': NULL;
-    $body_class .= ($this->user_agent['is_android'] === TRUE)? ' is_android': NULL;
-    $body_class .= ($this->user_agent['is_mobile'])? ' is_mobile': NULL; // 移动端设备
-
-    $body_class .= ($this->user_agent['is_macos'] === TRUE)? ' is_macos': NULL;
-    $body_class .= ($this->user_agent['is_windows'] === TRUE)? ' is_windows': NULL;
-    $body_class .= ($this->user_agent['is_desktop'])? ' is_desktop': NULL; // 非移动端设备
+    // 将head内容立即输出，让用户浏览器立即开始请求head中各项资源，提高页面加载速度
+    ob_flush();flush();
 ?>
 
 <!-- 内容开始 -->
