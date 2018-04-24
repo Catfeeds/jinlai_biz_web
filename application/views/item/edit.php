@@ -99,7 +99,7 @@
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">品牌</label>
 				<div class=col-sm-10>
-					<input class=form-control name=brand_id type=text value="<?php echo $item['brand_id'] ?>" placeholder="所属品牌ID">
+					<input class=form-control name=brand_id type=text value="<?php echo empty(set_value('brand_id'))? $item['brand_id']: set_value('brand_id') ?>" placeholder="所属品牌ID">
 				</div>
 			</div>
 			<?php endif ?>
@@ -113,16 +113,23 @@
 			<div class=form-group>
 				<label for=slogan class="col-sm-2 control-label">商品宣传语/卖点</label>
 				<div class=col-sm-10>
-					<input class=form-control name=slogan type=text value="<?php echo $item['slogan'] ?>" placeholder="最多30个字符，中英文、数字，不可为纯数字">
+					<input class=form-control name=slogan type=text value="<?php echo empty(set_value('slogan'))? $item['slogan']: set_value('slogan') ?>" placeholder="最多30个字符，中英文、数字，不可为纯数字">
 				</div>
 			</div>
 			
 			<div class=form-group>
-				<label for=code_biz class="col-sm-2 control-label">商家自定义货号</label>
+				<label for=code_biz class="col-sm-2 control-label">商家商品编码</label>
 				<div class=col-sm-10>
-					<input class=form-control name=code_biz type=text value="<?php echo $item['code_biz'] ?>" placeholder="最多20个英文大小写字母、数字">
+					<input class=form-control name=code_biz type=text value="<?php echo empty(set_value('code_biz'))? $item['code_biz']: set_value('code_biz') ?>" placeholder="最多20个英文大小写字母、数字">
 				</div>
 			</div>
+
+            <div class=form-group>
+                <label for=barcode class="col-sm-2 control-label">商品条形码</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=barcode type=number step=1 size=13 value="<?php echo empty(set_value('barcode'))? $item['barcode']: set_value('barcode') ?>" placeholder="13位数字">
+                </div>
+            </div>
 
 			<div class=form-group>
 				<label for=url_image_main class="col-sm-2 control-label">主图 ※</label>
@@ -161,7 +168,7 @@
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">商品描述</label>
 				<div class=col-sm-10>
-					<textarea id=detail_editior name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo $item['description'] ?></textarea>
+					<textarea id=detail_editior name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo empty(set_value('description'))? $item['description']: set_value('description') ?></textarea>
 
                     <?php
                     require_once(APPPATH. 'views/templates/simditor.php');
@@ -190,13 +197,13 @@
 			<div class=form-group>
 				<label for=tag_price class="col-sm-2 control-label">标签价/原价（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=tag_price type=number min=0 step=0.01 max=99999.99 value="<?php echo $item['tag_price'] ?>" placeholder="留空或0则不显示，最高99999.99">
+					<input class=form-control name=tag_price type=number min=0 step=0.01 max=99999.99 value="<?php echo empty(set_value('tag_price'))? $item['tag_price']: set_value('tag_price') ?>" placeholder="留空或0则不显示，最高99999.99">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=price class="col-sm-2 control-label">商城价/现价（元）※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=price type=number min=1 step=0.01 max=99999.99 value="<?php echo $item['price'] ?>" placeholder="1 ~ 99999.99" required>
+					<input class=form-control name=price type=number min=1 step=0.01 max=99999.99 value="<?php echo empty(set_value('price'))? $item['price']: set_value('price') ?>" placeholder="1 ~ 99999.99" required>
 				</div>
 			</div>
 		</fieldset>
@@ -205,26 +212,26 @@
 			<div class=form-group>
 				<label for=unit_name class="col-sm-2 control-label">销售单位</label>
 				<div class=col-sm-10>
-					<input class=form-control name=unit_name type=text value="<?php echo $item['unit_name'] ?>" placeholder="最多10个字符，例如斤、双、头、件等，默认“份”">
+					<input class=form-control name=unit_name type=text value="<?php echo empty(set_value('unit_name'))? $item['unit_name']: set_value('unit_name') ?>" placeholder="最多10个字符，例如斤、双、头、件等，默认“份”">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=stocks class="col-sm-2 control-label">库存量 ※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo $item['stocks'] ?>" placeholder="最高65535单位" required>
+					<input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo empty(set_value('stocks'))? $item['stocks']: set_value('stocks') ?>" placeholder="最高65535单位" required>
                     <p class=help-block>库存管理方案为付款减库存，商品或规格库存量低于1个单位（含）时将不可被下单/付款；极少数情况下可能出现超卖。</p>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=quantity_max class="col-sm-2 control-label">每单最高限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=quantity_max type=number min=0 step=1 max=50 value="<?php echo $item['quantity_max'] ?>" placeholder="留空则默认为50，最高50">
+					<input class=form-control name=quantity_max type=number min=0 step=1 max=50 value="<?php echo empty(set_value('quantity_max'))? $item['quantity_max']: set_value('quantity_max') ?>" placeholder="留空则默认为50，最高50">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=quantity_min class="col-sm-2 control-label">每单最低限量（份）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=quantity_min type=number min=1 step=1 max=50 value="<?php echo $item['quantity_min'] ?>" placeholder="留空则默认为1，最高50">
+					<input class=form-control name=quantity_min type=number min=1 step=1 max=50 value="<?php echo empty(set_value('quantity_min'))? $item['quantity_min']: set_value('quantity_min') ?>" placeholder="留空则默认为1，最高50">
 				</div>
 			</div>
 		</fieldset>
@@ -233,21 +240,21 @@
             <div class=form-group>
                 <label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
                 <div class=col-sm-10>
-                    <input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo $item['weight_gross'] ?>" placeholder="最高999.99，运费计算将以运费模板为准">
+                    <input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo empty(set_value('weight_gross'))? $item['weight_gross']: set_value('weight_gross') ?>" placeholder="最高999.99，运费计算将以运费模板为准">
                 </div>
             </div>
 
             <div class=form-group>
 				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo $item['weight_net'] ?>" placeholder="最高999.99，运费计算将以运费模板为准">
+					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo empty(set_value('weight_net'))? $item['weight_net']: set_value('weight_net') ?>" placeholder="最高999.99，运费计算将以运费模板为准">
 				</div>
 			</div>
 
 			<div class=form-group>
 				<label for=weight_volume class="col-sm-2 control-label">体积重（KG）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo $item['weight_volume'] ?>" placeholder="最高999.99，运费计算将以运费模板为准">
+					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo empty(set_value('weight_volume'))? $item['weight_volume']: set_value('weight_volume') ?>" placeholder="最高999.99，运费计算将以运费模板为准">
 				</div>
 			</div>
 		</fieldset>
@@ -256,7 +263,7 @@
 			<div class=form-group>
 				<label for=discount_credit class="col-sm-2 control-label">积分抵扣率</label>
 				<div class=col-sm-10>
-					<input class=form-control name=discount_credit type=number step=0.01 min=0.00 max=0.99 value="<?php echo $item['discount_credit'] ?>" placeholder="留空则默认为0">
+					<input class=form-control name=discount_credit type=number step=0.01 min=0.00 max=0.99 value="<?php echo empty(set_value('discount_credit'))? $item['discount_credit']: set_value('discount_credit') ?>" placeholder="留空则默认为0">
 					<p class=help-block>若允许使用积分抵扣，则需填写此项；例如允许5%的金额使用积分抵扣则为0.05，10%为0.1，最高0.5</p>
 				</div>
 			</div>
@@ -264,7 +271,7 @@
 			<div class=form-group>
 				<label for=commission_rate class="col-sm-2 control-label">佣金比例/提成率</label>
 				<div class=col-sm-10>
-					<input class=form-control name=commission_rate type=number step=0.01 min=0.00 max=0.99 value="<?php echo $item['commission_rate'] ?>" placeholder="留空则默认为0">
+					<input class=form-control name=commission_rate type=number step=0.01 min=0.00 max=0.99 value="<?php echo empty(set_value('commission_rate'))? $item['commission_rate']: set_value('commission_rate') ?>" placeholder="留空则默认为0">
 					<p class=help-block>若需向推广者返还佣金，则需填写此项；例如提成实际支付金额的5%则为0.05，10%为0.1，最高0.5</p>
 				</div>
 			</div>

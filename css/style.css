@@ -12,7 +12,7 @@ h2 {font-size:28px;}
 h3 {font-size:22px;}
 .login {color:#111;background:none;padding:0;margin-bottom:0;}
 
-body {color:#3e3a39;background-color:#f6f6f6;font-size:26px;z-index:100;margin-top:88px;margin-bottom:98px;}
+body {color:#3e3a39;background-color:#f6f6f6;font-size:26px;height:100%;padding-top:88px;padding-bottom:98px;z-index:100;}
 .container, .container-fluid {width:100%;padding:0;/* 去掉BootStrap默认的左右内边距 */}
 
 th, td {text-align:center;}
@@ -56,6 +56,7 @@ a {font-size:26px;color:#3e3a39;text-decoration:none;/* 清理BootStrap样式 */
 				#content .btn-group:first-of-type .dropdown-menu .btn-primary {color:#fff;background-color:#ff3649;}
 					#content .btn-group:first-of-type .dropdown-menu .btn-primary:after {content:none;}
 
+/* 顶部导航栏 */
 #header .navbar-collapse {background-color:#fff;position:fixed;left:0;right:0;top:88px;bottom:0;max-height:100%;}
 
 #header .navbar-toggle {height:88px;line-height:88px;margin:-88px 20px 0 0;padding:0;}
@@ -147,8 +148,14 @@ noscript {color:#032f62;background-color:#dbedff;padding:16px;border:1px solid r
 
 	#header h1 {width:205px;margin:0;}
 	#return {display:none;}
+
+	/* 顶部导航栏 */
 	#header .navbar-collapse {position:relative;max-height:340px;top:0;margin-left:205px;}
 	#header .navbar-nav>li {border-top:none;padding:0;}
+	#header .navbar-nav .dropdown.open .dropdown-menu {margin-top:-15px !important;padding:0;}
+		#header .navbar-nav .dropdown-menu>li {width:100%;margin-right:0;padding:0;overflow:hidden;}
+		#header .navbar-nav .open .dropdown-menu>li>a {background-color:transparent;border-radius:0;padding:8px 16px;display:block;text-align:left;}
+		#header .dropdown-menu>li>a {border-radius:0;}
 	
 	#breadcrumb {display:block;}
 

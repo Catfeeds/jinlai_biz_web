@@ -111,8 +111,8 @@
 				<?php echo empty($item['time_start'])? '自领取时起': date('Y-m-d H:i:s', $item['time_start']); ?> 至 <?php echo empty($item['time_end'])? '有效期结束': date('Y-m-d H:i:s', $item['time_end']); ?>，
 			<?php endif ?>
 			
-			<?php if ( !empty($item['time_end']) ): ?>
-			自领取之时起最长<?php echo $options[ $item['period'] ] ?>（不晚于有效期结束时间，若有。）
+			<?php if ( ! empty($item['time_end']) ): ?>
+			自领取之时起<?php echo $options[ $item['period'] ] ?>
 			<?php endif ?>
 		</dd>
 		
@@ -126,13 +126,13 @@
 		<!--
         <dt>限用系统分类</dt>
 		<dd><?php echo empty($item['category_id'])? '不限': $category['name']; ?></dd>
-		-->
 		<dt>限用店内分类</dt>
 		<dd><?php echo empty($item['category_biz_id'])? '不限': $category_biz['name']; ?></dd>
 		<dt>限用商品</dt>
 		<dd>
             <?php echo empty($item['item_id'])? '不限': '<a class="btn btn-default btn-lg btn-block" href="'.base_url('item/detail?id='.$commodity['item_id']).'">'.$commodity['name'].'</a>'; ?>
         </dd>
+        -->
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>

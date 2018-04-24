@@ -6,7 +6,7 @@
 @charset "utf-8";
 @viewport{width:device-width;}
 
-body {margin-bottom:104px;}
+body {padding-bottom:104px;}
 
 #content {min-height:1050px;}
 

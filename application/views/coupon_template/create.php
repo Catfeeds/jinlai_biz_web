@@ -102,12 +102,13 @@
 					<input class=form-control name=max_amount_user type=number step=1 max=99 value="<?php echo set_value('max_amount_user') ?>" placeholder="留空或0为不限，最高99">
 				</div>
 			</div>
-
         </fieldset>
 
         <fieldset>
+            <legend>有效期</legend>
+
 			<div class=form-group>
-				<label for=period class="col-sm-2 control-label">有效期</label>
+				<label for=period class="col-sm-2 control-label">有效时长</label>
 				<div class=col-sm-10>
 					<?php $input_name = 'period' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
@@ -139,33 +140,32 @@
 						<option value="<?php echo $value ?>" <?php echo set_select($input_name, $value) ?>><?php echo $name ?></option>
 						<?php endforeach ?>
 					</select>
-					<p class=help-block>自领取之时起有效时长；留空则默认为自领取之日起30天内</p>
+					<p class=help-block>自领取之时起时长；留空则默认为自领取之日起30天内</p>
 				</div>
 			</div>
 
-			<!--
             <div class=form-group>
-				<label for=time_start class="col-sm-2 control-label">有效期开始时间</label>
+				<label for=time_start class="col-sm-2 control-label">开始时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_start type=datetime value="<?php echo set_value('time_start') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+1days')) ?>">
-                    <p class=help-block>若指定了开始时间，则有效期将从该时间开始</p>
+                    <p class=help-block>有效期将在该分钟开始</p>
                     <?php require_once(APPPATH. 'views/templates/time_start_hint.php') ?>
 				</div>
 			</div>
 
 			<div class=form-group>
-				<label for=time_end class="col-sm-2 control-label">有效期结束时间</label>
+				<label for=time_end class="col-sm-2 control-label">结束时间</label>
 				<div class=col-sm-10>
 					<input class=form-control name=time_end type=datetime value="<?php echo set_value('time_end') ?>" placeholder="例如：<?php echo date('Y-m-d H:i', strtotime('+31days')) ?>">
-                    <p class=help-block>若指定了结束时间，则将忽略领取后有效期</p>
+                    <p class=help-block>有效期将在该分钟结束</p>
                     <?php require_once(APPPATH. 'views/templates/time_end_hint.php') ?>
 				</div>
 			</div>
-			-->
 		</fieldset>
 
+        <!--
         <fieldset>
-            <legend>高级功能（免费试用）</legend>
+            <legend>高级功能（试用）</legend>
 
 			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">限用系统分类</label>
@@ -210,6 +210,7 @@
 				</div>
 			</div>
 		</fieldset>
+		-->
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">

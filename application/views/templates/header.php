@@ -26,7 +26,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180423">
+		<meta name=version content="revision20180425">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -191,14 +191,14 @@
         <script src="/js/common.js"></script>
 		<script defer src="<?php echo CDN_URL ?>js/js.cookie.js"></script>
         <script defer src="<?php echo CDN_URL ?>bootstrap/v3.3.7/bootstrap.min.js"></script>
-        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.9/fontawesome-all.min.js"></script>
-        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.9/fa-v4-shims.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.10/fontawesome-all.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.10/fa-v4-shims.min.js"></script>
         <script>
             // AJAX参数
             var ajax_root = '<?php echo API_URL ?>'
             var common_params = new Object()
             common_params.app_type = 'biz' // 默认为商户端请求
-            common_params.biz_id = <?php echo $this->session->biz_id ?>
+            common_params.biz_id = <?php echo empty($this->session->biz_id)? '': $this->session->biz_id ?>
 
             // UserAgent
             var user_agent = new Object();
@@ -246,7 +246,7 @@
                 if (strpos($class,'home') === FALSE && $class !== 'success'):
             ?>
 			<a id=return href="javascript:" onclick="history.back()">
-				<i class="far fa-chevron-left" aria-hidden=true></i>
+                <i class="far fa-chevron-left"></i>
 			</a>
             <?php endif ?>
 
@@ -266,7 +266,7 @@
 					</h1>
 					<button class=navbar-toggle data-toggle=collapse data-target=".navbar-collapse">
 						<span class=sr-only>展开/收起菜单</span>
-						<i class="far fa-ellipsis-h" aria-hidden="true"></i>
+                        <i class="far fa-ellipsis-h"></i>
 					</button>
 				</div>
 				<div class="navbar-collapse collapse">
@@ -275,89 +275,91 @@
 
 				<?php if ( !empty($this->session->biz_id) ): ?>
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>商家 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>商家 <i class="far fa-angle-down"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="我的店铺" href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">店铺资料</a></li>
+								<li><a href="<?php echo base_url('biz/detail?id='.$this->session->biz_id) ?>">店铺资料</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a title="店铺装修列表" href="<?php echo base_url('ornament_biz') ?>">店铺装修</a></li>
+                                <li><a href="<?php echo base_url('ornament_biz') ?>">店铺装修</a></li>
 
                                 <li role="separator" class="divider"></li>
-                                <li><a title="门店列表" href="<?php echo base_url('branch') ?>">门店</a></li>
+                                <li><a href="<?php echo base_url('branch') ?>">门店</a></li>
+                                <li><a href="<?php echo base_url('branch/create') ?>">创建门店</a></li>
 
                                 <?php
                                     // 仅获得大于10的权限的管理员可以管理员工
                                     if ($this->session->role === '管理员' && $this->session->level > 10):
                                 ?>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a title="员工列表" href="<?php echo base_url('stuff') ?>">所有员工</a></li>
-                                    <li><a title="创建员工" href="<?php echo base_url('stuff/create') ?>">创建员工</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="<?php echo base_url('stuff') ?>">员工</a></li>
+                                <li><a href="<?php echo base_url('stuff/create') ?>">创建员工</a></li>
                                 <?php endif ?>
 							</ul>
 						</li>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>商品 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>商品 <i class="far fa-angle-down"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="店内分类列表" href="<?php echo base_url('item_category_biz') ?>">所有店内分类</a></li>
-								<li><a title="创建店内分类" href="<?php echo base_url('item_category_biz/create') ?>">创建店内分类</a></li>
+								<li><a href="<?php echo base_url('item_category_biz') ?>">店内分类</a></li>
+								<li><a href="<?php echo base_url('item_category_biz/create') ?>">创建店内分类</a></li>
 
 								<li role="separator" class="divider"></li>
-								<li><a title="运费模板列表" href="<?php echo base_url('freight_template_biz') ?>">所有运费模板</a></li>
-								<li><a title="创建运费模板" href="<?php echo base_url('freight_template_biz/create') ?>">创建运费模板</a></li>
+								<li><a href="<?php echo base_url('freight_template_biz') ?>">运费模板</a></li>
+								<li><a href="<?php echo base_url('freight_template_biz/create') ?>">创建运费模板</a></li>
 
 								<li role="separator" class="divider"></li>
-								<li><a title="商品列表" href="<?php echo base_url('item') ?>">所有商品</a></li>
-								<li><a title="创建商品" href="<?php echo base_url('item/create') ?>">创建商品</a></li>
-								<li><a title="快速创建" href="<?php echo base_url('item/create_quick') ?>">快速创建</a></li>
+								<li><a href="<?php echo base_url('item') ?>">商品</a></li>
+								<li><a href="<?php echo base_url('item/create') ?>">创建商品</a></li>
+								<li><a href="<?php echo base_url('item/create_quick') ?>">快速创建</a></li>
 							</ul>
 						</li>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>订单 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>订单 <i class="far fa-angle-down"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="商品订单列表" href="<?php echo base_url('order') ?>">所有订单</a></li>
-                                <li><a title="待接单订单" href="<?php echo base_url('order?status=待接单') ?>">待接单订单</a></li>
-                                <li><a title="待发货订单" href="<?php echo base_url('order?status=待发货') ?>">待发货订单</a></li>
+								<li><a href="<?php echo base_url('order') ?>">所有订单</a></li>
+                                <li><a href="<?php echo base_url('order?status=待接单') ?>">待接单订单</a></li>
+                                <li><a href="<?php echo base_url('order?status=待发货') ?>">待发货订单</a></li>
+
                                 <li role="separator" class="divider"></li>
-                                <li><a title="退款/售后列表" href="<?php echo base_url('refund') ?>">所有退款/售后</a></li>
+                                <li><a href="<?php echo base_url('refund') ?>">退款/售后</a></li>
 							</ul>
 						</li>
 
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>营销 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>营销 <i class="far fa-angle-down"></i></a>
 							<ul class=dropdown-menu>
-                                <li><a title="文章列表" href="<?php echo base_url('article_biz') ?>">所有文章</a></li>
-                                <li><a title="创建文章" href="<?php echo base_url('article_biz/create') ?>">创建文章</a></li>
+                                <li><a href="<?php echo base_url('article_biz') ?>">文章</a></li>
+                                <li><a href="<?php echo base_url('article_biz/create') ?>">创建文章</a></li>
 
                                 <li role="separator" class="divider"></li>
-                                <li><a title="优惠券模板" href="<?php echo base_url('coupon_template') ?>">所有优惠券模板</a></li>
-                                <li><a title="创建优惠券模板" href="<?php echo base_url('coupon_template/create') ?>">创建优惠券模板</a></li>
+                                <li><a href="<?php echo base_url('coupon_template') ?>">优惠券模板</a></li>
+                                <li><a href="<?php echo base_url('coupon_template/create') ?>">创建优惠券模板</a></li>
 
                                 <li role="separator" class="divider"></li>
-                                <li><a title="优惠券包" href="<?php echo base_url('coupon_combo') ?>">所有优惠券包</a></li>
-                                <li><a title="创建优惠券包" href="<?php echo base_url('coupon_combo/create') ?>">创建优惠券包</a></li>
+                                <li><a href="<?php echo base_url('coupon_combo') ?>">优惠券包</a></li>
+                                <li><a href="<?php echo base_url('coupon_combo/create') ?>">创建优惠券包</a></li>
 
                                 <li role="separator" class="divider"></li>
-                                <li><a title="店内活动列表" href="<?php echo base_url('promotion_biz') ?>">所有店内活动</a></li>
-								<li><a title="创建店内活动" href="<?php echo base_url('promotion_biz/create') ?>">创建店内活动</a></li>
+                                <li><a href="<?php echo base_url('promotion_biz') ?>">店内活动</a></li>
+								<li><a href="<?php echo base_url('promotion_biz/create') ?>">创建店内活动</a></li>
 
 								<li role="separator" class="divider"></li>
-								<li><a title="平台活动列表" href="<?php echo base_url('promotion') ?>">所有平台活动</a></li>
+								<li><a href="<?php echo base_url('promotion') ?>">平台活动</a></li>
 							</ul>
 						</li>
 
 						<!--
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>余额 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>余额 <i class="far fa-angle-down"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="余额列表" href="<?php echo base_url('balance') ?>">所有余额</a></li>
+								<li><a href="<?php echo base_url('balance') ?>">所有余额</a></li>
 							</ul>
 						</li>
 						
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>素材 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>素材 <i class="far fa-angle-down"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="素材列表" href="<?php echo base_url('material') ?>">所有素材</a></li>
+								<li><a href="<?php echo base_url('material') ?>">所有素材</a></li>
 							</ul>
 						</li>
 						-->
@@ -365,9 +367,9 @@
                         <!--
                         <?php if ( $this->session->role === '管理员' && $this->session->level > 30): ?>
 						<li class=dropdown>
-							<a href=# class=dropdown-toggle data-toggle=dropdown>积分 <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+							<a href=# class=dropdown-toggle data-toggle=dropdown>积分 <i class="far fa-angle-down"></i></a>
 							<ul class=dropdown-menu>
-								<li><a title="积分列表" href="<?php echo base_url('credit') ?>">所有积分</a></li>
+								<li><a href="<?php echo base_url('credit') ?>">所有积分</a></li>
 							</ul>
 						</li>
 

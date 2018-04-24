@@ -6,17 +6,19 @@
 @charset "utf-8";
 @viewport{width:device-width;}
 
-#maincontainer {margin-bottom:98px;}
+#maincontainer {padding-bottom:98px;}
 
 #nav-main {display:none;}
 
 #item-actions {background-color:#fff;position:fixed;left:0;right:0;bottom:0;height:98px;line-height:98px;z-index:101;}
-    #item-actions>li {color:#ff3649;float:left;display:inline-block;text-align:center;overflow:hidden;}
-        #item-actions>li:last-child {background-color:#ff3649;}
-            #item-actions>li:last-child>a {color:#fff;}
-        #item-actions>li>a:hover, #item-actions>li>a:active {box-shadow:0 0 1rem #f6f6f6 inset;}
+#item-actions>li {color:#ff3649;float:left;display:inline-block;text-align:center;overflow:hidden;}
+#item-actions>li:last-child {background-color:#ff3649;}
+#item-actions>li:last-child>a {color:#fff;}
+#item-actions>li>a:hover, #item-actions>li>a:active {box-shadow:0 0 1rem #f6f6f6 inset;}
 
 .margined-list>li:not(:last-child) {margin-bottom:1rem;}
+
+#list-record {margin-bottom:20px;border-top:1px solid #ddd;padding-top:20px;}
 
 /* 宽度在750像素以上的设备 */
 @media only screen and (min-width:751px)

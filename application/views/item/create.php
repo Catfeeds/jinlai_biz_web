@@ -52,7 +52,7 @@
                             data-ms-name=category_id
                             data-ms-api_url="item_category/index"
                             data-ms-min_level=2
-                            data-ms-max_level=2
+                            data-ms-max_level=3
                     >
                         <div class=col-xs-4>
                             <select class=form-control data-ms-level=1 required>
@@ -119,11 +119,18 @@
 			</div>
 
 			<div class=form-group>
-				<label for=code_biz class="col-sm-2 control-label">商家自定义货号</label>
+				<label for=code_biz class="col-sm-2 control-label">商家商品编码</label>
 				<div class=col-sm-10>
 					<input class=form-control name=code_biz type=text value="<?php echo set_value('code_biz') ?>" placeholder="最多20个英文大小写字母、数字">
 				</div>
 			</div>
+
+            <div class=form-group>
+                <label for=barcode class="col-sm-2 control-label">商品条形码</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=barcode type=number step=1 size=13 value="<?php echo set_value('barcode') ?>" placeholder="13位数字">
+                </div>
+            </div>
 			
 			<div class=form-group>
 				<label for=url_image_main class="col-sm-2 control-label">主图 ※</label>

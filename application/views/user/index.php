@@ -85,7 +85,7 @@
 							// 仅可修改自己的信息
 							if ( $item['user_id'] === $this->session->user_id ):
 							?>
-							<li class="color_primary"><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
+							<li><a href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
 							<?php endif ?>
 						</ul>
 					</td>

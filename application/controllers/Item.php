@@ -322,8 +322,8 @@
             $this->form_validation->set_rules('brand_id', '品牌', 'trim|is_natural_no_zero');
             $this->form_validation->set_rules('category_id', '系统分类', 'trim|required|is_natural_no_zero');
             $this->form_validation->set_rules('category_biz_id', '店内分类', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('code_biz', '商家自定义商品编码', 'trim|max_length[20]');
-            $this->form_validation->set_rules('barcode', '商品二维码', 'trim|exact_length[13]|is_natural');
+            $this->form_validation->set_rules('code_biz', '商家商品编码', 'trim|max_length[20]');
+            $this->form_validation->set_rules('barcode', '商品条形码', 'trim|is_natural_no_zero|exact_length[13]');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim|max_length[255]');
 			$this->form_validation->set_rules('figure_video_urls', '形象视频', 'trim|max_length[255]');
@@ -438,8 +438,8 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('category_biz_id', '商家分类', 'trim|is_natural_no_zero');
-			$this->form_validation->set_rules('code_biz', '商家自定义商品编码', 'trim|max_length[20]');
-            $this->form_validation->set_rules('barcode', '商品二维码', 'trim|exact_length[13]|is_natural');
+            $this->form_validation->set_rules('code_biz', '商家商品编码', 'trim|max_length[20]');
+            $this->form_validation->set_rules('barcode', '商品条形码', 'trim|is_natural_no_zero|exact_length[13]');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
 			$this->form_validation->set_rules('figure_image_urls', '形象图', 'trim|max_length[255]');
 			$this->form_validation->set_rules('figure_video_urls', '形象视频', 'trim|max_length[255]');
@@ -541,7 +541,94 @@
 
 			endif;
 		} // end edit
-		
+
+        /**
+         * 编辑单行
+         */
+        public function edit_description()
+        {
+            // 检查是否已传入必要参数
+            $id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
+            if ( !empty($id) ):
+                $params['id'] = $id;
+            else:
+                redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
+            endif;
+
+            // 操作可能需要检查操作权限
+            // $role_allowed = array('管理员', '经理'); // 角色要求
+// 			$min_level = 30; // 级别要求
+// 			$this->basic->permission_check($role_allowed, $min_level);
+
+            // 页面信息
+            $data = array(
+                'title' => '修改'.$this->class_name_cn.'商品描述',
+                'class' => $this->class_name.' edit',
+                'error' => '',
+            );
+
+            // 待验证的表单项
+            $this->form_validation->set_error_delimiters('', '；');
+            $this->form_validation->set_rules('description', '商品描述', 'trim|max_length[20000]');
+
+            // 从API服务器获取相应详情信息
+            $params['id'] = $id;
+            $url = api_url($this->class_name. '/detail');
+            $result = $this->curl->go($url, $params, 'array');
+            if ($result['status'] === 200):
+                $data['item'] = $result['content'];
+
+            else:
+                redirect( base_url('error/code_404') ); // 若未成功获取信息，则转到错误页
+
+            endif;
+
+            // 若表单提交不成功
+            if ($this->form_validation->run() === FALSE):
+                $data['error'] .= validation_errors();
+
+                $this->load->view('templates/header', $data);
+                $this->load->view($this->view_root.'/edit_description', $data);
+                $this->load->view('templates/footer', $data);
+
+            else:
+                // 需要编辑的数据；逐一赋值需特别处理的字段
+                $data_to_edit = array(
+                    'user_id' => $this->session->user_id,
+                    'id' => $id,
+
+                    'name' => 'description',
+                    'value' => empty($this->input->post('description'))? NULL: $this->input->post('description'),
+                );
+
+                // 向API服务器发送待创建数据
+                $params = $data_to_edit;
+                $url = api_url($this->class_name. '/edit_certain');
+                $result = $this->curl->go($url, $params, 'array');
+                if ($result['status'] === 200):
+                    $data['title'] = $this->class_name_cn. '修改成功';
+                    $data['class'] = 'success';
+                    $data['content'] = $result['content']['message'];
+                    $data['operation'] = 'edit';
+                    $data['id'] = $result['content']['id']; // 修改后的信息ID
+
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/result', $data);
+                    $this->load->view('templates/footer', $data);
+
+                else:
+                    // 若创建失败，则进行提示
+                    $data['error'] = $result['content']['error']['message'];
+
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/edit_description', $data);
+                    $this->load->view('templates/footer', $data);
+
+                endif;
+
+            endif;
+        } // end edit_description
+
 		/**
 		 * 上架单行或多行项目
 		 */

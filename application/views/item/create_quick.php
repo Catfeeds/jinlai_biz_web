@@ -83,7 +83,7 @@ $(function(){
                             data-ms-name=category_id
                             data-ms-api_url="item_category/index"
                             data-ms-min_level=2
-                            data-ms-max_level=2
+                            data-ms-max_level=3
                     >
                         <div class=col-xs-4>
                             <select class=form-control data-ms-level=1 required>

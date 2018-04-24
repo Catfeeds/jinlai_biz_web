@@ -1,6 +1,3 @@
-            <section id=beta-reminder>
-                <p><?php if (CURRENT_ENV === 'DEVELOP') echo 'RC'.CURRENT_VERSION ?> 当前系统仅供技术研究及开发；数据、功能、页面样式等的变更均可能不做任何告知；任何数据、业务、功能均无实际意义，不构成任何责任、义务，或权利的侵犯。</p>
-            </section>
 
         </main>
 <!-- End #maincontainer -->

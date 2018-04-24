@@ -214,34 +214,34 @@
 			);
 
 			// 获取品牌
-			$data['brands'] = $this->list_brand();
+			//$data['brands'] = $this->list_brand();
 
 			// 获取系统级商品分类
-			$data['categories'] = $this->list_category();
+			//$data['categories'] = $this->list_category();
 
 			// 获取商家级商品分类
-			$data['biz_categories'] = $this->list_category_biz();
+			//$data['biz_categories'] = $this->list_category_biz();
 
             // 获取当前商家所有商品数据
-            $data['comodities'] = $this->list_item();
+            //$data['comodities'] = $this->list_item();
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('category_id', '限用系统商品分类', 'trim');
-			$this->form_validation->set_rules('category_biz_id', '限用商家商品分类', 'trim');
-			$this->form_validation->set_rules('item_id', '限用商品', 'trim');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
 			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|greater_than_equal_to[1]|less_than_equal_to[999]');
 			$this->form_validation->set_rules('min_subtotal', '起用金额（元）', 'trim|greater_than_equal_to[0]|less_than_equal_to[9999]');
-			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
-			$this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[99]');
-			$this->form_validation->set_rules('period', '有效期', 'trim|is_natural_no_zero');
+            $this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural_no_zero|greater_than_equal_to[0]|less_than_equal_to[999999]');
+            $this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|is_natural_no_zero|greater_than_equal_to[0]|less_than_equal_to[99]');
+            $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than[3600]|less_than[31622400]');
 			$this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
             $this->form_validation->set_message('time_start', '有效期开始时间需详细到分，且晚于当前时间1分钟后');
             $this->form_validation->set_message('time_end', '有效期结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
+            $this->form_validation->set_rules('category_id', '限用系统商品分类', 'trim|is_natural_no_zero');
+            $this->form_validation->set_rules('category_biz_id', '限用商家商品分类', 'trim|is_natural_no_zero');
+            $this->form_validation->set_rules('item_id', '限用商品', 'trim|is_natural_no_zero');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -255,6 +255,7 @@
 				// 需要创建的数据；逐一赋值需特别处理的字段
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
+
                     'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
                     'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
 
@@ -329,16 +330,16 @@
 			endif;
 			
 			// 获取品牌
-			$data['brands'] = $this->list_brand();
+			//$data['brands'] = $this->list_brand();
 
 			// 获取系统级商品分类
-			$data['categories'] = $this->list_category();
+			//$data['categories'] = $this->list_category();
 
 			// 获取商家级商品分类
-			$data['biz_categories'] = $this->list_category_biz();
+			//$data['biz_categories'] = $this->list_category_biz();
 
             // 获取当前商家所有商品数据
-            $data['comodities'] = $this->list_item();
+            //$data['comodities'] = $this->list_item();
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
@@ -346,16 +347,16 @@
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
 			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|greater_than_equal_to[1]|less_than_equal_to[999]');
 			$this->form_validation->set_rules('min_subtotal', '起用金额（元）', 'trim|greater_than_equal_to[0]|less_than_equal_to[9999]');
-			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
-			$this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[99]');
-			$this->form_validation->set_rules('period', '有效期', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural_no_zero|greater_than_equal_to[0]|less_than_equal_to[999999]');
+			$this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|is_natural_no_zero|greater_than_equal_to[0]|less_than_equal_to[99]');
+            $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than[3600]|less_than[31622400]');
 			$this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
 			$this->form_validation->set_message('time_start', '有效期开始时间需详细到分，且晚于当前时间1分钟后');
 			$this->form_validation->set_message('time_end', '有效期结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
-            $this->form_validation->set_rules('category_id', '限用系统商品分类', 'trim');
-            $this->form_validation->set_rules('category_biz_id', '限用商家商品分类', 'trim');
-            $this->form_validation->set_rules('item_id', '限用商品', 'trim');
+            $this->form_validation->set_rules('category_id', '限用系统商品分类', 'trim|is_natural_no_zero');
+            $this->form_validation->set_rules('category_biz_id', '限用商家商品分类', 'trim|is_natural_no_zero');
+            $this->form_validation->set_rules('item_id', '限用商品', 'trim|is_natural_no_zero');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):

@@ -167,7 +167,7 @@
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
-                <a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>">
+                <a title="运费模板" href="<?php echo base_url('freight_template_biz') ?>" class="bg-warning">
                     <img src="/media/home/moban@3x.png">
                     运费模板
                 </a>
@@ -193,13 +193,13 @@
             </li>
 
             <li class="col-xs-4 col-md-2">
-                <a title="店内活动" href="<?php echo base_url('promotion_biz') ?>">
+                <a title="店内活动" href="<?php echo base_url('promotion_biz') ?>" class="bg-warning">
                     <img src="/media/home/huodong-biz@3x.png">
                     店内活动
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
-                <a title="平台活动" href="<?php echo base_url('promotion') ?>">
+                <a title="平台活动" href="<?php echo base_url('promotion') ?>" class="bg-warning">
                     <img src="/media/home/huodong-platform@3x.png">
                     平台活动
                 </a>
@@ -218,7 +218,7 @@
                 </a>
             </li>
             <li class="col-xs-4 col-md-2">
-				<a title="团队管理" href="<?php echo base_url('stuff') ?>">
+				<a title="团队管理" href="<?php echo base_url('stuff') ?>" class="bg-warning">
 					<img src="/media/home/tuandui@3x.png">
 					团队
 				</a>
