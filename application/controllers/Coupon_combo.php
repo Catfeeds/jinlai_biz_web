@@ -209,67 +209,80 @@
             // 获取当前商家所有优惠券数据
             $data['coupon_templates'] = $this->list_coupon_template();
 
-			// 待验证的表单项
-			$this->form_validation->set_error_delimiters('', '；');
-			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
-			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
-			$this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
-			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
-			$this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
-			$this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|callback_time_end');
-			$this->form_validation->set_message('time_start', '领取开始时间需详细到分，且晚于当前时间1分钟后');
-			$this->form_validation->set_message('time_end', '领取结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
+            // 若无优惠券，则不可创建优惠券包，转到优惠券包列表页
+            if (empty($data['coupon_templates'])):
+                $data['title'] = '没有可放入优惠券包的模板';
+                $data['class'] = 'failed';
+                $data['content'] = '<p>请先创建需要放入优惠券包的优惠券模板</p>';
+                $data['content'] .= '<p><a class="btn btn-primary btn-lg" href="'. base_url('coupon_template/create').'">创建优惠券模板</a></p>';
 
-			// 若表单提交不成功
-			if ($this->form_validation->run() === FALSE):
-				$data['error'] = validation_errors();
+                $this->load->view('templates/header', $data);
+                $this->load->view($this->view_root.'/result', $data);
+                $this->load->view('templates/footer', $data);
 
-				$this->load->view('templates/header', $data);
-				$this->load->view($this->view_root.'/create', $data);
-				$this->load->view('templates/footer', $data);
+            else:
+                // 待验证的表单项
+                $this->form_validation->set_error_delimiters('', '；');
+                // 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
+                $this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
+                $this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
+                $this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
+                $this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[999999]');
+                $this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
+                $this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|callback_time_end');
+                $this->form_validation->set_message('time_start', '领取开始时间需详细到分，且不可晚于领取结束时间');
+                $this->form_validation->set_message('time_end', '领取结束时间需详细到分，且不可早于领取开始时间');
 
-			else:
-				// 需要创建的数据；逐一赋值需特别处理的字段
-				$data_to_create = array(
-					'user_id' => $this->session->user_id,
-                    'template_ids' => implode(',', $this->input->post('template_ids')),
-                    'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
-                    'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
-				);
-				// 自动生成无需特别处理的数据
-				$data_need_no_prepare = array(
-					'name', 'description', 'max_amount',
-				);
-				foreach ($data_need_no_prepare as $name)
-					$data_to_create[$name] = $this->input->post($name);
+                // 若表单提交不成功
+                if ($this->form_validation->run() === FALSE):
+                    $data['error'] = validation_errors();
 
-				// 向API服务器发送待创建数据
-				$params = $data_to_create;
-				$url = api_url($this->class_name. '/create');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn. '创建成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-					$data['operation'] = 'create';
-					$data['id'] = $result['content']['id']; // 创建后的信息ID
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/create', $data);
+                    $this->load->view('templates/footer', $data);
 
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
+                else:
+                    // 需要创建的数据；逐一赋值需特别处理的字段
+                    $data_to_create = array(
+                        'user_id' => $this->session->user_id,
+                        'template_ids' => implode(',', $this->input->post('template_ids')),
+                        'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
+                        'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
+                    );
+                    // 自动生成无需特别处理的数据
+                    $data_need_no_prepare = array(
+                        'name', 'description', 'max_amount',
+                    );
+                    foreach ($data_need_no_prepare as $name)
+                        $data_to_create[$name] = $this->input->post($name);
 
-				else:
-					// 若创建失败，则进行提示
-					$data['error'] = $result['content']['error']['message'];
+                    // 向API服务器发送待创建数据
+                    $params = $data_to_create;
+                    $url = api_url($this->class_name. '/create');
+                    $result = $this->curl->go($url, $params, 'array');
+                    if ($result['status'] === 200):
+                        $data['title'] = $this->class_name_cn. '创建成功';
+                        $data['class'] = 'success';
+                        $data['content'] = $result['content']['message'];
+                        $data['operation'] = 'create';
+                        $data['id'] = $result['content']['id']; // 创建后的信息ID
 
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/create', $data);
-					$this->load->view('templates/footer', $data);
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/result', $data);
+                        $this->load->view('templates/footer', $data);
 
-				endif;
-				
-			endif;
+                    else:
+                        // 若创建失败，则进行提示
+                        $data['error'] = $result['content']['error']['message'];
+
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/create', $data);
+                        $this->load->view('templates/footer', $data);
+
+                    endif;
+
+                endif;
+            endif;
 		} // end create
 
 		/**
@@ -304,11 +317,11 @@
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
 			$this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
-			$this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
+			$this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[999999]');
 			$this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|callback_time_end');
-            $this->form_validation->set_message('time_start', '领取开始时间需详细到分，且晚于当前时间1分钟后');
-            $this->form_validation->set_message('time_end', '领取结束时间需详细到分，且晚于当前时间1分钟后，亦不可早于开始时间（若有）');
+            $this->form_validation->set_message('time_start', '领取开始时间需详细到分，且不可晚于领取结束时间');
+            $this->form_validation->set_message('time_end', '领取结束时间需详细到分，且不可早于领取开始时间');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -377,58 +390,64 @@
 		/**
 		 * 以下为工具类方法
 		 */
-		
-		// 检查起始时间
-		public function time_start($value)
-		{
-			if ( empty($value) ):
-				return true;
 
-			elseif (strlen($value) !== 16):
-				return false;
+        // 检查起始时间
+        public function time_start($value)
+        {
+            if ( empty($value) ):
+                return true;
 
-			else:
-				// 将精确到分的输入值拼合上秒值
-				$time_to_check = strtotime($value.':00');
+            elseif (strlen($value) !== 16):
+                return false;
 
-				// 该时间不可早于当前时间一分钟以内
-				if ($time_to_check <= time() + 60):
-					return false;
-				else:
-					return true;
-				endif;
+            else:
+                // 将精确到分的输入值拼合上秒值
+                $time_to_check = strtotime($value.':00');
 
-			endif;
-		} // end time_start
+                // 若已设置结束时间，不可晚于结束时间
+                $time_end = $this->input->post('time_end');
+                if (
+                    !empty($time_end)
+                    && ($time_to_check > strtotime($time_end.':00'))
+                ):
+                    return false;
 
-		// 检查结束时间
-		public function time_end($value)
-		{
-			if ( empty($value) ):
-				return true;
+                else:
+                    return true;
 
-			elseif (strlen($value) !== 16):
-				return false;
+                endif;
 
-			else:
-				// 将精确到分的输入值拼合上秒值
-				$time_to_check = strtotime($value.':00');
+            endif;
+        } // end time_start
 
-				// 该时间不可早于当前时间一分钟以内
-				if ($time_to_check <= time() + 60):
-					return false;
+        // 检查结束时间
+        public function time_end($value)
+        {
+            if ( empty($value) ):
+                return true;
 
-				// 若已设置开始时间，不可早于开始时间一分钟以内
-				elseif ( !empty($this->input->post('time_start')) && $time_to_check < strtotime($this->input->post('time_start')) + 60):
-					return false;
+            elseif (strlen($value) !== 16):
+                return false;
 
-				else:
-					return true;
+            else:
+                // 将精确到分的输入值拼合上秒值
+                $time_to_check = strtotime($value.':00');
 
-				endif;
+                // 若已设置开始时间，不可早于开始时间
+                $time_start = $this->input->post('time_start');
+                if (
+                    !empty($time_start)
+                    && ($time_to_check < strtotime($time_start.':00'))
+                ):
+                    return false;
 
-			endif;
-		} // end time_end
+                else:
+                    return true;
+
+                endif;
+
+            endif;
+        } // end time_end
 
 	} // end class Coupon_combo
 

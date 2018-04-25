@@ -85,7 +85,7 @@
 			<div class=form-group>
 				<label for=min_subtotal class="col-sm-2 control-label">起用金额（元）</label>
 				<div class=col-sm-10>
-					<input class=form-control name=min_subtotal type=number min=0 step=1 max=9999 value="<?php echo $item['min_subtotal'] ?>" placeholder="即订单商品小计；留空则不限，最高9999">
+					<input class=form-control name=min_subtotal type=number min=0 step=1 max=9999 value="<?php echo $item['min_subtotal'] ?>" placeholder="即订单小计；留空则不限，最高9999">
 				</div>
 			</div>
 

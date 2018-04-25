@@ -69,7 +69,7 @@
             <div class=form-group>
                 <label for=category_biz_id class="col-sm-2 control-label">店内分类</label>
                 <div class="col-sm-10 input-group">
-                    <?php $input_name = 'category_id' ?>
+                    <?php $input_name = 'category_biz_id' ?>
                     <select class=form-control name="<?php echo $input_name ?>">
                         <option value="">不选择</option>
                         <?php
@@ -170,9 +170,9 @@
 				<label for=description class="col-sm-2 control-label">商品描述</label>
                 <div class=col-sm-10>
                     <textarea class=form-control name=description rows=10 placeholder="10 - 20000个字符"><?php echo set_value('description') ?></textarea>
-                    <?php if ( ! $this->user_agent['is_wechat']): ?>
+                    <?php //if ( ! $this->user_agent['is_wechat']): ?>
 
-                    <?php else: ?>
+                    <?php //else: ?>
 
                     <?php
                     require_once(APPPATH. 'views/templates/simditor.php');
@@ -195,7 +195,7 @@
                             });
                         });
                     </script>
-                    <?php endif ?>
+                    <?php //endif ?>
                 </div>
 			</div>
 

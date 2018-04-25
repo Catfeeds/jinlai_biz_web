@@ -97,11 +97,6 @@
                     <p class=help-block>总共可被领取的优惠券数量上限；对于每位用户来说，每个优惠券包仅可领取一次</p>
                 </div>
             </div>
-		</fieldset>
-
-		<!--
-        <fieldset>
-			<legend>高级选项（可留空）</legend>
 
 			<div class=form-group>
 				<label for=time_start class="col-sm-2 control-label">领取开始时间</label>
@@ -119,7 +114,6 @@
 				</div>
 			</div>
 		</fieldset>
-		-->
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">

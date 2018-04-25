@@ -75,8 +75,8 @@
 		<dd><?php echo empty($item['description'])? '无': $item['description'] ?></dd>
 		<dt>面值</dt>
 		<dd>￥ <?php echo $item['amount'] ?></dd>
-		<dt>起用金额（订单商品小计）</dt>
-		<dd><?php echo !empty($item['min_subtotal'])? '￥ '.$item['min_subtotal']: '不限' ?></dd>
+		<dt>起用金额</dt>
+		<dd><?php echo !empty($item['min_subtotal'])? '￥ '.$item['min_subtotal'].'（订单小计）': '不限' ?></dd>
 
 		<?php
 			$options = array(
@@ -102,24 +102,25 @@
 			);
 			$options = array_flip($options);
 		?>
+
+        <?php //var_dump($item) ?>
 		
 		<dt>有效期</dt>
 		<dd>
-			<p class=help-block>若选择了有效期后指定了开始时间，则将在用户领取优惠券时以领取时间加上有效期作为结束时间；若选择了有效期后输入了结束时间，则以结束时间为准，有效期将被忽略。</p>
+            <!--
+            开始时间  <?php echo $item['time_start'] ?>
+            结束时间 <?php echo $item['time_end'] ?>
+            有效期 <?php echo $options[ $item['period'] ]?>
+            -->
 
-			<?php if ( !empty($item['time_start']) || !empty($item['time_end']) ): ?>
-				<?php echo empty($item['time_start'])? '自领取时起': date('Y-m-d H:i:s', $item['time_start']); ?> 至 <?php echo empty($item['time_end'])? '有效期结束': date('Y-m-d H:i:s', $item['time_end']); ?>，
-			<?php endif ?>
-			
-			<?php if ( ! empty($item['time_end']) ): ?>
-			自领取之时起<?php echo $options[ $item['period'] ] ?>
-			<?php endif ?>
+            自领取时起<?php echo $options[ $item['period'] ]?>
+            <?php echo empty($item['time_start'])? NULL: '<br>不早于 '. date('Y-m-d H:i:s', $item['time_start']) ?>
+            <?php echo empty($item['time_end'])? NULL: '<br>不晚于 '. date('Y-m-d H:i:s', $item['time_end']) ?>
 		</dd>
 		
 		<dt>总限量</dt>
-		<dd>
-			<?php echo empty($item['max_amount'])? '不限': $item['max_amount'].'份'; ?>
-		</dd>
+		<dd><?php echo empty($item['max_amount'])? '不限': $item['max_amount'].'份'; ?></dd>
+
 		<dt>单个用户限量</dt>
 		<dd><?php echo empty($item['max_amount_user'])? '不限': $item['max_amount_user'].'份'; ?></dd>
 

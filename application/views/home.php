@@ -132,13 +132,13 @@
 				</a>
 			</li>
 			<li class="col-xs-3 col-md-2">
-				<a title="待发货订单" href="<?php echo base_url('order?status=待发货') ?>">
-					<img src="/media/home/daifahuo@3x.png">
-					待发货<span class=count><?php echo $count['order_confirm'] ?></span>
-				</a>
-			</li>
+                <a title="待发货订单" href="<?php echo base_url('order?status=待发货') ?>">
+                    <img src="/media/home/daifahuo@3x.png">
+                    待发货<span class=count><?php echo $count['order_confirm'] ?></span>
+                </a>
+            </li>
 			<li class="col-xs-3 col-md-2">
-                <a title="退款/售后" href="<?php echo base_url('refund') ?>">
+                <a title="退款/售后" href="<?php echo base_url('refund') ?>" class="bg-warning">
                     <img src="/media/home/shouhou@3x.png">
                     退款/售后<span class=count><?php echo $count['refund'] ?></span>
                 </a>

@@ -77,7 +77,7 @@
         <dd><?php echo empty($item['barcode'])? 'N/A': $item['barcode'] ?></dd>
 
         <dt>系统分类</dt>
-        <dd><?php echo $category['name'] ?></dd>
+        <dd><?php echo $category['name'].' / ID'. $item['category_id'] ?></dd>
 
         <?php if ( !empty($item['category_biz_id']) ): ?>
             <dt>店内分类</dt>
