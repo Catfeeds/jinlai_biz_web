@@ -151,8 +151,9 @@ $(function(){
             </div>
 
 			<div class=form-group>
-				<label for=price class="col-sm-2 control-label">商城价/现价（元）※</label>
-				<div class=col-sm-10>
+				<label for=price class="col-sm-2 control-label">商城价/现价 ※</label>
+                <div class="input-group col-sm-10">
+                    <div class="input-group-addon">￥</div>
 					<input class=form-control name=price type=number min=1 step=0.01 max=99999.99 value="<?php echo set_value('price') ?>" placeholder="1 ~ 99999.99" required>
 				</div>
 			</div>

@@ -76,15 +76,17 @@
 			</div>
 
 			<div class=form-group>
-				<label for=amount class="col-sm-2 control-label">面值（元）※</label>
-				<div class=col-sm-10>
+				<label for=amount class="col-sm-2 control-label">面值 ※</label>
+				<div class="input-group col-sm-10">
+                    <div class="input-group-addon">￥</div>
 					<input class=form-control name=amount type=number step=1 min=1 max=999 value="<?php echo set_value('amount') ?>" placeholder="最高999" required>
 				</div>
 			</div>
 
 			<div class=form-group>
-				<label for=min_subtotal class="col-sm-2 control-label">起用金额（元）</label>
-				<div class=col-sm-10>
+				<label for=min_subtotal class="col-sm-2 control-label">起用金额 </label>
+                <div class="input-group col-sm-10">
+                    <div class="input-group-addon">￥</div>
 					<input class=form-control name=min_subtotal type=number step=1 max=9999 value="<?php echo set_value('min_subtotal') ?>" placeholder="即订单小计；留空则不限，最高9999">
 				</div>
 			</div>
@@ -112,7 +114,7 @@
 				<div class=col-sm-10>
 					<?php $input_name = 'period' ?>
 					<select class=form-control name="<?php echo $input_name ?>">
-						<option value="" <?php echo set_select($input_name, '') ?>>请选择</option>
+						<option value="" <?php echo set_select($input_name, '') ?>>可选择</option>
 						<?php
 							$options = array(
 								'1小时' => '3600',
@@ -140,7 +142,7 @@
 						<option value="<?php echo $value ?>" <?php echo set_select($input_name, $value) ?>><?php echo $name ?></option>
 						<?php endforeach ?>
 					</select>
-					<p class=help-block>自领取之时起时长；留空则默认为自领取之日起30天内</p>
+					<p class=help-block>自领取之时起时长；留空则默认为30天</p>
 				</div>
 			</div>
 

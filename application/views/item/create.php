@@ -200,15 +200,17 @@
 			</div>
 
 			<div class=form-group>
-				<label for=tag_price class="col-sm-2 control-label">标签价/原价（元）</label>
-				<div class=col-sm-10>
+				<label for=tag_price class="col-sm-2 control-label">标签价/原价</label>
+                <div class="input-group col-sm-10">
+                    <div class="input-group-addon">￥</div>
 					<input class=form-control name=tag_price type=number min=0 step=0.01 max=99999.99 value="<?php echo set_value('tag_price') ?>" placeholder="留空或0则不显示，最高99999.99">
 				</div>
 			</div>
 
 			<div class=form-group>
-				<label for=price class="col-sm-2 control-label">商城价/现价（元）※</label>
-				<div class=col-sm-10>
+				<label for=price class="col-sm-2 control-label">商城价/现价 ※</label>
+                <div class="input-group col-sm-10">
+                    <div class="input-group-addon">￥</div>
                     <input class=form-control name=price type=number min=1 step=0.01 max=99999.99 value="<?php echo set_value('price') ?>" placeholder="1 ~ 99999.99" required>
 				</div>
 			</div>
@@ -248,23 +250,26 @@
 
 		<fieldset>
             <div class=form-group>
-                <label for=weight_gross class="col-sm-2 control-label">毛重（KG）</label>
-                <div class=col-sm-10>
+                <label for=weight_gross class="col-sm-2 control-label">毛重</label>
+                <div class="input-group col-sm-10">
                     <input class=form-control name=weight_gross type=number step=0.01 max=999.99 value="<?php echo set_value('weight_gross') ?>" placeholder="最高999.99">
+                    <div class="input-group-addon">KG</div>
                 </div>
             </div>
 
             <div class=form-group>
-				<label for=weight_net class="col-sm-2 control-label">净重（KG）</label>
-				<div class=col-sm-10>
+				<label for=weight_net class="col-sm-2 control-label">净重</label>
+                <div class="input-group col-sm-10">
 					<input class=form-control name=weight_net type=number step=0.01 max=999.99 value="<?php echo set_value('weight_net') ?>" placeholder="最高999.99">
+                    <div class="input-group-addon">KG</div>
 				</div>
 			</div>
 
 			<div class=form-group>
-				<label for=weight_volume class="col-sm-2 control-label">体积重（KG）</label>
-				<div class=col-sm-10>
+				<label for=weight_volume class="col-sm-2 control-label">体积重</label>
+                <div class="input-group col-sm-10">
 					<input class=form-control name=weight_volume type=number step=0.01 max=999.99 value="<?php echo set_value('weight_volume') ?>" placeholder="最高999.99">
+                    <div class="input-group-addon">KG</div>
 				</div>
 			</div>
 		</fieldset>

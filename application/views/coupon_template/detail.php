@@ -107,12 +107,6 @@
 		
 		<dt>有效期</dt>
 		<dd>
-            <!--
-            开始时间  <?php echo $item['time_start'] ?>
-            结束时间 <?php echo $item['time_end'] ?>
-            有效期 <?php echo $options[ $item['period'] ]?>
-            -->
-
             自领取时起<?php echo $options[ $item['period'] ]?>
             <?php echo empty($item['time_start'])? NULL: '<br>不早于 '. date('Y-m-d H:i:s', $item['time_start']) ?>
             <?php echo empty($item['time_end'])? NULL: '<br>不晚于 '. date('Y-m-d H:i:s', $item['time_end']) ?>

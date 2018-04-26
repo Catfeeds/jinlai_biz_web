@@ -97,6 +97,47 @@
                     <p class=help-block>总共可被领取的优惠券数量上限；对于每位用户来说，每个优惠券包仅可领取一次</p>
                 </div>
             </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>可领取时间</legend>
+
+            <div class=form-group>
+                <label for=period class="col-sm-2 control-label">可领时长</label>
+                <div class=col-sm-10>
+                    <?php $input_name = 'period' ?>
+                    <select class=form-control name="<?php echo $input_name ?>">
+                        <option value="" <?php echo set_select($input_name, '') ?>>可选择</option>
+                        <?php
+                        $options = array(
+                            '1小时' => '3600',
+                            '2小时' => '7200',
+                            '3小时' => '10800',
+                            '4小时' => '14400',
+                            '6小时' => '21600',
+                            '8小时' => '28800',
+                            '12小时' => '43200',
+                            '24小时/1天' => '86400',
+                            '2天' => '172800',
+                            '3天' => '259200',
+                            '7天' => '604800',
+                            '10天' => '864000',
+                            '14天' => '1209600',
+                            '30天' => '2592000',
+                            '45天' => '3888000',
+                            '90天' => '7776000',
+                            '120天' => '10368000',
+                            '180天/半年' => '15552000',
+                            '366天/1年' => '31622400',
+                        );
+                        foreach ($options as $name => $value):
+                            ?>
+                            <option value="<?php echo $value ?>" <?php echo set_select($input_name, $value) ?>><?php echo $name ?></option>
+                        <?php endforeach ?>
+                    </select>
+                    <p class=help-block>留空则默认为30天</p>
+                </div>
+            </div>
 
 			<div class=form-group>
 				<label for=time_start class="col-sm-2 control-label">领取开始时间</label>

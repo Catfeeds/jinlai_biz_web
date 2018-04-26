@@ -45,8 +45,7 @@ define('CDN_URL', 'https://cdn-remote'.ROOT_URL); // 生产环境
 
 // （可选）媒体文件，即非样式图片、视频、音频存储的根目录所在URL，可用于配合又拍云等第三方存储
 define('DEFAULT_IMAGE', NULL); // 默认图片URL
-//define('MEDIA_URL', 'https://medias'.ROOT_URL); // 生产环境
-define('MEDIA_URL', 'https://jinlaisandbox-images.b0.upaiyun.com/'); // 测试环境
+define('MEDIA_URL', 'https://medias'.ROOT_URL);
 
 // COOKIE & SESSION相关
 define('COOKIE_DOMAIN', $_SERVER['SERVER_NAME']); // cookie存储路径；方便起见可让所有子域共享，若需分离可自行配置
@@ -56,7 +55,7 @@ define('SESSION_PERIOD', 2592000); // session有效期秒数，此处设为30天
 define('ENCRYPTION_KEY', ''); // 秘钥用于加密相关功能，可为空
 
 // 原生应用scheme
-define('APP_SCHEME', 'jinlaiadmin');
+define('APP_SCHEME', 'jinlaibiz');
 
 // APPLE开发平台参数
 define('IOS_APP_ID', '1234502207');

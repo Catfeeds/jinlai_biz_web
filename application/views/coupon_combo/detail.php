@@ -77,7 +77,7 @@
 
 		<dt>开放领取时间</dt>
 		<dd>
-			<?php echo empty($item['time_start'])? '自即日起': date('Y-m-d H:i:s', $item['time_start']); ?> <?php echo empty($item['time_end'])? '始终开放': ' 至 '.date('Y-m-d H:i:s', $item['time_end']); ?>
+			<?php echo empty($item['time_start'])? '自即日起': date('Y-m-d H:i:s', $item['time_start']) ?> <?php echo empty($item['time_end'])? '始终开放': '至 '.date('Y-m-d H:i:s', $item['time_end']); ?>
 		</dd>
 
         <dt>所含优惠券</dt>

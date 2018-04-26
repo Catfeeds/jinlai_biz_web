@@ -234,7 +234,7 @@
 			$this->form_validation->set_rules('min_subtotal', '起用金额（元）', 'trim|greater_than_equal_to[0]|less_than_equal_to[9999]');
             $this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural_no_zero|greater_than_equal_to[0]|less_than_equal_to[999999]');
             $this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[99]');
-            $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than[3600]|less_than[31622400]');
+            $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than_equal_to[3600]|less_than_equal_to[31622400]');
 			$this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
             $this->form_validation->set_message('time_start', '有效期开始时间需详细到分，且不可晚于结束时间');
@@ -258,7 +258,6 @@
 
                     'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
                     'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
-
                 );
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -269,6 +268,7 @@
 
 				// 向API服务器发送待创建数据
 				$params = $data_to_create;
+                //$this->key_value($params);exit();
 				$url = api_url($this->class_name. '/create');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
@@ -349,7 +349,7 @@
 			$this->form_validation->set_rules('min_subtotal', '起用金额（元）', 'trim|greater_than_equal_to[0]|less_than_equal_to[9999]');
 			$this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[999999]');
 			$this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|is_natural_no_zero|greater_than_equal_to[0]|less_than_equal_to[99]');
-            $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than[3600]|less_than[31622400]');
+            $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than_equal_to[3600]|less_than_equal_to[31622400]');
 			$this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
             $this->form_validation->set_message('time_start', '有效期开始时间需详细到分，且不可晚于结束时间');
@@ -371,9 +371,9 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
+
                     'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
                     'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
-
                 );
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(

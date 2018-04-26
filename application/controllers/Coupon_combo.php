@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'biz_id', 'name', 'description', 'template_ids', 'max_amount', 'time_start', 'time_end',
+			'biz_id', 'name', 'description', 'template_ids', 'max_amount', 'period', 'time_start', 'time_end',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -22,7 +22,7 @@
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'name', 'description', 'template_ids', 'max_amount', 'time_start', 'time_end',
+			'name', 'description', 'template_ids', 'max_amount', 'period', 'time_start', 'time_end',
 		);
 
 		/**
@@ -228,6 +228,7 @@
                 $this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
                 $this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
                 $this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[999999]');
+                $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than_equal_to[3600]|less_than_equal_to[31622400]');
                 $this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
                 $this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|callback_time_end');
                 $this->form_validation->set_message('time_start', '领取开始时间需详细到分，且不可晚于领取结束时间');
@@ -245,13 +246,14 @@
                     // 需要创建的数据；逐一赋值需特别处理的字段
                     $data_to_create = array(
                         'user_id' => $this->session->user_id,
+
                         'template_ids' => implode(',', $this->input->post('template_ids')),
                         'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
                         'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
                     );
                     // 自动生成无需特别处理的数据
                     $data_need_no_prepare = array(
-                        'name', 'description', 'max_amount',
+                        'name', 'description', 'max_amount', 'period',
                     );
                     foreach ($data_need_no_prepare as $name)
                         $data_to_create[$name] = $this->input->post($name);
@@ -318,6 +320,7 @@
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
 			$this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
 			$this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[999999]');
+            $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than_equal_to[3600]|less_than_equal_to[31622400]');
 			$this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '领取结束时间', 'trim|exact_length[16]|callback_time_end');
             $this->form_validation->set_message('time_start', '领取开始时间需详细到分，且不可晚于领取结束时间');
@@ -347,14 +350,14 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
+
                     'template_ids' => implode(',', $this->input->post('template_ids')),
                     'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
                     'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
-
                 );
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'name', 'description', 'max_amount',
+					'name', 'description', 'max_amount', 'period',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
