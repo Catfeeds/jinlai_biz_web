@@ -96,14 +96,14 @@
                     </span>
 
                     <ul class=horizontal>
-                        <li class=color_warning><a title="分类商品" href="<?php echo base_url('item/index?category_biz_id='.$item[$this->id_name]) ?>" target=_blank>分类商品 <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo base_url('item/index?category_biz_id='.$item[$this->id_name]) ?>" target=_blank>商品 <i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 
                         <?php
                         // 需要特定角色和权限进行该操作
                         if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
                             ?>
-                        <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
-                        <li class=color_primary><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
+                        <li><a href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
+                        <li><a href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>" target=_blank>编辑</a></li>
                         <?php endif ?>
                     </ul>
                 </div>

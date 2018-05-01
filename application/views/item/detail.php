@@ -48,16 +48,20 @@
 		?>
 
         <?php if ( empty($item['time_delete']) ): ?>
-        <li><a title="删除" href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
+        <li><a href="<?php echo base_url($this->class_name.'/delete?ids='.$item[$this->id_name]) ?>" target=_blank>删除</a></li>
         <?php endif ?>
 
         <?php if ( empty($item['time_publish']) ): ?>
-        <li><a title="上架" href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank>上架</a></li>
+        <li><a href="<?php echo base_url($this->class_name.'/publish?ids='.$item[$this->id_name]) ?>" target=_blank>上架</a></li>
         <?php else: ?>
-            <li><a title="下架" href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
+        <li><a href="<?php echo base_url($this->class_name.'/suspend?ids='.$item[$this->id_name]) ?>" target=_blank>下架</a></li>
         <?php endif ?>
 
-        <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
+        <li><a href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>">规格</a></li>
+
+        <li><a href="<?php echo base_url('item/edit_description?id='.$item['item_id']) ?>">描述</a></li>
+
+        <li><a href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
 		<?php endif ?>
 	</ul>
 
@@ -222,7 +226,7 @@
 			<p>该商品尚未填写商品描述。</p>
 		<?php endif ?>
 
-        <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('item/edit_description?id='.$item['item_id']) ?>" target=_blank>修改详情</a>
+        <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('item/edit_description?id='.$item['item_id']) ?>" target=_blank>修改描述</a>
 	</section>
 
     <section id=skus class=well>

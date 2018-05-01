@@ -55,7 +55,7 @@
 
         <ul class=horizontal>
             <li>
-                <a class=bg_primary title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
+                <a class=bg_primary title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="far fa-plus"></i></a>
             </li>
         </ul>
     </div>

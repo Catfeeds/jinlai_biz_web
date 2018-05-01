@@ -64,9 +64,9 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
+        <p class=help-block>必填项以“※”符号标示</p>
+
 		<fieldset>
-			<p class=help-block>必填项以“※”符号标示</p>
-			
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>
@@ -100,8 +100,8 @@
 				<label for=fold_allowed class="col-sm-2 control-label">是否允许折上折 ※</label>
 				<div class=col-sm-10>
 					<select class=form-control name=fold_allowed required>
-						<option value=0 <?php echo ($item['fold_allowed'] === '0')? 'selected': NULL; ?>>否</option>
-						<option value=1 <?php echo ($item['fold_allowed'] === '1')? 'selected': NULL; ?>>是</option>
+						<option value=0 <?php echo ($item['fold_allowed'] === '0')? 'selected': NULL ?>>否</option>
+						<option value=1 <?php echo ($item['fold_allowed'] === '1')? 'selected': NULL ?>>是</option>
 					</select>
 				</div>
 			</div>

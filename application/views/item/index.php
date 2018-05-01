@@ -60,10 +60,10 @@
 
         <ul class=horizontal>
             <li>
-                <a class=bg_second title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>">创建</a>
+                <a class=bg_second title="创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create') ?>"><i class="far fa-plus"></i></a>
             </li>
             <li>
-                <a class=bg_primary title="快速创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create_quick') ?>">快速创建</a>
+                <a class=bg_primary title="快速创建<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name.'/create_quick') ?>"><i class="far fa-plus"></i><sub><i class="far fa-bolt"></i></sub></a>
             </li>
         </ul>
     </div>
