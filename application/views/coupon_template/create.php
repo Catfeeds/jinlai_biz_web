@@ -58,8 +58,9 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-create form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
+        <p class=help-block>必填项以“※”符号标示</p>
+
 		<fieldset>
-			<p class=help-block>必填项以“※”符号标示</p>
 
 			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">名称 ※</label>

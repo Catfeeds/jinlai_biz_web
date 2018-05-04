@@ -26,7 +26,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180501">
+		<meta name=version content="revision20180504">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -38,12 +38,10 @@
         <?php endif ?>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <?php
-            if (!empty($this->session->stuff_id) && empty($this->stuff)):
-        ?>
+        <?php if ( ! empty($this->session->stuff_id) && empty($this->stuff)): ?>
         <script>
             alert('员工关系状态异常，请重新登录')
-            location.href = "<?php echo base_url('logout') ?>";
+            location.href = "<?php echo base_url('logout') ?>"
         </script>
         <?php exit();endif; ?>
 
@@ -210,7 +208,7 @@
         <link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/reset.css">
         <link rel=stylesheet media=all href="<?php echo CDN_URL ?>bootstrap/v3.3.7/bootstrap.min.css">
         <link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/flat-ui.min.css">
-		<link rel=stylesheet media=all href="/css/style.css">
+		<link rel=stylesheet media=all href="/css/style.css<?php echo '?'.time() ?>">
 
         <?php if ($this->session->time_expire_login > time()): ?>
         <link rel=stylesheet media=all href="/css/file-upload.css">

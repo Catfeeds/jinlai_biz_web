@@ -218,12 +218,17 @@
 				</div>
 			</div>
 			<div class=form-group>
-				<label for=stocks class="col-sm-2 control-label">库存量 ※</label>
-				<div class=col-sm-10>
-					<input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo empty(set_value('stocks'))? $item['stocks']: set_value('stocks') ?>" placeholder="最高65535单位" required>
+				<label for=stocks class="col-sm-2 control-label">库存量</label>
+                <div class=col-sm-10>
+                    <div class=input-group>
+                        <input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo empty(set_value('stocks'))? $item['stocks']: set_value('stocks') ?>" placeholder="默认10，最高65535单位">
+                        <div class="input-group-addon">单位</div>
+                    </div>
+
                     <p class=help-block>库存管理方案为付款减库存，商品或规格库存量低于1个单位（含）时将不可被下单/付款；极少数情况下可能出现超卖。</p>
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=quantity_max class="col-sm-2 control-label">每单最高限量（份）</label>
 				<div class=col-sm-10>

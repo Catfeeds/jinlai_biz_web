@@ -1,6 +1,5 @@
 <link rel=stylesheet media=all href="/css/detail.css">
 <style>
-    #content {background-color:#fff;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
@@ -112,16 +111,17 @@
 		<dd><strong><?php echo $item['name'] ?></strong></dd>
 		<dt>商品宣传语/卖点</dt>
 		<dd><?php echo empty($item['slogan'])? 'N/A': $item['slogan'] ?></dd>
-		<dt>标签价/原价</dt>
-		<dd><?php echo ($item['tag_price'] !== '0.00')? '<del>￥ '.$item['tag_price'].'</del>': 'N/A'; ?></dd>
-		<dt>商城价/现价</dt>
-		<dd><strong>￥ <?php echo $item['price'] ?></strong></dd>
+		<dt>价格</dt>
+		<dd>
+            <strong>￥ <?php echo $item['price'] ?></strong>
+            <?php echo ($item['tag_price'] !== '0.00')? '<del>￥ '.$item['tag_price'].'</del>': NULL ?>
+        </dd>
 
         <dt>库存量</dt>
         <dd>
             <?php $unit_name = !empty($item['unit_name'])? $item['unit_name']: '份（默认单位）' ?>
             <strong><?php echo $item['stocks'].' '. $unit_name ?></strong>
-            <p class=help-block>若商品存在规格，则可销售库存量以各规格相应库存量为准</p>
+            <p class=help-block>若商品存在规格，则为各规格总库存量</p>
         </dd>
 
         <dt>物流信息</dt>
@@ -143,14 +143,8 @@
 		<dt>佣金比例</dt>
 		<dd><?php echo $item['commission_rate'] * 100 ?>%</dd>
 
-		<dt>预定上架时间</dt>
-		<dd><?php echo empty($item['time_to_publish'])? 'N/A': date('Y-m-d H:i:s', $item['time_to_publish']); ?></dd>
-
-		<dt>预定下架时间</dt>
-		<dd><?php echo empty($item['time_to_suspend'])? 'N/A': date('Y-m-d H:i:s', $item['time_to_suspend']); ?></dd>
-
         <dt>可用优惠券</dt>
-        <dd><?php echo ($item['coupon_allowed'] === '1')? '是': '否'; ?></dd>
+        <dd><?php echo ($item['coupon_allowed'] === '1')? '是': '否' ?></dd>
 
         <dt>单品活动</dt>
 		<dd>
@@ -175,14 +169,14 @@
         <dt>形象图</dt>
         <dd>
             <?php if ( !empty($item['figure_image_urls']) ): ?>
-                <ul class=upload_preview>
+                <ul class=row>
                     <?php
                     $slides = explode(',', $item['figure_image_urls']);
                     foreach($slides as $slide):
                         ?>
-                        <li>
+                        <li class="col-xs-3">
                             <figure>
-                                <img src="<?php echo $slide ?>">
+                                <img src="<?php echo MEDIA_URL.'item/'.$slide ?>">
                             </figure>
                         </li>
                     <?php endforeach ?>
@@ -215,64 +209,79 @@
 		-->
     </dl>
 
-	<section id=description class=well>
-		<h2>商品描述</h2>
+	<section id=description>
+		<h2>描述</h2>
 
-		<?php if ( !empty($item['description']) ): ?>
-			<div id=description-content class=row>
-				<?php echo $item['description'] ?>
-			</div>
-		<?php else: ?>
-			<p>该商品尚未填写商品描述。</p>
-		<?php endif ?>
+        <div class=well>
+            <?php if ( empty($item['description']) ): ?>
+                <p>商品描述尚未填写</p>
+            <?php else: ?>
+                <div id=description-content>
+                    <?php echo $item['description'] ?>
+                </div>
+            <?php endif ?>
 
-        <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('item/edit_description?id='.$item['item_id']) ?>" target=_blank>修改描述</a>
+            <a class="btn btn-default btn-block" href="<?php echo base_url('item/edit_description?id='.$item['item_id']) ?>" target=_blank>填写/修改描述 <i class="far fa-angle-right"></i></a>
+        </div>
 	</section>
 
-    <section id=skus class=well>
-        <h2>商品规格</h2>
+    <section id=skus>
+        <h2>规格</h2>
 
-        <?php if ( !empty($skus) ): ?>
-            <ul class=row>
-                <?php foreach ($skus as $sku): ?>
-                    <li class="col-xs-12 col-sm-6">
-                        <a href="<?php echo base_url('sku/detail?id='.$sku['sku_id']) ?>">
+        <div class=well>
+            <?php if ( empty($skus) ): ?>
+                <p>该商品尚未添加规格</p>
+            <?php else: ?>
+                <ul class=row>
+                    <?php foreach ($skus as $sku): ?>
+                        <li class="col-xs-12 col-sm-6">
+                            <a href="<?php echo base_url('sku/detail?id='.$sku['sku_id']) ?>">
 
-                            <figure class="list-item-figure col-xs-4">
-                                <?php if ( !empty($sku['url_image']) ): ?>
-                                    <img src="<?php echo MEDIA_URL.'sku/'.$sku['url_image'] ?>">
-                                <?php else: ?>
-                                    <img src="<?php echo $item['url_image_main'] ?>">
-                                <?php endif ?>
-                            </figure>
+                                <figure class="list-item-figure col-xs-4">
+                                    <?php if ( !empty($sku['url_image']) ): ?>
+                                        <img src="<?php echo MEDIA_URL.'sku/'.$sku['url_image'] ?>">
+                                    <?php else: ?>
+                                        <img src="<?php echo $item['url_image_main'] ?>">
+                                    <?php endif ?>
+                                </figure>
 
-                            <div class="list-item-info col-xs-8">
-                                <h3><?php echo $sku['name_first'].' '.$sku['name_second'].' '.$sku['name_third'] ?></h3>
-                                <p>￥<?php echo $sku['price'] ?> &times; <?php echo $sku['stocks'] ?>单位</p>
-                            </div>
-                        </a>
-                    </li>
-                <?php endforeach ?>
-            </ul>
-        <?php endif ?>
+                                <div class="list-item-info col-xs-8">
+                                    <ul>
+                                        <li><?php echo $sku['name_first'].' '.$sku['name_second'].' '.$sku['name_third'] ?></li>
+                                        <li>￥ <?php echo $sku['price'] ?></li>
+                                        <li><?php echo $sku['stocks'] ?> 单位</li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            <?php endif ?>
 
-        <a class="btn btn-default btn-lg btn-block" href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>管理规格</a>
+            <a class="btn btn-default btn-block" href="<?php echo base_url('sku/index?item_id='.$item['item_id']) ?>" target=_blank>管理规格 <i class="far fa-angle-right"></i></a>
+        </div>
     </section>
 
 	<dl id=list-record class=dl-horizontal>
+        <dt>上架时间</dt>
+        <?php if ( empty($item['time_to_publish'])): ?>
+            <dd><?php echo empty($item['time_publish'])? '未上架': date('Y-m-d H:i:s', $item['time_publish']) ?></dd>
+        <?php else: ?>
+            <dd>预订于 <?php echo date('Y-m-d H:i:s', $item['time_to_publish']) ?> 上架</dd>
+        <?php endif ?>
+
+        <dt>下架时间</dt>
+        <?php if ( empty($item['time_to_suspend'])): ?>
+            <dd><?php echo empty($item['time_suspend'])? '未下架': date('Y-m-d H:i:s', $item['time_suspend']) ?></dd>
+        <?php else: ?>
+            <dd>预订于 <?php echo date('Y-m-d H:i:s', $item['time_to_suspend']) ?> 下架</dd>
+        <?php endif ?>
+
 		<dt>创建时间</dt>
 		<dd>
 			<?php echo $item['time_create'] ?>
 			<a href="<?php echo base_url('stuff/detail?id='.$item['creator_id']) ?>" target=new>查看创建者</a>
 		</dd>
-
-        <dt>上架时间</dt>
-        <dd><?php echo empty($item['time_publish'])? '未上架': $item['time_publish'] ?></dd>
-
-        <?php if ( ! empty($item['time_publish']) ): ?>
-        <dt>下架时间</dt>
-        <dd><?php echo empty($item['time_suspend'])? '未下架': $item['time_suspend'] ?></dd>
-        <?php endif ?>
 
 		<?php if ( ! empty($item['time_delete']) ): ?>
 		<dt>删除时间</dt>

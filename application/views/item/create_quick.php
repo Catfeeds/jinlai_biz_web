@@ -70,9 +70,9 @@ $(function(){
 		$attributes = array('class' => 'form-'.$this->class_name.'-create-quick form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/create_quick', $attributes);
 	?>
-		<fieldset>
-			<p class=help-block>必填项以“※”符号标示</p>
+        <p class=help-block>必填项以“※”符号标示</p>
 
+		<fieldset>
 			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">平台分类 ※</label>
 				<div class=col-sm-10>
@@ -102,7 +102,7 @@ $(function(){
 				<div class="col-sm-10 input-group">
                     <?php $input_name = 'category_biz_id' ?>
                     <select class=form-control name="<?php echo $input_name ?>">
-                        <option value="">不选择</option>
+                        <option value="">可选择</option>
                         <?php
                         if ( !empty($biz_categories) ):
                             $options = $biz_categories;
@@ -121,7 +121,7 @@ $(function(){
 				</div>
 			</div>
 			
-			<?php if ( !empty($brands) ): ?>
+			<?php if ( ! empty($brands) ): ?>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">品牌</label>
 				<div class=col-sm-10>
@@ -159,9 +159,13 @@ $(function(){
 			</div>
 
 			<div class=form-group>
-				<label for=stocks class="col-sm-2 control-label">库存量（单位）※</label>
-				<div class=col-sm-10>
-                    <input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo empty(set_value('stocks'))? 0: set_value('stocks') ?>" placeholder="最高65535单位" required>
+				<label for=stocks class="col-sm-2 control-label">库存量</label>
+                <div class=col-sm-10>
+                    <div class=input-group>
+                        <input class=form-control name=stocks type=number min=0 step=1 max=65535 value="<?php echo empty(set_value('stocks'))? 10: set_value('stocks') ?>" placeholder="默认10，最高65535单位">
+                        <div class="input-group-addon">单位</div>
+                    </div>
+
                     <p class=help-block>库存管理方案为付款减库存，商品或规格库存量低于1个单位（含）时将不可被下单/付款；极少数情况下可能出现超卖。</p>
 				</div>
 			</div>

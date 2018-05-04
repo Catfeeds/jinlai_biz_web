@@ -6,9 +6,9 @@
 @charset "utf-8";
 @viewport{width:device-width;}
 
-body {padding-bottom:104px;}
+#maincontainer {padding-bottom:0;}
 
-#content {min-height:670px;}
+#content {padding-bottom:104px;}
 
 .action_bottom {background-color:#fff;position:fixed;left:0;right:0;bottom:0;height:84px;line-height:84px;overflow:hidden;z-index:101;}
     #bulk_action {}

@@ -56,9 +56,9 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
+        <p class=help-block>必填项以“※”符号标示</p>
+
 		<fieldset>
-			<p class=help-block>必填项以“※”符号标示</p>
-			
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>

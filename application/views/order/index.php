@@ -1,8 +1,9 @@
 <link rel=stylesheet media=all href="/css/index.css">
 <style>
-    body {margin-bottom:202px;}
-    .action_bottom{bottom:98px;}
-    
+    #content {padding-bottom:0;}
+
+    .action_bottom {bottom:98px;}
+
     .order-figures {color:#c9caca;margin:50px -20px 0;}
         .order-figures>li {font-size:22px;border-right:1px solid #c9caca;padding:0 42px;}
             .order-figures>li:last-child {border:0;}
@@ -21,7 +22,7 @@
 	@media only screen and (min-width:751px)
 	{
         body {margin-bottom:0;}
-        .action_bottom{bottom:0;}
+        .action_bottom {bottom:0;}
 	}
 
 	/* 宽度在960像素以上的设备 */
@@ -65,7 +66,7 @@
                 <ul class=dropdown-menu>
                     <li>
                         <?php $style_class = empty($this->input->get('status') )? 'btn-primary': 'btn-default'; ?>
-                        <a class="btn <?php echo $style_class ?>" title="全部<?php echo $this->class_name_cn ?>" href="<?php echo base_url($this->class_name) ?>">全部</a>
+                        <a class="btn <?php echo $style_class ?>" href="<?php echo base_url($this->class_name) ?>">全部</a>
                     </li>
 
                     <?php
@@ -75,15 +76,15 @@
                         $url = ($status === NULL)? base_url($this->class_name): base_url($this->class_name. '?status='.$status);
                         // 链接样式
                         $style_class = ($this->input->get('status') !== $status)? 'btn-default': 'btn-primary';
-                        echo '<li><a class="btn '. $style_class. '" title="'. $status. '订单" href="'. $url. '">'. $status. '</a> </li>';
+                        echo '<li><a class="btn '. $style_class. '" href="'. $url. '">'. $status. '</a> </li>';
                     endforeach;
                     ?>
                 </ul>
             </div>
 
-            <!--<a class="btn <?php echo $this->input->get('status') === '待接单'? 'btn-primary': 'btn-default' ?>" title="待接单商品订单" href="<?php echo base_url($this->class_name. '?status=待接单') ?>">待接单</a>-->
-            <a class="btn <?php echo $this->input->get('status') === '待付款'? 'btn-primary': 'btn-default' ?>" title="待发货商品订单" href="<?php echo base_url($this->class_name. '?status=待付款') ?>">待付款</a>
-            <a class="btn <?php echo $this->input->get('status') === '待发货'? 'btn-primary': 'btn-default' ?>" title="待发货商品订单" href="<?php echo base_url($this->class_name. '?status=待发货') ?>">待发货</a>
+            <!--<a class="btn <?php echo $this->input->get('status') === '待接单'? 'btn-primary': 'btn-default' ?>" href="<?php echo base_url($this->class_name. '?status=待接单') ?>">待接单</a>-->
+            <a class="btn <?php echo $this->input->get('status') === '待付款'? 'btn-primary': 'btn-default' ?>" href="<?php echo base_url($this->class_name. '?status=待付款') ?>">待付款</a>
+            <a class="btn <?php echo $this->input->get('status') === '待发货'? 'btn-primary': 'btn-default' ?>" href="<?php echo base_url($this->class_name. '?status=待发货') ?>">待发货</a>
         </div>
     <?php endif ?>
     
@@ -121,7 +122,7 @@
         ?>
         <div id=bulk_action class=action_bottom>
             <span id=bulk_selector data-bulk-selector=off>
-                <i class="far fa-circle" aria-hidden=true></i>全选
+                <i class="far fa-circle"></i>全选
             </span>
             <span id=exit_bulk>取消</span>
             <ul class=horizontal>
@@ -197,24 +198,24 @@
 
 					<ul class=horizontal>
                         <?php if ($status === '待付款'): ?>
-                        <li><a title="改价" href="<?php echo base_url($this->class_name.'/reprice?ids='.$item[$this->id_name]) ?>" target=_blank>改价</a></li>
-                        <li><a title="拒绝" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>拒绝</a></li>
+                        <li><a href="<?php echo base_url($this->class_name.'/reprice?ids='.$item[$this->id_name]) ?>" target=_blank>改价</a></li>
+                        <li><a href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>拒绝</a></li>
                         <?php endif ?>
 
                         <?php if ($status === '待接单'): ?>
-                        <li><a title="接单" href="<?php echo base_url($this->class_name.'/accept?ids='.$item[$this->id_name]) ?>" target=_blank>接单</a></li>
-                        <li><a title="拒绝" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>拒绝</a></li>
+                        <li><a href="<?php echo base_url($this->class_name.'/accept?ids='.$item[$this->id_name]) ?>" target=_blank>接单</a></li>
+                        <li><a href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>拒绝</a></li>
                         <?php endif ?>
 
                         <?php if ($status === '已拒绝' && !empty($item['time_pay']) && ($item['refund_status'] === '退款中')): ?>
-                        <li><a title="退款列表" href="<?php echo base_url('refund/index?order_id='.$item[$this->id_name]) ?>" target=_blank>处理退款</a></li>
+                        <li><a href="<?php echo base_url('refund/index?order_id='.$item[$this->id_name]) ?>" target=_blank>处理退款</a></li>
                         <?php endif ?>
 
                         <?php if ($status === '待发货'): ?>
-                        <li><a title="发货" href="<?php echo base_url($this->class_name.'/deliver?ids='.$item[$this->id_name]) ?>" target=_blank>发货</a></li>
+                        <li><a href="<?php echo base_url($this->class_name.'/deliver?ids='.$item[$this->id_name]) ?>" target=_blank>发货</a></li>
                         <?php endif ?>
 
-                        <li><a title="备注" href="<?php echo base_url($this->class_name.'/note?ids='.$item[$this->id_name]) ?>" target=_blank>备注</a></li>
+                        <li><a href="<?php echo base_url($this->class_name.'/note?ids='.$item[$this->id_name]) ?>" target=_blank>备注</a></li>
 					</ul>
 				</div>
 				<?php endif ?>

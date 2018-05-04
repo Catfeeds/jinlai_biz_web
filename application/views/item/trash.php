@@ -1,12 +1,12 @@
 <link rel=stylesheet media=all href="/css/trash.css">
 <style>
-    body {margin-bottom:104px;}
-    .action_bottom{bottom:0;}
+    .action_bottom {bottom:0;}
 
 	/* 宽度在750像素以上的设备 */
 	@media only screen and (min-width:751px)
 	{
         body {margin-bottom:0;}
+        .action_bottom {bottom:0;}
 	}
 	
 	/* 宽度在960像素以上的设备 */
