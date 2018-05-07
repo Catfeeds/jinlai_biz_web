@@ -2,34 +2,19 @@
 	defined('BASEPATH') OR exit('此文件不可被直接访问');
 
 	/**
-	 * Message/MSG 聊天消息类
+	 * Notice/NTC 系统通知类
 	 *
 	 * @version 1.0.0
 	 * @author Kamas 'Iceberg' Lau <kamaslau@outlook.com>
 	 * @copyright ICBG <www.bingshankeji.com>
 	 */
-	class Message extends MY_Controller
+	class Notice extends MY_Controller
 	{	
 		/**
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'message_id', 'user_id', 'biz_id', 'stuff_id', 'sender_type', 'receiver_type', 'type', 'ids', 'title', 'excerpt', 'url_image', 'content', 'longitude', 'latitude', 'time_create', 'time_delete', 'time_revoke', 'creator_id',  'sth_min', 'sth_max',
-		);
-
-		/**
-		 * 可被编辑的字段名
-		 */
-		protected $names_edit_allowed = array(
-			'message_id', 'user_id', 'biz_id', 'stuff_id', 'sender_type', 'receiver_type', 'type', 'ids', 'title', 'excerpt', 'url_image', 'content', 'longitude', 'latitude', 'time_create', 'time_delete', 'time_revoke', 'creator_id', 
-		);
-
-		/**
-		 * 完整编辑单行时必要的字段名
-		 */
-		protected $names_edit_required = array(
-			'id',
-			'message_id', 'user_id', 'biz_id', 'stuff_id', 'sender_type', 'receiver_type', 'type', 'ids', 'title', 'excerpt', 'url_image', 'content', 'longitude', 'latitude', 'time_create', 'time_delete', 'time_revoke', 'creator_id', 
+			'notice_id', 'article_id', 'app_type', 'user_id', 'biz_id', 'title', 'excerpt', 'url_image', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',  'sth_min', 'sth_max',
 		);
 
 		public function __construct()
@@ -37,63 +22,21 @@
 			parent::__construct();
 
 			// 未登录用户转到登录页
-			//($this->session->time_expire_login > time()) OR redirect( base_url('login') );
+			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
 
 			// 向类属性赋值
 			$this->class_name = strtolower(__CLASS__);
-			$this->class_name_cn = '聊天消息'; // 改这里……
-			$this->table_name = 'message'; // 和这里……
-			$this->id_name = 'message_id'; // 还有这里，OK，这就可以了
+			$this->class_name_cn = '系统通知'; // 改这里……
+			$this->table_name = 'notice'; // 和这里……
+			$this->id_name = 'notice_id'; // 还有这里，OK，这就可以了
 			$this->view_root = $this->class_name; // 视图文件所在目录
 			$this->media_root = MEDIA_URL. $this->class_name.'/'; // 媒体文件所在目录
 
 			// 设置需要自动在视图文件中生成显示的字段
 			$this->data_to_display = array(
-				'name' => '名称',
-				'description' => '描述',
+				'excerpt' => '摘要',
 			);
 		} // end __construct
-
-		/**
-		 * 我的
-		 *
-		 * 限定获取的行的user_id（示例为通过session传入的user_id值），一般用于前台
-		 */
-		public function mine()
-		{
-			// 页面信息
-			$data = array(
-				'title' => '我的'. $this->class_name_cn, // 页面标题
-				'class' => $this->class_name.' mine', // 页面body标签的class属性值
-				
-				'keywords' => '关键词一,关键词二,关键词三', // （可选，后台功能可删除此行）页面关键词；每个关键词之间必须用半角逗号","分隔才能保证搜索引擎兼容性
-				'description' => '这个页面的主要内容', // （可选，后台功能可删除此行）页面内容描述
-				// 对于后台功能，一般不需要特别指定具体页面的keywords和description
-			);
-
-			// 筛选条件
-			$condition['user_id'] = $this->session->user_id;
-
-			// 排序条件
-			$order_by = NULL;
-			//$order_by['name'] = 'value';
-
-			// 从API服务器获取相应列表信息
-			$params = $condition;
-			$url = api_url($this->class_name. '/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-				$data['items'] = array();
-				$data['error'] = $result['content']['error']['message'];
-			endif;
-
-			// 输出视图
-			$this->load->view('templates/header', $data);
-			$this->load->view($this->view_root.'/mine', $data);
-			$this->load->view('templates/footer', $data);
-		} // end mine
 
 		/**
 		 * 列表页
@@ -239,19 +182,14 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
-            $this->form_validation->set_rules('user_id', '收信用户ID', 'trim|is_natural_no_zero');
-            $this->form_validation->set_rules('biz_id', '收信商家ID', 'trim|is_natural_no_zero');
-            $this->form_validation->set_rules('stuff_id', '收信员工ID', 'trim|is_natural_no_zero');
-            $this->form_validation->set_rules('sender_type', '发信端类型', 'trim|in_list[admin,biz,client]');
-            $this->form_validation->set_rules('receiver_type', '收信端类型', 'trim|required|in_list[admin,biz,client]');
-            $this->form_validation->set_rules('type', '类型', 'trim|required');
-            $this->form_validation->set_rules('ids', '内容ID们', 'trim|max_length[255]');
-            $this->form_validation->set_rules('title', '标题', 'trim|max_length[30]');
-            $this->form_validation->set_rules('excerpt', '摘要', 'trim|max_length[100]');
-            $this->form_validation->set_rules('url_image', '形象图', 'trim|max_length[255]');
-            $this->form_validation->set_rules('content', '内容', 'trim|max_length[5000]');
-            $this->form_validation->set_rules('longitude', '经度', 'trim|max_length[10]');
-            $this->form_validation->set_rules('latitude', '纬度', 'trim|max_length[10]');
+			$this->form_validation->set_rules('article_id', '相关文章ID', 'trim|');
+			$this->form_validation->set_rules('app_type', '目标客户端类型', 'trim|');
+			$this->form_validation->set_rules('user_id', '用户ID', 'trim|');
+			$this->form_validation->set_rules('biz_id', '商家ID', 'trim|');
+			$this->form_validation->set_rules('title', '标题', 'trim|');
+			$this->form_validation->set_rules('excerpt', '摘要', 'trim|required');
+			$this->form_validation->set_rules('url_image', '形象图', 'trim|');
+
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -264,16 +202,13 @@
 			else:
 				// 需要创建的数据；逐一赋值需特别处理的字段
 				$data_to_create = array(
-					'creator_id' => $this->session->user_id,
+					'creator' => $this->session->user_id,
 
-                    'sender_type' => $this->app_type,
-                    'receiver_type' => empty($this->input->post('receiver_type'))? 'biz': $this->input->post('receiver_type'),
-
-                    'type' => empty($this->input->post('type'))? 'text': $this->input->post('type'),
+                    //'name' => empty($this->input->post('name'))? NULL: $this->input->post('name'),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-                    'user_id', 'biz_id', 'stuff_id', 'ids', 'title', 'excerpt', 'url_image', 'content', 'longitude', 'latitude',
+					'article_id', 'app_type', 'user_id', 'biz_id', 'title', 'excerpt', 'url_image',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -305,7 +240,7 @@
 				
 			endif;
 		} // end create
-
+		
 		/**
          * 删除
          *
@@ -330,7 +265,7 @@
 		 * 以下为工具类方法
 		 */
 
-	} // end class Message
+	} // end class Notice
 
-/* End of file Message.php */
-/* Location: ./application/controllers/Message.php */
+/* End of file Notice.php */
+/* Location: ./application/controllers/Notice.php */

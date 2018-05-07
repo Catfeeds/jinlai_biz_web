@@ -26,7 +26,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180504">
+		<meta name=version content="revision20180507">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -189,8 +189,8 @@
         <script src="/js/common.js"></script>
 		<script defer src="<?php echo CDN_URL ?>js/js.cookie.js"></script>
         <script defer src="<?php echo CDN_URL ?>bootstrap/v3.3.7/bootstrap.min.js"></script>
-        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.10/fontawesome-all.min.js"></script>
-        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.10/fa-v4-shims.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.12/fontawesome-all.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.12/fa-v4-shims.min.js"></script>
         <script>
             // AJAX参数
             var ajax_root = '<?php echo API_URL ?>'

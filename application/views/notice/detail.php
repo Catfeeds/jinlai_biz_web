@@ -71,37 +71,42 @@
 			</figure>
 			<?php endif ?>
 		</dd>
-
+		
+		<dt>形象图</dt>
+		<dd>
+			<?php
+				$column_images = 'url_image_main';
+				if ( empty($item[$column_images]) ):
+			?>
+			<p>未上传</p>
+			<?php else: ?>
+			<ul class=row>
+				<?php
+					$image_urls = explode(',', $item[$column_images]);
+					foreach($image_urls as $url):
+				?>
+				<li class="col-xs-6 col-sm-4 col-md-3">
+					<img src="<?php echo $url ?>">
+				</li>
+				<?php endforeach ?>
+			</ul>
+			<?php endif ?>
+		</dd>
+		
+		<dt>相关文章ID</dt>
+		<dd><?php echo $item['article_id'] ?></dd>
+		<dt>目标客户端类型</dt>
+		<dd><?php echo $item['app_type'] ?></dd>
 		<dt>用户ID</dt>
 		<dd><?php echo $item['user_id'] ?></dd>
 		<dt>商家ID</dt>
 		<dd><?php echo $item['biz_id'] ?></dd>
-		<dt>员工ID</dt>
-		<dd><?php echo $item['stuff_id'] ?></dd>
-		<dt>发信端类型</dt>
-		<dd><?php echo $item['sender_type'] ?></dd>
-		<dt>收信端类型</dt>
-		<dd><?php echo $item['receiver_type'] ?></dd>
-		<dt>类型</dt>
-		<dd><?php echo $item['type'] ?></dd>
-
 		<dt>标题</dt>
-        <dd><?php echo empty($item['title'])? 'N/A': $item['title'] ?></dd>
-
+		<dd><?php echo $item['title'] ?></dd>
 		<dt>摘要</dt>
-        <dd><?php echo empty($item['excerpt'])? 'N/A': $item['excerpt'] ?></dd>
-
+		<dd><?php echo $item['excerpt'] ?></dd>
 		<dt>形象图</dt>
 		<dd><?php echo $item['url_image'] ?></dd>
-
-		<dt>内容</dt>
-        <dd><?php echo empty($item['content'])? 'N/A': $item['content'] ?></dd>
-
-        <dt>内容ID们</dt>
-        <dd><?php echo $item['ids'] ?></dd>
-
-		<dt>位置</dt>
-		<dd><?php echo $item['longitude']. ','. $item['latitude']?></dd>
 	</dl>
 
 	<dl id=list-record class=dl-horizontal>
@@ -115,11 +120,6 @@
 		<dt>删除时间</dt>
 		<dd><?php echo $item['time_delete'] ?></dd>
 		<?php endif ?>
-
-        <?php if ( ! empty($item['time_revoke']) ): ?>
-        <dt>撤回时间</dt>
-        <dd><?php echo $item['time_revoke'] ?></dd>
-        <?php endif ?>
 
 		<?php if ( ! empty($item['operator_id']) ): ?>
 		<dt>最后操作时间</dt>

@@ -42,68 +42,30 @@
 		<p class=help-block>必填项以“※”符号标示</p>
 		
 		<fieldset>
-			<legend>常用字段类型</legend>
-			
-			<div class=form-group>
-				<label for=description class="col-sm-2 control-label">详情</label>
-				<div class=col-sm-10>
-					<textarea class=form-control name=description rows=10 placeholder="详情" required><?php echo set_value('description') ?></textarea>
-				</div>
-			</div>
 			
 			<div class=form-group>
 				<label for=url_image_main class="col-sm-2 control-label">主图</label>
-                <div class=col-sm-10>
-                    <?php $name_to_upload = 'url_image_main' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone>
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>" >
-
-                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=1 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
-					
-					<p class=help-block>推荐上传正方形图片以达到最佳视觉效果</p>
-                </div>
+				<div class=col-sm-10>
+                    <?php
+                    require_once(APPPATH. 'views/templates/file-uploader.php');
+                    $name_to_upload = 'url_image_main';
+                    generate_html($name_to_upload, $this->class_name);
+                    ?>
+				</div>
 			</div>
 
 			<div class=form-group>
 				<label for=figure_image_urls class="col-sm-2 control-label">形象图</label>
-                <div class=col-sm-10>
-                    <?php $name_to_upload = 'figure_image_urls' ?>
-                    <ul class="upload_preview"></ul>
-
-                    <div class=selector_zone>
-                        <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
-                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo set_value($name_to_upload) ?>">
-
-                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
-                    </div>
-
-                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name.'/'.$name_to_upload ?>" data-selector-id="<?php echo $name_to_upload ?>" data-input-name="<?php echo $name_to_upload ?>" data-max-count=4 type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
-					
-					<p class=help-block>最多可上传4张</p>
-                </div>
-			</div>
-			
-			<div class=form-group>
-				<?php $input_name = 'delivery' ?>
-				<label for="<?php echo $input_name ?>" class="col-sm-2 control-label">库存状态</label>
 				<div class=col-sm-10>
-                    <select class=form-control name="<?php echo $input_name ?>" required>
-						<option value="" <?php echo set_select($input_name, '') ?>>请选择</option>
-						<?php
-							$options = array('现货','期货');
-							foreach ($options as $option):
-						?>
-						<option value="<?php echo $option ?>" <?php echo set_select($input_name, $option) ?>><?php echo $option ?></option>
-						<?php endforeach ?>
-					</select>
+                    <?php
+                    require_once(APPPATH. 'views/templates/file-uploader.php');
+                    $name_to_upload = 'url_image_main';
+                    generate_html($name_to_upload, $this->class_name, FALSE, 4);
+                    ?>
 				</div>
 			</div>
+			
+
 			
             <div class=form-group>
 				<?php $input_name = 'home_m1_ace_id' ?>
@@ -162,50 +124,118 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>基本信息</legend>
-			
-			<div class=form-group>
-				<label for=type class="col-sm-2 control-label">类型</label>
-				<div class=col-sm-10>
-					<input class=form-control name=type type=text value="<?php echo set_value('type') ?>" placeholder="类型" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=content class="col-sm-2 control-label">内容</label>
-				<div class=col-sm-10>
-					<input class=form-control name=content type=text value="<?php echo set_value('content') ?>" placeholder="内容" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=url_image class="col-sm-2 control-label">图片URL</label>
-				<div class=col-sm-10>
-					<input class=form-control name=url_image type=text value="<?php echo set_value('url_image') ?>" placeholder="图片URL" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=item_id class="col-sm-2 control-label">商品ID</label>
-				<div class=col-sm-10>
-					<input class=form-control name=item_id type=text value="<?php echo set_value('item_id') ?>" placeholder="商品ID" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=order_id class="col-sm-2 control-label">订单ID</label>
-				<div class=col-sm-10>
-					<input class=form-control name=order_id type=text value="<?php echo set_value('order_id') ?>" placeholder="订单ID" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=url_page class="col-sm-2 control-label">网页URL</label>
-				<div class=col-sm-10>
-					<input class=form-control name=url_page type=text value="<?php echo set_value('url_page') ?>" placeholder="网页URL" required>
-				</div>
-			</div>
-			<div class=form-group>
-				<label for=title class="col-sm-2 control-label">网页标题</label>
-				<div class=col-sm-10>
-					<input class=form-control name=title type=text value="<?php echo set_value('title') ?>" placeholder="网页标题" required>
-				</div>
-			</div>
+            <div class=form-group>
+                <label for=user_id class="col-sm-2 control-label">用户ID</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=user_id type=number min=1 step=1 value="<?php echo set_value('user_id') ?>" placeholder="用户ID">
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=biz_id class="col-sm-2 control-label">商家ID</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=biz_id type=number min=1 step=1 value="<?php echo set_value('biz_id') ?>" placeholder="商家ID">
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=stuff_id class="col-sm-2 control-label">员工ID</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=stuff_id type=number min=1 step=1 value="<?php echo set_value('stuff_id') ?>" placeholder="员工ID">
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=receiver_type class="col-sm-2 control-label">收信端类型</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=receiver_type type=text value="<?php echo set_value('receiver_type') ?>" placeholder="收信端类型" required>
+                </div>
+            </div>
+
+            <div class=form-group>
+                <label for=type class="col-sm-2 control-label">类型</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=type type=text value="<?php echo set_value('type') ?>" placeholder="类型" required>
+                </div>
+            </div>
+
+            <div class=form-group>
+                <?php $input_name = 'type' ?>
+                <label for="<?php echo $input_name ?>" class="col-sm-2 control-label">类型</label>
+                <div class=col-sm-10>
+                    <select class=form-control name="<?php echo $input_name ?>" required>
+                        <?php
+                        $options = array(
+                            'address' => '收货地址',
+                            'article' => '平台文章',
+                            'article_biz' => '店内文章',
+                            'audio' => '音频',
+                            'branch' => '门店',
+                            'coupon_template' => '优惠券',
+                            'coupon_combo' => '优惠券包',
+                            'item' => '商品',
+                            'image' => '图片',
+                            'location' => '位置/定位',
+                            'order' => '订单',
+                            'promotion' => '平台活动',
+                            'promotion_biz' => '店内活动',
+                            'text' => '文字',
+                            'video' => '视频',
+                        );
+                        $option_keys = array_keys($options);
+                        $option_values = array_values($options);
+                        foreach ($option_keys as $option):
+                            ?>
+                            <option value="<?php echo $option ?>" <?php echo set_select($input_name, $option) ?>><?php echo $option_values[$option] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class=form-group>
+                <label for=ids class="col-sm-2 control-label">内容ID们</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=ids type=text value="<?php echo set_value('ids') ?>" placeholder="内容ID们">
+                </div>
+            </div>
+
+            <!--
+            <div class=form-group>
+                <label for=title class="col-sm-2 control-label">标题</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=title type=text value="<?php echo set_value('title') ?>" placeholder="标题">
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=excerpt class="col-sm-2 control-label">摘要</label>
+                <div class=col-sm-10>
+                    <textarea class=form-control name=excerpt rows=5 placeholder="最多100个字符"><?php echo set_value('excerpt') ?></textarea>
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=url_image class="col-sm-2 control-label">形象图</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=url_image type=text value="<?php echo set_value('url_image') ?>" placeholder="形象图">
+                </div>
+            </div>
+            -->
+
+            <div class=form-group>
+                <label for=content class="col-sm-2 control-label">内容</label>
+                <div class=col-sm-10>
+                    <textarea class=form-control name=content rows=10 placeholder="最多5000个字符"><?php echo set_value('content') ?></textarea>
+                </div>
+            </div>
+
+            <div class=form-group>
+                <label for=longitude class="col-sm-2 control-label">经度</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=longitude type=text value="<?php echo set_value('longitude') ?>" placeholder="经度，小数点后保留5位">
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=latitude class="col-sm-2 control-label">纬度</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=latitude type=text value="<?php echo set_value('latitude') ?>" placeholder="纬度，小数点后保留5位">
+                </div>
+            </div>
 		</fieldset>
 
 		<div class=form-group>
