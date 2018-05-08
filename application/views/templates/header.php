@@ -26,7 +26,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180507">
+		<meta name=version content="revision20180508">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -291,6 +291,13 @@
                                 <li><a href="<?php echo base_url('stuff') ?>">员工</a></li>
                                 <li><a href="<?php echo base_url('stuff/create') ?>">创建员工</a></li>
                                 <?php endif ?>
+
+                                <li role=separator class=divider></li>
+                                <li><a href="<?php echo base_url('notice') ?>">系统通知</a></li>
+
+                                <li role=separator class=divider></li>
+                                <li><a href="<?php echo base_url('message') ?>">聊天消息</a></li>
+                                <li><a href="<?php echo base_url('message/create') ?>">创建聊天消息</a></li>
 							</ul>
 						</li>
 
