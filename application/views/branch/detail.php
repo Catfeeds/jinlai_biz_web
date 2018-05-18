@@ -46,7 +46,7 @@
         // 需要特定角色和权限进行该操作
         if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
             ?>
-            <li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
+            <li><a href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
         <?php endif ?>
     </ul>
 
@@ -116,10 +116,10 @@
 				<div id=map style="height:300px;background-color:#aaa"></div>
 			</figure>
 			
-			<script defer src="https://webapi.amap.com/maps?v=1.3&key=bf0fd60938b2f4f40de5ee83a90c2e0e"></script>
-			<script defer src="https://webapi.amap.com/ui/1.0/main.js"></script>
+			<script src="https://webapi.amap.com/maps?v=1.3&key=bf0fd60938b2f4f40de5ee83a90c2e0e"></script>
+			<script src="https://webapi.amap.com/ui/1.0/main.js"></script>
 			<script>
-				var lnglat = [<?php echo $item['longitude'] ?>, <?php echo $item['latitude'] ?>];
+				var lnglat = [<?php echo $item['longitude'] ?>,<?php echo $item['latitude'] ?>];
 			    var map = new AMap.Map('map',{
 					center: lnglat,
 			        zoom: 16,
