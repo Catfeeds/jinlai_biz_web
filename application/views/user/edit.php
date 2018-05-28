@@ -68,7 +68,7 @@
                                 <i class="remove fa fa-minus"></i>
                                 <i class="left fa fa-arrow-left"></i>
                                 <i class="right fa fa-arrow-right"></i>
-                                <figure>
+                                <figure class="centered_xy">
                                     <img src="<?php echo $item[$name_to_upload] ?>">
                                 </figure>
                             </li>

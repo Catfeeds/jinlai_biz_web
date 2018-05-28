@@ -43,7 +43,7 @@
 
 <div id=content class=container>
 	<ul id=item-actions class=list-unstyled>
-		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
+		<li><a href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
 	</ul>
 
 	<dl id=list-info class=dl-horizontal>
@@ -69,10 +69,12 @@
 
 		<dt>姓名</dt>
 		<dd><?php echo $item['lastname'].$item['firstname'] ?></dd>
+
 		<dt>身份证号</dt>
 		<dd class="ssn_cn">
             <?php echo !empty($item['code_ssn'])? str_replace(substr($item['code_ssn'], -6), '******', $item['code_ssn']): NULL;  ?>
         </dd>
+
 		<dt>身份证照片</dt>
         <?php if ( empty($item['url_image_id']) ): ?>
         <dd>未上传</dd>
@@ -82,19 +84,24 @@
                 <img class=img-circle src="<?php echo $item['url_image_id'] ?>">
             </figure>
         </dd>
+        <?php endif ?>
 
         <dt>手机号</dt>
 		<dd class="mobile"><?php echo $item['mobile'] ?></dd>
 		<dt>电子邮件地址</dt>
 		<dd><?php echo $item['email'] ?></dd>
+
+        <!--
 		<dt>开户行名称</dt>
-		<dd><?php echo $item['bank_name'] ?></dd>
+		<dd><?php //echo $item['bank_name'] ?></dd>
 		<dt>开户行账号</dt>
 		<dd class="bank_account">
-            <?php echo !empty($item['bank_account'])? str_replace(substr($item['bank_account'], -6), '******', $item['bank_account']): NULL;  ?>
+            <?php //echo !empty($item['bank_account'])? str_replace(substr($item['bank_account'], -6), '******', $item['bank_account']): NULL;  ?>
         </dd>
+        -->
+
 		<dt>注册时间</dt>
-		<dd><?php echo $item['time_create'] ?></dd>
+		<dd><?php echo date('Y-m-d H:i:s', $item['time_create']) ?></dd>
 
 		<dt>最后登录信息</dt>
 		<dd>
@@ -104,6 +111,5 @@
             （<?php echo $item['last_login_ip'] ?> <a href="//www.baidu.com/s?wd=<?php echo $item['last_login_ip'] ?>" target="_blank">查询</a>）
             <?php endif ?>
         </dd>
-        <?php endif ?>
 	</dl>
 </div>

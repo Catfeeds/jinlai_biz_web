@@ -26,7 +26,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180511">
+		<meta name=version content="revision20180525">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -189,8 +189,8 @@
         <script src="/js/common.js"></script>
 		<script defer src="<?php echo CDN_URL ?>js/js.cookie.js"></script>
         <script defer src="<?php echo CDN_URL ?>bootstrap/v3.3.7/bootstrap.min.js"></script>
-        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.12/fontawesome-all.min.js"></script>
-        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.12/fa-v4-shims.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.13/fontawesome-all.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>font-awesome/v5.0.13/fa-v4-shims.min.js"></script>
         <script>
             // AJAX参数
             var ajax_root = '<?php echo API_URL ?>'
@@ -383,14 +383,25 @@
 			<?php endif ?>
 					</ul>
 
-					<ul class="nav navbar-nav navbar-right">
-						<?php if ( !isset($this->session->time_expire_login) ): ?>
-						<li><a title="登录" href="<?php echo base_url('login') ?>">登录</a></li>
-						<?php else: ?>
-						<li><a title="个人中心" href="<?php echo base_url('mine') ?>">个人中心</a></li>
-						<li><a title="退出" href="<?php echo base_url('logout') ?>">退出</a></li>
-						<?php endif ?>
-					</ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <?php
+                        if ( $this->session->time_expire_login > time() ):
+                            $display_name = !empty($this->session->nickname)? $this->session->nickname: $this->session->lastname.$this->session->firstname;
+                            ?>
+                            <li>
+                                <a href="<?php echo base_url('mine') ?>">
+                                    <i class="far fa-user-circle"></i>
+                                    <?php echo $display_name ?>
+                                    <?php echo $this->session->role. 'lv.'. $this->session->level ?>
+                                </a>
+                            </li>
+                            <li><a href="<?php echo base_url('logout') ?>"><i class="far fa-sign-out"></i></a></li>
+
+                        <?php else: ?>
+                            <li><a href="<?php echo base_url('login') ?>"><i class="far fa-sign-in"></i> 登录</a></li>
+
+                        <?php endif ?>
+                    </ul>
 
 				</div>
 			</nav>
