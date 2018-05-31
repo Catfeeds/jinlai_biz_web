@@ -118,7 +118,7 @@
 		public function login_sms()
 		{
 			// 若已登录，转到首页
-			!isset($this->session->time_expire_login) OR redirect( base_url() );
+			($this->session->time_expire_login < time()) OR redirect( base_url() );
 
 			// 页面信息
 			$data = array(

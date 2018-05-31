@@ -26,7 +26,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180529">
+		<meta name=version content="revision20180531">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -196,7 +196,7 @@
             var ajax_root = '<?php echo API_URL ?>'
             var common_params = new Object()
             common_params.app_type = 'biz' // 默认为商户端请求
-            common_params.biz_id = <?php echo empty($this->session->biz_id)? '': $this->session->biz_id ?>
+            common_params.biz_id = <?php echo empty($this->session->biz_id)? 'null': $this->session->biz_id ?>
 
             // UserAgent
             var user_agent = new Object();

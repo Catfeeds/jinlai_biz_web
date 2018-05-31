@@ -182,8 +182,8 @@ $(function(){
 			alert(data.content.message);
 
 			// 记录短信ID并赋值到相应字段
-			Cookies.set('sms_id', data.content.sms_id);
-			$('[name=sms_id]').val(data.content.sms_id);
+			Cookies.set('sms_id', data.content.id);
+			$('[name=sms_id]').val(data.content.id);
 
 			var timestamp = Date.parse(new Date()) / 1000;
 			// 记录最后成功发送短信时间、本日日期，以及本日已发短信数
@@ -195,7 +195,7 @@ $(function(){
 				Cookies.set('sms_today', today);
 				Cookies.set('sms_today_sent', 1);
 			} else {
-				Cookies.set('sms_today_sent', Cookies.get('sms_today_sent') += 1);
+				Cookies.set('sms_today_sent', Cookies.get('sms_today_sent') + 1);
 			}
 
 			// 倒计时60秒后重新激活发送按钮

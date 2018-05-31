@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-$active_group = 'development_old';
+$active_group = (ENVIRONMENT === 'production')? 'production': 'development_old';
 $query_builder = TRUE;
 
 $db['production'] = array(
@@ -82,7 +82,7 @@ $db['production'] = array(
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
-    'db_debug' => (ENVIRONMENT !== 'production'),
+    'db_debug' => FALSE, // 生产环境中不显示错误报告
     'cache_on' => FALSE,
     'cachedir' => '',
     'char_set' => 'utf8',
