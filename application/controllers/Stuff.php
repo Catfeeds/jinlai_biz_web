@@ -206,7 +206,7 @@
 			$this->form_validation->set_rules('mobile', '手机号', 'trim|required');
 			$this->form_validation->set_rules('fullname', '姓名', 'trim|required');
 			$this->form_validation->set_rules('role', '角色', 'trim|required');
-			$this->form_validation->set_rules('level', '等级', 'trim|required|greater_than_equal_to[0]|less_than_equal_to[100]');
+            $this->form_validation->set_rules('level', '等级', 'trim|required|is_natural_no_zero|greater_than_equal_to[0]|less_than[101]');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -220,10 +220,12 @@
 				// 需要创建的数据；逐一赋值需特别处理的字段
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
+
+                    'level' => empty($this->input->post('level'))? 10: $this->input->post('level'), // 默认门店级员工
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'mobile', 'fullname', 'password', 'role', 'level',
+					'mobile', 'fullname', 'password', 'role',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -295,7 +297,7 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('fullname', '姓名', 'trim|required');
 			$this->form_validation->set_rules('role', '角色', 'trim|required');
-			$this->form_validation->set_rules('level', '等级', 'trim|required|greater_than_equal_to[0]|less_than_equal_to[100]');
+            $this->form_validation->set_rules('level', '等级', 'trim|required|is_natural_no_zero|greater_than_equal_to[0]|less_than[101]');
 			$this->form_validation->set_rules('status', '状态', 'trim|required');
 
 			// 若表单提交不成功
@@ -311,11 +313,12 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
-					//'name' => $this->input->post('name')),
+
+                    'level' => empty($this->input->post('level'))? 10: $this->input->post('level'), // 默认门店级员工
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'fullname', 'role', 'level', 'status',
+					'fullname', 'role', 'status',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);

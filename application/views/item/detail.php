@@ -156,11 +156,11 @@
     <dl id=item_figure class=dl-horizontal>
         <dt>主图</dt>
         <dd>
-            <?php $name_to_upload = 'url_image_main' ?>
+            <?php $column_name = 'url_image_main' ?>
             <ul class=upload_preview>
                 <li>
                     <figure>
-                        <img src="<?php echo $item[$name_to_upload] ?>">
+                        <img src="<?php echo $item[$column_name] ?>">
                     </figure>
                 </li>
             </ul>
@@ -168,10 +168,13 @@
 
         <dt>形象图</dt>
         <dd>
-            <?php if ( !empty($item['figure_image_urls']) ): ?>
+            <?php
+                $column_name = 'figure_image_urls';
+                if ( !empty($item[$column_name]) ):
+            ?>
                 <ul class=row>
                     <?php
-                    $slides = explode(',', $item['figure_image_urls']);
+                    $slides = explode(',', $item[$column_name]);
                     foreach($slides as $slide):
                         ?>
                         <li class="col-xs-3">
