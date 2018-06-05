@@ -96,7 +96,7 @@
 		/**
 		 * 详情页
 		 */
-		public function detail($url_name)
+		public function detail($url_name = NULL)
 		{
 			// 检查是否已传入必要参数
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
@@ -115,7 +115,7 @@
                 $data['item'] = $result['content'];
 
                 // 页面信息
-                $data['title'] = $this->class_name_cn. ' "'.$data['item']['title']. '"';
+                $data['title'] = $data['item']['title'];
                 $data['class'] = $this->class_name.' detail';
                 $data['description'] = $this->class_name.','. $data['item']['excerpt'];
 

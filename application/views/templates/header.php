@@ -26,7 +26,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180604">
+		<meta name=version content="revision20180605">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -370,7 +370,7 @@
 						-->
 
                         <!--
-                        <?php if ( $this->session->role === '管理员' && $this->session->level > 30): ?>
+                        <?php if ( $this->session->role === '管理员' && $this->session->level >= 30): ?>
 						<li class=dropdown>
 							<a href=# class=dropdown-toggle data-toggle=dropdown>积分 <i class="far fa-angle-down"></i></a>
 							<ul class=dropdown-menu>
