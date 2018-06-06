@@ -33,14 +33,6 @@
 
 <base href="<?php echo $this->media_root ?>">
 
-<div id=breadcrumb>
-	<ol class="breadcrumb container">
-		<li><a href="<?php echo base_url() ?>">首页</a></li>
-		<li><a href="<?php echo base_url($this->class_name) ?>"><?php echo $this->class_name_cn ?></a></li>
-		<li class=active><?php echo $title ?></li>
-	</ol>
-</div>
-
 <div id=content class=container>
 	<ul id=item-actions class=list-unstyled>
 		<li><a href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
@@ -63,14 +55,15 @@
 		<dt>昵称</dt>
 		<dd><?php echo $item['nickname'] ?></dd>
         <dt>性别</dt>
-        <dd><?php echo empty($item['gender'])? '未设置': $item['gender'] ?></dd>
+        <dd><?php echo empty($item['gender'])? 'N/A': $item['gender'] ?></dd>
         <dt>生日</dt>
-        <dd><?php echo empty($item['dob'])? '未填写': $item['dob'] ?></dd>
+        <dd><?php echo empty($item['dob'])? 'N/A': $item['dob'] ?></dd>
 
 		<dt>姓名</dt>
 		<dd><?php echo $item['lastname'].$item['firstname'] ?></dd>
 
-		<dt>身份证号</dt>
+		<!--
+        <dt>身份证号</dt>
 		<dd class="ssn_cn">
             <?php echo !empty($item['code_ssn'])? str_replace(substr($item['code_ssn'], -6), '******', $item['code_ssn']): NULL;  ?>
         </dd>
@@ -85,11 +78,12 @@
             </figure>
         </dd>
         <?php endif ?>
+        -->
 
         <dt>手机号</dt>
 		<dd class="mobile"><?php echo $item['mobile'] ?></dd>
 		<dt>电子邮件地址</dt>
-		<dd><?php echo $item['email'] ?></dd>
+		<dd><?php echo empty($item['email'])? 'N/A': $item['email'] ?></dd>
 
         <!--
 		<dt>开户行名称</dt>
@@ -108,7 +102,7 @@
             <?php echo date('Y-m-d H:i:s', $item['last_login_timestamp']) ?>
 
             <?php if ( ! empty($item['last_login_ip'])): ?>
-            （<?php echo $item['last_login_ip'] ?> <a href="//www.baidu.com/s?wd=<?php echo $item['last_login_ip'] ?>" target="_blank">查询</a>）
+            （IP <?php echo $item['last_login_ip'] ?> <a href="//www.baidu.com/s?wd=<?php echo $item['last_login_ip'] ?>" target="_blank">查询</a>）
             <?php endif ?>
         </dd>
 	</dl>
