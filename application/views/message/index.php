@@ -1,54 +1,7 @@
-    <style>
-        #dialog {color:#3f3f3f;font-size:28px;padding:32px 26px;}
-        #dialog>li.message-item {width:100%;overflow:hidden;display:block;margin-top:30px;position:relative;}
+<link rel=stylesheet media=all href="/css/message.css">
 
-        .message-time {position:absolute;left:50%;}
-            .message-time>span {color:#fff;background-color:#cecece;height:50px;line-height:50px;border-radius:25px;padding:0 16px;display:block;position:relative;right:50%;}
-        .message-avatar {background-color:#fff;width:90px;height:90px;border-radius:12px;overflow:hidden;display:flex;justify-content:center;align-items:center;}
+<ul id="dialog">
 
-        .self .message-avatar {margin-left:16px;float:right;}
-        .other .message-avatar {margin-right:16px;float:left;}
-
-        .message-time+.message-body {margin-top:86px;}
-
-        .message-content {border:1px solid #eec240;border-radius:12px;overflow:hidden;}
-        .type-text {padding:25px 30px;}
-
-        .self .message-content {float:right;background-color:#ffd968;border-color:#eec240;}
-        .other .message-content {float:left;background-color:#fff;border-color:#e9e9e9;}
-
-        .type-text {}
-        .type-text a {color:#4cb5ff;}
-        .type-image {}
-        .type-image img {max-width:280px;max-height:280px;}
-
-        #page-bottom {text-align:center;}
-        #page-bottom hr {border-color:transparent;}
-
-        #action {background-color:#fff;position:fixed;left:0;right:0;bottom:0;z-index:100;padding-top:15px;overflow:hidden;}
-            #tools {display:table;width:100%;height:100%;margin-bottom:15px;}
-                #tools>* {display:table-cell;vertical-align:middle;overflow:hidden;}
-                form {padding-left:26px;}
-                    input[name=content] {background-color:#f4f4f4;width:100%;line-height:80px;border:1px solid #e0dfdf;border-radius:14px;padding:0 20px;}
-                #tools ul {width:118px;overflow:hidden;}
-                    #tools li {float:left;color:#a9a9a9;font-size:66px;width:66px;height:66px;line-height:66px;padding:0 26px;display:inline-block;text-align:center;cursor:pointer;} /* 将与页面右侧、输入框间的空间交给菜单按钮的padding实现，以增大可点击区域 */
-                    li#hide_selectors {display:none;}
-            #selectors_panel {color:#848484;font-size:26px;text-align:center;border-top:1px solid #e0dfdf;padding:18px 4px 12px;display:none;}
-                #selectors_panel li {width:25%;margin-bottom:42px;}
-                    .selector-figure {color:#b3b3b3;font-size:58px;width:108px;height:108px;line-height:108px;margin-bottom:12px;border:2px solid #e1e1e1;display:inline-block;}
-    </style>
-
-<ul id=dialog>
-    <!--<li>-->
-    <!--<div class="message-body self">-->
-    <!--<figure class="message-avatar"><img alt="用户头像" src="https://jinlaisandbox-images.b0.upaiyun.com/user/avatar/201801/0129/1407221.jpg"></figure>-->
-    <!--<div class="message-content type-image">-->
-    <!--<figure>-->
-    <!--<img src="https://jinlaisandbox-images.b0.upaiyun.com/user/avatar/201801/0129/1407221.jpg">-->
-    <!--</figure>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</li>-->
 </ul>
 
 <div id=page-bottom>
@@ -61,7 +14,7 @@
         <form>
             <input id=text-input name=content type=text placeholder="输入框暂不可用" autofocus required>
         </form>
-        <!--<i class="action far fa-image"></i>-->
+
         <ul>
             <li id=show_selectors><i class="fal fa-plus-circle"></i></li>
             <li id=hide_selectors><i class="fal fa-times-circle"></i></li>
@@ -141,16 +94,19 @@
     // 商家信息
     var biz = <?php echo json_encode($biz) ?>;
 
-    var avatar_user = '<figure class="message-avatar"><img alt="用户头像" src="' + url_image_root + 'user/' + user.avatar + '"></figure>'; // 用户头像DOM
-    var avatar_biz = '<figure class="message-avatar"><img alt="商家头像" src="' + url_image_root + 'biz/' + biz.url_logo + '"></figure>'; // 商家头像DOM
+    var avatar_user = '<div class="message-avatar"><figure><img src="' + url_image_root + 'user/' + user.avatar + '"></figure></div>'; // 用户头像DOM
+    var avatar_biz = '<div class="message-avatar"><figure><img src="' + url_image_root + 'biz/' + biz.url_logo + '"></figure></div>'; // 商家头像DOM
+
+    // 页面初始下内边距
+    var maincontainer_padding_bottom = $('#maincontainer').css('padding-bottom');
 
     // 建立EventStream连接
-    var es = new EventSource(url_api + 'es.php?user_id=' + user.user_id + '&biz_id=' + biz.biz_id);
+    var es = new EventSource(url_api + 'es.php?user_id=' + user.user_id);
 
     // 连接建立
-    // es.onopen = function(){
-    //     console.log('onopen');
-    // }
+    es.onopen = function(){
+        console.log('onopen');
+    }
 
     // 报错
     es.onerror = function(event) {
@@ -203,22 +159,35 @@
 
         // 判断消息来源身份类型
         var from = (is_self)? 'self': 'other';
-        message += '<div class="message-body ' + from + '">';
+        var type = event_data.type;
+        message += '<div class="message-body ' + from + ' body-' + type + '">';
 
         // 生成消息头像
         message += (sender == 'user')? avatar_user: avatar_biz;
 
         // 生成消息体容器
-        message += '    <div class="message-content type-' + event_data.type + '">';
+        message += '    <div class="message-content type-' + type + '">';
 
         // 生成消息内容
-        if (event_data.type === 'text')
+        var message_content = '';
+        if (type === 'text')
         {
-            message += '<p>ID' + event_data.message_id + ' ' + event_data.content + '</p>';
-        } else if (event_data.type == 'image') {
-            message += '<figure><img src="' + event_data.url_image + '"></figure>';
+            message_content = '<p>ID' + event_data.message_id + ' ' + event_data.content + '</p>';
+        }
+        else if (type === 'image')
+        {
+            message_content = '<figure><img src="<?php echo MEDIA_URL.'message/' ?>' + event_data.content + '"></figure>';
+        }
+        else if (type === 'location')
+        {
+            message_content = '<a href="<?php echo base_url('location/detail?content=') ?>'+ event_data.content +'"><div>省市区<br>路楼户</div></a>';
+        }
+        else if (type === 'address')
+        {
+            message_content = '收货地址啥啥的';
         }
 
+        message += message_content;
         message += '    </div>'; // end div.message-content
         message += '</div>'; // end div.message-body
         message += '</li>'; // end li.message-item
@@ -247,34 +216,126 @@
     }
 
     // TODO 输入文本消息后发送到服务器
-    text_input = document.getElementById('text-input');
+    var text_input = document.getElementById('text-input');
     text_input.onchange = function(){
-        console.log(text_input.value);
+        var text_wrote = text_input.value;
+        console.log(text_wrote);
+
+        // 清空并将焦点移入文本字段
         text_input.value = '';
         text_input.focus();
+
+        return false;
     }
 
     // 点击切换消息选择器/文本输入框
     $('#action li').click(function(){
-        selectors_toggle();
+        selectors_toggle(true);
     });
 
-    // 收起/显示选择器面板，并调整页面下内边距
-    var maincontainer_padding_bottom = $('#maincontainer').css('padding-bottom');
-    function selectors_toggle()
+    // 点击对话区的空白处时若选择器已展开，则收起选择器，且不将焦点移入文本字段
+    $('#dialog').click(function(){
+        if ($('#selectors_panel').css('display') === 'block')
+        {
+            $('#maincontainer').css('padding-bottom', maincontainer_padding_bottom);
+            $('#selectors_panel, #selectors_panel *').hide();
+
+            // 将聊天窗口底部移入视界
+            document.getElementById('page-bottom').scrollIntoView(true)
+        }
+    });
+
+    /**
+     * 切换选择器显示与否
+     *
+     * @param focus_to_input boolean 是否需要将焦点移入文本字段
+     */
+    function selectors_toggle(focus_to_input)
     {
         $('#action li, #selectors_panel').toggle();
+
         if ($('#selectors_panel').css('display') === 'block'){
             $('#selectors_panel *').show();
             var action_height = $('#action').css('height');
             $('#maincontainer').css('padding-bottom', action_height);
-
-        } else {
+            text_input.blur();
+        }
+        else
+        {
             $('#maincontainer').css('padding-bottom', maincontainer_padding_bottom);
             $('#selectors_panel *').hide();
+
+            focus_to_input = focus_to_input || false;
+            if (focus_to_input)
+            {
+                text_input.focus();
+            }
         }
 
         // 将聊天窗口底部移入视界
         document.getElementById('page-bottom').scrollIntoView(true)
     }
+</script>
+
+<button id="button">消息声音</button>
+
+<script>
+
+(function (){
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    if ( ! window.AudioContext){
+        alert('当前浏览器不支持Web Audio API');
+        return;
+    }
+
+// 按钮元素
+var eleButton = document.getElementById('button');
+
+// 创建新的音频上下文接口
+var audioCtx = new AudioContext();
+
+// 发出的声音频率数据，表现为音调的高低
+var arrFrequency = [196.00, 220.00, 246.94, 261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.50];
+
+// 音调依次递增或者递减处理需要的参数
+var start = 0, direction = 1;
+
+// 鼠标hover我们的按钮的时候
+eleButton.addEventListener('mouseenter', function(){
+    // 当前频率
+    var frequency = arrFrequency[start];
+    // 如果到头，改变音调的变化规则（增减切换）
+    if ( ! frequency) {
+    direction = -1 * direction;
+    start = start + 2 * direction;
+    frequency = arrFrequency[start];
+    }
+    // 改变索引，下一次hover时候使用
+    start = start + direction;
+
+    // 创建一个OscillatorNode, 它表示一个周期性波形（振荡），基本上来说创造了一个音调
+    var oscillator = audioCtx.createOscillator();
+    // 创建一个GainNode,它可以控制音频的总音量
+    var gainNode = audioCtx.createGain();
+    // 把音量，音调和终节点进行关联
+    oscillator.connect(gainNode);
+    // audioCtx.destination返回AudioDestinationNode对象，表示当前audio context中所有节点的最终节点，一般表示音频渲染设备
+    gainNode.connect(audioCtx.destination);
+    // 指定音调的类型，其他还有square|triangle|sawtooth
+    oscillator.type = 'sine';
+    // 设置当前播放声音的频率，也就是最终播放声音的调调
+    oscillator.frequency.value = frequency;
+
+    // 当前时间设置音量为0
+    gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+    // 0.01秒后音量为1
+    gainNode.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.01);
+    // 音调从当前时间开始播放
+    oscillator.start(audioCtx.currentTime);
+    // 1秒内声音慢慢降低，是个不错的停止声音的方法
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1);
+    // 1秒后完全停止声音
+    oscillator.stop(audioCtx.currentTime + 1);
+});
+})();
 </script>
