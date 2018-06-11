@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-$active_group = (ENVIRONMENT === 'production')? 'production': 'development_old';
+$active_group = (ENVIRONMENT === 'production')? 'production': 'development_liuyajie';
 $query_builder = TRUE;
 
 $db['production'] = array(
@@ -104,7 +104,7 @@ $db['development'] = array(
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
-    'db_debug' => (ENVIRONMENT !== 'production'),
+    'db_debug' => TRUE,
     'cache_on' => FALSE,
     'cachedir' => '',
     'char_set' => 'utf8',
@@ -117,7 +117,7 @@ $db['development'] = array(
     'save_queries' => TRUE,
 );
 
-$db['development_old'] = array(
+$db['development_liuyajie'] = array(
     'dsn' => 'mysqli://jinlai:Yibang2017@sensestrong.mysql.rds.aliyuncs.com/jinlai',
     'hostname' => 'sensestrong.mysql.rds.aliyuncs.com', // 数据库URL，以阿里云为例
     'username' => 'jinlai', // 数据库用户名
@@ -126,7 +126,7 @@ $db['development_old'] = array(
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
-    'db_debug' => (ENVIRONMENT !== 'production'),
+    'db_debug' => TRUE,
     'cache_on' => FALSE,
     'cachedir' => '',
     'char_set' => 'utf8',

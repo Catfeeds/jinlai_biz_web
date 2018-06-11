@@ -1,8 +1,10 @@
 <?php
 	defined('BASEPATH') OR exit('No direct script access allowed');
 
-	// 生成SEO相关变量，一般为页面特定信息与在config/config.php中设置的站点通用信息拼接
-	$title = isset($title)? $title: SITE_NAME.' - '.SITE_SLOGAN;
+    // 生成SEO相关变量，一般为页面特定信息与在config/config.php中设置的站点通用信息拼接
+    $title_prefix = (ENVIRONMENT !== 'production')? '[测试]': NULL;
+    $title = isset($title)? $title: SITE_NAME.' - '.SITE_SLOGAN;
+    $title = $title_prefix. $title;
     $keywords = (isset($keywords)? $keywords.',': NULL). SITE_KEYWORDS;
     $description = (isset($description)? $description: NULL). SITE_DESCRIPTION;
 
@@ -26,7 +28,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180606">
+		<meta name=version content="revision20180610">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -208,7 +210,7 @@
         <link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/reset.css">
         <link rel=stylesheet media=all href="<?php echo CDN_URL ?>bootstrap/v3.3.7/bootstrap.min.css">
         <link rel=stylesheet media=all href="<?php echo CDN_URL ?>css/flat-ui.min.css">
-		<link rel=stylesheet media=all href="/css/style.css<?php echo '?'.time() ?>">
+		<link rel=stylesheet media=all href="/css/style.css">
 
         <?php if ($this->session->time_expire_login > time()): ?>
         <link rel=stylesheet media=all href="/css/file-upload.css">
@@ -224,7 +226,9 @@
         <?php else: ?>
         <link rel=apple-touch-icon href="<?php echo CDN_URL ?>icon/jinlai_client/icon120@3x.png">
         <meta name=format-detection content="telephone=yes, address=no, email=no">
-        <!--<meta name=apple-itunes-app content="app-id=<?php //echo IOS_APP_ID ?>">-->
+            <?php if ($this->user_agent['is_ios'] && !empty(IOS_APP_ID)): ?>
+                <meta name=apple-itunes-app content="app-id=<?php echo IOS_APP_ID ?>">
+            <?php endif ?>
         <?php endif ?>
 	</head>
 <?php

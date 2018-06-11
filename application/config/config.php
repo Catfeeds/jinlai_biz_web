@@ -8,8 +8,11 @@ define('CURRENT_VERSION_UPDATE', 0); // 副版本号，功能新增
 define('CURRENT_VERSION_SUPPORT', 1); // 支持版本号，功能调整
 
 // 根域名及URL
-define('ROOT_DOMAIN', '.517ybang.com');
-//define('ROOT_DOMAIN', '.jinlaimall.com'); // 生产环境
+if (ENVIRONMENT !== 'production'): // 测试环境
+    define('ROOT_DOMAIN', '.517ybang.com');
+else: // 生产环境
+    define('ROOT_DOMAIN', '.jinlaimall.com');
+endif;
 define('ROOT_URL', ROOT_DOMAIN.'/');
 
 // 允许响应指定URL的跨域请求
@@ -40,10 +43,10 @@ function api_url($api_name)
     return API_URL. $api_name;
 }
 
-// （可选）JS、CSS等非当前站点特有资源所在URL，可用于配合又拍云等第三方存储
+// JS、CSS等非当前站点特有资源所在URL，可用于配合又拍云等第三方存储
 define('CDN_URL', 'https://cdn-remote'.ROOT_URL); // 生产环境
 
-// （可选）媒体文件，即非样式图片、视频、音频存储的根目录所在URL，可用于配合又拍云等第三方存储
+// 媒体文件，即非样式图片、视频、音频存储的根目录所在URL，可用于配合又拍云等第三方存储
 define('DEFAULT_IMAGE', NULL); // 默认图片URL
 define('MEDIA_URL', 'https://medias'.ROOT_URL);
 
@@ -73,14 +76,16 @@ define('WEPAY_URL_NATIVE', BASE_URL.'/payment/wepay/example/native.php?showwxpay
 // 支付宝参数
 define('ALIPAY_URL', BASE_URL.'/payment/alipay/alipayapi.php?');
 
-// 又拍云参数
-define('UPYUN_BUCKETNAME', 'jinlaisandbox-images');
-define('UPYUN_USERNAME', 'jinlaisandbox');
-define('UPYUN_USERPASSWORD', 'jinlaisandbox');
-// 生产环境
-// define('UPYUN_BUCKETNAME', 'medias-jinlai');
-// define('UPYUN_USERNAME', 'jinlaibiz');
-// define('UPYUN_USERPASSWORD', 'jinlai2017');
+// 又拍云
+if (ENVIRONMENT !== 'production'): // 测试环境
+    define('UPYUN_BUCKETNAME', 'jinlaisandbox-images');
+    define('UPYUN_USERNAME', 'jinlaisandbox');
+    define('UPYUN_USERPASSWORD', 'jinlaisandbox');
+else: // 生产环境
+    define('UPYUN_BUCKETNAME', 'medias-jinlai');
+    define('UPYUN_USERNAME', 'jinlaibiz');
+    define('UPYUN_USERPASSWORD', 'jinlai2017');
+endif;
 
 /*
 |--------------------------------------------------------------------------

@@ -644,7 +644,7 @@
             $params['id'] = $id;
 
             // 从API服务器获取相应信息
-            $url = api_url('user/detail');
+            $url = api_url('stuff/detail');
             $result = $this->curl->go($url, $params, 'array');
             if ($result['status'] === 200):
                 // 若不允许已删除项
