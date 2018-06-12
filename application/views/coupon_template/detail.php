@@ -67,14 +67,29 @@
             <figure class="qrcode col-xs-12 col-sm-6 col-md-3" data-qrcode-string="<?php echo $item_url ?>"></figure>
         </dd>
 
+        <?php
+        // 当前项客户端URL
+        $create_url = WEB_URL.'coupon/create?template_id='.$item[$this->id_name];
+        ?>
+        <dt>领券链接</dt>
+        <dd>
+            <span><?php echo $create_url ?></span>
+            <a href="<?php echo $create_url ?>" target=_blank>查看</a>
+        </dd>
+
+        <dt><?php echo $this->class_name_cn ?>二维码</dt>
+        <dd>
+            <figure class="qrcode col-xs-12 col-sm-6 col-md-3" data-qrcode-string="<?php echo $create_url ?>"></figure>
+        </dd>
+
 		<dt>优惠券模板ID</dt>
 		<dd><?php echo $item['template_id'] ?></dd>
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 		<dt>说明</dt>
 		<dd><?php echo empty($item['description'])? '无': $item['description'] ?></dd>
-		<dt>面值</dt>
-		<dd>￥ <?php echo $item['amount'] ?></dd>
+		<dt>抵扣额</dt>
+		<dd><?php echo empty($item['amount'])? ($item['rate']*100).'%': '￥'.$item['amount'] ?></dd>
 		<dt>起用金额</dt>
 		<dd><?php echo !empty($item['min_subtotal'])? '￥ '.$item['min_subtotal'].'（订单小计）': '不限' ?></dd>
 
@@ -108,8 +123,8 @@
 		<dt>有效期</dt>
 		<dd>
             自领取时起<?php echo $options[ $item['period'] ]?>
-            <?php echo empty($item['time_start'])? NULL: '<br>不早于 '. date('Y-m-d H:i:s', $item['time_start']) ?>
-            <?php echo empty($item['time_end'])? NULL: '<br>不晚于 '. date('Y-m-d H:i:s', $item['time_end']) ?>
+            <?php echo empty($item['time_start'])? NULL: '<br>不早于 '. date('Y-m-d H:i', $item['time_start']) ?>
+            <?php echo empty($item['time_end'])? NULL: '<br>不晚于 '. date('Y-m-d H:i', $item['time_end']) ?>
 		</dd>
 		
 		<dt>总限量</dt>

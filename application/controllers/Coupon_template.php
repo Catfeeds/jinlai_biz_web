@@ -14,23 +14,27 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'template_id', 'biz_id', 'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'max_amount_user', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end', 
-			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
+            'category_id', 'category_biz_id', 'item_id', 'amount', 'rate', 'max_amount', 'max_amount_user', 'min_subtotal', 'period', 'time_start', 'time_end',
+            'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
 		/**
 		 * 可被编辑的字段名
 		 */
 		protected $names_edit_allowed = array(
-			'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'max_amount_user', 'min_subtotal', 'amount', 'period', 'time_start', 'time_end',
+		    'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'amount', 'rate', 'max_amount', 'max_amount_user', 'min_subtotal', 'period', 'time_start', 'time_end',
 		);
 
 		/**
 		 * 完整编辑单行时必要的字段名
 		 */
 		protected $names_edit_required = array(
-			'id', 'name', 'amount',
+			'id',
+            'name',
 		);
+
+        // 优惠券默认有效时长
+        protected $default_period = 2592000; // 30天
 
 		public function __construct()
 		{
@@ -216,10 +220,10 @@
 			// 获取品牌
 			//$data['brands'] = $this->list_brand();
 
-			// 获取系统级商品分类
+			// 获取平台商品分类
 			//$data['categories'] = $this->list_category();
 
-			// 获取商家级商品分类
+			// 获取店内商品分类
 			//$data['biz_categories'] = $this->list_category_biz();
 
             // 获取当前商家所有商品数据
@@ -230,11 +234,12 @@
 			// 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
-			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|greater_than_equal_to[1]|less_than_equal_to[999]');
-			$this->form_validation->set_rules('min_subtotal', '起用金额（元）', 'trim|greater_than_equal_to[0]|less_than_equal_to[9999]');
-            $this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural_no_zero|greater_than_equal_to[0]|less_than_equal_to[999999]');
-            $this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[99]');
-            $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than_equal_to[3600]|less_than_equal_to[31622400]');
+            $this->form_validation->set_rules('amount', '面值（元）', 'trim|greater_than_equal_to[0]|less_than_equal_to[999]');
+            $this->form_validation->set_rules('rate', '折扣率', 'trim|greater_than_equal_to[0]|less_than_equal_to[50]');
+            $this->form_validation->set_rules('min_subtotal', '起用金额（元）', 'trim|greater_than_equal_to[1]|less_than_equal_to[9999]');
+            $this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
+            $this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[99]');
+            $this->form_validation->set_rules('period', '有效时长', 'trim|greater_than_equal_to[3600]|less_than_equal_to[31622400]');
 			$this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
             $this->form_validation->set_message('time_start', '有效期开始时间需详细到分，且不可晚于结束时间');
@@ -252,45 +257,68 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
-				// 需要创建的数据；逐一赋值需特别处理的字段
-				$data_to_create = array(
-					'user_id' => $this->session->user_id,
+                // 可选的必要参数（其中之一不可为空）
+                $amount = empty($this->input->post('amount'))? NULL: $this->input->post('amount');
+                $rate = empty($this->input->post('rate'))? NULL: $this->input->post('rate');
+                if (empty($amount.$rate)):
+                    $data['error'] = '可选的必要请求参数未传入';
 
-                    'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
-                    'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
-                );
-				// 自动生成无需特别处理的数据
-				$data_need_no_prepare = array(
-					'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'max_amount_user', 'min_subtotal', 'amount', 'period',
-				);
-				foreach ($data_need_no_prepare as $name)
-					$data_to_create[$name] = $this->input->post($name);
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/create', $data);
+                    $this->load->view('templates/footer', $data);
 
-				// 向API服务器发送待创建数据
-				$params = $data_to_create;
-                //$this->key_value($params);exit();
-				$url = api_url($this->class_name. '/create');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn. '创建成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-					$data['operation'] = 'create';
-					$data['id'] = $result['content']['id']; // 创建后的信息ID
+                else:
+                    // 需要创建的数据；逐一赋值需特别处理的字段
+                    $period = empty($this->input->post('period'))? $this->default_period: $this->input->post('period');
 
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
+                    $data_to_create = array(
+                        'user_id' => $this->session->user_id,
 
-				else:
-					// 若创建失败，则进行提示
-					$data['error'] = $result['content']['error']['message'];
+                        'amount' => empty($amount)? 0: $amount,
+                        'rate' => empty($rate)? 0: $rate/100,
 
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/create', $data);
-					$this->load->view('templates/footer', $data);
+                        'min_subtotal' => empty($this->input->post('min_subtotal'))? 1: $this->input->post('min_subtotal'),
+                        'max_amount' => empty($this->input->post('max_amount'))? 0: $this->input->post('max_amount'),
+                        'max_amount_user' => empty($this->input->post('max_amount_user'))? 0: $this->input->post('max_amount_user'),
 
-				endif;
+                        'period' => $period,
+                        'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
+                        'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
+                    );
+                    // 自动生成无需特别处理的数据
+                    $data_need_no_prepare = array(
+                        'category_id', 'category_biz_id', 'item_id', 'name', 'description',
+                    );
+                    foreach ($data_need_no_prepare as $name)
+                        $data_to_create[$name] = $this->input->post($name);
+
+                    // 向API服务器发送待创建数据
+                    $params = $data_to_create;
+                    //$this->key_value($params);exit();
+                    $url = api_url($this->class_name. '/create');
+                    $result = $this->curl->go($url, $params, 'array');
+                    if ($result['status'] === 200):
+                        $data['title'] = $this->class_name_cn. '创建成功';
+                        $data['class'] = 'success';
+                        $data['content'] = $result['content']['message'];
+                        $data['operation'] = 'create';
+                        $data['id'] = $result['content']['id']; // 创建后的信息ID
+
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/result', $data);
+                        $this->load->view('templates/footer', $data);
+
+                    else:
+                        // 若创建失败，则进行提示
+                        $data['error'] = $result['content']['error']['message'];
+
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/create', $data);
+                        $this->load->view('templates/footer', $data);
+
+                    endif;
+
+                endif; // end 可选的必要参数已传入
 				
 			endif;
 		} // end create
@@ -343,15 +371,16 @@
 
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
-			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
-			$this->form_validation->set_rules('amount', '面值（元）', 'trim|required|greater_than_equal_to[1]|less_than_equal_to[999]');
-			$this->form_validation->set_rules('min_subtotal', '起用金额（元）', 'trim|greater_than_equal_to[0]|less_than_equal_to[9999]');
-			$this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[999999]');
-			$this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|is_natural_no_zero|greater_than_equal_to[0]|less_than_equal_to[99]');
-            $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than_equal_to[3600]|less_than_equal_to[31622400]');
-			$this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
-			$this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
+            $this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
+            $this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
+            $this->form_validation->set_rules('amount', '面值（元）', 'trim|greater_than_equal_to[0]|less_than_equal_to[999]');
+            $this->form_validation->set_rules('rate', '折扣率', 'trim|greater_than_equal_to[0]|less_than_equal_to[50]');
+            $this->form_validation->set_rules('min_subtotal', '起用金额（元）', 'trim|greater_than_equal_to[1]|less_than_equal_to[9999]');
+            $this->form_validation->set_rules('max_amount', '总限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[999999]');
+            $this->form_validation->set_rules('max_amount_user', '单个用户限量', 'trim|greater_than_equal_to[0]|less_than_equal_to[99]');
+            $this->form_validation->set_rules('period', '有效时长', 'trim|greater_than_equal_to[3600]|less_than_equal_to[31622400]');
+            $this->form_validation->set_rules('time_start', '有效期开始时间', 'trim|exact_length[16]|callback_time_start');
+            $this->form_validation->set_rules('time_end', '有效期结束时间', 'trim|exact_length[16]|callback_time_end');
             $this->form_validation->set_message('time_start', '有效期开始时间需详细到分，且不可晚于结束时间');
             $this->form_validation->set_message('time_end', '有效期结束时间需详细到分，且不可早于开始时间');
             $this->form_validation->set_rules('category_id', '限用系统商品分类', 'trim|is_natural_no_zero');
@@ -367,45 +396,67 @@
 				$this->load->view('templates/footer', $data);
 
 			else:
-				// 需要编辑的数据；逐一赋值需特别处理的字段
-				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
-					'id' => $id,
+                // 可选的必要参数（其中之一不可为空）
+                $amount = empty($this->input->post('amount'))? NULL: $this->input->post('amount');
+                $rate = empty($this->input->post('rate'))? NULL: $this->input->post('rate');
+                if (empty($amount.$rate)):
+                    $data['error'] = '可选的必要请求参数未传入';
 
-                    'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
-                    'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
-                );
-				// 自动生成无需特别处理的数据
-				$data_need_no_prepare = array(
-					'category_id', 'category_biz_id', 'item_id', 'name', 'description', 'max_amount', 'max_amount_user', 'min_subtotal', 'amount', 'period',
-				);
-				foreach ($data_need_no_prepare as $name)
-					$data_to_edit[$name] = $this->input->post($name);
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/edit', $data);
+                    $this->load->view('templates/footer', $data);
 
-				// 向API服务器发送待创建数据
-				$params = $data_to_edit;
-				$url = api_url($this->class_name. '/edit');
-				$result = $this->curl->go($url, $params, 'array');
-				if ($result['status'] === 200):
-					$data['title'] = $this->class_name_cn. '修改成功';
-					$data['class'] = 'success';
-					$data['content'] = $result['content']['message'];
-					$data['operation'] = 'edit';
-					$data['id'] = $id;
+                else:
+                    // 需要编辑的数据；逐一赋值需特别处理的字段
+                    $period = empty($this->input->post('period'))? $this->default_period: $this->input->post('period');
+                    $data_to_edit = array(
+                        'user_id' => $this->session->user_id,
+                        'id' => $id,
 
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/result', $data);
-					$this->load->view('templates/footer', $data);
+                        'amount' => empty($amount)? 0: $amount,
+                        'rate' => empty($rate)? 0: $rate/100,
 
-				else:
-					// 若创建失败，则进行提示
-					$data['error'] = $result['content']['error']['message'];
+                        'min_subtotal' => empty($this->input->post('min_subtotal'))? 1: $this->input->post('min_subtotal'),
+                        'max_amount' => empty($this->input->post('max_amount'))? 0: $this->input->post('max_amount'),
+                        'max_amount_user' => empty($this->input->post('max_amount_user'))? 0: $this->input->post('max_amount_user'),
 
-					$this->load->view('templates/header', $data);
-					$this->load->view($this->view_root.'/edit', $data);
-					$this->load->view('templates/footer', $data);
+                        'period' => $period,
+                        'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
+                        'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
+                    );
+                    // 自动生成无需特别处理的数据
+                    $data_need_no_prepare = array(
+                        'category_id', 'category_biz_id', 'item_id', 'name', 'description',
+                    );
+                    foreach ($data_need_no_prepare as $name)
+                        $data_to_edit[$name] = $this->input->post($name);
 
-				endif;
+                    // 向API服务器发送待创建数据
+                    $params = $data_to_edit;
+                    $url = api_url($this->class_name. '/edit');
+                    $result = $this->curl->go($url, $params, 'array');
+                    if ($result['status'] === 200):
+                        $data['title'] = $this->class_name_cn. '修改成功';
+                        $data['class'] = 'success';
+                        $data['content'] = $result['content']['message'];
+                        $data['operation'] = 'edit';
+                        $data['id'] = $id;
+
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/result', $data);
+                        $this->load->view('templates/footer', $data);
+
+                    else:
+                        // 若创建失败，则进行提示
+                        $data['error'] = $result['content']['error']['message'];
+
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/edit', $data);
+                        $this->load->view('templates/footer', $data);
+
+                    endif;
+
+                endif; // end 可选的必要参数已传入
 
 			endif;
 		} // end edit

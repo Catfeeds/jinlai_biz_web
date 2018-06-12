@@ -70,6 +70,28 @@
 
 			<div class=form-group>
 				<label for=template_ids class="col-sm-2 control-label">所含优惠券 ※</label>
+                <div class=col-sm-10>
+                    <textarea class=form-control name=template_ids placeholder="例如18|3,17|1"><?php echo set_value('template_ids') ?></textarea>
+                    <p class=help-block>优惠券模板ID|数量，多个优惠券间以半角逗号分隔，例如18|3,17|1</p>
+
+                    <h3>可发放优惠券</h3>
+                    <div class="well">
+                        <ul>
+                            <?php
+                            $options = $coupon_templates;
+                            foreach ($options as $option):
+                                if ( empty($option['time_delete']) ):
+                                    ?>
+                                    <li>ID<?php echo $option['template_id'] ?> <?php echo $option['name'] ?></li>
+                                <?php
+                                endif;
+                            endforeach;
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+
+                <!--
 				<div class=col-sm-10>
                     <?php $input_name = 'template_ids[]' ?>
                     <select class=form-control name="<?php echo $input_name ?>" multiple required>
@@ -88,6 +110,7 @@
 
                     <p class=help-block>放入券包的优惠券，在优惠券包被领取时将忽视总限量（若有）及单个用户限量（若有），以优惠券包的总限量（若有）为准；作为单个优惠券被领取时不受影响。</p>
 				</div>
+				-->
 			</div>
 
             <div class=form-group>

@@ -226,3 +226,42 @@ $(function(){
 	}
 
 });
+
+// 验证数字格式
+function validate_number(value, allow_zero, allow_minus)
+{
+    // 转换为数字格式
+    value = parseFloat(value);
+
+    // 默认允许为0
+    var allow_zero = allow_zero || 'yes';
+
+    // 默认不允许为负数
+    var allow_minus = allow_minus || 'no';
+
+    // 初始化返回结果
+    var result = true;
+
+    // 检查是否为数字
+    if (value.toString() === 'NaN')
+    {
+        console.log('不是数字');
+        result = false;
+    }
+
+    // 检查是否为0
+    if (result === true && allow_zero === 'no' && value === 0)
+    {
+        console.log('不应为0');
+        result = false;
+    }
+
+    // 检查是否为负数
+    if (result === true && allow_minus === 'no' && value < 0)
+    {
+        console.log('不应为负数');
+        result = false;
+    }
+
+    return result;
+} // end validate_number

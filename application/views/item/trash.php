@@ -22,6 +22,11 @@
 	}
 </style>
 
+<script>
+    // 分页参数
+    var limit = <?php echo $this->limit ?>;
+    var offset = <?php echo $this->offset ?>;
+</script>
 <script defer src="/js/trash.js"></script>
 
 <base href="<?php echo $this->media_root ?>">

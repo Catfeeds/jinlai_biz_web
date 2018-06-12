@@ -69,6 +69,21 @@
             <figure class="qrcode col-xs-12 col-sm-6 col-md-3" data-qrcode-string="<?php echo $item_url ?>"></figure>
         </dd>
 
+        <?php
+        // 当前项客户端URL
+        $create_url = WEB_URL.'coupon/create?combo_id='.$item[$this->id_name];
+        ?>
+        <dt>领券链接</dt>
+        <dd>
+            <span><?php echo $create_url ?></span>
+            <a href="<?php echo $create_url ?>" target=_blank>查看</a>
+        </dd>
+
+        <dt><?php echo $this->class_name_cn ?>二维码</dt>
+        <dd>
+            <figure class="qrcode col-xs-12 col-sm-6 col-md-3" data-qrcode-string="<?php echo $create_url ?>"></figure>
+        </dd>
+
 		<dt>名称</dt>
 		<dd><?php echo $item['name'] ?></dd>
 
@@ -77,7 +92,7 @@
 
 		<dt>开放领取时间</dt>
 		<dd>
-			<?php echo empty($item['time_start'])? '自即日起': date('Y-m-d H:i:s', $item['time_start']) ?> <?php echo empty($item['time_end'])? '始终开放': '至 '.date('Y-m-d H:i:s', $item['time_end']); ?>
+			<?php echo empty($item['time_start'])? '自即日起': date('Y-m-d H:i', $item['time_start']) ?> <?php echo empty($item['time_end'])? '始终开放': '至 '.date('Y-m-d H:i', $item['time_end']); ?>
 		</dd>
 
         <dt>所含优惠券</dt>
@@ -85,7 +100,7 @@
             <ul class=margined-list>
                 <?php foreach ($templates as $template): ?>
                     <li>
-                        <a href="<?php echo base_url('coupon_template/detail?id='.$template['template_id']) ?>" target=_blank><?php echo $template['name'] ?> <i class="far fa-search"></i></a>
+                        <a href="<?php echo base_url('coupon_template/detail?id='.$template['template_id']) ?>" target=_blank><?php echo $template['name'] ?>×<?php echo $template['count'] ?> <i class="far fa-search"></i></a>
                     </li>
                 <?php endforeach ?>
             </ul>

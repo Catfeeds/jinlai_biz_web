@@ -60,6 +60,8 @@
 		 */
 		public function index()
 		{
+            parent::index();
+
 			// 页面信息
 			$data = array(
 				'title' => $this->class_name_cn. '列表',
@@ -93,6 +95,8 @@
 
 				// 排序条件
 				$condition['orderby_time_create'] = 'DESC';
+				$condition['limit'] = $this->limit;
+                $condition['offset'] = $this->offset;
 
 				// 从API服务器获取相应列表信息
 				$params = $condition;

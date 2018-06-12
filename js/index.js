@@ -1,6 +1,7 @@
 /* 列表页通用JavaScript */
 
 $(function(){
+
     // 显示批量操作栏
     $('#enter_bulk').click(function(){
         $('#primary_actions').hide();

@@ -115,6 +115,15 @@
 		} // end __destruct
 
         /**
+         * 列表页通用方法
+         */
+        public function index()
+        {
+            $this->limit = empty($this->input->get_post('limit')) ? 0 : $this->input->get_post('limit');
+            $this->offset = empty($this->input->get_post('offset')) ? 0 : $this->input->get_post('offset');
+        }
+
+        /**
          * 检查访问设备类型
          */
         protected function user_agent_determine()

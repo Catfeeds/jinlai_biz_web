@@ -22,6 +22,25 @@
 </style>
 
 <script defer src="/js/create.js"></script>
+<script src="/js/form.js"></script>
+<script>
+    $(function(){
+        $('form').submit(function(){
+            var amount = $('[name=amount]').val();
+            var rate = $('[name=rate]').val();
+
+            if (validate_number(amount, 'no') === false && validate_number(rate, 'no') === false)
+            {
+                alert('面值与折扣率至少需填写一项');
+
+                // 将聊天窗口底部移入视界
+                $("html,body").animate({"scrollTop":($('[name=amount]').offset().top - 100)});
+                $('[name=amount]').val('').focus(); // 清空并聚焦到amount字段
+                return false;
+            }
+        });
+    });
+</script>
 
 <base href="<?php echo $this->media_root ?>">
 
@@ -61,7 +80,6 @@
         <p class=help-block>必填项以“※”符号标示</p>
 
 		<fieldset>
-
 			<div class=form-group>
 				<label for=name class="col-sm-2 control-label">名称 ※</label>
 				<div class=col-sm-10>
@@ -77,15 +95,31 @@
 			</div>
 
 			<div class=form-group>
-				<label for=amount class="col-sm-2 control-label">面值 ※</label>
-				<div class="input-group col-sm-10">
-                    <div class="input-group-addon">￥</div>
-					<input class=form-control name=amount type=number step=1 min=1 max=999 value="<?php echo set_value('amount') ?>" placeholder="最高999" required>
+				<label for=amount class="col-sm-2 control-label">面值</label>
+				<div class=col-sm-10>
+                    <div class=input-group>
+                        <div class="input-group-addon">￥</div>
+                        <input class=form-control name=amount type=number step=1 min=0 max=999 value="<?php echo set_value('amount') ?>" placeholder="最高999">
+                    </div>
+
+                    <p class=help-block>面值与折扣率至少需填写一项，若同时填写则仅按面值计算实际折扣额</p>
 				</div>
 			</div>
 
+            <div class=form-group>
+                <label for=rate class="col-sm-2 control-label">折扣率</label>
+                <div class=col-sm-10>
+                    <div class=input-group>
+                        <input class=form-control name=rate type=number step=1 min=0 max=50 value="<?php echo set_value('rate') ?>" placeholder="最高50">
+                        <div class="input-group-addon">%</div>
+                    </div>
+
+                    <p class=help-block>面值与折扣率至少需填写一项，若同时填写则仅按面值计算实际折扣额</p>
+                </div>
+            </div>
+
 			<div class=form-group>
-				<label for=min_subtotal class="col-sm-2 control-label">起用金额 </label>
+				<label for=min_subtotal class="col-sm-2 control-label">起用金额</label>
                 <div class="input-group col-sm-10">
                     <div class="input-group-addon">￥</div>
 					<input class=form-control name=min_subtotal type=number step=1 max=9999 value="<?php echo set_value('min_subtotal') ?>" placeholder="即订单小计；留空则不限，最高9999">

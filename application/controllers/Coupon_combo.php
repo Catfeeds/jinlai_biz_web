@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'biz_id', 'name', 'description', 'template_ids', 'max_amount', 'period', 'time_start', 'time_end',
+			'max_amount', 'period', 'time_start', 'time_end',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -115,18 +115,7 @@
 			$result = $this->curl->go($url, $params, 'array');
 			if ($result['status'] === 200):
 				$data['item'] = $result['content'];
-
-                if ( !empty($data['item']['template_ids']) ):
-                    unset($params['id']);
-                    $params['ids'] = $data['item']['template_ids'];
-                    $url = api_url('coupon_template/index');
-                    $result = $this->curl->go($url, $params, 'array');
-                    if ($result['status'] === 200):
-                        $data['templates'] = $result['content'];
-                    else:
-                        $data['templates'] = NULL;
-                    endif;
-                endif;
+                $data['templates'] = $result['content']['templates'];
 
                 // 页面信息
                 $data['title'] = $this->class_name_cn. ' "'.$data['item']['name']. '"';
@@ -226,7 +215,8 @@
                 // 验证规则 https://www.codeigniter.com/user_guide/libraries/form_validation.html#rule-reference
                 $this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
                 $this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
-                $this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
+                //$this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
+                $this->form_validation->set_rules('template_ids', '所含优惠券', 'trim|required');
                 $this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[999999]');
                 $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than_equal_to[3600]|less_than_equal_to[31622400]');
                 $this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
@@ -244,10 +234,13 @@
 
                 else:
                     // 需要创建的数据；逐一赋值需特别处理的字段
+                    $template_ids = $this->input->post('template_ids');
+                    $template_ids = is_array($template_ids)? implode(',', $template_ids): $template_ids;
+
                     $data_to_create = array(
                         'user_id' => $this->session->user_id,
 
-                        'template_ids' => implode(',', $this->input->post('template_ids')),
+                        'template_ids' => $template_ids,
                         'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
                         'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
                     );
@@ -318,7 +311,8 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('name', '名称', 'trim|required|max_length[20]');
 			$this->form_validation->set_rules('description', '说明', 'trim|max_length[30]');
-			$this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
+			//$this->form_validation->set_rules('template_ids[]', '所含优惠券', 'trim|required');
+            $this->form_validation->set_rules('template_ids', '所含优惠券', 'trim|required');
 			$this->form_validation->set_rules('max_amount', '总限量', 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[999999]');
             $this->form_validation->set_rules('period', '有效时长', 'trim|is_natural_no_zero|greater_than_equal_to[3600]|less_than_equal_to[31622400]');
 			$this->form_validation->set_rules('time_start', '领取开始时间', 'trim|exact_length[16]|callback_time_start');
@@ -347,11 +341,14 @@
 
 			else:
 				// 需要编辑的数据；逐一赋值需特别处理的字段
+                $template_ids = $this->input->post('template_ids');
+                $template_ids = is_array($template_ids)? implode(',', $template_ids): $template_ids;
+
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'id' => $id,
 
-                    'template_ids' => implode(',', $this->input->post('template_ids')),
+                    'template_ids' => $template_ids,
                     'time_start' => empty($this->input->post('time_start'))? NULL: $this->strto_minute($this->input->post('time_start')), // 时间仅保留到分钟，下同
                     'time_end' => empty($this->input->post('time_end'))? NULL: $this->strto_minute($this->input->post('time_end')),
                 );

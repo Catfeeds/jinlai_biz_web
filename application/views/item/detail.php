@@ -170,16 +170,16 @@
         <dd>
             <?php
                 $column_name = 'figure_image_urls';
-                if ( !empty($item[$column_name]) ):
+                if ( !empty( trim($item[$column_name], ',') ) ):
             ?>
                 <ul class=row>
                     <?php
-                    $slides = explode(',', $item[$column_name]);
+                    $slides = array_filter( explode(',', $item[$column_name]) );
                     foreach($slides as $slide):
                         ?>
                         <li class="col-xs-3">
                             <figure>
-                                <img src="<?php echo MEDIA_URL.'item/'.$slide ?>">
+                                <img src="<?php echo $slide ?>">
                             </figure>
                         </li>
                     <?php endforeach ?>
@@ -219,9 +219,7 @@
             <?php if ( empty($item['description']) ): ?>
                 <p>商品描述尚未填写</p>
             <?php else: ?>
-                <div id=description-content>
-                    <?php echo $item['description'] ?>
-                </div>
+                <div id=description-content><?php echo $item['description'] ?></div>
             <?php endif ?>
 
             <a class="btn btn-default btn-block" href="<?php echo base_url('item/edit_description?id='.$item['item_id']) ?>" target=_blank>填写/修改描述 <i class="far fa-angle-right"></i></a>

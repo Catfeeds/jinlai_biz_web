@@ -217,6 +217,7 @@
 					<input class=form-control name=unit_name type=text value="<?php echo empty(set_value('unit_name'))? $item['unit_name']: set_value('unit_name') ?>" placeholder="最多10个字符，例如斤、双、头、件等，默认“份”">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=stocks class="col-sm-2 control-label">库存量</label>
                 <div class=col-sm-10>
