@@ -14,14 +14,15 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'refund_id', 'biz_id', 'user_id', 'content', 'time_create', 'time_delete', 'time_edit', 'operator_id',
+			'refund_id', 'user_id',
+            'time_create', 'time_delete', 'time_edit', 'operator_id',
 		);
 
 		public function __construct()
 		{
 			parent::__construct();
 
-			// （可选）未登录用户转到登录页
+			// 未登录用户转到登录页
 			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
 
 			// 向类属性赋值

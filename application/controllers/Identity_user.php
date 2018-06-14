@@ -9,14 +9,7 @@
 	 * @copyright ICBG <www.bingshankeji.com>
 	 */
 	class Identity_user extends MY_Controller
-	{	
-		/**
-		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
-		 */
-		protected $names_to_sort = array(
-			'user_id', 'fullname', 'code_ssn_owner', 'url_image_owner_id', 'url_verify_photo', 'bank_name', 'bank_account', 'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id', 'status',
-		);
-
+	{
 		/**
 		 * 可被编辑的字段名
 		 */
@@ -55,49 +48,6 @@
 		} // end __construct
 
 		/**
-		 * 列表页
-		 */
-		public function index()
-		{
-			// 页面信息
-			$data = array(
-				'title' => $this->class_name_cn. '列表',
-				'class' => $this->class_name.' index',
-			);
-
-			// 筛选条件
-			$condition['time_delete'] = 'NULL';
-			// （可选）遍历筛选条件
-            foreach ($this->names_to_sort as $sorter):
-                if ( !empty($this->input->get_post($sorter)) )
-                    $condition[$sorter] = $this->input->get_post($sorter);
-            endforeach;
-
-			// 排序条件
-			$order_by = NULL;
-			//$order_by['name'] = 'value';
-
-			// 从API服务器获取相应列表信息
-			$params = $condition;
-			$url = api_url($this->class_name. '/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-                $data['items'] = array();
-				$data['error'] = $result['content']['error']['message'];
-			endif;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
-
-			// 输出视图
-			$this->load->view('templates/header', $data);
-			$this->load->view($this->view_root.'/index', $data);
-			$this->load->view('templates/footer', $data);
-		} // end index
-
-		/**
 		 * 详情页
 		 */
 		public function detail()
@@ -130,53 +80,6 @@
 			$this->load->view($this->view_root.'/detail', $data);
 			$this->load->view('templates/footer', $data);
 		} // end detail
-
-		/**
-		 * 回收站
-		 */
-		public function trash()
-		{
-			// 操作可能需要检查操作权限
-			$role_allowed = array('管理员', '经理'); // 角色要求
-			$min_level = 30; // 级别要求
-			$this->permission_check($role_allowed, $min_level);
-
-			// 页面信息
-			$data = array(
-				'title' => $this->class_name_cn. '回收站',
-				'class' => $this->class_name.' trash',
-			);
-
-			// 筛选条件
-			$condition['time_delete'] = 'IS NOT NULL';
-			// （可选）遍历筛选条件
-            foreach ($this->names_to_sort as $sorter):
-                if ( !empty($this->input->get_post($sorter)) )
-                    $condition[$sorter] = $this->input->get_post($sorter);
-            endforeach;
-
-			// 排序条件
-			$order_by['time_delete'] = 'DESC';
-
-			// 从API服务器获取相应列表信息
-			$params = $condition;
-			$url = api_url($this->class_name. '/index');
-			$result = $this->curl->go($url, $params, 'array');
-			if ($result['status'] === 200):
-				$data['items'] = $result['content'];
-			else:
-                $data['items'] = array();
-				$data['error'] = $result['content']['error']['message'];
-			endif;
-
-			// 将需要显示的数据传到视图以备使用
-			$data['data_to_display'] = $this->data_to_display;
-
-			// 输出视图
-			$this->load->view('templates/header', $data);
-			$this->load->view($this->view_root.'/trash', $data);
-			$this->load->view('templates/footer', $data);
-		} // end trash
 
 		/**
 		 * 创建

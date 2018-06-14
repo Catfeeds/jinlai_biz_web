@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'biz_id', 'item_id', 'url_image', 'name_first', 'name_second', 'name_third', 'price', 'stocks', 'weight_net', 'weight_gross', 'weight_volume',
+			'item_id', 'name_first', 'name_second', 'name_third', 'price', 'stocks', 'weight_net', 'weight_gross', 'weight_volume',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 
@@ -416,7 +416,7 @@
             // 页面信息
             $data = array(
                 'title' => '复制'.$this->class_name_cn,
-                'class' => $this->class_name.' edit',
+                'class' => $this->class_name.' duplicate',
             );
 
             // 从API服务器获取相应详情信息

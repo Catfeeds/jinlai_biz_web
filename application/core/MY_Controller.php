@@ -346,7 +346,7 @@
             $text = trim($text, $seperator);
 
             // 拆分文本为数组并清理可被转换为布尔型FALSE的数组元素（空数组、空字符、NULL、0、’0‘等）
-            $array = array_filter( explode(',', $text) );
+            $array = array_filter( explode($seperator, $text) );
 
             return $array;
         } // end explode_csv
@@ -364,7 +364,7 @@
 
 				// 将字符串格式转换为数组格式
 				if ( !is_array($ids) ):
-					$ids = explode(',', $ids);
+                    $ids = explode_csv($ids);
 				endif;
 
 			elseif ( !empty($this->input->post('ids[]')) ):

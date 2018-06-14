@@ -75,7 +75,7 @@
                     <p class=help-block>优惠券模板ID|数量，多个优惠券间以半角逗号分隔，例如18|3,17|1</p>
 
                     <h3>可发放优惠券</h3>
-                    <div class="well">
+                    <div class=well>
                         <ul>
                             <?php
                             $options = $coupon_templates;

@@ -14,7 +14,7 @@
 		 * 可作为列表筛选条件的字段名；可在具体方法中根据需要删除不需要的字段并转换为字符串进行应用，下同
 		 */
 		protected $names_to_sort = array(
-			'category_id', 'parent_id', 'biz_id', 'name', 'url_image',
+			'category_id', 'parent_id', 'name',
 			'time_create', 'time_delete', 'time_edit', 'creator_id', 'operator_id',
 		);
 

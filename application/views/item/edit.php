@@ -19,7 +19,7 @@
 
     }
 </style>
-<script defer src="/js/edit.js"></script>
+<!--<script defer src="/js/edit.js"></script>-->
 
 <base href="<?php echo $this->media_root ?>">
 

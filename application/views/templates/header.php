@@ -28,7 +28,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180612">
+		<meta name=version content="revision20180614">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -217,11 +217,37 @@
 		<link rel=stylesheet media=all href="/css/style.css">
 
         <?php if ($this->session->time_expire_login > time()): ?>
-        <link rel=stylesheet media=all href="/css/file-upload.css">
-        <script defer src="/js/file-upload.js"></script>
-        <script defer src="<?php echo CDN_URL ?>js/jquery.qrcode.min.js"></script>
-        <script defer src="<?php echo CDN_URL ?>jquery/jquery.lazyload.min.js"></script>
-        <script defer src="<?php echo CDN_URL ?>jquery/stupidtable.min.js"></script>
+            <?php
+                /**
+                 * 拆分CSV为数组
+                 */
+                function explode_csv($text, $seperator = ',')
+                {
+                    // 清理可能存在的空字符、冗余分隔符
+                    $text = trim($text);
+                    $text = trim($text, $seperator);
+
+                    // 拆分文本为数组并清理可被转换为布尔型FALSE的数组元素（空数组、空字符、NULL、0、’0‘等）
+                    $array = array_filter( explode($seperator, $text) );
+
+                    return $array;
+                } // end explode_csv
+
+                // 一般情况下，仅创建、修改类页面载入文件上传组件资源
+                $current_page_classes = explode_csv($body_class, ' ');
+                $page_classes_needing_upload = array('create', 'edit', 'create-quick', 'duplicate');
+                if ( ! empty(array_intersect($page_classes_needing_upload,$current_page_classes)) ):
+            ?>
+                <link rel=stylesheet media=all href="/css/file-upload.css">
+                <script defer src="/js/file-upload.js"></script>
+            <?php
+                // 一般情况下，查看类页面载入下述组件
+                else:
+            ?>
+                <script defer src="<?php echo CDN_URL ?>jquery/jquery.lazyload.min.js"></script>
+                <script defer src="<?php echo CDN_URL ?>js/jquery.qrcode.min.js"></script>
+                <script defer src="<?php echo CDN_URL ?>jquery/stupidtable.min.js"></script>
+            <?php endif ?>
         <?php endif ?>
 
         <?php if ($this->user_agent['is_desktop']): ?>
