@@ -10,13 +10,13 @@
 
     // 生成body的class
     $body_class = ( isset($class) )? $class: NULL;
-    $body_class .= ($this->user_agent['is_wechat'] === TRUE)? ' is_wechat': NULL;
-    $body_class .= ($this->user_agent['is_ios'] === TRUE)? ' is_ios': NULL;
-    $body_class .= ($this->user_agent['is_android'] === TRUE)? ' is_android': NULL;
+    $body_class .= ($this->user_agent['is_wechat'])? ' is_wechat': NULL;
+    $body_class .= ($this->user_agent['is_ios'])? ' is_ios': NULL;
+    $body_class .= ($this->user_agent['is_android'])? ' is_android': NULL;
     $body_class .= ($this->user_agent['is_mobile'])? ' is_mobile': NULL; // 移动端设备
 
-    $body_class .= ($this->user_agent['is_macos'] === TRUE)? ' is_macos': NULL;
-    $body_class .= ($this->user_agent['is_windows'] === TRUE)? ' is_windows': NULL;
+    $body_class .= ($this->user_agent['is_macos'])? ' is_macos': NULL;
+    $body_class .= ($this->user_agent['is_windows'])? ' is_windows': NULL;
     $body_class .= ($this->user_agent['is_desktop'])? ' is_desktop': NULL; // 非移动端设备
 ?>
 <!doctype html>
