@@ -42,6 +42,7 @@ function api_url($api_name)
 {
     return API_URL. $api_name;
 }
+define('VIEWS_PATH', APPPATH.'views/'); // 视图文件夹路径
 
 // JS、CSS等非当前站点特有资源所在URL，可用于配合又拍云等第三方存储
 define('CDN_URL', 'https://cdn-remote'.ROOT_URL); // 生产环境

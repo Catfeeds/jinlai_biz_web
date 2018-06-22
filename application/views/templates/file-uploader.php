@@ -1,3 +1,6 @@
+<script defer src="<?php echo base_url('js/file-upload.js') ?>"></script>
+<link rel=stylesheet media=all href="<?php echo base_url('css/file-upload.css') ?>">
+
 <?php
     function generate_html($name_to_upload, $class_name, $required = TRUE, $max_count = 1, $current_value = NULL)
     {

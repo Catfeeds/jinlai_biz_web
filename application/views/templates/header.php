@@ -28,7 +28,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180621">
+		<meta name=version content="revision20180622">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -226,48 +226,21 @@
 		<link rel=stylesheet media=all href="/css/style.css">
 
         <?php if ($this->session->time_expire_login > time()): ?>
-            <?php
-                /**
-                 * 拆分CSV为数组
-                 */
-                function explode_csv($text, $seperator = ',')
-                {
-                    // 清理可能存在的空字符、冗余分隔符
-                    $text = trim($text);
-                    $text = trim($text, $seperator);
-
-                    // 拆分文本为数组并清理可被转换为布尔型FALSE的数组元素（空数组、空字符、NULL、0、’0‘等）
-                    $array = array_filter( explode($seperator, $text) );
-
-                    return $array;
-                } // end explode_csv
-
-                // 一般情况下，仅创建、修改类页面载入文件上传组件资源
-                $current_page_classes = explode_csv($body_class, ' ');
-                $page_classes_needing_upload = array('create', 'edit', 'create-quick', 'duplicate');
-                if ( ! empty(array_intersect($page_classes_needing_upload,$current_page_classes)) ):
-            ?>
-                <link rel=stylesheet media=all href="/css/file-upload.css">
-                <script defer src="/js/file-upload.js"></script>
-            <?php
-                // 一般情况下，查看类页面载入下述组件
-                else:
-            ?>
-                <script defer src="<?php echo CDN_URL ?>jquery/jquery.lazyload.min.js"></script>
-                <script defer src="<?php echo CDN_URL ?>js/jquery.qrcode.min.js"></script>
-                <script defer src="<?php echo CDN_URL ?>jquery/stupidtable.min.js"></script>
-            <?php endif ?>
+        <script defer src="<?php echo CDN_URL ?>jquery/jquery.lazyload.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>js/jquery.qrcode.min.js"></script>
+        <script defer src="<?php echo CDN_URL ?>jquery/stupidtable.min.js"></script>
         <?php endif ?>
 
         <?php if ($this->user_agent['is_desktop']): ?>
-        <link rel="shortcut icon" href="<?php echo CDN_URL ?>icon/jinlai_client/icon28@3x.png">
-        <link rel=canonical href="<?php echo current_url() ?>">
+            <link rel="shortcut icon" href="<?php echo CDN_URL ?>icon/jinlai_client/icon28@3x.png">
+            <link rel=canonical href="<?php echo current_url() ?>">
         <?php else: ?>
-        <link rel=apple-touch-icon href="<?php echo CDN_URL ?>icon/jinlai_client/icon120@3x.png">
-        <meta name=format-detection content="telephone=yes, address=no, email=no">
-            <?php if ($this->user_agent['is_ios'] && !empty(IOS_APP_ID)): ?>
-                <meta name=apple-itunes-app content="app-id=<?php echo IOS_APP_ID ?>">
-            <?php endif ?>
+            <link rel=apple-touch-icon href="<?php echo CDN_URL ?>icon/jinlai_client/icon120@3x.png">
+            <meta name=format-detection content="telephone=yes, address=no, email=no">
+        <?php endif ?>
+
+        <?php if (!empty(IOS_APP_ID) && $this->user_agent['is_ios']): ?>
+            <meta name=apple-itunes-app content="app-id=<?php echo IOS_APP_ID ?>">
         <?php endif ?>
 	</head>
 <?php
