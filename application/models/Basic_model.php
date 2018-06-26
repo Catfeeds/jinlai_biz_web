@@ -361,6 +361,14 @@
             return $query->row_array();
         } // end password_check
 
+        //返回整表的字段
+        public function tablefields(){
+			if ($this->db->table_exists($this->table_name)){
+				return $this->db->list_fields($this->table_name);
+			}
+			return false;
+		}
+
 	} // end Class Basic_model
 
 /* End of file Basic_model.php */

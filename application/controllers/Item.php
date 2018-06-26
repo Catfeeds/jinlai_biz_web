@@ -174,6 +174,53 @@
 		} // end detail
 
 		/**
+		 * 文件上传，保存
+		 */
+		public function create_bulk(){
+
+			// 页面信息
+            $data['title'] = $this->class_name_cn. 'excel文件批量创建';
+            $data['class'] = $this->class_name.' create_bulk';
+			// 输出视图
+			$this->load->view('templates/header', $data);
+			$this->load->view($this->view_root.'/create _bulk', $data);
+			$this->load->view('templates/footer', $data);
+		}
+
+		//上传 获取文件，读取文件
+		public function upload(){
+	        set_time_limit(40);
+			$json = ['status'=>1, 'msg'=>'', 'error'=>'', 'res'=>''];
+			$classname = $this->input->post('classname');
+			$tablename = $this->input->post('tablename');
+			$tableMap  = ['item', 'user'];
+			if (empty($classname) || !in_array($classname, $tableMap)){
+				$json['msg'] = '类名不能为空';
+				echo json_encode($json);
+				exit;
+			}
+	        //上传配置，限制大小1m
+			$config['upload_path']    = 'upload/';
+	        $config['allowed_types']  = 'xlsx';
+	        $config['max_size']       = 1024;
+	        $config['file_name']      = date('Ymd_his') . '-' . $classname . '-' . rand(1000, 9999);
+	        $this->load->library('upload', $config);
+	        $this->upload->initialize($config);
+	        
+	        if (!$this->upload->do_upload('excelfile')) {
+	            $json['msg'] = $this->upload->display_errors('','');
+	        	echo json_encode($json);
+	        	exit;
+	        } else {
+	            //上传的文件路径地址 $this->upload->data('full_path');
+	        	$this->load->library('importexcel');
+	        	$this->importexcel->config($this->upload->data('full_path'), $classname, 1, 2);
+	        	$json = $this->importexcel->run();
+	        	echo json_encode($json);
+	        }
+	        exit;
+		}
+		/**
 		 * 回收站
 		 */
 		public function trash()
