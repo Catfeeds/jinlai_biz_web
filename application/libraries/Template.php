@@ -13,7 +13,7 @@
 	class Class_name
 	{
 		// 类属性
-		public $some_property
+		public $some_property;
 
 		// （可选）原始CodeIgniter对象
 		private $CI;
@@ -23,20 +23,20 @@
 		{
 			// (可选)引用原始CodeIgniter对象
 			$this->CI =& get_instance();
-		}
+		} // end __construct
 		
 		// （可选）析构函数
 		public function __destruct()
 		{
 		
-		}
+		} // end __destruct
 
 		// 类方法
 		public function some_method()
 		{
 			
-		}
-	}
+		} // end some_method
+	} // end Class_name
 
 /* End of file Class_name.php */
 /* Location: ./application/libraries/Class_name.php */

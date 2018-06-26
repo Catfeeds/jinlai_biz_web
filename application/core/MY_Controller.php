@@ -327,7 +327,7 @@
         } // count_table
 
         // 将数组输出为key:value格式，主要用于在postman等工具中进行api测试
-        protected function key_value($params)
+        public function key_value($params)
         {
             echo 'app_type:'.$this->app_type ."\n";
 
@@ -339,7 +339,7 @@
         /**
          * 拆分CSV为数组
          */
-        protected function explode_csv($text, $seperator = ',')
+        public function explode_csv($text, $seperator = ',')
         {
             // 清理可能存在的空字符、冗余分隔符
             $text = trim($text);
@@ -356,7 +356,7 @@
 		 *
 		 * @return array $ids 解析为数组的ID们
 		 */
-		protected function parse_ids_array()
+        public function parse_ids_array()
 		{
 			// 检查是否已传入必要参数
 			if ( !empty($this->input->get_post('ids')) ):

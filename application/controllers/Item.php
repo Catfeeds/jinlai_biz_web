@@ -174,53 +174,6 @@
 		} // end detail
 
 		/**
-		 * 文件上传，保存
-		 */
-		public function create_bulk(){
-
-			// 页面信息
-            $data['title'] = $this->class_name_cn. 'excel文件批量创建';
-            $data['class'] = $this->class_name.' create_bulk';
-			// 输出视图
-			$this->load->view('templates/header', $data);
-			$this->load->view($this->view_root.'/create _bulk', $data);
-			$this->load->view('templates/footer', $data);
-		}
-
-		//上传 获取文件，读取文件
-		public function upload(){
-	        set_time_limit(40);
-			$json = ['status'=>1, 'msg'=>'', 'error'=>'', 'res'=>''];
-			$classname = $this->input->post('classname');
-			$tablename = $this->input->post('tablename');
-			$tableMap  = ['item', 'user'];
-			if (empty($classname) || !in_array($classname, $tableMap)){
-				$json['msg'] = '类名不能为空';
-				echo json_encode($json);
-				exit;
-			}
-	        //上传配置，限制大小1m
-			$config['upload_path']    = 'upload/';
-	        $config['allowed_types']  = 'xlsx';
-	        $config['max_size']       = 1024;
-	        $config['file_name']      = date('Ymd_his') . '-' . $classname . '-' . rand(1000, 9999);
-	        $this->load->library('upload', $config);
-	        $this->upload->initialize($config);
-	        
-	        if (!$this->upload->do_upload('excelfile')) {
-	            $json['msg'] = $this->upload->display_errors('','');
-	        	echo json_encode($json);
-	        	exit;
-	        } else {
-	            //上传的文件路径地址 $this->upload->data('full_path');
-	        	$this->load->library('importexcel');
-	        	$this->importexcel->config($this->upload->data('full_path'), $classname, 1, 2);
-	        	$json = $this->importexcel->run();
-	        	echo json_encode($json);
-	        }
-	        exit;
-		}
-		/**
 		 * 回收站
 		 */
 		public function trash()
@@ -464,6 +417,91 @@
 
 			endif;
 		} // end create
+
+        /**
+         * 导入并创建
+         */
+        public function create_import()
+        {
+            // 页面信息
+            $data['title'] = $this->class_name_cn. '导入';
+            $data['class'] = $this->class_name.' create_import';
+            $data['error'] = ''; // 初始化错误提示
+
+            // 待验证的表单项
+            $this->form_validation->set_error_delimiters('', '；');
+            // 动态设置待验证字段名及字段值
+            $data_to_validate['file_to_upload'] = empty($_FILES['file_to_upload'])? NULL: $_FILES['file_to_upload']['tmp_name'];
+            $this->form_validation->set_data($data_to_validate);
+            $this->form_validation->set_rules('file_to_upload', '待导入文件', 'trim|required');
+
+            // 若表单提交不成功
+            if ($this->form_validation->run() === FALSE):
+                $data['error'] .= validation_errors();
+
+                $this->load->view('templates/header', $data);
+                $this->load->view($this->view_root.'/create_import', $data);
+                $this->load->view('templates/footer', $data);
+
+            else:
+                //var_dump($_FILES['file_to_upload']);
+
+                // 文件大小限制(M)
+                $max_size = 4; // 4M
+                if ($_FILES['file_to_upload']['size'] > ($max_size*1024*1024)):
+                    $data['error'] = '文件需小于'.$max_size.'M';
+
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/create_import', $data);
+                    $this->load->view('templates/footer', $data);
+
+                // TODO 文件格式限制
+                //elseif ():
+
+                else:
+                    // 当前用户ID
+                    $this->user_id = $this->session->user_id;
+                    // 获取上传的文件，不永久保存
+//                    $file = fopen($_FILES['file_to_upload']['tmp_name'], 'r');
+//                    $file_content = fread($file,filesize($_FILES['file_to_upload']['tmp_name']));
+//                    fclose($file);
+
+                    // 可导入的字段名
+                    $names_to_import = 'category_id,biz_id,category_biz_id,code_biz,barcode,name,slogan,tag_price,price,unit_name,weight_net,weight_gross,weight_volume,stocks,quantity_max,quantity_min';
+
+                    // 配置并初始化PHPExcel类库
+                    $this->load->library('importexcel');
+                    $this->importexcel->import($_FILES['file_to_upload']['tmp_name'], $names_to_import, 2);
+                    //var_dump($result);
+
+                    // 错误提示
+                    $error = empty($this->result['content']['error']['message'])? NULL: $this->result['content']['error']['message'];
+
+                    // 导入
+                    if ( ! empty($this->result['content'])):
+                        $data['title'] = $this->class_name_cn. '导入成功';
+                        $data['class'] = 'success';
+                        $data['content'] = $this->result['content']['message'];
+                        $data['error'] = $error;
+                        $data['operation'] = 'create_import';
+
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/result', $data);
+                        $this->load->view('templates/footer', $data);
+
+                    else:
+                        // 若创建失败，则进行提示
+                        $data['error'] = $error;
+
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/create_import', $data);
+                        $this->load->view('templates/footer', $data);
+
+                    endif;
+                endif;
+
+            endif;
+        } // end create_import
 
 		/**
 		 * 编辑单行
