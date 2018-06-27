@@ -82,15 +82,18 @@
 				<label for=discount_reprice class="col-sm-2 control-label">改价折扣金额</label>
 				<div class=col-sm-10>
 					<input class=form-control name=discount_reprice type=number step=0.01 min=0.01 max=99999.99 placeholder="请输入需要折抵的金额" autofocus required>
+                    <p class="help-block">若订单待支付金额为100元，此处输入10元，则待支付金额将变更为90元（即100-10）。</p>
 				</div>
 			</div>
 
-			<div class=form-group>
-				<label for=password class="col-sm-2 control-label">密码</label>
-				<div class=col-sm-10>
-					<input class=form-control name=password type=password placeholder="请输入您的登录密码" required>
-				</div>
-			</div>
+            <!--
+            <div class=form-group>
+                <label for=password class="col-sm-2 control-label">密码</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=password type=password placeholder="请输入您的登录密码" autofocus required>
+                </div>
+            </div>
+            -->
 		</fieldset>
 
 		<div class=form-group>

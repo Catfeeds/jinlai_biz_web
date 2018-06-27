@@ -18,6 +18,13 @@
             'time_delete', 'time_edit', 'operator_id', 'invoice_status', 'status',
 		);
 
+        /**
+         * 编辑多行特定字段时必要的字段名
+         */
+        protected $names_edit_bulk_required = array(
+            'ids',
+        );
+
 		public function __construct()
 		{
 			parent::__construct();
@@ -572,7 +579,7 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('ids', '待操作数据ID们', 'trim|required|regex_match[/^(\d|\d,?)+$/]'); // 仅允许非零整数和半角逗号
-			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
+			//$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
 			$this->form_validation->set_rules('deliver_method', '发货方式', 'trim|required|max_length[30]');
 
             // 若用户自提，不需要填写服务商
@@ -615,7 +622,7 @@
 				$data_to_edit = array(
 					'user_id' => $this->session->user_id,
 					'ids' => $ids,
-					'password' => $password,
+					//'password' => $password,
 					'operation' => $op_view, // 操作名称
 
 					'deliver_method' => $this->input->post('deliver_method'),
@@ -626,6 +633,7 @@
 				// 向API服务器发送待创建数据
 				$params = $data_to_edit;
 				$url = api_url($this->class_name. '/edit_bulk');
+				var_dump($url);
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
 					$data['title'] = $this->class_name_cn.$op_name. '成功';

@@ -190,13 +190,15 @@
 				</div>
 			</div>
 
-			<div id=password class="form-group optional-input">
+		<!--
+            <div id=password class="form-group optional-input">
 				<label for=password class="col-sm-2 control-label">密码</label>
 				<div class=col-sm-10>
 					<input class=form-control name=password type=password placeholder="请输入您的登录密码" required>
 				</div>
 			</div>
-		</fieldset>
+		-->
+    </fieldset>
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">

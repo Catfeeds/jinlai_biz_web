@@ -413,6 +413,7 @@
 
                 // 向API服务器发送待创建数据
                 $params = $data_to_edit;
+                var_dump($params);
                 $url = api_url($this->class_name. '/edit_bulk');
                 $result = $this->curl->go($url, $params, 'array');
                 if ($result['status'] === 200):
