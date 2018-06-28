@@ -60,7 +60,7 @@
                     <textarea class=form-control name=content rows=10 placeholder="10 - 20000个字符" required><?php echo set_value('content') ?></textarea>
 
                     <?php
-                    require_once(APPPATH. 'views/templates/simditor.php');
+                    require_once(VIEWPATH. 'templates/simditor.php');
                     $name_to_upload = 'content';
                     ?>
                     <script>

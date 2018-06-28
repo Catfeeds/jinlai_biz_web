@@ -59,7 +59,7 @@
 					<textarea id=detail_editior name=description rows=10 placeholder="可选，不超过20000个字符"><?php echo empty(set_value('description'))? $item['description']: set_value('description') ?></textarea>
 
                     <?php
-                    require_once(APPPATH. 'views/templates/simditor.php');
+                    require_once(VIEWPATH. 'templates/simditor.php');
                     $name_to_upload = 'description';
                     ?>
                     <script>

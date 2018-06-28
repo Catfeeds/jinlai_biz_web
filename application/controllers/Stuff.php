@@ -206,7 +206,7 @@
 			$this->form_validation->set_rules('mobile', '手机号', 'trim|required');
 			$this->form_validation->set_rules('fullname', '姓名', 'trim|required');
 			$this->form_validation->set_rules('role', '角色', 'trim|required');
-            $this->form_validation->set_rules('level', '等级', 'trim|required|is_natural_no_zero|greater_than_equal_to[0]|less_than[101]');
+            $this->form_validation->set_rules('level', '等级', 'trim|required|is_natural_no_zero|greater_than_equal_to[0]|less_than['.$this->session->level.']');
 
 			// 若表单提交不成功
 			if ($this->form_validation->run() === FALSE):
@@ -297,7 +297,7 @@
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('fullname', '姓名', 'trim|required');
 			$this->form_validation->set_rules('role', '角色', 'trim|required');
-            $this->form_validation->set_rules('level', '等级', 'trim|required|is_natural_no_zero|greater_than_equal_to[0]|less_than[101]');
+            $this->form_validation->set_rules('level', '等级', 'trim|required|is_natural_no_zero|greater_than_equal_to[0]|less_than['.$this->session->level.']');
 			$this->form_validation->set_rules('status', '状态', 'trim|required');
 
 			// 若表单提交不成功
