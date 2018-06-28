@@ -61,7 +61,7 @@
 		public function index()
 		{
             parent::index();
-
+            
 			// 页面信息
 			$data = array(
 				'title' => $this->class_name_cn. '列表',
@@ -102,6 +102,9 @@
 				$params = $condition;
 				$url = api_url($this->class_name. '/index');
 				$result = $this->curl->go($url, $params, 'array');
+
+				
+
 				if ($result['status'] === 200):
 					$data['items'] = $result['content'];
 				else:
@@ -470,13 +473,12 @@
                     $names_to_import = 'category_id,biz_id,category_biz_id,code_biz,barcode,name,slogan,tag_price,price,unit_name,weight_net,weight_gross,weight_volume,stocks,quantity_max,quantity_min';
 
                     // 配置并初始化PHPExcel类库
-                    $this->load->library('importexcel');
-                    $this->importexcel->import($_FILES['file_to_upload']['tmp_name'], $names_to_import, 2);
+                    $this->load->library('Excel');
+                    $this->excel->import($_FILES['file_to_upload']['tmp_name'], $names_to_import, 2);
                     //var_dump($result);
 
                     // 错误提示
                     $error = empty($this->result['content']['error']['message'])? NULL: $this->result['content']['error']['message'];
-
                     // 导入
                     if ( ! empty($this->result['content'])):
                         $data['title'] = $this->class_name_cn. '导入成功';
