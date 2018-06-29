@@ -144,7 +144,8 @@
             </div>
 		</fieldset>
 
-		<fieldset>
+	<!--
+    <fieldset>
 			<legend>资质信息</legend>
 
 			<div class=form-group>
@@ -184,10 +185,10 @@
 			</div>
 		</fieldset>
 
-		<fieldset>
+        <fieldset>
 			<legend>财务信息</legend>
 
-			<div class=form-group>
+            <div class=form-group>
 				<label for=bank_name class="col-sm-2 control-label">对公账户开户行</label>
 				<div class=col-sm-10>
 					<input class=form-control name=bank_name type=text value="<?php echo $item['bank_name'] ?>" placeholder="基本户、一般户均可">
@@ -199,6 +200,7 @@
 					<input class=form-control name=bank_account type=number step=1 value="<?php echo $item['bank_account'] ?>" placeholder="基本户、一般户均可">
 				</div>
 			</div>
+
 			<div class=form-group>
 				<label for=tel_protected_fiscal class="col-sm-2 control-label">财务联系手机号</label>
 				<div class=col-sm-10>
@@ -338,6 +340,7 @@
                 </div>
 			</div>
 		</fieldset>
+		-->
 
 		<fieldset>
 			<legend>形象展示</legend>
@@ -448,19 +451,19 @@
                 </div>
 			</div>
 		</fieldset>
-		
+
+        <!--
 		<fieldset>
 			<legend>联系地址</legend>
             <p class=help-block>该信息将用于订单退换货等业务</p>
 
-			<!--
+
             <div class=form-group>
 				<label for=nation class="col-sm-2 control-label">国家</label>
 				<div class=col-sm-10>
 					<p class="form-control-static"><?php echo $item['nation'] ?></p>
 				</div>
 			</div>
-			-->
 			<div class=form-group>
 				<label for=province class="col-sm-2 control-label">省</label>
 				<div class=col-sm-10>
@@ -621,6 +624,7 @@
 				});
 			</script>
 		</fieldset>
+        -->
 
         <fieldset>
             <legend>店铺装修（高级版功能，限时免费）</legend>
