@@ -103,8 +103,6 @@
 				$url = api_url($this->class_name. '/index');
 				$result = $this->curl->go($url, $params, 'array');
 
-				
-
 				if ($result['status'] === 200):
 					$data['items'] = $result['content'];
 				else:

@@ -76,6 +76,10 @@
 </div>
 
 <script>
+    // 分页参数
+    var limit = <?php echo $this->limit ?>;
+    var offset = <?php echo $this->offset ?>;
+
     // 本地身份类型
     var local_role = '<?php echo $this->app_type ?>';
     // 聊天消息列表容器
@@ -84,24 +88,25 @@
     // 间隔多久后重新显示时间
     var show_time_again = 60; // 秒
 
-    // API地址根路径
-    var url_api = '<?php echo API_URL ?>';
-    // 图片地址根路径
-    var url_image_root = '<?php echo MEDIA_URL ?>';
-
     // 用户信息
     var user = <?php echo json_encode($user) ?>;
     // 商家信息
     var biz = <?php echo json_encode($biz) ?>;
 
-    var avatar_user = '<div class="message-avatar"><figure><img src="' + url_image_root + 'user/' + user.avatar + '"></figure></div>'; // 用户头像DOM
-    var avatar_biz = '<div class="message-avatar"><figure><img src="' + url_image_root + 'biz/' + biz.url_logo + '"></figure></div>'; // 商家头像DOM
+    var avatar_user = '<div class="message-avatar"><figure><img src="' + media_url + 'user/' + user.avatar + '"></figure></div>'; // 用户头像DOM
+    var avatar_biz = '<div class="message-avatar"><figure><img src="' + media_url + 'biz/' + biz.url_logo + '"></figure></div>'; // 商家头像DOM
 
     // 页面初始下内边距
     var maincontainer_padding_bottom = $('#maincontainer').css('padding-bottom');
 
     // 建立EventStream连接
-    var es = new EventSource(url_api + 'es.php?user_id=' + user.user_id);
+    //var es = new EventSource(url_api + 'es.php?user_id=' + user.user_id); // 初版API
+    api_url += 'messages?';
+    var es = new EventSource(
+        api_url +
+        'app_type=' + local_role +
+        '&user_id=' + user.user_id
+    );
 
     // 连接建立
     es.onopen = function(){
