@@ -242,6 +242,12 @@
 					<input class=form-control name=quantity_min type=number min=1 step=1 max=50 value="<?php echo empty(set_value('quantity_min'))? $item['quantity_min']: set_value('quantity_min') ?>" placeholder="留空则默认为1，最高50">
 				</div>
 			</div>
+            <div class=form-group>
+                <label for=limit_lifetime class="col-sm-2 control-label">终身限购数量（份）</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=limit_lifetime type=number min=0 step=1 max=255 value="<?php echo empty(set_value('limit_lifetime'))? $item['limit_lifetime']: set_value('limit_lifetime') ?>" placeholder="留空则默认为0（不限），最高255">
+                </div>
+            </div>
 		</fieldset>
 
 		<fieldset>

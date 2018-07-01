@@ -141,7 +141,7 @@
 			endif;
 
 			// 若为当前用户，则转到我的页面
-			if ($id = $this->session->user_id) redirect(base_url('user/mine'));
+			if ($id == $this->session->user_id) redirect(base_url('user/mine'));
 
             // 从API服务器获取相应详情信息
             $url = api_url($this->class_name. '/detail');
