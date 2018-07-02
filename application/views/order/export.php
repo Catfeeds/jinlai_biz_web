@@ -54,7 +54,37 @@
 					<input class=form-control name="time_create_max" type="date" placeholder="选择订单开始时间" required>
 				</div>
 			</div>
+			<div class=form-group>
+				<label for=brand_id class="col-sm-2 control-label">用户ID</label>
+				<div class="input-group col-sm-10">
+					<input class=form-control name="user_id" type="number" placeholder="填写用户id">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=brand_id class="col-sm-2 control-label">手机号</label>
+				<div class="input-group col-sm-10">
+					<input class=form-control name="mobile" type="number" maxlength="11" placeholder="填写手机号">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=brand_id class="col-sm-2 control-label">支付方式</label>
+				<div class="col-sm-10 input-group">
+                    <?php $input_name = 'payment_type' ?>
+                    <select class=form-control name="<?php echo $input_name ?>">
+                        <option value="" selected="selected">全部</option>
+                        <?php
+                        if ( !empty($payment_type) ):
+                            foreach ($payment_type as $option):
+                                ?>
+                                <option value="<?php echo $option ?>" <?php echo set_select($input_name, $order_status) ?>><?php echo $option ?></option>
+                            <?php
+                            endforeach;
+                        endif;
+                        ?>
+                    </select>
 
+                </div>
+			</div>
             <div class=form-group>
                 <label for="status" class="col-sm-2 control-label">订单状态</label>
                 <div class="col-sm-10 input-group">

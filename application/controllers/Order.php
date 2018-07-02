@@ -669,11 +669,15 @@
                 'class' => $this->class_name. ' export',
                 'error' => '', // 预设错误提示
                 'order_status' => ['待付款','待接单','待发货','待收货','待评价','已完成','已退款','已拒绝','已取消','已关闭'],
+                'payment_type' => ['现金','银行转账','微信支付','支付宝','余额','待支付']
             ];
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
             $this->form_validation->set_rules('time_create_min', '开始时间', 'trim|required');
             $this->form_validation->set_rules('time_create_max', '结束时间', 'trim|required');
+            $this->form_validation->set_rules('user_id', '用户id', 'trim|integer');
+            $this->form_validation->set_rules('mobile', '手机号', 'trim|exact_length[11]');
+            $this->form_validation->set_rules('payment_type', '支付方式', 'trim|in_list[现金,银行转账,微信支付,支付宝,余额,待支付]');
             $this->form_validation->set_rules('status', '订单状态', 'trim|in_list[待付款,待接单,待发货,待收货,待评价,已完成,已退款,已拒绝,已取消,已关闭]');
 
             // 若表单提交不成功
@@ -689,11 +693,11 @@
 					'time_create_min' => strtotime($this->input->post('time_create_min') . ' 00:00:00'),
                     'time_create_max' => strtotime($this->input->post('time_create_max') . ' 23:59:59'),
                     'client_type'     => 'biz',
-                    'biz_id'          => $this->session->user_id
+                    'biz_id'          => 148//$this->session->user_id
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-                    'status',
+                    'status','user_id','mobile','payment_type'
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_send[$name] = $this->input->post($name);
@@ -708,7 +712,7 @@
 					$data_filterd = [];
 
 					//增加一步 ，字段过滤
-					$data_allow_show = ['blank','order_id','biz_name','biz_url_logo','user_id','user_ip','subtotal','discount_promotion','discount_coupon','freight','discount_reprice','repricer_id','total','credit_id','credit_payed','total_payed','total_refund','fullname','code_ssn','mobile','nation','province','city','county','street','longitude','latitude','note_user','note_stuff','reason_cancel','payment_type','payment_account','payment_id','commission','promoter_id','deliver_method','deliver_biz','waybill_id','invoice_status','invoice_id','time_create','time_cancel','time_expire','time_pay','time_refuse','time_accept','time_deliver','time_confirm','time_confirm_auto','time_comment','time_refund','time_delete','status'];
+					$data_allow_show = ['blank','order_id','user_id','subtotal','freight','discount_reprice','total','total_payed','fullname','code_ssn','mobile','province','city','county','street','longitude','latitude','note_user','note_stuff','payment_type','payment_account','payment_id','time_create','time_cancel','time_expire','time_pay','time_refuse','time_accept','time_deliver','time_confirm','time_confirm_auto','time_comment','time_refund','time_delete','status'];
 					foreach ($result['content'] as  $item) :
 						$data_filterd = [];
 						foreach ($item as $key => $value) :
