@@ -693,7 +693,7 @@
 					'time_create_min' => strtotime($this->input->post('time_create_min') . ' 00:00:00'),
                     'time_create_max' => strtotime($this->input->post('time_create_max') . ' 23:59:59'),
                     'client_type'     => 'biz',
-                    'biz_id'          => 148//$this->session->user_id
+                    'biz_id'          => $this->session->user_id
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -701,30 +701,59 @@
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_send[$name] = $this->input->post($name);
+
+				//查找是否存在文件缓存
+				$new_condition = sha1(implode('-', $data_to_send));
+				if (isset($_COOKIE[$new_condition]) && file_exists($_COOKIE[$new_condition])) :
+					redirect('/' . $_COOKIE[$new_condition]);
+					exit;
+				endif;
+
+
                 // 向API服务器发送待创建数据
 				$params = $data_to_send;
 				$url    = api_url($this->class_name. '/index');
 				$result = $this->curl->go($url, $params, 'array');
 				//api返回成功
 				if ($result['status'] == 200):
+
 					$this->user_id = $this->session->user_id;
 					$data_list = [];
 					$data_filterd = [];
 
-					//增加一步 ，字段过滤
-					$data_allow_show = ['blank','order_id','user_id','subtotal','freight','discount_reprice','total','total_payed','fullname','code_ssn','mobile','province','city','county','street','longitude','latitude','note_user','note_stuff','payment_type','payment_account','payment_id','time_create','time_cancel','time_expire','time_pay','time_refuse','time_accept','time_deliver','time_confirm','time_confirm_auto','time_comment','time_refund','time_delete','status'];
-					foreach ($result['content'] as  $item) :
+					//增加一步 ，字段过滤,处理订单的item
+					$data_order_show = ['blank','order_id','user_id','subtotal','freight','discount_reprice','total','total_payed','fullname','code_ssn','mobile','province','city','county','street','longitude','latitude','note_user','note_stuff','payment_type','payment_account','payment_id','time_create','time_cancel','time_expire','time_pay','time_refuse','time_accept','time_deliver','time_confirm','time_confirm_auto','time_comment','time_refund','time_delete','status'];
+					$data_order_items = ['item_id', 'name', 'sku_id', 'sku_name', 'price', 'single_total', 'count'];
+					foreach ($result['content'] as  $order) :
 						$data_filterd = [];
-						foreach ($item as $key => $value) :
-							if ( !is_array($value) && array_search($key, $data_allow_show) ):
+						foreach ($order as $key => $value) :
+							if ( !is_array($value) && array_search($key, $data_order_show) ):
 								$data_filterd[$key] = $value;
+							elseif ( is_array($value) ) :
+								foreach ($value as $itemcount => $items) :
+									$cellvalue = [];
+									foreach ($items as $itemskey => $itemdetail) :
+										if ( array_search($itemskey, $data_order_items))
+											$cellvalue[] = $itemskey . ':' . $itemdetail;
+									endforeach;
+									$data_filterd['order_items' . ($itemcount + 1)] = implode(',', $cellvalue);
+								endforeach;
 							endif;
 						endforeach;
 						$data_list[] = $data_filterd;
 					endforeach;
 					//导出
 					$this->load->library('Excel');
-					$this->excel->export($data_list, $data_to_send['time_create_min'] . '-' . $data_to_send['time_create_max'] . '订单导出');
+					$this->excel->export($data_list, $data_to_send['time_create_min'] . '-' . $data_to_send['time_create_max'] . '订单导出', 'save');
+					if ($this->result['status'] == 200) :
+						//文件生成 后 保存 cookie
+						$cookie_condition = sha1(implode('-', $params));
+						setcookie($cookie_condition,  $this->result['content'], time() + 180);
+						redirect('/' . $this->result['content']);
+						exit;
+					else:
+						$data['error'] = $this->result['content']['error']['message'];
+					endif;
 				else:
 					if (isset($result['content']['error'])) :
 						$data['error'] = $result['content']['error']['message'];

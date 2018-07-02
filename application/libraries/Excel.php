@@ -177,7 +177,7 @@
                 $this->CI->result['content']['error']['message'] = '数据为空';
             endif;
 
-            $outputMap = ['download', 'file'];
+            $outputMap = ['download', 'file', 'save'];
             if (!in_array($output, $outputMap)) :
                 $this->CI->result['status'] = 411;
                 $this->CI->result['content']['error']['message'] = '请确定文件输出位置';
@@ -205,31 +205,31 @@
             $filename = $this->CI->user_id . '-' . $this->CI->class_name . '-' . date('Ymd_his') . '.xlsx' ;
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($this->_phpexcel);
 
-            if ($output == 'download') :
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-                header('Content-Disposition: attachment;filename=' . $filename);
-                header('Cache-Control: max-age=0');
-                $writer->save('php://output');
-                exit;
-            else :
+            //文件形式保存
+            if ($output == 'file' || $output == 'save' ) :
                 if (!is_dir('./public')){
                     $this->CI->result['status'] = 411;
                     $this->CI->result['content']['error']['message'] = 'public目录不存在';
                     return FALSE;
                 }
 
-                $filepath = './public/' . $filename; 
+                $filepath = 'public/' . $filename; 
                 $writer->save($filepath);
                 //处理结果
                 if (file_exists($filepath)) :
                     $this->CI->result['status'] = 200;
-                    $this->CI->result['content']['message'] = $filepath;
-                    return TRUE;
+                    $this->CI->result['content'] = $filepath;
                 else :
                     $this->CI->result['status'] = 411;
                     $this->CI->result['content']['error']['message'] = '生成excel文件失败';
-                    return FALSE;
                 endif;
+            endif;
+            //直接输出
+            if ($output == 'download') :
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename=' . $filename);
+                header('Cache-Control: max-age=0');
+                $writer->save('php://output');
             endif;
             return TRUE;
         } // end export

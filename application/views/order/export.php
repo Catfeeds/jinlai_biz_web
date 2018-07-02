@@ -76,7 +76,7 @@
                         if ( !empty($payment_type) ):
                             foreach ($payment_type as $option):
                                 ?>
-                                <option value="<?php echo $option ?>" <?php echo set_select($input_name, $order_status) ?>><?php echo $option ?></option>
+                                <option value="<?php echo $option ?>"><?php echo $option ?></option>
                             <?php
                             endforeach;
                         endif;
@@ -95,7 +95,7 @@
                         if ( !empty($order_status) ):
                             foreach ($order_status as $option):
                                 ?>
-                                <option value="<?php echo $option ?>" <?php echo set_select($input_name, $order_status) ?>><?php echo $option ?></option>
+                                <option value="<?php echo $option ?>"><?php echo $option ?></option>
                             <?php
                             endforeach;
                         endif;
