@@ -45,6 +45,8 @@
 		 */
 		public function index()
 		{
+            parent::index();
+
             // 检查是否已传入必要参数
             $id = $this->input->get_post('user_id');
             if ( empty($id) )

@@ -336,7 +336,31 @@
             <div class=form-group>
                 <label for=home_html class="col-sm-2 control-label">首页内容（HTML）</label>
                 <div class=col-sm-10>
-                    <textarea class="form-control" name="home_html" rows=5 placeholder="HTML格式内容，10-20000个字符"><?php echo $item['home_html'] ?></textarea>
+                    <textarea class=form-control name=home_html rows=5 placeholder="HTML格式内容，10-20000个字符"><?php echo $item['home_html'] ?></textarea>
+
+                    <?php
+                    require_once(VIEWPATH. 'templates/simditor.php');
+                    $name_to_upload = 'home_html';
+                    ?>
+                    <script>
+                        $(function(){
+                            var editor = new Simditor({
+                                textarea: $('textarea[name=home_html]'), // 若只使用属性选择器，有可能误选中meta等其它含有相应属性的DOM
+                                placeholder: '10 - 20000个字符',
+                                toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'hr', 'ol', 'ul', 'blockquote', 'table', '|', 'link', 'image', '|', 'indent', 'outdent', 'alignment'],
+                                cleanPaste: true,
+                                upload: {
+                                    url: '<?php echo base_url('/simditor?target='.$this->class_name.'/'.$name_to_upload) ?>',
+                                    params: null,
+                                    fileKey: 'file0',
+                                    connectionCount: 4,
+                                    leaveConfirm: '上传尚未结束，确定要中止？'
+                                }
+                            });
+                        });
+                    </script>
+
+                    <p class="help-block">若填写了此项，首页模块将会被忽略</p>
                 </div>
             </div>
         </fieldset>

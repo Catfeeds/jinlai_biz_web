@@ -103,8 +103,6 @@
 				$url = api_url($this->class_name. '/index');
 				$result = $this->curl->go($url, $params, 'array');
 
-				
-
 				if ($result['status'] === 200):
 					$data['items'] = $result['content'];
 				else:
@@ -272,7 +270,7 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 
-                    'stocks' => empty($this->input->post('time_to_publish'))? 10: $this->input->post('time_to_publish'),
+                    'stocks' => empty($this->input->post('stocks'))? 10: $this->input->post('stocks'),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -348,12 +346,13 @@
 			$this->form_validation->set_rules('weight_volume', '体积重（KG）', 'trim|greater_than_equal_to[0]|less_than_equal_to[999.99]');
 			$this->form_validation->set_rules('quantity_max', '每单最高限量（份）', 'trim|greater_than_equal_to[0]|less_than_equal_to[50]');
 			$this->form_validation->set_rules('quantity_min', '每单最低限量（份）', 'trim|greater_than_equal_to[0]|less_than_equal_to[50]');
+            $this->form_validation->set_rules('limit_lifetime', '终身限购数量（份）', 'trim|greater_than_equal_to[0]|less_than_equal_to[255]');
 			$this->form_validation->set_rules('discount_credit', '积分抵扣率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
             $this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[16]|callback_time_start');
             $this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[16]|callback_time_end');
-            $this->form_validation->set_message('time_to_publish', '预定上架时间需详细到分，且不可晚于预订下架时间');
-            $this->form_validation->set_message('time_to_suspend', '预定下架时间需详细到分，且不可早于预订上架时间');
+            $this->form_validation->set_message('time_start', '预定上架时间需详细到分，且不可晚于预订下架时间');
+            $this->form_validation->set_message('time_end', '预定下架时间需详细到分，且不可早于预订上架时间');
             $this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
             $this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 
@@ -382,13 +381,13 @@
 				$data_to_create = array(
 					'user_id' => $this->session->user_id,
 
-                    'stocks' => empty($this->input->post('time_to_publish'))? 10: $this->input->post('time_to_publish'),
+                    'stocks' => empty($this->input->post('stocks'))? 10: $this->input->post('stocks'),
 					'time_to_publish' => empty($this->input->post('time_to_publish'))? NULL: $this->strto_minute($this->input->post('time_to_publish')), // 时间仅保留到分钟，下同
 					'time_to_suspend' => empty($this->input->post('time_to_suspend'))? NULL: $this->strto_minute($this->input->post('time_to_suspend')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-                    'brand_id', 'category_id', 'category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'discount_credit', 'commission_rate', 'coupon_allowed', 'promotion_id',
+                    'brand_id', 'category_id', 'category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'limit_lifetime', 'discount_credit', 'commission_rate', 'coupon_allowed', 'promotion_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_create[$name] = $this->input->post($name);
@@ -550,12 +549,13 @@
 			$this->form_validation->set_rules('weight_volume', '体积重（KG）', 'trim|greater_than_equal_to[0]|less_than_equal_to[999.99]');
             $this->form_validation->set_rules('quantity_max', '每单最高限量（份）', 'trim|greater_than_equal_to[0]|less_than_equal_to[50]');
             $this->form_validation->set_rules('quantity_min', '每单最低限量（份）', 'trim|greater_than_equal_to[0]|less_than_equal_to[50]');
+            $this->form_validation->set_rules('limit_lifetime', '终身限购数量（份）', 'trim|greater_than_equal_to[0]|less_than_equal_to[255]');
 			$this->form_validation->set_rules('discount_credit', '积分抵扣率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('commission_rate', '佣金比例/提成率', 'trim|less_than_equal_to[0.5]');
 			$this->form_validation->set_rules('time_to_publish', '预定上架时间', 'trim|exact_length[16]|callback_time_start');
 			$this->form_validation->set_rules('time_to_suspend', '预定下架时间', 'trim|exact_length[16]|callback_time_end');
-            $this->form_validation->set_message('time_to_publish', '预定上架时间需详细到分，且不可晚于预订下架时间');
-            $this->form_validation->set_message('time_to_suspend', '预定下架时间需详细到分，且不可早于预订上架时间');
+            $this->form_validation->set_message('time_start', '预定上架时间需详细到分，且不可晚于预订下架时间');
+            $this->form_validation->set_message('time_end', '预定下架时间需详细到分，且不可早于预订上架时间');
             $this->form_validation->set_rules('coupon_allowed', '是否可用优惠券', 'trim|in_list[0,1]');
 			$this->form_validation->set_rules('promotion_id', '店内活动', 'trim|is_natural_no_zero');
 
@@ -599,19 +599,20 @@
 					'user_id' => $this->session->user_id,
 					'id' => $id,
 
-                    'stocks' => empty($this->input->post('time_to_publish'))? 10: $this->input->post('time_to_publish'),
+                    'stocks' => empty($this->input->post('stocks'))? 10: $this->input->post('stocks'),
                     'time_to_publish' => empty($this->input->post('time_to_publish'))? NULL: $this->strto_minute($this->input->post('time_to_publish')), // 时间仅保留到分钟，下同
                     'time_to_suspend' => empty($this->input->post('time_to_suspend'))? NULL: $this->strto_minute($this->input->post('time_to_suspend')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'coupon_allowed', 'discount_credit', 'commission_rate', 'promotion_id',
+					'category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'limit_lifetime', 'coupon_allowed', 'discount_credit', 'commission_rate', 'promotion_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
 
 				// 向API服务器发送待创建数据
 				$params = $data_to_edit;
+                // 进行修改
 				$url = api_url($this->class_name. '/edit');
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):

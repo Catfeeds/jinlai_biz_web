@@ -134,7 +134,7 @@ $(function(){
 				<label for=url_image_main class="col-sm-2 control-label">主图 ※</label>
 				<div class=col-sm-10>
                     <?php
-                    require_once(APPPATH. 'views/templates/file-uploader.php');
+                    require_once(VIEWPATH. 'templates/file-uploader.php');
                     $name_to_upload = 'url_image_main';
                     generate_html($name_to_upload, $this->class_name);
                     ?>

@@ -86,27 +86,19 @@
         </a>
     </section>
 
-    <section id="info-user">
-        <h2>用户</h2>
-        <?php $user = $item['user'] ?>
-        <a href="<?php echo base_url('user/detail?id='.$user['user_id']) ?>">
-            <div class="row">
-                <figure class=col-xs-2>
-                    <img src="<?php echo MEDIA_URL.'user/'.$user['avatar'] ?>">
-                </figure>
-                <div class="item-name col-xs-10">
-                    <h3><?php echo $user['nickname'] ?></h3>
-                </div>
-            </div>
-        </a>
-    </section>
-
     <dl id=list-info class=dl-horizontal>
 		<dt><?php echo $this->class_name_cn ?>ID</dt>
 		<dd><?php echo $item[$this->id_name] ?></dd>
 
 		<dt>相关订单ID</dt>
-		<dd><?php echo $item['order_id'] ?></dd>
+		<dd><?php echo $item['order_id'] ?> <a href="<?php echo base_url('order/detail?id='.$item['order_id']) ?>" target=_blank>查看</a></dd>
+
+        <dt>用户ID</dt>
+        <dd>
+            <?php echo $item['user_id'] ?>
+            <a href="<?php echo base_url('user/detail?id='.$item['user_id']) ?>" target=new>查看</a>
+        </dd>
+
 		<dt>类型</dt>
 		<dd><?php echo $item['type'] ?></dd>
 		<dt>货物状态</dt>

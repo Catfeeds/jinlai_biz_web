@@ -39,9 +39,9 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-create form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
-		<fieldset>
-			<p class=helper-block>必填项以“※”符号标示</p>
+        <p class=help-block>必填项以“※”符号标示</p>
 
+		<fieldset>
 			<div class=form-group>
 				<label for=mobile class="col-sm-2 control-label">手机号 ※</label>
 				<div class=col-sm-10>
@@ -76,7 +76,9 @@
 			<div class=form-group>
 				<label for=level class="col-sm-2 control-label">级别 ※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=level type=number step=1 max=30 value="<?php echo set_value('level') ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
+					<input class=form-control name=level type=number step=1 max=<?php echo $this->session->level ?> value="<?php echo set_value('level') ?>" placeholder="1普通员工，10门店级，20品牌级，30企业级" required>
+
+                    <p class="help-block">您最高可以授予<?php echo $this->session->level ?>级权限</p>
 				</div>
 			</div>
 		</fieldset>

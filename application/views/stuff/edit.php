@@ -37,9 +37,9 @@
 		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
-		<fieldset>
-			<p class=helper-block>必填项以“※”符号标示</p>
+        <p class=help-block>必填项以“※”符号标示</p>
 
+		<fieldset>
 			<input name=id type=hidden value="<?php echo $item[$this->id_name] ?>">
 
 			<div class=form-group>
@@ -85,7 +85,9 @@
 				<label for=level class="col-sm-2 control-label">级别 ※</label>
 				<div class=col-sm-10>
 					<?php if ($item['user_id'] !== $this->session->user_id): ?>
-					<input class=form-control name=level type=number step=1 max=30 value="<?php echo $item['level'] ?>" placeholder="0暂不授权，1普通员工，10门店级，20品牌级，30企业级" required>
+					<input class=form-control name=level type=number step=1 max=<?php echo $this->session->level ?> value="<?php echo $item['level'] ?>" placeholder="1普通员工，10门店级，20品牌级，30企业级" required>
+
+                    <p class=help-block>您最高可以授予<?php echo $this->session->level ?>级权限</p>
 					<?php else: ?>
 					<p class="form-control-static"><?php echo $item['level'] ?></p>
 					<input name=level type=hidden value="<?php echo $item['level'] ?>" required>

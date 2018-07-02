@@ -136,7 +136,7 @@
 				<label for=url_image_main class="col-sm-2 control-label">主图 ※</label>
 				<div class=col-sm-10>
 					<?php
-                        require_once(APPPATH. 'views/templates/file-uploader.php');
+                        require_once(VIEWPATH. 'templates/file-uploader.php');
                         $name_to_upload = 'url_image_main';
                         generate_html($name_to_upload, $this->class_name);
                     ?>
@@ -249,6 +249,13 @@
 					<input class=form-control name=quantity_min type=number min=1 step=1 max=50 value="<?php echo set_value('quantity_min') ?>" placeholder="留空则默认为1，最高50">
 				</div>
 			</div>
+
+            <div class=form-group>
+                <label for=limit_lifetime class="col-sm-2 control-label">终身限购数量（份）</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=limit_lifetime type=number min=0 step=1 max=255 value="<?php echo set_value('limit_lifetime') ?>" placeholder="留空则默认为0（不限），最高255">
+                </div>
+            </div>
 		</fieldset>
 
 		<fieldset>
