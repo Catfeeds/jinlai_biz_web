@@ -100,13 +100,12 @@
     var maincontainer_padding_bottom = $('#maincontainer').css('padding-bottom');
 
     // 建立EventStream连接
-    //var es = new EventSource(url_api + 'es.php?user_id=' + user.user_id); // 初版API
-    api_url += 'messages?';
-    var es = new EventSource(
-        api_url +
+    var es_params = '?' +
         'app_type=' + local_role +
-        '&user_id=' + user.user_id
-    );
+        '&biz_id=' + biz.biz_id +
+        '&user_id=' + user.user_id;
+    var es = new EventSource(api_url + 'es.php' + es_params); // 初版API
+    //var es = new EventSource(api_url + 'messages' + es_params);
 
     // 连接建立
     es.onopen = function(){
@@ -121,6 +120,7 @@
 
     // 处理接收到的消息
     es.onmessage = function(event){
+
         // 将返回值存入本地存储
         localStorage.event_data = JSON.stringify(event.data);
 
@@ -131,6 +131,7 @@
             console.log(error);
             return;
         }
+        console.log(event.data)
 
         // 判断信息来源
         //alert(event_data.sender_type);
@@ -220,11 +221,35 @@
         return result;
     }
 
-    // TODO 输入文本消息后发送到服务器
+    // 输入文本消息后发送到服务器
     var text_input = document.getElementById('text-input');
     text_input.onchange = function(){
         var text_wrote = text_input.value;
-        console.log(text_wrote);
+        if (text_wrote == ''){return false}
+        //console.log(text_wrote);
+
+        // AJAX创建消息
+        var params = common_params
+        params.creator_id = user_id
+        params.receiver_type = 'client'
+        params.user_id = user.user_id
+        params.type = 'text'
+        params.content = text_wrote
+        //console.log(params);
+        $.post(
+            api_url + 'message/create',
+            params,
+            function(result)
+            {
+                console.log(result); // 输出回调数据到控制台
+                if (result.status == 200)
+                {
+                    console.log(result.content);
+                } else {
+                    alert(result.content.error.message);
+                }
+            }
+        );
 
         // 清空并将焦点移入文本字段
         text_input.value = '';
@@ -282,10 +307,10 @@
     }
 </script>
 
+<!--
 <button id="button">消息声音</button>
 
 <script>
-
 (function (){
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     if ( ! window.AudioContext){
@@ -344,3 +369,4 @@ eleButton.addEventListener('mouseenter', function(){
 });
 })();
 </script>
+-->

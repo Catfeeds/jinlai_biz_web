@@ -72,7 +72,7 @@
             $data = array_merge(
                 $data,
                 array(
-                    'title' => $data['user']['nickname'],
+                    'title' => '对话'. $data['user']['nickname'],
                     'class' => $this->class_name.' index',
                 )
             );
