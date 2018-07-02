@@ -200,6 +200,7 @@
 
                                 <li role="separator" class="divider"></li>
                                 <li><a href="<?php echo base_url('refund') ?>">退款/售后</a></li>
+                                <li><a href="<?php echo base_url('order/export') ?>">Excel导出</a></li>
 							</ul>
 						</li>
 

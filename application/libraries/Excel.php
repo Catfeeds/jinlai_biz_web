@@ -186,7 +186,7 @@
             //创建一个spreadsheet
             $this->_phpexcel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
             $this->_phpexcel->getProperties()
-                        ->setCreator("userid:" . $this->CI->user_id)
+                        ->setCreator("userid:" . (isset($this->CI->user_id) ? $this->CI->user_id : 'unknown'))
                         ->setSubject("数据导出")
                         ->setDescription(date('Y-m-d H:i:s'));
             $this->_phpexcel->getActiveSheet()->setTitle(empty($description) ? $this->CI->class_name . '文件导出' : $description);
@@ -243,7 +243,7 @@
             $typeString = \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING;
             foreach ($row as $key => $value) :
                 if (is_array($value))
-                    $value = implode(',', $value);
+                    continue;
 
                 if (strpos( '-' . $key, 'time') && is_numeric($value))
                     $value = date('Y-m-d H:i:s', $value);
