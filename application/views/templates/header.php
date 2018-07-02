@@ -28,7 +28,7 @@
 		<title><?php echo $title ?></title>
 		<meta name=description content="<?php echo $description ?>">
 		<meta name=keywords content="<?php echo $keywords ?>">
-		<meta name=version content="revision20180630">
+		<meta name=version content="revision20180701">
 		<meta name=author content="刘亚杰Kamas,青岛意帮网络科技有限公司产品部&技术部">
 		<meta name=copyright content="进来商城,青岛意帮网络科技有限公司">
 		<meta name=contact content="kamaslau@dingtalk.com">
@@ -187,7 +187,7 @@
 								<li><a href="<?php echo base_url('item') ?>">商品</a></li>
 								<li><a href="<?php echo base_url('item/create') ?>">创建商品</a></li>
 								<li><a href="<?php echo base_url('item/create_quick') ?>">快速创建</a></li>
-                                <li><a href="<?php echo base_url('item/create_import') ?>">导入</a></li>
+                                <li><a href="<?php echo base_url('item/create_import') ?>">商品导入</a></li>
 							</ul>
 						</li>
 
@@ -197,10 +197,12 @@
 								<li><a href="<?php echo base_url('order') ?>">所有订单</a></li>
                                 <li><a href="<?php echo base_url('order?status=待接单') ?>">待接单订单</a></li>
                                 <li><a href="<?php echo base_url('order?status=待发货') ?>">待发货订单</a></li>
+                                <li><a href="<?php echo base_url('order?status=待收货') ?>">待收货订单</a></li>
+                                <li><a href="<?php echo base_url('order?status=待评价') ?>">待评价订单</a></li>
+                                <li><a href="<?php echo base_url('order/export') ?>">订单导出</a></li>
 
                                 <li role="separator" class="divider"></li>
                                 <li><a href="<?php echo base_url('refund') ?>">退款/售后</a></li>
-                                <li><a href="<?php echo base_url('order/export') ?>">Excel导出</a></li>
 							</ul>
 						</li>
 

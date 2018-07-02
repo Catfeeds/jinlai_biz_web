@@ -57,11 +57,12 @@
 	<?php endif ?>
 	
 	<ul id=item-actions class=list-unstyled>
+        <li><a href="<?php echo base_url('order/index?user_id='.$item[$this->id_name]) ?>">ta的订单</a></li>
 		<?php
 		// 仅可修改自己的信息
 		if ( $item['user_id'] === $this->session->user_id ):
 		?>
-		<li><a title="编辑" href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
+		<li><a href="<?php echo base_url($this->class_name.'/edit?id='.$item[$this->id_name]) ?>">编辑</a></li>
 		<?php endif ?>
 	</ul>
 
