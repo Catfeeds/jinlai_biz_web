@@ -663,7 +663,6 @@
 		 * 起止时间、字段等
 		 */
 		public function export(){
-
 			// 页面信息
             $data = [
                 'title' => '订单导出'. $this->class_name_cn,
@@ -673,8 +672,8 @@
             ];
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
-            $this->form_validation->set_rules('time_create_min', '开始时间', 'trim|alpha_dash|required');
-            $this->form_validation->set_rules('time_create_max', '结束时间', 'trim|alpha_dash|required');
+            $this->form_validation->set_rules('time_create_min', '开始时间', 'trim|required');
+            $this->form_validation->set_rules('time_create_max', '结束时间', 'trim|required');
             $this->form_validation->set_rules('status', '订单状态', 'trim|in_list[待付款,待接单,待发货,待收货,待评价,已完成,已退款,已拒绝,已取消,已关闭]');
 
             // 若表单提交不成功
@@ -687,8 +686,8 @@
 			else:
 				// 筛选参数；逐一赋值需特别处理的字段
 				$data_to_send = array(
-					'time_create_min' => strtotime($this->input->post('time_create_min') .' 00:00:00'),
-                    'time_create_max' => strtotime($this->input->post('time_create_max') .' 23:59:59'),
+					'time_create_min' => strtotime($this->input->post('time_create_min') . ' 00:00:00'),
+                    'time_create_max' => strtotime($this->input->post('time_create_max') . ' 23:59:59'),
                     'client_type'     => 'biz',
                     'biz_id'          => $this->session->user_id
 				);
@@ -702,7 +701,6 @@
 				$params = $data_to_send;
 				$url    = api_url($this->class_name. '/index');
 				$result = $this->curl->go($url, $params, 'array');
-
 				//api返回成功
 				if ($result['status'] == 200):
 					$this->user_id = $this->session->user_id;
@@ -711,25 +709,25 @@
 
 					//增加一步 ，字段过滤
 					$data_allow_show = ['blank','order_id','biz_name','biz_url_logo','user_id','user_ip','subtotal','discount_promotion','discount_coupon','freight','discount_reprice','repricer_id','total','credit_id','credit_payed','total_payed','total_refund','fullname','code_ssn','mobile','nation','province','city','county','street','longitude','latitude','note_user','note_stuff','reason_cancel','payment_type','payment_account','payment_id','commission','promoter_id','deliver_method','deliver_biz','waybill_id','invoice_status','invoice_id','time_create','time_cancel','time_expire','time_pay','time_refuse','time_accept','time_deliver','time_confirm','time_confirm_auto','time_comment','time_refund','time_delete','status'];
-					foreach ($result['content'] as  $item) {
+					foreach ($result['content'] as  $item) :
 						$data_filterd = [];
-						foreach ($item as $key => $value) {
-							if( !is_array($value)):
-								if (array_search($key, $data_allow_show)) :
-									$data_filterd[$key] = $value;
-								endif;
+						foreach ($item as $key => $value) :
+							if ( !is_array($value) && array_search($key, $data_allow_show) ):
+								$data_filterd[$key] = $value;
 							endif;
-						}
+						endforeach;
 						$data_list[] = $data_filterd;
-					}
+					endforeach;
 					//导出
 					$this->load->library('Excel');
 					$this->excel->export($data_list, $data_to_send['time_create_min'] . '-' . $data_to_send['time_create_max'] . '订单导出');
 				else:
-					// 更新本地用户密码字段
-					$data['error'] = '导出错误，稍后重试';
+					if (isset($result['content']['error'])) :
+						$data['error'] = $result['content']['error']['message'];
+					else:
+						$data['error'] = '导出错误，稍后重试';
+					endif;
 				endif;
-
 			endif;
 
 			$this->load->view('templates/header', $data);

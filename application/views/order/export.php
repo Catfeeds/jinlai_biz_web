@@ -45,15 +45,13 @@
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">开始时间 ※</label>
 				<div class="input-group col-sm-10">
-                    <div class="input-group-addon">￥</div>
-					<input class=form-control name="time_create_min" type="date" placeholder="选择订单开始时间">
+					<input class=form-control name="time_create_min" type="date" placeholder="选择订单开始时间" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">结束时间 ※</label>
 				<div class="input-group col-sm-10">
-                    <div class="input-group-addon">￥</div>
-					<input class=form-control name="time_create_max" type="date" placeholder="选择订单开始时间">
+					<input class=form-control name="time_create_max" type="date" placeholder="选择订单开始时间" required>
 				</div>
 			</div>
 

@@ -218,7 +218,7 @@
                     return FALSE;
                 }
 
-                $filepath = './public/' . $filename; //项目下没有此目录
+                $filepath = './public/' . $filename; 
                 $writer->save($filepath);
                 //处理结果
                 if (file_exists($filepath)) :
