@@ -163,15 +163,25 @@
 					$status = $item['status'];
 			?>
 			<li>
-                <span class=item-status><?php echo $status ?></span>
+                <span class=item-status>
+                    <?php
+                        $item_create =
+                            (date('ymd') == date('ymd', $item['time_create']))? '今天'.date('H:i', $item['time_create']): date('m-d H:i', $item['time_create'])
+                    ?>
+
+                    <?php echo $item_create ?>下单，<?php echo $status ?>
+                </span>
                 <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
-                    <p>下单时间 <?php echo date('Y-m-d H:i:s', $item['time_create']) ?></p>
+                    <!--<p>下单时间 <?php echo date('Y-m-d H:i:s', $item['time_create']) ?></p>-->
+                    <p>
+                       <?php echo $item['fullname'].' / '.$item['mobile'] ?>
+                    </p>
 
                     <ul class="order-figures row">
                         <li class="col-xs-4">小计<span>￥<?php echo $item['subtotal'] ?></span></li>
                         <li class="col-xs-4">应支付<span>￥<?php echo $item['total'] ?></span>
-                        <li class="col-xs-4">已支付<span<?php echo ($item['total_payed'] !== '0.00' && $item['total_payed'] < $item['total'])? ' style="color:red"': ' style="color:#c9caca"' ?>>￥<?php echo $item['total_payed'] ?></span>
+                        <li class="col-xs-4">已支付<span<?php echo ($item['total_payed'] !== '0.00' && $item['total_payed'] < $item['total'])? ' style="color:red"': ' style="_color:#c9caca"' ?>>￥<?php echo $item['total_payed'] ?></span>
                     </ul>
                 </a>
 

@@ -32,6 +32,8 @@
 </div>
 
 <div id=content class=container>
+    <?php if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>' ?>
+
 	<h2><?php echo $title ?></h2>
 	<?php if ( !empty($content) ): ?>
 	<section><?php echo $content ?></section>
