@@ -686,14 +686,14 @@
 				$this->load->view('templates/header', $data);
 				$this->load->view($this->view_root.'/export', $data);
 				$this->load->view('templates/footer', $data);
-				return true;
+
 			else:
 				// 筛选参数；逐一赋值需特别处理的字段
 				$data_to_send = array(
 					'time_create_min' => strtotime($this->input->post('time_create_min') . ' 00:00:00'),
                     'time_create_max' => strtotime($this->input->post('time_create_max') . ' 23:59:59'),
                     'client_type'     => 'biz',
-                    'biz_id'          => $this->session->user_id
+                    'biz_id'          => $this->session->biz_id
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -702,13 +702,12 @@
 				foreach ($data_need_no_prepare as $name)
 					$data_to_send[$name] = $this->input->post($name);
 
-				//查找是否存在文件缓存
+				// 查找是否存在文件缓存
 				$new_condition = sha1(implode('-', $data_to_send));
 				if (isset($_COOKIE[$new_condition]) && file_exists($_COOKIE[$new_condition])) :
 					redirect('/' . $_COOKIE[$new_condition]);
 					exit;
 				endif;
-
 
                 // 向API服务器发送待创建数据
 				$params = $data_to_send;
@@ -716,13 +715,12 @@
 				$result = $this->curl->go($url, $params, 'array');
 				//api返回成功
 				if ($result['status'] == 200):
-
 					$this->user_id = $this->session->user_id;
 					$data_list = [];
 					$data_filterd = [];
 
 					//增加一步 ，字段过滤,处理订单的item
-					$data_order_show = ['blank','order_id','user_id','subtotal','freight','discount_reprice','total','total_payed','fullname','code_ssn','mobile','province','city','county','street','longitude','latitude','note_user','note_stuff','payment_type','payment_account','payment_id','time_create','time_cancel','time_expire','time_pay','time_refuse','time_accept','time_deliver','time_confirm','time_confirm_auto','time_comment','time_refund','time_delete','status'];
+					$data_order_show = ['blank','order_id','user_id','subtotal','freight','discount_reprice','total','total_payed','fullname','code_ssn','mobile','province','city','county','street','longitude','latitude','note_user','note_stuff','payment_type','payment_account','payment_id','time_create','time_cancel','time_expire','time_pay','time_refuse','time_accept','time_deliver','time_confirm','time_confirm_auto','time_comment','time_refund', 'status'];
 					$data_order_items = ['item_id', 'name', 'sku_id', 'sku_name', 'price', 'single_total', 'count'];
 					foreach ($result['content'] as  $order) :
 						$data_filterd = [];

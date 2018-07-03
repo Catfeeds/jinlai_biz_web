@@ -45,25 +45,25 @@
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">开始时间 ※</label>
 				<div class="input-group col-sm-10">
-					<input class=form-control name="time_create_min" type="date" placeholder="选择订单开始时间" required>
+					<input class=form-control name="time_create_min" type="date" placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min') ?>" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">结束时间 ※</label>
 				<div class="input-group col-sm-10">
-					<input class=form-control name="time_create_max" type="date" placeholder="选择订单开始时间" required>
+					<input class=form-control name="time_create_max" type="date" placeholder="选择订单开始时间" value="<?php echo set_value('time_create_max') ?>" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">用户ID</label>
 				<div class="input-group col-sm-10">
-					<input class=form-control name="user_id" type="number" placeholder="填写用户id">
+					<input class=form-control name="user_id" type="number" value="<?php echo set_value('user_id') ?>" placeholder="填写用户id">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">手机号</label>
 				<div class="input-group col-sm-10">
-					<input class=form-control name="mobile" type="number" maxlength="11" placeholder="填写手机号">
+					<input class=form-control name="mobile" type="tel" maxlength="11" value="<?php echo set_value('mobile') ?>" placeholder="填写手机号">
 				</div>
 			</div>
 			<div class=form-group>
