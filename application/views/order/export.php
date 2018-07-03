@@ -45,26 +45,26 @@
 		<fieldset>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">开始时间 ※</label>
-				<div class="input-group col-sm-10">
-					<input class=form-control name="time_create_min" id="time_create_min" type="text" placeholder="选择订单开始时间" required>
+				<div class=col-sm-10>
+					<input class=form-control name=time_create_min id="time_create_min" type=text placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min') ?>" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">结束时间 ※</label>
-				<div class="input-group col-sm-10">
-					<input class=form-control name="time_create_max" id="time_create_max" type="text" placeholder="选择订单开始时间" required>
+				<div class=col-sm-10>
+					<input class=form-control name=time_create_max id="time_create_max" type"text placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min') ?>" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">用户ID</label>
 				<div class="input-group col-sm-10">
-					<input class=form-control name="user_id" type="number" value="<?php echo set_value('user_id') ?>" placeholder="填写用户id">
+					<input class=form-control name=user_id type=number min=0 step=1 value="<?php echo set_value('user_id') ?>" placeholder="填写用户id">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">手机号</label>
 				<div class="input-group col-sm-10">
-					<input class=form-control name="mobile" type="tel" maxlength="11" value="<?php echo set_value('mobile') ?>" placeholder="填写手机号">
+					<input class=form-control name=mobile type=tel maxlength="11" value="<?php echo set_value('mobile') ?>" placeholder="填写手机号">
 				</div>
 			</div>
 			<div class=form-group>
@@ -118,8 +118,8 @@
 	</form>
 
 </div>
-<script type="text/javascript" src="<?php echo BASE_URL ?>/js/jquery.datetimepicker.full.min.js"></script>
-<script type="text/javascript">
+<script src="<?php echo BASE_URL ?>/js/jquery.datetimepicker.full.min.js"></script>
+<script>
 	$("#time_create_min").datetimepicker({
 		format: 'Y-m-d H:i',
 		step:10

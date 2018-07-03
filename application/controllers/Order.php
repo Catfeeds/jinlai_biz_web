@@ -751,19 +751,23 @@
 						exit;
 					else:
 						$data['error'] = $this->result['content']['error']['message'];
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/export', $data);
+                        $this->load->view('templates/footer', $data);
 					endif;
+
 				else:
 					if (isset($result['content']['error'])) :
 						$data['error'] = $result['content']['error']['message'];
 					else:
 						$data['error'] = '导出错误，稍后重试';
 					endif;
+
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/export', $data);
+                    $this->load->view('templates/footer', $data);
 				endif;
 			endif;
-
-			$this->load->view('templates/header', $data);
-			$this->load->view($this->view_root.'/export', $data);
-			$this->load->view('templates/footer', $data);
 		}
 		/**
 		 * TODO 商家验证
