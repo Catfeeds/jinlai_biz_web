@@ -46,13 +46,13 @@
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">开始时间 ※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_create_min id="time_create_min" type=text placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min') ?>" required>
+					<input class=form-control name=time_create_min id="time_create_min" type=text placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min', date('Y-m-d H:00')) ?>" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">结束时间 ※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_create_max id="time_create_max" type"text placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min') ?>" required>
+					<input class=form-control name=time_create_max id="time_create_max" type="text" placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min',date('Y-m-d H:i')) ?>" required>
 				</div>
 			</div>
 			<div class=form-group>

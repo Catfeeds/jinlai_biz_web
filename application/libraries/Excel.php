@@ -245,7 +245,7 @@
                 if (is_array($value))
                     continue;
 
-                if (strpos( '-' . $key, 'time') && is_numeric($value))
+                if (( strpos( '-' . $key, '时间') || strpos( '-' . $key, 'time') ) && is_numeric($value))
                     $value = date('Y-m-d H:i:s', $value);
         
                 $this->_phpexcel->getActiveSheet()->setCellValueByColumnAndRow($column++, $line, $value, $typeString);
