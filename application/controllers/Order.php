@@ -693,7 +693,7 @@
 					'time_create_min' => strtotime($this->input->post('time_create_min') . ':00'),
                     'time_create_max' => strtotime($this->input->post('time_create_max') . ':00'),
                     'client_type'     => 'biz',
-                    'biz_id'          => 148//$this->session->biz_id
+                    'biz_id'          => $this->session->biz_id
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
@@ -720,7 +720,7 @@
 					$data_filterd = [];
 
 					//增加一步 ，字段过滤,处理订单的item
-					$data_order_show = ['order_id'=>'订单ID','user_id'=>'用户ID','subtotal'=>'小计','freight'=>'运费 0包邮','total'=>'应支付金额','total_payed'=>'实际支付金额','fullname'=>'收件人姓名','code_ssn'=>'身份证号','mobile'=>'收件人手机号','province'=>'省份','city'=>'城市','county'=>'区/县','street'=>'街道','full_address'=>'收货地址','note_user'=>'用户留言','note_stuff'=>'员工留言','payment_type'=>'支付方式','payment_account'=>'付款账号','payment_id'=>'付款流水号','time_create'=>'用户下单时间','time_cancel'=>'用户取消时间','time_expire'=>'自动过期时间；创建后未付款','time_pay'=>'用户付款时间','time_refuse'=>'商家拒绝时间；系统自动发起退款','time_accept'=>'商家接单时间', 'status'=>'订单状态'];
+					$data_order_show = ['order_id'=>'订单ID','user_id'=>'用户ID','subtotal'=>'小计','freight'=>'运费 0包邮','total'=>'应支付金额','total_payed'=>'实际支付金额','fullname'=>'收件人姓名','code_ssn'=>'身份证号','mobile'=>'收件人手机号','province'=>'省份','city'=>'城市','county'=>'区/县','street'=>'街道','full_address'=>'完整地址','note_user'=>'用户留言','note_stuff'=>'员工留言','payment_type'=>'支付方式','payment_account'=>'付款账号','payment_id'=>'付款流水号','time_create'=>'用户下单时间','time_cancel'=>'用户取消时间','time_expire'=>'自动过期时间；创建后未付款','time_pay'=>'用户付款时间','time_refuse'=>'商家拒绝时间；系统自动发起退款','time_accept'=>'商家接单时间', 'status'=>'订单状态'];
 					$data_order_items = ['item_id'=>'商品ID', 'name'=>'名称', 'sku_id'=>'规格ID', 'sku_name'=>'规格名称', 'price'=>'价格', 'single_total'=>'小计', 'count'=>'数量'];
 					foreach ($result['content'] as  $order) :
 						$data_filterd = [];
