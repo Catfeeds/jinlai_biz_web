@@ -46,7 +46,7 @@
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">开始时间 ※</label>
 				<div class=col-sm-10>
-					<input class=form-control name=time_create_min id="time_create_min" type=text placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min', date('Y-m-d H:00')) ?>" required>
+					<input class=form-control name=time_create_min id="time_create_min" type=text placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min', date('Y-m-d H:00'), time() - 59) ?>" required>
 				</div>
 			</div>
 			<div class=form-group>
@@ -65,6 +65,18 @@
 				<label for=brand_id class="col-sm-2 control-label">手机号</label>
 				<div class="input-group col-sm-10">
 					<input class=form-control name=mobile type=tel maxlength="11" value="<?php echo set_value('mobile') ?>" placeholder="填写手机号">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=brand_id class="col-sm-2 control-label">导出量</label>
+				<div class="input-group col-sm-10">
+					<input class=form-control name=limit type=number maxlength="4" min=1 step=1 value="<?php echo set_value('limit') ?>" placeholder="填写最多导出多少条">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=brand_id class="col-sm-2 control-label">起始订单ID</label>
+				<div class="input-group col-sm-10">
+					<input class=form-control name=order_id type=number maxlength="11"  min=1 step=1 value="<?php echo set_value('order_id') ?>" placeholder="填写起始订单ID">
 				</div>
 			</div>
 			<div class=form-group>
