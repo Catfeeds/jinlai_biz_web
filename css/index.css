@@ -34,7 +34,7 @@
 #item-list>li {background-color:#fff;margin-top:20px;border-radius:12px;padding:20px 20px 0 20px;position:relative;}
     #item-list>li>p:first-child {margin-bottom:12px;}
     
-.item-status {position:absolute;top:20px;right:20px;}
+.item-status {position:absolute;top:20px;right:20px;text-align:right;}
 
 .item-actions {height:80px;line-height:80px;margin-top:20px;border-top:1px solid #c9caca;}
 .item-actions [type=checkbox] {display:none;}
