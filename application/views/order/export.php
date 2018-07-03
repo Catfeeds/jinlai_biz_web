@@ -57,31 +57,31 @@
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">用户ID</label>
-				<div class="input-group col-sm-10">
+				<div class="col-sm-10">
 					<input class=form-control name=user_id type=number min=0 step=1 value="<?php echo set_value('user_id') ?>" placeholder="填写用户id">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">手机号</label>
-				<div class="input-group col-sm-10">
+				<div class="col-sm-10">
 					<input class=form-control name=mobile type=tel maxlength="11" value="<?php echo set_value('mobile') ?>" placeholder="填写手机号">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">导出量</label>
-				<div class="input-group col-sm-10">
+				<div class="col-sm-10">
 					<input class=form-control name=limit type=number maxlength="4" min=1 step=1 value="<?php echo set_value('limit') ?>" placeholder="填写最多导出多少条">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">起始订单ID</label>
-				<div class="input-group col-sm-10">
+				<div class="col-sm-10">
 					<input class=form-control name=order_id type=number maxlength="11"  min=1 step=1 value="<?php echo set_value('order_id') ?>" placeholder="填写起始订单ID">
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">支付方式</label>
-				<div class="col-sm-10 input-group">
+				<div class="col-sm-10">
                     <?php $input_name = 'payment_type' ?>
                     <select class=form-control name="<?php echo $input_name ?>">
                         <option value="" selected="selected">全部</option>
@@ -100,7 +100,7 @@
 			</div>
             <div class=form-group>
                 <label for="status" class="col-sm-2 control-label">订单状态</label>
-                <div class="col-sm-10 input-group">
+                <div class="col-sm-10">
                     <?php $input_name = 'status' ?>
                     <select class=form-control name="<?php echo $input_name ?>">
                         <option value="" selected="selected">全部</option>
