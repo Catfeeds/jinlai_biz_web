@@ -140,7 +140,7 @@
             ?>
             <li>
                 <span class=item-status><?php echo $status ?></span>
-                <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
+                <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>" target="_blank">
                     <p><?php echo $this->class_name_cn ?>ID <?php echo $item[$this->id_name] ?></p>
                     <p>下单时间 <?php echo date('Y-m-d H:i:s', $item['time_create']) ?></p>
 
@@ -157,22 +157,22 @@
 		            </span>
 
                     <ul class=horizontal>
-                        <?php
-                        // 需要特定角色和权限进行该操作
-                        if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
-                            $status = $item['status'];
-                        ?>
-                            <li><a title="备注" href="<?php echo base_url($this->class_name.'/note?ids='.$item[$this->id_name]) ?>" target=_blank>备注</a></li>
+                    <?php
+                    // 需要特定角色和权限进行该操作
+                    if ( in_array($current_role, $role_allowed) && ($current_level >= $level_allowed) ):
+                        $status = $item['status'];
+                    ?>
+                        <li><a title="备注" href="<?php echo base_url($this->class_name.'/note?ids='.$item[$this->id_name]) ?>" target=_blank>备注</a></li>
 
-                            <?php if ($status === '待处理'): ?>
-                            <li><a title="拒绝" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>拒绝</a></li>
-                            <li><a title="同意" href="<?php echo base_url($this->class_name.'/accept?ids='.$item[$this->id_name]) ?>" target=_blank>同意</a></li>
-                            <?php endif ?>
-
-                            <?php if ($status === '待退货'): ?>
-                            <li><a title="收货" href="<?php echo base_url($this->class_name.'/confirm?ids='.$item[$this->id_name]) ?>" target=_blank>收货</a></li>
-                            <?php endif ?>
+                        <?php if ($status === '待处理'): ?>
+                        <li><a title="拒绝" href="<?php echo base_url($this->class_name.'/refuse?ids='.$item[$this->id_name]) ?>" target=_blank>拒绝</a></li>
+                        <li><a title="同意" href="<?php echo base_url($this->class_name.'/accept?ids='.$item[$this->id_name]) ?>" target=_blank>同意</a></li>
                         <?php endif ?>
+
+                        <?php if ($status === '待退货'): ?>
+                        <li><a title="收货" href="<?php echo base_url($this->class_name.'/confirm?ids='.$item[$this->id_name]) ?>" target=_blank>收货</a></li>
+                        <?php endif ?>
+                    <?php endif ?>
                     </ul>
                 </div>
 
