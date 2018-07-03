@@ -33,11 +33,11 @@ define('SITE_KEYWORDS', '进来,进来商城,品控,网购,网购平台,网上�
 define('SITE_DESCRIPTION', '「进来」是本地商家严选平台，构建严选商圈生态、共享超级用户圈，深度服务本地商家。 '); // 站点描述
 define('ICP_NUMBER', '鲁ICP备15023233号-7'); // ICP备案号码，没有请留空
 
-define('BASE_URL', 'https://'. $_SERVER['SERVER_NAME']); // 可对外使用的站点URL；在本地测试时须替换为类似“localhost/BasicCodeigniter”形式
-define('API_URL', 'https://api'.ROOT_URL); // API URL
-define('WEB_URL', 'https://www'.ROOT_URL); // 客户端 URL
-define('BIZ_URL', 'https://biz'.ROOT_URL); // 商家端 URL
-define('ADMIN_URL', 'https://admin'.ROOT_URL); // 管理端 URL
+define('BASE_URL', 'http://'. $_SERVER['SERVER_NAME']); // 可对外使用的站点URL；在本地测试时须替换为类似“localhost/BasicCodeigniter”形式
+define('API_URL', 'http://api'.ROOT_URL); // API URL
+define('WEB_URL', 'http://www'.ROOT_URL); // 客户端 URL
+define('BIZ_URL', 'http://biz'.ROOT_URL); // 商家端 URL
+define('ADMIN_URL', 'http://admin'.ROOT_URL); // 管理端 URL
 function api_url($api_name)
 {
     return API_URL. $api_name;

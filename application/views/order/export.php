@@ -1,4 +1,5 @@
-<link rel=stylesheet media=all href="/css/create.css">
+<link rel=stylesheet media=all href="<?php echo BASE_URL ?>/css/jquery.datetimepicker.css">
+
 <style>
 
 
@@ -45,13 +46,13 @@
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">开始时间 ※</label>
 				<div class="input-group col-sm-10">
-					<input class=form-control name="time_create_min" type="date" placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min') ?>" required>
+					<input class=form-control name="time_create_min" id="time_create_min" type="text" placeholder="选择订单开始时间" required>
 				</div>
 			</div>
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">结束时间 ※</label>
 				<div class="input-group col-sm-10">
-					<input class=form-control name="time_create_max" type="date" placeholder="选择订单开始时间" value="<?php echo set_value('time_create_max') ?>" required>
+					<input class=form-control name="time_create_max" id="time_create_max" type="text" placeholder="选择订单开始时间" required>
 				</div>
 			</div>
 			<div class=form-group>
@@ -117,3 +118,14 @@
 	</form>
 
 </div>
+<script type="text/javascript" src="<?php echo BASE_URL ?>/js/jquery.datetimepicker.full.min.js"></script>
+<script type="text/javascript">
+	$("#time_create_min").datetimepicker({
+		format: 'Y-m-d H:i',
+		step:10
+	});
+	$("#time_create_max").datetimepicker({
+		format: 'Y-m-d H:i',
+		step:10
+	});
+</script>

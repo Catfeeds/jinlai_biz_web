@@ -690,8 +690,8 @@
 			else:
 				// 筛选参数；逐一赋值需特别处理的字段
 				$data_to_send = array(
-					'time_create_min' => strtotime($this->input->post('time_create_min') . ' 00:00:00'),
-                    'time_create_max' => strtotime($this->input->post('time_create_max') . ' 23:59:59'),
+					'time_create_min' => strtotime($this->input->post('time_create_min') . ':00'),
+                    'time_create_max' => strtotime($this->input->post('time_create_max') . ':00'),
                     'client_type'     => 'biz',
                     'biz_id'          => $this->session->biz_id
 				);

@@ -18,7 +18,7 @@
 	 	public $_dataline; // 数据起始行号
 	 	public $_file; // 待导入文件URL
 	 	protected $_phpexcel; // PHPExcel对象
-
+        static $_savepath = 'temp_files'; //文件默认保存路径
         // 构造函数
         public function __construct()
         {
@@ -207,13 +207,13 @@
 
             //文件形式保存
             if ($output == 'file' || $output == 'save' ) :
-                if (!is_dir('./public')){
+                if (!is_dir('./' . self::$_savepath)){
                     $this->CI->result['status'] = 411;
-                    $this->CI->result['content']['error']['message'] = 'public目录不存在';
+                    $this->CI->result['content']['error']['message'] =  self::$_savepath . '目录不存在';
                     return FALSE;
                 }
 
-                $filepath = 'public/' . $filename; 
+                $filepath = self::$_savepath . '/' . $filename; 
                 $writer->save($filepath);
                 //处理结果
                 if (file_exists($filepath)) :
