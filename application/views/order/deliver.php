@@ -173,7 +173,7 @@
 					<select class=form-control name="<?php echo $input_name ?>">
 						<option value="" <?php echo set_select($input_name, '') ?>>请选择</option>
 						<?php
-							$options = array('自营', '达达', '蜂鸟', '顺丰速运', '圆通', '中通', '申通', '百世汇通', '天天',);
+							$options = array('自营', '达达', '蜂鸟', '顺丰速运', '圆通', '中通', '申通', '百世汇通', '天天','韵达');
 							foreach ($options as $option):
 						?>
 						<option value="<?php echo $option ?>" <?php echo set_select($input_name, $option) ?>><?php echo $option ?></option>
