@@ -99,6 +99,10 @@
 	</blockquote>
 
 	<?php else: ?>
+        <blockquote>
+            <p>共找到订单：<?php echo count($items) ?>条</p>
+        </blockquote>
+        
         <?php if (empty($this->input->get_post('status'))): ?>
         <blockquote>
             <p>已取消、已拒绝，及已关闭的订单不在此处列出，您可通过上方筛选菜单查看</p>
