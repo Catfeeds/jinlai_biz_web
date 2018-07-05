@@ -420,6 +420,7 @@
                     $data['title'] = $this->class_name_cn.$op_name. '成功';
                     $data['class'] = 'success';
                     $data['content'] = $result['content']['message'];
+                    $data['error'] = $result['content']['error']['message'];
 
                     $this->load->view('templates/header', $data);
                     $this->load->view($this->view_root.'/result', $data);
