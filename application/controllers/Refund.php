@@ -569,7 +569,6 @@
                 'class' => $this->class_name. ' export',
                 'error' => '', // 预设错误提示
                 'refund_status' => ['待处理','已取消','已关闭','已拒绝','待退货','待退款','已退款'],
-                'biz'   => $this->getallbiz()
             ];
             // 待验证的表单项
             $this->form_validation->set_error_delimiters('', '；');
@@ -595,10 +594,11 @@
                     'time_create_min' => strtotime($this->input->post('time_create_min') . ':00'),
                     'time_create_max' => strtotime($this->input->post('time_create_max') . ':00'),
                     'client_type'     => 'biz',
+                    'biz_id'          => $this->session->biz_id
                 );
                 // 自动生成无需特别处理的数据
                 $data_need_no_prepare = array(
-                    'status','user_id','mobile','payment_type','limit','biz_id'
+                    'status','user_id','mobile','payment_type','limit',''
                 );
                 foreach ($data_need_no_prepare as $name)
                     $data_to_send[$name] = $this->input->post($name);
@@ -621,7 +621,7 @@
                     $data_filterd = [];
 
                     //增加一步 ，字段过滤,处理订单的item
-                    $data_order_show = ['biz_id'=>'商家ID','order_id'=>'订单ID','user_id'=>'用户ID','total_payed'=>'实际退款金额','total_applied'=>'申请退款金额','total_approved'=>'同意退款金额','cargo_status'=>'货物状态','reason'=>'原因','description'=>'补充说明','deliver_method'=>'退货方式','deliver_biz'=>'物流服务商','waybill_id'=>'运单号','note_stuff'=>'员工备注','time_create'=>'用户创建时间','time_cancel'=>'用户取消时间','time_close'=>'关闭时间','time_accept'=>'商家同意时间','time_confirm'=>'商家收货时间','time_refuse'=>'商家拒绝时间','time_refund'=>'商家退款时间','status'=>'订单状态'];
+                    $data_order_show = ['order_id'=>'订单ID','user_id'=>'用户ID','total_payed'=>'实际退款金额','total_applied'=>'申请退款金额','total_approved'=>'同意退款金额','cargo_status'=>'货物状态','reason'=>'原因','description'=>'补充说明','deliver_method'=>'退货方式','deliver_biz'=>'物流服务商','waybill_id'=>'运单号','note_stuff'=>'员工备注','time_create'=>'用户创建时间','time_cancel'=>'用户取消时间','time_close'=>'关闭时间','time_accept'=>'商家同意时间','time_confirm'=>'商家收货时间','time_refuse'=>'商家拒绝时间','time_refund'=>'商家退款时间','status'=>'订单状态'];
                     foreach ($result['content'] as  $order) :
                         //从哪开始
                         if ($order['order_id'] < $order_id) :
@@ -667,7 +667,7 @@
                 endif;
             endif;
         }
-        
+
         /**
          * 删除
          *
