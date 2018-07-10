@@ -93,19 +93,21 @@
     // 商家信息
     var biz = <?php echo json_encode($biz) ?>;
 
-    var avatar_user = '<div class="message-avatar"><figure><img src="' + media_url + 'user/' + user.avatar + '"></figure></div>'; // 用户头像DOM
-    var avatar_biz = '<div class="message-avatar"><figure><img src="' + media_url + 'biz/' + biz.url_logo + '"></figure></div>'; // 商家头像DOM
+    // 用户头像DOM
+    var avatar_user = '<div class="message-avatar"><figure><img src="'+ media_url+'user/'+user.avatar +'"></figure></div>';
+    // 商家头像DOM
+    var avatar_biz = '<div class="message-avatar"><figure><img src="'+ media_url+'biz/'+biz.url_logo +'"></figure></div>';
 
-    // 页面初始下内边距
+    // 获取页面初始下内边距
     var maincontainer_padding_bottom = $('#maincontainer').css('padding-bottom');
 
     // 建立EventStream连接
-    var es_params = '?' +
+    var es_params =
         'app_type=' + local_role +
         '&biz_id=' + biz.biz_id +
         '&user_id=' + user.user_id;
-    var es = new EventSource(api_url + 'es.php' + es_params); // 初版API
-    //var es = new EventSource(api_url + 'messages' + es_params);
+    var es = new EventSource(api_url + 'es.php?' + es_params); // 测试用API
+    //var es = new EventSource(api_url + 'messages?' + es_params);
 
     // 连接建立
     es.onopen = function(){
@@ -115,30 +117,42 @@
     // 报错
     es.onerror = function(event) {
         console.log('onerror');
-        //console.log(event);
+        console.log(event);
     }
 
     // 处理接收到的消息
-    es.onmessage = function(event){
+    es.onmessage = function(event)
+    {
+        console.log(event.data) // 输出返回值
+        console.log('origin:' + event.origin)
+        console.log('last_event_id:' + event.lastEventId)
 
         // 将返回值存入本地存储
         localStorage.event_data = JSON.stringify(event.data);
 
         // 解析JSON格式的返回内容
-        try {
-            var event_data = JSON.parse(event.data);
-        } catch(error){
+        try
+        {
+            var data_in_json = JSON.parse(event.data);
+
+            // 生成对话体DOM
+            genereate_dom_chat(data_in_json)
+        }
+        catch(error)
+        {
             console.log(error);
             return;
         }
-        console.log(event.data)
+    }
 
+    // 生成对话体DOM
+    function genereate_dom_chat(data)
+    {
         // 判断信息来源
-        //alert(event_data.sender_type);
-        var sender = (event_data.sender_type == 'client')? 'user': event_data.sender_type;
+        var sender = (data.sender_type == 'client')? 'user': data.sender_type;
 
         // 判断信息来源是否为当前用户
-        var is_self = (event_data.sender_type === local_role);
+        var is_self = (data.sender_type === local_role);
 
         // 拼合待显示的消息体DOM
         var message = '<li class=message-item>';
@@ -149,52 +163,52 @@
         var time_from_latest = Date.parse(new Date())/1000 - time_to_compare;
         if (time_from_latest > show_time_again || time_to_compare == undefined)
         {
-            message += '<div class=message-time><span>' + time_formater(event_data.time_create) + '</span></div>';
+            message += '<div class=message-time><span>' + time_formater(data.time_create) + '</span></div>';
         }
 
         // 更新localstorage最近接受消息的创建时间
-        localStorage.latest_time_create = event_data.time_create;
+        localStorage.latest_time_create = data.time_create;
         if (sender == 'user')
         {
-            localStorage.latest_time_create_user = event_data.time_create;
+            localStorage.latest_time_create_user = data.time_create
         }
         else
         {
-            localStorage.latest_time_create_biz = event_data.time_create;
+            localStorage.latest_time_create_biz = data.time_create
         }
 
         // 判断消息来源身份类型
-        var from = (is_self)? 'self': 'other';
-        var type = event_data.type;
-        message += '<div class="message-body ' + from + ' body-' + type + '">';
+        var type = data.type;
+        message += '<div class="message-body '+ (is_self? 'self': 'other') +' body-'+ type +'">';
 
         // 生成消息头像
         message += (sender == 'user')? avatar_user: avatar_biz;
 
-        // 生成消息体容器
-        message += '    <div class="message-content type-' + type + '">';
-
-        // 生成消息内容
+        // 准备消息内容
         var message_content = '';
         if (type === 'text')
         {
-            message_content = '<p>ID' + event_data.message_id + ' ' + event_data.content + '</p>';
+            message_content = '<p>ID' + data.message_id + ' ' + data.content + '</p>';
         }
         else if (type === 'image')
         {
-            message_content = '<figure><img src="<?php echo MEDIA_URL.'message/' ?>' + event_data.content + '"></figure>';
+            message_content = '<figure><img src="<?php echo MEDIA_URL.'message/' ?>' + data.content + '"></figure>';
         }
         else if (type === 'location')
         {
-            message_content = '<a href="<?php echo base_url('location/detail?content=') ?>'+ event_data.content +'"><div>省市区<br>路楼户</div></a>';
+            message_content = '<a href="<?php echo base_url('location/detail?content=') ?>'+ data.content +'"><div>省市区<br>路楼户</div></a>';
         }
         else if (type === 'address')
         {
             message_content = '收货地址啥啥的';
         }
 
+        // 生成消息内容DOM
+        message += '    <div class="message-content type-' + type + '">';
         message += message_content;
         message += '    </div>'; // end div.message-content
+
+        // 完成消息体DOM
         message += '</div>'; // end div.message-body
         message += '</li>'; // end li.message-item
 
@@ -203,7 +217,7 @@
 
         // 将聊天窗口底部移入视界
         document.getElementById('page-bottom').scrollIntoView(true)
-    }
+    } // end genereate_dom_chat
 
     // 将时间戳格式化为可读日期
     function time_formater(timestamp)
@@ -219,22 +233,24 @@
         //result += ':' + ((time.getSeconds().toString().length == 1)? '0'+time.getSeconds(): time.getSeconds());
 
         return result;
-    }
+    } // end time_formater
 
     // 输入文本消息后发送到服务器
     var text_input = document.getElementById('text-input');
     text_input.onchange = function(){
-        var text_wrote = text_input.value;
-        if (text_wrote == ''){return false}
-        //console.log(text_wrote);
+        var content = text_input.value;
+        //console.log(content);
 
-        // AJAX创建消息
+        // 若无内容，则忽略
+        if (content == ''){return false}
+
+        // 发送消息
         var params = common_params
-        params.creator_id = user_id
+        params.creator_id = user_id // 发送者ID，即当前登陆用户ID
         params.receiver_type = 'client'
         params.user_id = user.user_id
-        params.type = 'text'
-        params.content = text_wrote
+        params.type = 'text' // 消息类型
+        params.content = content // 消息内容
         //console.log(params);
         $.post(
             api_url + 'message/create',
@@ -246,7 +262,7 @@
                 {
                     console.log(result.content);
                 } else {
-                    alert(result.content.error.message);
+                    console.log(result.content.error.message);
                 }
             }
         );

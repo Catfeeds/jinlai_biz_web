@@ -413,13 +413,14 @@
 
                 // 向API服务器发送待创建数据
                 $params = $data_to_edit;
-                var_dump($params);
+                //var_dump($params);
                 $url = api_url($this->class_name. '/edit_bulk');
                 $result = $this->curl->go($url, $params, 'array');
                 if ($result['status'] === 200):
                     $data['title'] = $this->class_name_cn.$op_name. '成功';
                     $data['class'] = 'success';
                     $data['content'] = $result['content']['message'];
+                    $data['error'] = $result['content']['error']['message'];
 
                     $this->load->view('templates/header', $data);
                     $this->load->view($this->view_root.'/result', $data);
@@ -555,6 +556,118 @@
             endif;
         } // end confirm
 
+        /**
+         * TODO 根据条件导出订单信息为excel
+         *
+         * 起止时间、字段等
+         */
+        public function export(){
+            $this->class_name_cn = '';
+            // 页面信息
+            $data = [
+                'title' => '退款导出'. $this->class_name_cn,
+                'class' => $this->class_name. ' export',
+                'error' => '', // 预设错误提示
+                'refund_status' => ['待处理','已取消','已关闭','已拒绝','待退货','待退款','已退款'],
+                'biz'   => $this->getallbiz()
+            ];
+            // 待验证的表单项
+            $this->form_validation->set_error_delimiters('', '；');
+            $this->form_validation->set_rules('time_create_min', '开始时间', 'trim|required');
+            $this->form_validation->set_rules('time_create_max', '结束时间', 'trim|required');
+            $this->form_validation->set_rules('user_id', '用户id', 'trim|integer');
+            $this->form_validation->set_rules('order_id', '起始订单id', 'trim|integer|max_length[11]');
+            $this->form_validation->set_rules('limit', '总量', 'trim|integer|max_length[4]');
+            $this->form_validation->set_rules('status', '订单状态', 'trim|in_list[待处理,已取消,已关闭,已拒绝,待退货,待退款,已退款]');
+            $this->form_validation->set_rules('biz_id', '商家', 'trim|integer');
+            // 若表单提交不成功
+            if ($this->form_validation->run() === FALSE):
+                $data['error'] .= validation_errors();
+                $this->load->view('templates/header', $data);
+                $this->load->view($this->view_root.'/export', $data);
+                $this->load->view('templates/footer', $data);
+
+            else:
+                //起始订单id 
+                $order_id = intval($this->input->post('order_id'));
+                // 筛选参数；逐一赋值需特别处理的字段
+                $data_to_send = array(
+                    'time_create_min' => strtotime($this->input->post('time_create_min') . ':00'),
+                    'time_create_max' => strtotime($this->input->post('time_create_max') . ':00'),
+                    'client_type'     => 'biz',
+                );
+                // 自动生成无需特别处理的数据
+                $data_need_no_prepare = array(
+                    'status','user_id','mobile','payment_type','limit','biz_id'
+                );
+                foreach ($data_need_no_prepare as $name)
+                    $data_to_send[$name] = $this->input->post($name);
+
+                // 查找是否存在文件缓存
+                $new_condition = sha1(implode('-', $data_to_send));
+                if (isset($_COOKIE[$new_condition]) && file_exists($_COOKIE[$new_condition])) :
+                    redirect('/' . $_COOKIE[$new_condition]);
+                    exit;
+                endif;
+
+                // 向API服务器发送待创建数据
+                $params = $data_to_send;
+                $url    = api_url($this->class_name. '/index');
+                $result = $this->curl->go($url, $params, 'array');
+                //api返回成功
+                if ($result['status'] == 200):
+                    $this->user_id = $this->session->user_id;
+                    $data_list = [];
+                    $data_filterd = [];
+
+                    //增加一步 ，字段过滤,处理订单的item
+                    $data_order_show = ['biz_id'=>'商家ID','order_id'=>'订单ID','user_id'=>'用户ID','total_payed'=>'实际退款金额','total_applied'=>'申请退款金额','total_approved'=>'同意退款金额','cargo_status'=>'货物状态','reason'=>'原因','description'=>'补充说明','deliver_method'=>'退货方式','deliver_biz'=>'物流服务商','waybill_id'=>'运单号','note_stuff'=>'员工备注','time_create'=>'用户创建时间','time_cancel'=>'用户取消时间','time_close'=>'关闭时间','time_accept'=>'商家同意时间','time_confirm'=>'商家收货时间','time_refuse'=>'商家拒绝时间','time_refund'=>'商家退款时间','status'=>'订单状态'];
+                    foreach ($result['content'] as  $order) :
+                        //从哪开始
+                        if ($order['order_id'] < $order_id) :
+                            continue;
+                        endif;
+                        $data_filterd = [];
+                        foreach ($order as $key => $value) :
+                            if ( !is_array($value) && array_key_exists($key, $data_order_show) ):
+                                $data_filterd[$data_order_show[$key]] = $value;
+                                if ($key == 'biz_id' && isset($data['biz'][$data_filterd['商家ID']]) ) :
+                                    $data_filterd['商家名称'] = $data['biz'][$data_filterd['商家ID']];
+                                endif;
+                            endif;
+                        endforeach;
+                        $data_list[] = $data_filterd;
+                    endforeach;
+                    //导出
+                    $this->load->library('Excel');
+                    $this->excel->export($data_list, $data_to_send['time_create_min'] . '-' . $data_to_send['time_create_max'] . '退款导出', 'save');
+                    if ($this->result['status'] == 200) :
+                        //文件生成 后 保存 cookie
+                        $cookie_condition = sha1(implode('-', $params));
+                        setcookie($cookie_condition,  $this->result['content'], time() + 180);
+                        redirect('/' . $this->result['content']);
+                        exit;
+                    else:
+                        $data['error'] = $this->result['content']['error']['message'];
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/export', $data);
+                        $this->load->view('templates/footer', $data);
+                    endif;
+
+                else:
+                    if (isset($result['content']['error'])) :
+                        $data['error'] = $result['content']['error']['message'];
+                    else: 
+                        $data['error'] = '导出错误，稍后重试';
+                    endif;
+
+                    $this->load->view('templates/header', $data);
+                    $this->load->view($this->view_root.'/export', $data);
+                    $this->load->view('templates/footer', $data);
+                endif;
+            endif;
+        }
+        
         /**
          * 删除
          *
