@@ -568,7 +568,9 @@
 
 				// 获取系统商品分类信息
 				$data['category'] = $this->get_category($data['item']['category_id']);
-
+				// 获取平台商品分类
+                $data['categories'] = $this->list_category();
+                
 				// 若参与店内活动，获取店内活动详情
 				if ( !empty($data['item']['promotion_id']) ):
 					$data['promotion'] = $this->get_promotion_biz($data['item']['promotion_id']);
