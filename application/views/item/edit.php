@@ -54,7 +54,7 @@
 <div id=content class=container>
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'role' => 'form');
+		$attributes = array('class' => 'form-'.$this->class_name.'-edit form-horizontal', 'id'=>'editform' ,'role' => 'form');
 		echo form_open_multipart($this->class_name.'/edit?id='.$item[$this->id_name], $attributes);
 	?>
 		<p class=help-block>必填项以“※”符号标示</p>
@@ -65,24 +65,23 @@
 			<div class=form-group>
 				<label for=category_id class="col-sm-2 control-label">平台分类</label>
 				<div class=col-sm-10>
-                    <input name=category_id type=hidden value="" required>
-
-                    <div
-                            class="multi-selector row"
-                            data-ms-name=category_id
-                            data-ms-api_url="item_category/index"
-                            data-ms-min_level=2
-                            data-ms-max_level=3
-                    >
-                        <div class=col-xs-4>
-                            <select class=form-control data-ms-level=1 required>
-                                <option value="">请选择</option>
-                                <?php foreach ($categories as $option): ?>
-                                    <option value="<?php echo $option['category_id'] ?>" <?php echo set_select('category_id', $option['category_id']) ?>><?php echo $option['nature'].'-'.$option['name'] ?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
-                    </div>
+					<?php $input_name='category_id' ?>
+					<input name="category_id" type="hidden" value="<?php echo $item['category_id']?>" id="category_id">
+                    <select class=form-control id="category_id_1">
+						<option value="">-</option>
+						<?php
+							$options = $categories['1'];
+							foreach ($options as $pid => $option):
+						?>
+						<option value="<?php echo $option['category_id'] ?>"><?php echo $option['name'] ?></option>
+						<?php endforeach ?>
+					</select>
+					&nbsp;
+					<select class=form-control id="category_id_2">
+					</select>
+					&nbsp;
+					<select class=form-control id="category_id_3">
+					</select>
 				</div>
 			</div>
 
@@ -358,9 +357,92 @@
 
 		<div class=form-group>
 		    <div class="col-xs-12 col-sm-offset-2 col-sm-2">
-				<button class="btn btn-primary btn-lg btn-block" type=submit>确定</button>
+				<input type="button" class="btn btn-primary btn-lg btn-block" id="send" value="确定" />
 		    </div>
 		</div>
 	</form>
 
 </div>
+	<script>
+	
+		var all_category = <?php echo json_encode($categories)?>;
+		$("#category_id_1").on('change', function(){
+			if (this.value == '-'){
+				$("#category_id").val('');
+			} else {
+				$("#category_id").val(this.value);
+			}
+			let subObj    = document.getElementById('category_id_2');
+			subObj.options.length = 0;
+			let trdObj    = document.getElementById('category_id_3');
+			trdObj.options.length = 0;
+			if (all_category.hasOwnProperty('2') && all_category['2'].hasOwnProperty(this.value)) {	
+				setOptions('category_id_2', all_category['2'][this.value], '2');
+			}
+		});
+		$("#category_id_2").on('change', function(){
+			let subObj    = document.getElementById('category_id_3');
+			subObj.options.length = 0
+			if (this.value == '-'){
+				$("#category_id").val($("#category_id_1").val());
+			} else {
+				$("#category_id").val(this.value);
+			}
+			if (all_category.hasOwnProperty('3') && all_category['3'].hasOwnProperty(this.value)) {	
+				setOptions('category_id_3', all_category['3'][this.value], '3');
+			}
+		});
+		$("#category_id_3").on('change', function(){
+			console.log(this.value)
+			if (this.value == '-'){
+				$("#category_id").val($("#category_id_2").val());
+			} else {
+				$("#category_id").val(this.value);
+			}
+		});
+		function setOptions(tagID, list, cur) {
+			let selectObj = document.getElementById(tagID);
+			selectObj.options.add(new Option('-', '-'));
+			for (cate in list) {
+				selectObj.options.add(new Option(list[cate]['name'], list[cate]['category_id']));
+			}
+		}
+		let initCategory = <?php echo json_encode($category) ?>;
+		console.log(initCategory);
+		if (initCategory['level'] == '1') {
+			$("#category_id").val(initCategory['category_id']);
+			$("#category_id_1").val(initCategory['category_id']);
+		}
+		
+		if (initCategory['level'] == '2'){
+			$("#category_id").val(initCategory['category_id']);
+			$("#category_id_1").val(initCategory['parent_id']).change();
+			setTimeout(function(){
+				selectItem("#category_id_2", initCategory['category_id']);
+				$("#category_id_2").change();
+				$("#category_id").val(initCategory['category_id']);
+			}, 500)
+		}
+		if (initCategory['level'] == '3'){
+			$("#category_id_1").val(initCategory['ancestor_id']).change();
+			$("#category_id_2").val(initCategory['parent_id']).change();
+			setTimeout(function(){
+				console.log( initCategory['category_id'])
+				selectItem("#category_id_3", initCategory['category_id']);
+				$("#category_id").val(initCategory['category_id']);
+			}, 500)
+		}
+
+		$("#send").on('click', function(){
+			let cid = $("#category_id").val();
+			if(isNaN(parseInt(cid))){
+				alert('分类必须选择!');
+			} else {
+				$("#editform").submit();
+			}
+
+		});
+		function selectItem(tab, value){
+			$(tab).val(value);
+		}
+	</script>

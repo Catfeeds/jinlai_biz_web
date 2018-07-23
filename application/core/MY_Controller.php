@@ -764,7 +764,10 @@
 		        $params['time_delete'] = 'NULL';
 
             // 限制分类级别
-		    $params['level'] = $level;
+            if (empty($level)) {
+                $params['level'] = $level;
+            }
+		    
 
 			// 从API服务器获取相应列表信息
 			$url = api_url('item_category/index');

@@ -364,8 +364,8 @@
                 // 获取平台商品分类
                 $data['categories'] = $this->list_category();
 
-                // 获取店内商品分类
-                $data['biz_categories'] = $this->list_category_biz();
+                // 获取平台商品分类
+                $data['categories'] = $this->formatcategory($this->list_category(null, ''));
 
                 // 获取店内营销活动
                 $data['biz_promotions'] = $this->list_promotion_biz();
@@ -410,7 +410,17 @@
 				else:
 					// 若创建失败，则进行提示
 					$data['error'] = $result['content']['error']['message'];
+					// 获取品牌
+	                $data['brands'] = $this->list_brand();
 
+	                // 获取平台商品分类
+	                $data['categories'] = $this->list_category();
+
+	                // 获取平台商品分类
+	                $data['categories'] = $this->formatcategory($this->list_category(null, ''));
+
+	                // 获取店内营销活动
+	                $data['biz_promotions'] = $this->list_promotion_biz();
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/create', $data);
 					$this->load->view('templates/footer', $data);
@@ -503,12 +513,25 @@
 
             endif;
         } // end create_import
-
+        protected function formatcategory($data){
+        	$arr = ['1'=>[], '2'=>[], '3'=>[]];
+        	foreach ($data as $key => $value) {
+        		if( is_null($value['time_delete']) ){
+        			if (intval($value['level']) == 1) {
+        				$arr[$value['level']][$value['category_id']] = ['category_id'=>$value['category_id'], 'nature'=>$value['nature'], 'name'=>$value['name']];
+        			} else {
+        				$arr[$value['level']][$value['parent_id']][$value['category_id']] = ['category_id'=>$value['category_id'], 'nature'=>$value['nature'], 'name'=>$value['name']];
+        			}
+        			
+        		}
+        	}
+        	return $arr;
+        }
 		/**
 		 * 编辑单行
 		 */
 		public function edit()
-		{
+		{	
 			// 检查是否已传入必要参数
 			$id = $this->input->get_post('id')? $this->input->get_post('id'): NULL;
 			if ( !empty($id) ):
@@ -532,6 +555,7 @@
 			// 待验证的表单项
 			$this->form_validation->set_error_delimiters('', '；');
 			$this->form_validation->set_rules('category_biz_id', '商家分类', 'trim|is_natural_no_zero');
+			$this->form_validation->set_rules('category_id', '商品分类', 'trim|is_natural_no_zero');
             $this->form_validation->set_rules('code_biz', '商家商品编码', 'trim|max_length[20]');
             $this->form_validation->set_rules('barcode', '商品条形码', 'trim|is_natural_no_zero|exact_length[13]');
 			$this->form_validation->set_rules('url_image_main', '主图', 'trim|required|max_length[255]');
@@ -569,8 +593,8 @@
 				// 获取系统商品分类信息
 				$data['category'] = $this->get_category($data['item']['category_id']);
 				// 获取平台商品分类
-                $data['categories'] = $this->list_category();
-                
+                $data['categories'] = $this->formatcategory($this->list_category(null, ''));
+          
 				// 若参与店内活动，获取店内活动详情
 				if ( !empty($data['item']['promotion_id']) ):
 					$data['promotion'] = $this->get_promotion_biz($data['item']['promotion_id']);
@@ -598,16 +622,15 @@
 			else:
 				// 需要编辑的数据；逐一赋值需特别处理的字段
 				$data_to_edit = array(
-					'user_id' => $this->session->user_id,
+					'biz_id' => $this->session->biz_id,
 					'id' => $id,
-
                     'stocks' => empty($this->input->post('stocks'))? 10: $this->input->post('stocks'),
                     'time_to_publish' => empty($this->input->post('time_to_publish'))? NULL: $this->strto_minute($this->input->post('time_to_publish')), // 时间仅保留到分钟，下同
                     'time_to_suspend' => empty($this->input->post('time_to_suspend'))? NULL: $this->strto_minute($this->input->post('time_to_suspend')),
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-					'category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'limit_lifetime', 'coupon_allowed', 'discount_credit', 'commission_rate', 'promotion_id',
+					'category_id','category_biz_id', 'code_biz', 'barcode', 'url_image_main', 'figure_image_urls', 'figure_video_urls', 'name', 'slogan', 'description', 'tag_price', 'price', 'unit_name', 'weight_net', 'weight_gross', 'weight_volume', 'quantity_max', 'quantity_min', 'limit_lifetime', 'coupon_allowed', 'discount_credit', 'commission_rate', 'promotion_id',
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_edit[$name] = $this->input->post($name);
@@ -616,6 +639,7 @@
 				$params = $data_to_edit;
                 // 进行修改
 				$url = api_url($this->class_name. '/edit');
+				
 				$result = $this->curl->go($url, $params, 'array');
 				if ($result['status'] === 200):
 					$data['title'] = $this->class_name_cn. '修改成功';
@@ -631,6 +655,11 @@
 				else:
 					// 若创建失败，则进行提示
 					$data['error'] = $result['content']['error']['message'];
+
+					// 获取系统商品分类信息
+					$data['category'] = $this->get_category($data['item']['category_id']);
+					// 获取平台商品分类
+                	$data['categories'] = $this->list_category(null, '');
 
 					$this->load->view('templates/header', $data);
 					$this->load->view($this->view_root.'/edit', $data);
