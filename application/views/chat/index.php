@@ -101,6 +101,7 @@
              }else{
 
              }
+             console.log(media_url);
 
 
 </script>
@@ -144,22 +145,7 @@
         </div>
     </header>
     <div class="message" id="message" style="height:10rem">
-    	<div class="show">
-    		<div class="time">5月07日 12:00</div>
-    		<div class="msg">
-    			<div class="arrow"></div>
-    			<img src="https://cdn-remote.517ybang.com//media/chatimages/images/touxiangm.png" alt="" />
-    			<p><i clas="msg_input"></i>你家宝贝质量杠杠滴,给你点赞,哈哈哈哈...</p>
-    		</div>
-    	</div>
-    	<!--<div class="send">
-    		<div class="time">5月07日 12:00</div>
-    		<div class="msg">
-    			<div class="arrowL"></div>
-    			<img src="https://cdn-remote.517ybang.com//media/chatimages/images/touxiang.png" alt="" />
-    			<p><i class="msg_input"></i>谢谢,亲!我们会努力做到更好滴,嘻嘻嘻嘻嘻...</p>
-    		</div>
-    	</div>-->
+
 
     </div>
     <div class="footer">
@@ -221,6 +207,7 @@
 <script>
     var ws = '';
     var objUserId = '';
+    var mediaUrl=media_url;
     $(function(){
 
         $('body').on('click','.friends .notice',function(){
@@ -229,15 +216,12 @@
                     //获取当前点击聊天好友的userID和最后一条聊天内容id获取聊天记录
 
                     objUserId = $(this).attr('data-id');
-                    var messageId = $(this).attr('data-messId');
-                    console.log(messageId);
                     var imgUrl = '';
                     console.log(objUserId);
                     var objList = {};
                     objList.app_type = 'biz';
                     objList.user_id = objUserId;
                     objList.biz_id = biz_id;
-                    objList.message_id = messageId;
                     $.post({
                         url:  api_url + 'wsmessage/index',
                         data: objList,
@@ -258,16 +242,62 @@
                                 var arr = [];
                                 arr = result.content[0].list;
                                 console.log(arr);
-                                for(var i in arr){
+                                for(var i=0; i<arr.length; i++){
+                                    var time1 = '';
+                                    var time2 = '';
+                                   if(i < arr.length-1){
+
+                                        time1 = arr[i].time_create*1000;
+                                        time2 = arr[i+1].time_create*1000;
+                                   }else{
+                                        time1 = arr[i].time_create*1000;
+                                        time2 = arr[i].time_create*1000;
+                                   }
+
 
                                    if(arr[i].chat == "receive"){
-                                        //我发送的
-                                       show(url_logo,arr[i].content);
+                                       //我发送的
+                                       if(arr[i].type == 'text'){
+
+                                            if((time2 - (5*60*1000)) > time1){
+                                                var strTime =arr[i].time_create*1000;
+                                                strTime = timeFormat(strTime);
+                                                strTime = strTime.substring(5,16);
+                                                var timeHtml = "<div class='time'>"+strTime+"</div>";
+                                                console.log(timeHtml);
+                                                show(url_logo,arr[i].content,timeHtml);
+                                            }else{
+                                                show(url_logo,arr[i].content,'');
+                                            }
+                                       }else if(arr[i].type == 'image'){
+                                            if(reg.test(arr[i].content) !== true){
+                                                console.log('no');
+                                                sendkhdPic(url_logo,'<img src="'+mediaUrl+arr[i].content+'">');
+                                            }else{
+                                                console.log('yes');
+                                                sendkhdPic(url_logo,'<img src="'+arr[i].content+'">');
+                                            }
+
+                                       }
+
                                    }else if(arr[i].chat == "send"){
                                         //我接收到的
-                                       send(imgUrl,arr[i].content);
+                                       if(arr[i].type == 'text'){
+                                            send(imgUrl,arr[i].content);
+                                       }else if(arr[i].type == 'image'){
+                                           if(reg.test(arr[i].content) !== true){
+                                               sendPic(imgUrl,'<img src="'+ mediaUrl+arr[i].content+'">');
+                                           }else{
+                                               sendPic(imgUrl,'<img src="'+arr[i].content+'">');
+                                           }
+
+                                       }
                                    }
+                                $('body').animate({scrollTop:$('.message').outerHeight()-window.innerHeight},200);
+
                                 }
+
+
                              } else {
                                 alert(result.content.error.message);
                              }
@@ -277,6 +307,8 @@
                         },
                         dataType: 'json'
                     });
+
+                    //下拉加载更多
 
 
 
@@ -318,7 +350,7 @@
                                          		var content = $('#chat .footer .chatInput').text();
                                          		var oMessage = document.getElementById('message').scrollHeight + 500;
                                           		$(".message").animate({scrollTop:oMessage}, 50);
-                                         		show(url_logo,$('#chat .footer .chatInput').text());
+                                         		show(url_logo,$('#chat .footer .chatInput').text(),'');
                                          		$('#chat .footer .chatInput').text('');
                                          		var timestamp = (new Date()).getTime();
                                          		console.log(content);
@@ -347,10 +379,16 @@
                                  img = data.content[0].avatar;
                             }
                             var currentType = data.content[0].list.type;
+                            var currentContent = data.content[0].list.content;
                             if(currentType == 'text'){
-                                send(img,data.content[0].list.content);
+                                send(img,currentContent);
                             }else if(currentType == 'image'){
-                                sendPic(img,'<img src="'+data.content[0].list.content+'">');
+
+                                if(reg.test(currentContent) !== true){
+                                    sendPic(img,'<img src="'+mediaUrl+currentContent+'">');
+                                }else{
+                                    sendPic(img,'<img src="'+currentContent+'">');
+                                }
                             }
 
                        }
@@ -387,8 +425,15 @@
                  for(var key in item){
                     var list = item[key].list;
                     var newText = list[list.length-1].content;
+                    var thisType = list[list.length-1].type;
+                    //判断content类型
+                    if(thisType == 'image'){
+                        newText = '[图片]';
+                    }else{
+
+                    }
                     var timeCreate = list[list.length-1].time_create;
-                    var messageId = list[list.length-1].message_id;
+                    timeCreate = timeFormat(parseInt(timeCreate*1000));
                     var imgUrl = item[key].avatar;
                     var reg = RegExp(/http/);
                     //console.log(reg.test(imgUrl)); // true
@@ -397,7 +442,7 @@
                     }else{
                          imgUrl = item[key].avatar;
                     }
-                    var friendsHtml = '<div class="notice" data-messId="'+messageId+'" data-id="'+ item[key].user_id +'">'+
+                    var friendsHtml = '<div class="notice" data-id="'+ item[key].user_id +'">'+
                                                   '<div class="notice-image">'+
                                                       '<img class="notice-header-img" src="'+imgUrl+'" alt=""/>'+
                                                       '<div class="newNews"></div>'+
@@ -410,6 +455,7 @@
                                               '</div>';
                     $('.friends').append(friendsHtml);
                  }
+
                  } else {
                     alert(result.content.error.message);
                  }
@@ -419,16 +465,23 @@
             },
             dataType: 'json'
         });
-        //聊天列表
 
 
-
-
-
-
+        function add0(m){return m<10?'0'+m:m }
+        //时间戳转化成时间格式
+        function timeFormat(timestamp){
+          //timestamp是整数，否则要parseInt转换,不会出现少个0的情况
+            var time = new Date(timestamp);
+            var year = time.getFullYear();
+            var month = time.getMonth()+1;
+            var date = time.getDate();
+            var hours = time.getHours();
+            var minutes = time.getMinutes();
+            var seconds = time.getSeconds();
+            return year+'-'+add0(month)+'-'+add0(date)+' '+add0(hours)+':'+add0(minutes)+':'+add0(seconds);
+        }
     });
 var biz = user_id;//传入
-
 </script>
 </body>
 </html>
