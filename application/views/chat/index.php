@@ -101,7 +101,7 @@
              }else{
 
              }
-             console.log(media_url);
+             //console.log(media_url);
 
 
 </script>
@@ -133,8 +133,8 @@
 
     </div>
 </div>
-<div id="chat">
-    <header class="header">
+<div id="chat" style="max-width:7.5rem;">
+    <header class="header" style="max-width:7.5rem;">
         <a class="chatback" id="closeChat">
             <i class="icon-Back"></i>
         </a>
@@ -144,11 +144,12 @@
             </i>
         </div>
     </header>
+    <div id="more" style="width:100%;display:none;text-align:center;margin-top:1rem;padding:0.2rem 0;">点击加载更多聊天记录</div>
     <div class="message" id="message" style="height:10rem">
 
 
     </div>
-    <div class="footer">
+    <div class="footer" style="max-width:7.5rem;">
     	<!--<input type="text" />-->
     	<div contenteditable="true" class="chatInput" style="-webkit-user-select: auto"></div>
     	<i class="icon-xl-tankuang chatbtn">
@@ -208,9 +209,118 @@
     var ws = '';
     var objUserId = '';
     var mediaUrl=media_url;
+    var moreId = '';
     $(function(){
+        $('.message').scroll(function() {
+                if ($('.message').scrollTop()<=0){
+                    alert("滚动条已经到达顶部");
+                    $('#more').show();
+                }else{
+                    $('#more').hide();
+                }
 
-        $('body').on('click','.friends .notice',function(){
+        });
+        $('#more').on('click',function(){
+            $.post({
+                 url:  api_url + 'wsmessage/index',
+                 data: {app_type:'biz',user_id:objUserId,biz_id:biz_id,message_id:moreId},
+                 async:false,
+                 success: function(result){
+                 		//console.log(result); // 输出回调数据到控制台
+                      if (result.status == 200 && result.content[0].list.length > 0)
+                      {
+
+                         imgUrl = result.content[0].avatar;
+                         var reg = RegExp(/http/);
+                         //console.log(reg.test(imgUrl)); // true
+                         if(reg.test(imgUrl) !== true){
+                              imgUrl = media_url+'user/' + imgUrl;
+                         }else{
+                              imgUrl = result.content[0].avatar;
+                         }
+
+                         var arr = [];
+                         arr = result.content[0].list;
+
+                         moreId = arr[0].message_id;
+
+
+                         console.log(moreId);
+                         arr = arr.reverse();
+                         console.log(arr);
+
+                         //console.log(arr);
+                         for(var i=0; i<arr.length; i++){
+                             var time1 = '';
+                             var time2 = '';
+                            if(i < arr.length-1){
+
+                                 time1 = arr[i].time_create*1000;
+                                 time2 = arr[i+1].time_create*1000;
+                            }else{
+                                 time1 = arr[i].time_create*1000;
+                                 time2 = arr[i].time_create*1000;
+                            }
+
+
+                            if(arr[i].chat == "receive"){
+                                //我发送的
+                                if(arr[i].type == 'text'){
+
+                                     if((time1 - (5*60*1000)) > time2){
+                                         var strTime =arr[i].time_create*1000;
+                                         strTime = timeFormat(strTime);
+                                         strTime = strTime.substring(5,16);
+                                         var timeHtml = "<div class='time'>"+strTime+"</div>";
+                                         //console.log(timeHtml);
+                                         showMore(url_logo,arr[i].content,timeHtml);
+                                     }else{
+                                         showMore(url_logo,arr[i].content,'');
+                                     }
+                                }else if(arr[i].type == 'image'){
+                                     if(reg.test(arr[i].content) !== true){
+                                         //console.log('no');
+                                         sendkhdPicMore(url_logo,'<img src="'+mediaUrl+arr[i].content+'">');
+                                     }else{
+                                         //console.log('yes');
+                                         sendkhdPicMore(url_logo,'<img src="'+arr[i].content+'">');
+                                     }
+
+                                }
+
+                            }else if(arr[i].chat == "send"){
+                                 //我接收到的
+                                if(arr[i].type == 'text'){
+                                     sendMore(imgUrl,arr[i].content);
+                                }else if(arr[i].type == 'image'){
+                                    if(reg.test(arr[i].content) !== true){
+                                        sendPicMore(imgUrl,'<img src="'+ mediaUrl+arr[i].content+'">');
+                                    }else{
+                                        sendPicMore(imgUrl,'<img src="'+arr[i].content+'">');
+                                    }
+
+                                }else if(arr[i].chat == "item"){
+
+
+                                }
+                            }
+
+
+                         }
+
+
+                      } else {
+                         $('#more').text('没有更多记录了');
+                      }
+                 },
+                 error:function(result){
+                 	console.log(result);
+                 },
+                 dataType: 'json'
+            });
+        });
+
+        $('.content').on('click','.friends .notice',function(){
             $('#chat').show();//聊天窗口与消息通知切换
             $('.content').hide();
                     //获取当前点击聊天好友的userID和最后一条聊天内容id获取聊天记录
@@ -227,9 +337,10 @@
                         data: objList,
                         async:false,
                         success: function(result){
-                        		console.log(result); // 输出回调数据到控制台
+                        		//console.log(result); // 输出回调数据到控制台
                              if (result.status == 200)
                              {
+
                                 imgUrl = result.content[0].avatar;
                                 var reg = RegExp(/http/);
                                 //console.log(reg.test(imgUrl)); // true
@@ -241,7 +352,8 @@
 
                                 var arr = [];
                                 arr = result.content[0].list;
-                                console.log(arr);
+                                moreId = arr[0].message_id;
+                                //console.log(arr);
                                 for(var i=0; i<arr.length; i++){
                                     var time1 = '';
                                     var time2 = '';
@@ -264,17 +376,17 @@
                                                 strTime = timeFormat(strTime);
                                                 strTime = strTime.substring(5,16);
                                                 var timeHtml = "<div class='time'>"+strTime+"</div>";
-                                                console.log(timeHtml);
+                                                //console.log(timeHtml);
                                                 show(url_logo,arr[i].content,timeHtml);
                                             }else{
                                                 show(url_logo,arr[i].content,'');
                                             }
                                        }else if(arr[i].type == 'image'){
                                             if(reg.test(arr[i].content) !== true){
-                                                console.log('no');
+                                                //console.log('no');
                                                 sendkhdPic(url_logo,'<img src="'+mediaUrl+arr[i].content+'">');
                                             }else{
-                                                console.log('yes');
+                                                //console.log('yes');
                                                 sendkhdPic(url_logo,'<img src="'+arr[i].content+'">');
                                             }
 
@@ -293,7 +405,8 @@
 
                                        }
                                    }
-                                $('body').animate({scrollTop:$('.message').outerHeight()-window.innerHeight},200);
+                                var div = document.getElementById('message');
+                                div.scrollTop = div.scrollHeight;
 
                                 }
 
@@ -323,7 +436,7 @@
                         url:  api_url + 'wsmessage/getverify',
                         data: params,
                         success: function(result){
-                        		console.log(result); // 输出回调数据到控制台
+                        		//console.log(result); // 输出回调数据到控制台
                              if (result.status == 200)
                              {
                                 token = result.content.token;
@@ -342,6 +455,7 @@
 
                     ws.onopen = function () {
 
+
                          //alert("数据发送中...");
                         document.onkeyup = function (e) {
                                          	var code = e.charCode || e.keyCode;
@@ -353,9 +467,9 @@
                                          		show(url_logo,$('#chat .footer .chatInput').text(),'');
                                          		$('#chat .footer .chatInput').text('');
                                          		var timestamp = (new Date()).getTime();
-                                         		console.log(content);
+                                         		//console.log(content);
                                          		let str = JSON.stringify({"user_id": objUserId,"type":"text","content":content, "time_create":timestamp})
-                                         		console.log(str);
+                                         		//console.log(str);
                                          		ws.send(str);
                                          	}
                         }
@@ -366,7 +480,7 @@
                     ws.onmessage = function (evt) {
                        //var received_msg = evt.data;
                        //{"status":200,"result":"success","content":{"time_create":"1588876977","message_id":69,"user_id":19},"msg":"成功收到消息","no":1}
-                       console.log(evt.data)
+                       //console.log(evt.data)
                        var data = JSON.parse(evt.data)
                        if(data.msg == '新的消息' && data.status == '200'){
 
@@ -418,7 +532,7 @@
             url:  api_url + 'wsmessage/sync',
             data: params,
             success: function(result){
-            		console.log(result); // 输出回调数据到控制台
+            		//console.log(result); // 输出回调数据到控制台
                  if (result.status == 200)
                  {
                  var item = result.content;
