@@ -226,7 +226,7 @@
                  data: {app_type:'biz',user_id:objUserId,biz_id:biz_id,message_id:moreId},
                  async:false,
                  success: function(result){
-                 		//console.log(result); // 输出回调数据到控制台
+                 		console.log(result); // 输出回调数据到控制台
                       if (result.status == 200 && result.content[0].list.length > 0)
                       {
 
@@ -299,7 +299,17 @@
                                         sendPicMore(imgUrl,'<img src="'+arr[i].content+'">');
                                     }
 
-                                }else if(arr[i].chat == "item"){
+                                }else if(arr[i].type == "item"){
+
+                                    var thisContent = JSON.parse(arr[i].content);
+                                     var thisURL = thisContent.url_image_main;
+                                     var reg = RegExp(/http/);
+                                     if(reg.test(thisURL) !== true){
+                                          thisURL = media_url + 'item/' + thisContent.url_image_main;
+                                     }else{
+                                          thisURL = thisContent.url_image_main;
+                                     }
+                                    sendSp(imgUrl,'<img src="'+thisURL+'" style="width:1.2rem;height:1.2rem;display:block;float:left"><span style="display:block;width:2.2rem;float:left;font-size:.24rem;color:rgb(62,58,57);height:.8rem;overflow:hidden;margin-left:.1rem;">'+ thisContent.name+'</span><a style="display:block;width:2.2rem;margin-left:.1rem;margin-top:.1rem;float:left;"><i class="fl" style="font-size:.28rem;color:rgb(255,54,73)">¥'+ thisContent.price+'</i></a>');
 
 
                                 }
@@ -337,7 +347,7 @@
                         data: objList,
                         async:false,
                         success: function(result){
-                        		//console.log(result); // 输出回调数据到控制台
+                        		console.log(result); // 输出回调数据到控制台
                              if (result.status == 200)
                              {
 
@@ -367,7 +377,7 @@
                                    }
 
 
-                                   if(arr[i].chat == "receive"){
+                                   if(arr[i].chat == "send"){
                                        //我发送的
                                        if(arr[i].type == 'text'){
 
@@ -392,7 +402,7 @@
 
                                        }
 
-                                   }else if(arr[i].chat == "send"){
+                                   }else if(arr[i].chat == "receive"){
                                         //我接收到的
                                        if(arr[i].type == 'text'){
                                             send(imgUrl,arr[i].content);
@@ -403,13 +413,28 @@
                                                sendPic(imgUrl,'<img src="'+arr[i].content+'">');
                                            }
 
-                                       }
+                                       }else if(arr[i].type == "item"){
+
+                                          console.log(arr[i].content);
+                                          var thisContent = JSON.parse(arr[i].content);
+
+                                          var thisURL = thisContent.url_image_main;
+                                                                          var reg = RegExp(/http/);
+                                                                          if(reg.test(thisURL) !== true){
+                                                                               thisURL = media_url + 'item/' + thisContent.url_image_main;
+                                                                          }else{
+                                                                               thisURL = thisContent.url_image_main;
+                                                                          }
+                                          sendSp(imgUrl,'<img src="'+thisURL+'" style="width:1.2rem;height:1.2rem;display:block;float:left"><span style="display:block;width:2.2rem;float:left;font-size:.24rem;color:rgb(62,58,57);height:.8rem;overflow:hidden;margin-left:.1rem;">'+ thisContent.name+'</span><a style="display:block;width:2.2rem;margin-left:.1rem;margin-top:.1rem;float:left;"><i class="fl" style="font-size:.28rem;color:rgb(255,54,73)">¥'+ thisContent.price+'</i></a>');
+
+
+                                      }
                                    }
-                                var div = document.getElementById('message');
-                                div.scrollTop = div.scrollHeight;
+
 
                                 }
-
+                                var div = document.getElementById('message');
+                                div.scrollTop = div.scrollHeight;
 
                              } else {
                                 alert(result.content.error.message);
@@ -454,9 +479,11 @@
 
 
                     ws.onopen = function () {
-
+                        /*let str = JSON.stringify({"s_user_id": objUserId,"type":"read"});
+                        ws.send(str);*/
 
                          //alert("数据发送中...");
+                         console.log('连接成功');
                         document.onkeyup = function (e) {
                                          	var code = e.charCode || e.keyCode;
                                          	if (code == 13) {
@@ -469,7 +496,7 @@
                                          		var timestamp = (new Date()).getTime();
                                          		//console.log(content);
                                          		let str = JSON.stringify({"user_id": objUserId,"type":"text","content":content, "time_create":timestamp})
-                                         		//console.log(str);
+                                         		console.log(str);
                                          		ws.send(str);
                                          	}
                         }
@@ -480,9 +507,11 @@
                     ws.onmessage = function (evt) {
                        //var received_msg = evt.data;
                        //{"status":200,"result":"success","content":{"time_create":"1588876977","message_id":69,"user_id":19},"msg":"成功收到消息","no":1}
-                       //console.log(evt.data)
-                       var data = JSON.parse(evt.data)
-                       if(data.msg == '新的消息' && data.status == '200'){
+                       console.log(evt.data);
+                       var data = JSON.parse(evt.data);
+                       console.log(data.content.user_id);
+                       console.log(objUserId);
+                       if(data.msg == '新的消息' && data.content.user_id == objUserId){
 
                             var img = data.content[0].avatar;
                             var reg = RegExp(/http/);
@@ -503,7 +532,22 @@
                                 }else{
                                     sendPic(img,'<img src="'+currentContent+'">');
                                 }
+                            }else if(currentType == 'item'){
+                                var thisContent = JSON.parse(currentContent);
+                                var thisURL = thisContent.url_image_main;
+                                var reg = RegExp(/http/);
+                                if(reg.test(thisURL) !== true){
+                                     thisURL = media_url + 'item/' + thisContent.url_image_main;
+                                }else{
+                                     thisURL = thisContent.url_image_main;
+                                }
+                                sendSp(img,'<img src="'+thisURL+'" style="width:1.2rem;height:1.2rem;display:block;float:left"><span style="display:block;width:2.2rem;float:left;font-size:.24rem;color:rgb(62,58,57);height:.8rem;overflow:hidden;margin-left:.1rem;">'+ thisContent.name+'</span><a style="display:block;width:2.2rem;margin-left:.1rem;margin-top:.1rem;float:left;"><i class="fl" style="font-size:.28rem;color:rgb(255,54,73)">¥'+ thisContent.price+'</i></a>');
+
+
                             }
+
+                            /*let str = JSON.stringify({"s_user_id": objUserId,"type":"read"});
+                            ws.send(str);*/
 
                        }
                     };
@@ -532,21 +576,21 @@
             url:  api_url + 'wsmessage/sync',
             data: params,
             success: function(result){
-            		//console.log(result); // 输出回调数据到控制台
+            		console.log(result); // 输出回调数据到控制台
                  if (result.status == 200)
                  {
                  var item = result.content;
                  for(var key in item){
                     var list = item[key].list;
-                    var newText = list[list.length-1].content;
-                    var thisType = list[list.length-1].type;
+                    var newText = list[0].content;
+                    var thisType = list[0].type;
                     //判断content类型
                     if(thisType == 'image'){
                         newText = '[图片]';
-                    }else{
-
+                    }else if(thisType == 'item'){
+                        newText = '[item]';
                     }
-                    var timeCreate = list[list.length-1].time_create;
+                    var timeCreate = list[0].time_create;
                     timeCreate = timeFormat(parseInt(timeCreate*1000));
                     var imgUrl = item[key].avatar;
                     var reg = RegExp(/http/);
