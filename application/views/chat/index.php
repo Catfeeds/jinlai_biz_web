@@ -166,7 +166,7 @@
     			</span>
     			<em>图片</em>
     		</li>
-    		<li>
+    		<!--<li>
     			<span>
     				<i class="icon-liulan"></i>
     			</span>
@@ -201,7 +201,7 @@
     				<i class="icon-dq-weizhi"></i>
     			</span>
     			<em>当前位置</em>
-    		</li>
+    		</li>-->
     	</ul>
     </div>
 </div>
@@ -509,10 +509,11 @@
                        //{"status":200,"result":"success","content":{"time_create":"1588876977","message_id":69,"user_id":19},"msg":"成功收到消息","no":1}
                        console.log(evt.data);
                        var data = JSON.parse(evt.data);
-                       console.log(data.content.user_id);
-                       console.log(objUserId);
-                       if(data.msg == '新的消息' && data.content.user_id == objUserId){
 
+                       console.log(objUserId);
+                       if(data.msg == '新的消息'){
+                            var thisId = data.content[0].user_id;
+                            if( thisId == objUserId){
                             var img = data.content[0].avatar;
                             var reg = RegExp(/http/);
                             //console.log(reg.test(imgUrl)); // true
@@ -533,7 +534,7 @@
                                     sendPic(img,'<img src="'+currentContent+'">');
                                 }
                             }else if(currentType == 'item'){
-                                var thisContent = JSON.parse(currentContent);
+                                //var thisContent = JSON.parse(currentContent);
                                 var thisURL = thisContent.url_image_main;
                                 var reg = RegExp(/http/);
                                 if(reg.test(thisURL) !== true){
@@ -544,6 +545,7 @@
                                 sendSp(img,'<img src="'+thisURL+'" style="width:1.2rem;height:1.2rem;display:block;float:left"><span style="display:block;width:2.2rem;float:left;font-size:.24rem;color:rgb(62,58,57);height:.8rem;overflow:hidden;margin-left:.1rem;">'+ thisContent.name+'</span><a style="display:block;width:2.2rem;margin-left:.1rem;margin-top:.1rem;float:left;"><i class="fl" style="font-size:.28rem;color:rgb(255,54,73)">¥'+ thisContent.price+'</i></a>');
 
 
+                            }
                             }
 
                             /*let str = JSON.stringify({"s_user_id": objUserId,"type":"read"});
