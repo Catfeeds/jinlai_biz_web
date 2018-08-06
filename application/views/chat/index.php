@@ -12,6 +12,9 @@
 <script type="text/javascript">
             // 当前用户信息
             var user_id = '<?php echo $this->session->user_id ?>';
+            var biz_id = '<?php echo $this->session->biz_id ?>';
+            var url_logo = '<?php echo $this->session->url_logo ?>';
+            var brief_name = '<?php echo $this->session->brief_name ?>';
 
             // 全局参数
             var api_url = '<?php echo API_URL ?>'; // API根URL

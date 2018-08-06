@@ -28,6 +28,17 @@
 		} // end __construct
 
 		public function index(){
+			// 从API服务器获取相应详情信息
+			$url = api_url('biz/detail');
+			$result = $this->curl->go($url, ['id'=>$this->session->biz_id], 'array');
+			if($result['status'] == 200){
+				$result = $result['content'];
+				$this->session->url_logo = is_null($result['url_logo']) ? 'https://cdn-remote.517ybang.com/default_avatar.png' : $result['url_logo'];
+				$this->session->brief_name = $result['brief_name'];
+			} else {
+				exit;
+			}
+			
 			$data = [];
 			// 输出视图
 			$this->load->view($this->view_root.'/index', $data);

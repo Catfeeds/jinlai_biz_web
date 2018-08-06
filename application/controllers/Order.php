@@ -75,6 +75,11 @@
 			$params = $condition;
 			$url = api_url($this->class_name. '/index');
 			$result = $this->curl->go($url, $params, 'array');
+			if (isset($_GET['debug'])){
+				var_dump($result);
+				var_dump($url);
+				var_dump($params);
+			}
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:

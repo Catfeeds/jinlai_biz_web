@@ -36,7 +36,7 @@
 <div id=content class=container>
 	<?php
 		if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>';
-		$attributes = array('class' => 'form-'.$this->class_name.'-create form-horizontal', 'role' => 'form');
+		$attributes = array('class' => 'form-'.$this->class_name.'-create form-horizontal', 'role' => 'form', 'id'=>'editform');
 		echo form_open_multipart($this->class_name.'/create', $attributes);
 	?>
 		<p class=help-block>必填项以“※”符号标示</p>

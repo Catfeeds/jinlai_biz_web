@@ -336,7 +336,6 @@
             // 检查必要参数是否已传入
             if ( empty($this->input->post_get('ids')))
                 redirect( base_url('error/code_400') ); // 若缺少参数，转到错误提示页
-
             // 操作可能需要检查操作权限
             // $role_allowed = array('管理员', '经理'); // 角色要求
 // 			$min_level = 30; // 级别要求
@@ -363,7 +362,9 @@
             $params = array('ids' => $ids_string);
             $url = api_url($this->class_name.'/index');
             $data['items'] = $this->curl->go($url, $params, 'array')['content'];
-
+            if (is_null($data['items'])) {
+                redirect( base_url('refund') );
+            }
             // 将需要显示的数据传到视图以备使用
             $data['data_to_display'] = $this->data_to_display;
 
@@ -377,6 +378,7 @@
             if (count($data['items']) === 1):
                 $this->form_validation->set_rules('total_approved', '同意退款金额', 'trim|required|greater_than[0.01]|less_than_equal_to[99999.99]');
             endif;
+            $r = $this->form_validation->run();
 
             // 若表单提交不成功
             if ($this->form_validation->run() === FALSE):
@@ -414,7 +416,9 @@
                 // 向API服务器发送待创建数据
                 $params = $data_to_edit;
                 //var_dump($params);
+
                 $url = api_url($this->class_name. '/edit_bulk');
+              
                 $result = $this->curl->go($url, $params, 'array');
                 if ($result['status'] === 200):
                     $data['title'] = $this->class_name_cn.$op_name. '成功';
@@ -496,7 +500,10 @@
             else:
                 $this->form_validation->set_rules('waybill_id', '物流运单号', 'trim|required|max_length[30]');
             endif;
-
+            $r = $this->form_validation->run();
+            var_dump($r);
+            var_dump(validation_errors());
+            exit;
             // 若表单提交不成功
             if ($this->form_validation->run() === FALSE):
                 $data['error'] .= validation_errors();

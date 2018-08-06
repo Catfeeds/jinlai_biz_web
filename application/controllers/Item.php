@@ -360,6 +360,8 @@
 			if ($this->form_validation->run() === FALSE):
                 // 获取品牌
                 $data['brands'] = $this->list_brand();
+                // 获取店内商品分类
+                $data['biz_categories'] = $this->list_category_biz();
 
                 // 获取平台商品分类
                 $data['categories'] = $this->list_category();
@@ -413,8 +415,8 @@
 					// 获取品牌
 	                $data['brands'] = $this->list_brand();
 
-	                // 获取平台商品分类
-	                $data['categories'] = $this->list_category();
+	                // 获取店内商品分类
+               		$data['biz_categories'] = $this->list_category_biz();
 
 	                // 获取平台商品分类
 	                $data['categories'] = $this->formatcategory($this->list_category(null, ''));
