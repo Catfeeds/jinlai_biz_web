@@ -236,8 +236,8 @@
             <ul id=item-list>
                 <?php foreach ($items as $item): ?>
                 <li>
-
                     <span class=item-status><?php echo $item['status'] ?></span>
+                    <img src="<?php echo $item['url_image_main'] ?>" style="display: inline;float: left;width:10%;" />
                     <a href="<?php echo base_url($this->class_name.'/detail?id='.$item[$this->id_name]) ?>">
                         <p>
                             <?php echo $this->class_name_cn.'ID '.$item[$this->id_name] ?>
@@ -247,6 +247,7 @@
                         <p>
                             ￥<?php echo $item['price'] ?>
                             <?php if ($item['tag_price'] !== '0.00') echo '<del>￥ '.$item['tag_price'].'</del>' ?>
+                                库存：<?=  '<strong> ' . $item['stocks'] .'</strong>' ?>
                         </p>
                     </a>
 

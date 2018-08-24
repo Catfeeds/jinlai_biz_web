@@ -73,7 +73,7 @@
 							$options = $categories['1'];
 							foreach ($options as $pid => $option):
 						?>
-						<option value="<?php echo $option['category_id'] ?>"><?php echo $option['name'] ?></option>
+						<option value="<?php echo $option['category_id'] ?>"><?php echo $option['name'] . '-' . $option['nature'] ?></option>
 						<?php endforeach ?>
 					</select>
 					&nbsp;
@@ -142,6 +142,12 @@
                 <label for=barcode class="col-sm-2 control-label">商品条形码</label>
                 <div class=col-sm-10>
                     <input class=form-control name=barcode type=number step=1 size=13 value="<?php echo empty(set_value('barcode'))? $item['barcode']: set_value('barcode') ?>" placeholder="13位数字">
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=sold_display class="col-sm-2 control-label">商品显示销量</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=sold_display type=number step=1 size=13 value="<?php echo empty(set_value('sold_display')) ? $item['sold_display']: set_value('sold_display')?>">
                 </div>
             </div>
 
@@ -220,6 +226,13 @@
                 <div class="input-group col-sm-10">
                     <div class="input-group-addon">￥</div>
 					<input class=form-control name=price type=number min=1 step=0.01 max=99999.99 value="<?php echo empty(set_value('price'))? $item['price']: set_value('price') ?>" placeholder="1 ~ 99999.99" required>
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=settle_price class="col-sm-2 control-label">结算价格</label>
+                <div class="input-group col-sm-10">
+                    <div class="input-group-addon">￥</div>
+                    <input class=form-control name=settle_price type=number min=1 step=0.01 max=99999.99 value="<?php echo set_value('settle_price') ?>" placeholder="1 ~ 99999.99" required>
 				</div>
 			</div>
 		</fieldset>
@@ -404,7 +417,7 @@
 			let selectObj = document.getElementById(tagID);
 			selectObj.options.add(new Option('-', '-'));
 			for (cate in list) {
-				selectObj.options.add(new Option(list[cate]['name'], list[cate]['category_id']));
+				selectObj.options.add(new Option(list[cate]['name'] + '-' + list[cate]['nature'], list[cate]['category_id']));
 			}
 		}
 		let initCategory = <?php echo json_encode($category) ?>;

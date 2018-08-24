@@ -32,7 +32,7 @@
 		} // end __construct
 
 		public function index(){
-			$data = ['title'=>'核销列表', 'index'=>'active', 'verify'=>'','refund'=>'', 'name'=>$this->session->nickname];
+			$data = ['title'=>'核销列表', 'index'=>'active', 'verify'=>'','refund'=>'', 'chat'=>'', 'name'=>$this->session->nickname];
 
 			$this->load->model('orderitems_model');
 			$data['status'] = empty($this->input->get('status')) ? 'all' : $this->input->get('status');
@@ -46,7 +46,7 @@
 			$this->load->view($this->view_root.'/index-js', $data);
 		}
 		public function verify(){
-			$data = ['title'=>'核销', 'index'=>'', 'verify'=>'active', 'refund'=>'','name'=>$this->session->nickname];
+			$data = ['title'=>'核销', 'index'=>'', 'verify'=>'active', 'refund'=>'', 'chat'=>'','name'=>$this->session->nickname];
 			$this->load->view($this->view_root.'/header', $data);
 			$this->load->view($this->view_root.'/verify', $data);
 			$this->load->view($this->view_root.'/footer', $data);
@@ -54,7 +54,7 @@
 		}
 		public function detail(){
 			$record_id = intval($this->input->get('record_id'));
-			$data = ['title'=>'订单详情', 'index'=>'', 'verify'=>'','refund'=>'', 'name'=>$this->session->nickname, 'large'=>'col-xs-5', 'offset'=>' col-xs-offset-2'];
+			$data = ['title'=>'订单详情', 'index'=>'', 'verify'=>'','refund'=>'', 'chat'=>'', 'name'=>$this->session->nickname, 'large'=>'col-xs-5', 'offset'=>' col-xs-offset-2'];
 			$this->load->model('orderitems_model');
 			$data['res'] = $this->orderitems_model->getdetail($record_id, false);
 			if (empty($data['res'])) {
@@ -68,13 +68,11 @@
 			$this->load->view($this->view_root.'/footer', $data);
 		}
 		public function ajaxdetail(){
-			$returnJson = ['status'=>200, 'allowcheck'=>'yes', 'msg'=>'', 'html'=>''];
+			$returnJson = ['status'=>100, 'allowcheck'=>'no', 'msg'=>'', 'html'=>''];
 			$data = ['large'=>'col-md-6 col-xs-12' ,'offset'=>'col-md-offset-1 col-xs-offset-0'];
 			$verify_code = $this->input->get('verify_code');
 			if (!preg_match('/\d{10}/', $verify_code)) {
-				$returnJson['allowcheck'] = 'no';
 				$returnJson['msg'] = '核销码非法';
-				$returnJson['status'] = 100;
 				echo json_encode($returnJson);
 				exit;
 			}
@@ -82,19 +80,18 @@
 			$data['res'] = $this->orderitems_model->getdetail(false, $verify_code);
 
 			if (empty($data['res']) || strlen($verify_code) != 10 ) {
-				$returnJson['allowcheck'] = 'no';
 				$returnJson['msg'] = '没有找到核销券';
-				$returnJson['status'] = 100;
 				echo json_encode($returnJson);
 				exit;
 			}
+            $returnJson['allowcheck'] = 'yes';
 			if ($data['res']['status'] != '未消费') {
-				$returnJson['allowcheck'] = 'no';
-				$returnJson['msg'] .= '无法核销 ';
+				$returnJson['msg'] = '无法核销 ';
+                $returnJson['allowcheck'] = 'no';
 			}
 			if (intval($data['res']['time_expire']) < time()) {
-				$returnJson['allowcheck'] = 'no';
-				$returnJson['msg'] .= '已经过期  ';
+				$returnJson['msg'] .= '已经过期';
+                $returnJson['allowcheck'] = 'no';
 			}
 			$returnJson['rid'] = $data['res']['record_id'];
 			$returnJson['oid'] = $data['res']['order_id'];
@@ -102,6 +99,7 @@
 			$data['user'] = $this->basic_model->find('user_id', $data['res']['user_id']);
 
 			$returnJson['html'] = $this->load->view($this->view_root.'/detail', $data, TRUE);
+            $returnJson['status'] = 200;
 			echo json_encode($returnJson);
 			exit;
 		}
@@ -127,11 +125,11 @@
 		}
 
 		public function refund(){
-			$data = ['title'=>'核销列表', 'index'=>'', 'verify'=>'','refund'=>'active', 'name'=>$this->session->nickname, 'res'=>[]];
+			$data = ['title'=>'核销列表', 'index'=>'', 'verify'=>'','refund'=>'active', 'chat'=>'', 'name'=>$this->session->nickname, 'res'=>[]];
 			$params = [];
 			$url = api_url('refund/index');
 			$res = $this->curl->go($url, $params, 'array');
-			if (isset($res['error']['message'])) {
+			if (empty($res) || $res['status'] != 200) {
 				$data['res'] = [];
 			} else {
 				$data['res'] = $res['content'];
@@ -142,7 +140,7 @@
 		}
 
 		public function accept(){
-			$data = ['title'=>'核销列表', 'index'=>'', 'verify'=>'','refund'=>'', 'name'=>$this->session->nickname];
+			$data = ['title'=>'核销列表', 'index'=>'', 'verify'=>'','refund'=>'', 'chat'=>'', 'name'=>$this->session->nickname];
 			$refund_id = $this->input->get('refund_id');
 			$url = api_url('refund/detail');
 			$res = $this->curl->go($url, ['id'=>$refund_id], 'array');

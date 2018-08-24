@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>消息中心</title>
+    <title><?php echo $this->session->brief_name ?>  消息中心</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <script src="https://cdn-remote.517ybang.com/js/rem.js"></script>
     <link rel="stylesheet" href="https://cdn-remote.517ybang.com/css/fontStyle.css"/>
@@ -21,12 +21,14 @@
 
     <style>
             body{
-                max-width: 720px;
-                margin: 0 auto;
-                background: #f1f1f1;
-                color:#333;
-                font-size: 0.26rem;
-            }
+                 max-width: 720px;
+                 height:100%;
+                 margin: 0 auto;
+                 background: #f1f1f1;
+                 color:#333;
+                 font-size: 0.26rem;
+             }
+             #chat .message{height:78%;padding-top:0;margin-top:1.1rem}
             .icon-服务{
                 color: #b3b3b3;
             }
@@ -119,7 +121,7 @@
         <h5 class="tit">消息中心</h5>
 
     </header>
-    <a href="notification_message.html" class="notice" style="padding: 0.18rem 0 0.14rem 0">
+    <!--<a href="notification_message.html" class="notice" style="padding: 0.18rem 0 0.14rem 0">
         <div class="notice-image">
             <img class="notice-header-img" src="https://cdn-remote.517ybang.com/media/chatimages/images/tongzhi@3x.png" alt=""/>
             <div class="newNews"></div>
@@ -129,7 +131,7 @@
             <p class="notice-remind">现金券即将到期提醒</p>
         </div>
         <div class="notice-time" style="border-bottom: none">12:30</div>
-    </a>
+    </a>-->
     <div class="friends">
 
     </div>
@@ -139,14 +141,14 @@
         <a class="chatback" id="closeChat">
             <i class="icon-Back"></i>
         </a>
-        <h5 class="tit">商家店铺</h5>
+        <h5 class="tit" id="userName"> </h5>
         <div class="right">
             <i class="icon-person-icon">
             </i>
         </div>
     </header>
     <div id="more" style="width:100%;display:none;text-align:center;margin-top:1rem;padding:0.2rem 0;">点击加载更多聊天记录</div>
-    <div class="message" id="message" style="height:10rem">
+    <div class="message" id="message">
 
 
     </div>
@@ -212,13 +214,44 @@
     var mediaUrl=media_url;
     var moreId = '';
     $(function(){
+     //获取token
+                        var token = '';
+                        var params = {};
+                        params.app_type = 'biz';
+                        params.biz_id = biz_id;//要获取token的id商家端传商家客户端传userid？
+                        $.post({
+                            async:false,
+                            url:  api_url + 'wsmessage/getverify',
+                            data: params,
+                            success: function(result){
+                            		//console.log(result); // 输出回调数据到控制台
+                                 if (result.status == 200)
+                                 {
+                                    token = result.content.token;
+
+                                 } else {
+                                    alert(result.content.error.message);
+                                 }
+                            },
+                            error:function(result){
+                            	console.log(result);
+                            },
+                            dataType: 'json'
+                        });
+                        ws = new WebSocket('wss:biz.517ybang.com/jinlai_chat?token='+token);
+                        ws.onopen = function () {
+
+
+                                             //alert("数据发送中...");
+                        };
+
         $('.message').scroll(function() {
-                if ($('.message').scrollTop()<=0){
-                    alert("滚动条已经到达顶部");
-                    $('#more').show();
-                }else{
-                    $('#more').hide();
-                }
+            if ($('.message').scrollTop()<=0){
+                //alert("滚动条已经到达顶部");
+                $('#more').show();
+            }else{
+                $('#more').hide();
+            }
 
         });
         $('#more').on('click',function(){
@@ -331,12 +364,17 @@
             });
         });
 
+
         $('.content').on('click','.friends .notice',function(){
             $('#chat').show();//聊天窗口与消息通知切换
             $('.content').hide();
                     //获取当前点击聊天好友的userID和最后一条聊天内容id获取聊天记录
 
                     objUserId = $(this).attr('data-id');
+                    var currentUserName = $(this).attr('data-userName');
+                    $('#userName').text(currentUserName);
+                    let str = JSON.stringify({"s_user_id": objUserId,"type":"read"});
+                    ws.send(str);
                     var imgUrl = '';
                     console.log(objUserId);
                     var objList = {};
@@ -452,38 +490,10 @@
 
 
 
-                    //获取token
-                    var token = '';
-                    var params = {};
-                    params.app_type = 'biz';
-                    params.biz_id = biz_id;//要获取token的id商家端传商家客户端传userid？
-                    $.post({
-                        async:false,
-                        url:  api_url + 'wsmessage/getverify',
-                        data: params,
-                        success: function(result){
-                        		//console.log(result); // 输出回调数据到控制台
-                             if (result.status == 200)
-                             {
-                                token = result.content.token;
-
-                             } else {
-                                alert(result.content.error.message);
-                             }
-                        },
-                        error:function(result){
-                        	console.log(result);
-                        },
-                        dataType: 'json'
-                    });
-                    ws = new WebSocket('wss:biz.517ybang.com/jinlai_chat?token='+token);
 
 
-                    ws.onopen = function () {
-                        /*let str = JSON.stringify({"s_user_id": objUserId,"type":"read"});
-                        ws.send(str);*/
 
-                         //alert("数据发送中...");
+
                          console.log('连接成功');
                         document.onkeyup = function (e) {
                                          	var code = e.charCode || e.keyCode;
@@ -502,7 +512,7 @@
                                          	}
                         }
 
-                    };
+
 
 
                     ws.onmessage = function (evt) {
@@ -549,8 +559,8 @@
                             }
                             }
 
-                            /*let str = JSON.stringify({"s_user_id": objUserId,"type":"read"});
-                            ws.send(str);*/
+                            let str = JSON.stringify({"s_user_id": objUserId,"type":"read"});
+                            ws.send(str);
 
                        }
                     };
@@ -565,9 +575,10 @@
             $('#chat').hide();
             $('.content').show();
             $('#message').html('');
-             ws.onclose = function(){
+            /* ws.onclose = function(){
                 console.log('close')
              }
+             */
              location.reload();
         });
 
@@ -603,7 +614,7 @@
                     }else{
                          imgUrl = item[key].avatar;
                     }
-                    var friendsHtml = '<div class="notice" data-id="'+ item[key].user_id +'">'+
+                    var friendsHtml = '<div class="notice" data-userName="'+item[key].nickname+'" data-id="'+ item[key].user_id +'">'+
                                                   '<div class="notice-image">'+
                                                       '<img class="notice-header-img" src="'+imgUrl+'" alt=""/>'+
                                                       '<div class="newNews"></div>'+
@@ -618,7 +629,7 @@
                  }
 
                  } else {
-                    alert(result.content.error.message);
+                    //alert(result.content.error.message);
                  }
             },
             error:function(result){

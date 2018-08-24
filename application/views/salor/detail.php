@@ -14,6 +14,21 @@
 				</div>
 			</div>
 		<?php endif ?>
+        <?php if($res['refund_status'] == '待退款'): ?>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="ace-icon fa fa-times"></i>
+                        </button>
+                        <strong>
+                            此订单正在申请退款，如需核销请确认后再操作）
+                        </strong>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
 	</div>
 
 	<div class="row">
@@ -39,8 +54,8 @@
 								<code class="pull-right" id="dt-list-code"></code>
 
 								
-									<h4>[<?php echo $res['name']?>]   <?php echo $res['price']?>  x  <?php echo $res['count']?>   ￥<?php echo $res['single_total']?> '</h4>
-									
+									<h4>[<?php echo $res['name']?>]   <?php echo $res['price']?>  x  <?php echo $res['count']?>   ￥<?php echo $res['single_total']?>'</h4>
+									<h4>结算价格：  <?php echo $res['settle_price']?>  x  <?php echo $res['count']?>   ￥<?php echo $res['settle_price'] * $res['count']?> '</h4>
 									<h4>订单商品ID： <?php echo $res['record_id']?>
 									    商品ID： <?php echo $res['item_id']?>
 										订单ID： <?php echo $res['order_id']?></h4>

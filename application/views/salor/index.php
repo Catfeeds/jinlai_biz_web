@@ -21,6 +21,7 @@
 						<th>价格</th>
 						<th class="hidden-480">数量</th>
 						<th>总价</th>
+						<th>结算总价</th>
 						<th class="hidden-480">购买时间</th>
 						<th class="hidden-480">核销时间</th>
 						<th class="hidden-480">状态</th>
@@ -36,7 +37,8 @@
 							<td><?php echo $value['name']; ?></td>
 							<td><?php echo $value['price']; ?></td>
 							<td class="hidden-480"><?php echo $value['count']; ?></td>
-							<td><?php echo $value['single_total']; ?></td>
+							<td><?= $value['single_total']; ?></td>
+							<td><?= $value['settle_price'] * $value['count']; ?></td>
 							<td class="hidden-480"><?php echo date('Y-m-d H:i:s',$value['time_create']); ?></td>
 
 							<td class="hidden-480"><?php 

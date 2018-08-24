@@ -743,10 +743,13 @@
 									$data_filterd[$data_order_show['full_address']] = $order['province'] . $order['city'] . $order['county'] . '，' . $order['street'];
 								endif;
 							elseif ( is_array($value) ) :
+								if (!isset($data_filterd['订单商品'])) {
+									$data_filterd['订单商品'] = '';
+								}
 								foreach ($value as $itemcount => $items) :
 									$orderitem = $items['item_id'] . ' ' . $items['name'] . ($items['sku_id'] ? '(【' . $items['sku_id'] . $items['sku_name'] . '】)' : '');
-									$orderitem .= ' x ' . $items['count'];
-									$data_filterd['订单商品' . ($itemcount + 1)] = $orderitem;
+									$orderitem .= ' x ' . $items['count'] . '   ';
+									$data_filterd['订单商品'] .= $orderitem;
 								endforeach;
 							endif;
 						endforeach;

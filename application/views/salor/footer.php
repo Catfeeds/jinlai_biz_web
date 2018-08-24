@@ -7,8 +7,8 @@
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">意帮</span>
-							科技公司 &copy; 2015-2018
+							<span class="blue bolder">青岛意帮网络</span>
+							科技有限公司 &copy;
 						</span>
 
 						&nbsp; &nbsp;

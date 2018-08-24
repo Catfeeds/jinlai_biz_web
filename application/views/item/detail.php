@@ -79,6 +79,13 @@
         <dt>商品条形码</dt>
         <dd><?php echo empty($item['barcode'])? 'N/A': $item['barcode'] ?></dd>
 
+
+        <dt>实际销量</dt>
+        <dd><?= $item['sold_overall']?></dd>
+
+        <dt>显示销量</dt>
+        <dd><?= $item['sold_display']?></dd>
+
         <dt>系统分类</dt>
         <dd><?php echo $category['name'].' / ID'. $item['category_id'] ?></dd>
 
@@ -115,6 +122,10 @@
 		<dd>
             <strong>￥ <?php echo $item['price'] ?></strong>
             <?php echo ($item['tag_price'] !== '0.00')? '<del>￥ '.$item['tag_price'].'</del>': NULL ?>
+        </dd>
+        <dt>结算价格</dt>
+        <dd>
+            <strong>￥ <?= $item['settle_price'] ?></strong>
         </dd>
 
         <dt>库存量</dt>

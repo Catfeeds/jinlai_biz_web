@@ -86,12 +86,19 @@
             </div>
             -->
 
-			<div class=form-group>
-				<label for=slogan class="col-sm-2 control-label">宣传语</label>
-				<div class=col-sm-10>
-					<input class=form-control name=slogan type=text value="<?php echo $item['slogan'] ?>" placeholder="宣传语">
-				</div>
-			</div>
+			
+            <div class=form-group>
+                <label for=slogan class="col-sm-2 control-label">宣传语</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=slogan type=text value="<?php echo $item['slogan'] ?>" placeholder="宣传语">
+                </div>
+            </div>
+            <div class=form-group>
+                <label for=address class="col-sm-2 control-label">地址</label>
+                <div class=col-sm-10>
+                    <input class=form-control name=address type=text value="<?php echo $item['address'] ?>" placeholder="地址">
+                </div>
+            </div>
 			<div class=form-group>
 				<label for=description class="col-sm-2 control-label">简介</label>
 				<div class=col-sm-10>
@@ -344,10 +351,45 @@
 
 		<fieldset>
 			<legend>形象展示</legend>
-			<p class=help-block>您可根据自身情况上传合适的照片，向消费者展现企业形象，每种照片可上传4张</p>
+			<p class=help-block>地址信息，只能分别传一张</p>
 
-			<div class=form-group>
-				<label for=url_image_product class="col-sm-2 control-label">产品</label>
+            <div class=form-group>
+                <label for=url_image_product class="col-sm-2 control-label">地址</label>
+                <div class=col-sm-10>
+                    <?php $name_to_upload = 'url_image_service' ?>
+                    <ul class=upload_preview>
+                        <?php if ( !empty($item[$name_to_upload]) ): ?>
+
+                            <?php
+                            $figure_image_urls = explode(',', $item[$name_to_upload]);
+                            foreach($figure_image_urls as $url):
+                                ?>
+                                <li data-input-name="<?php echo $name_to_upload ?>" data-item-url="<?php echo $url ?>">
+                                    <i class="remove fa fa-minus"></i>
+                                    <i class="left fa fa-arrow-left"></i>
+                                    <i class="right fa fa-arrow-right"></i>
+                                    <figure>
+                                        <img src="<?php echo $url ?>">
+                                    </figure>
+                                </li>
+                            <?php endforeach ?>
+
+                        <?php endif ?>
+                    </ul>
+
+                    <div class=selector_zone>
+                        <input id=<?php echo $name_to_upload ?> class=form-control type=file multiple>
+                        <input name=<?php echo $name_to_upload ?> type=hidden value="<?php echo $item[$name_to_upload] ?>">
+
+                        <div class=file_selector><i class="fa fa-plus" aria-hidden=true></i></div>
+                    </div>
+
+                    <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/product" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="1" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
+                </div>
+            </div>
+            <p class=help-block>您可根据自身情况上传合适的照片，向消费者展现企业形象，每种照片可上传4张</p>
+            <div class=form-group>
+                <label for=url_image_product class="col-sm-2 control-label">产品</label>
                 <div class=col-sm-10>
                     <?php $name_to_upload = 'url_image_product' ?>
                     <ul class=upload_preview>
@@ -379,7 +421,7 @@
 
                     <button class="file-upload btn btn-default btn-lg col-xs-12 col-md-3" data-target-dir="<?php echo $this->class_name ?>/product" data-selector-id=<?php echo $name_to_upload ?> data-input-name=<?php echo $name_to_upload ?> data-max-count="4" type=button><i class="fa fa-upload" aria-hidden=true></i> 上传</button>
                 </div>
-			</div>
+            </div>
 
 			<div class=form-group>
 				<label for=url_image_produce class="col-sm-2 control-label">工厂/产地</label>

@@ -1,6 +1,6 @@
 
 <div class="page-content">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<table id="simple-table" class="table  table-bordered table-hover">
@@ -20,7 +20,7 @@
 						<th class="hidden-480">创建时间</th>
 						<th class="hidden-480">状态</th>
 						<th>操作</th>
-						
+
 					</tr>
 				</thead>
 
@@ -43,15 +43,16 @@
 							<?php if ($value['status'] == '待处理'): ?>
 							<td><a class="btn btn-xs btn-success" href="<?php echo BASE_URL("salor/accept?refund_id=") . $value['refund_id']?>" >
 									<i class="ace-icon fa fa-check bigger-120"></i>
+									同意退款
 								</a>
 							</td>
 							<?php else :?>
 								<td></td>
 							<?php endif ?>
-	
+
 						</tr>
 					<?php endforeach; ?>
-					
+
 
 				</tbody>
 
@@ -60,6 +61,5 @@
 
 		</div><!-- /.span -->
 	</div>
-	
-</div>
 
+</div>

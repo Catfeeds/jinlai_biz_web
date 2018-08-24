@@ -56,7 +56,6 @@
 			if($record_id) {
 				$res = $this->db->query("select * from " . $this->table_name . " where record_id={$record_id} and biz_id=" . $this->CI->session->biz_id);
 			} elseif (!empty($vcode) && strlen($vcode) == 10) {
-				
 				$res = $this->db->query("select * from " . $this->table_name . " where verify_code='{$vcode}' and biz_id=" . $this->CI->session->biz_id);
 				// echo "select * from " . $this->table_name . " where verify_code='{$vcode}' and biz_id=" . $this->CI->session->biz_id;
 			}

@@ -42,8 +42,8 @@
 
         <?php if ( ! empty($this->session->stuff_id) && empty($this->stuff)): ?>
         <script>
-            alert('员工关系状态异常，请重新登录')
-            location.href = "<?php echo base_url('logout') ?>"
+            //alert('员工关系状态异常，请重新登录')
+            //location.href = "<?php echo base_url('logout') ?>"
         </script>
         <?php exit();endif; ?>
 
@@ -168,6 +168,7 @@
                                 <li><a href="<?php echo base_url('notice') ?>">系统通知</a></li>
 
                                 <li role=separator class=divider></li>
+                                <li><a href="<?php echo base_url('chat/index') ?>">客服</a></li>
                                 <li><a href="<?php echo base_url('message') ?>">聊天消息</a></li>
                                 <li><a href="<?php echo base_url('message/create') ?>">创建聊天消息</a></li>
 							</ul>

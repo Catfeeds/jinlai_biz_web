@@ -68,6 +68,7 @@
 					foreach ($data['item'] as $key => $value):
 						$user_data[$key] = $value;
 					endforeach;
+					$user_data['hideorigin'] = 'yes'; //默认登录时不再跳转到原来到后台
 					$user_data['time_expire_login'] = time() + 60*60*24 *30; // 默认登录状态保持30天
 					$this->session->set_userdata($user_data);
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>Blank Page - Ace Admin</title>
+		<title>进来商户中心</title>
 
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -47,7 +47,7 @@
 		<div id="navbar" class="navbar navbar-default          ace-save-state">
 			<div class="navbar-container ace-save-state" id="navbar-container">
 				<button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
-					<span class="sr-only">Toggle sidebar</span>
+					<span class="sr-only">菜单</span>
 
 					<span class="icon-bar"></span>
 
@@ -60,7 +60,7 @@
 					<a href="<?php echo BASE_URL("salor/index") ?>" class="navbar-brand">
 						<small>
 							<i class="fa fa-leaf"></i>
-							意帮商户中心
+							进来商户中心
 						</small>
 					</a>
 				</div>
@@ -127,7 +127,7 @@
 						</a>
 						<b class="arrow"></b>
 					</li>
-					<li class="<?php echo $refund; ?>">
+					<li class="<?php echo $chat; ?>">
 						<a href="<?php echo BASE_URL("chat/index");?>">
 							<i class="menu-icon ace-icon fa fa-envelope"></i>
 							<span class="menu-text"> 聊天 </span>
