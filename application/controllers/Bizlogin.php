@@ -59,15 +59,24 @@
 				$params = $data_to_search;
 				$url = api_url('account/login');
 				$result = $this->curl->go($url, $params, 'array');
+
 				if ($result['status'] !== 200):
 					$data['error'] = $result['content']['error']['message'];
 				else:
+
 					// 获取用户信息
 					$data['item'] = $result['content'];
 					// 将信息键值对写入session
 					foreach ($data['item'] as $key => $value):
 						$user_data[$key] = $value;
 					endforeach;
+
+					$url = api_url('biz/detail');
+					$bizdata = $this->curl->go($url, ['app_type'=>'client','id'=>$result['content']['biz_id']], 'array');
+					if ($bizdata['status'] == 200) {
+						$user_data['brief_name'] = $bizdata['content']['brief_name'];
+					}
+
 					$user_data['hideorigin'] = 'yes'; //默认登录时不再跳转到原来到后台
 					$user_data['time_expire_login'] = time() + 60*60*24 *30; // 默认登录状态保持30天
 					$this->session->set_userdata($user_data);

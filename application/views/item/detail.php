@@ -134,6 +134,10 @@
             <strong><?php echo $item['stocks'].' '. $unit_name ?></strong>
             <p class=help-block>若商品存在规格，则为各规格总库存量</p>
         </dd>
+        <dt>最大购买限制</dt>
+        <dd>
+            <strong><?= $item['allow_sold'] ?></strong>
+        </dd>
 
         <dt>物流信息</dt>
         <dd>

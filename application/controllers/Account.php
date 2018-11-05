@@ -54,7 +54,7 @@
 			);
 			
             // 判断是否需要图片验证码
-			//$this->captcha_assess('failed_login_count');
+			$this->captcha_assess('failed_login_count');
 
 			$this->form_validation->set_rules('mobile', '手机号', 'trim|required|exact_length[11]|is_natural_no_zero');
 			$this->form_validation->set_rules('password', '密码', 'trim|required|min_length[6]|max_length[20]');
@@ -73,6 +73,7 @@
 				$params = $data_to_search;
 				$url = api_url($this->class_name. '/login');
 				$result = $this->curl->go($url, $params, 'array');
+
 				if ($result['status'] !== 200):
 					$data['error'] = $result['content']['error']['message'];
 
@@ -91,6 +92,7 @@
 
 					// 将用户手机号写入cookie并保存30天
 					$this->input->set_cookie('mobile', $data['item']['mobile'], 60*60*24 *30, COOKIE_DOMAIN);
+					
 					// 若用户已设置密码则转到首页，否则转到密码设置页
 					if ( !empty($data['item']['password']) ):
 						redirect( base_url() );

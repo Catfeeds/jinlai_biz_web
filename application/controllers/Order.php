@@ -75,11 +75,7 @@
 			$params = $condition;
 			$url = api_url($this->class_name. '/index');
 			$result = $this->curl->go($url, $params, 'array');
-			if (isset($_GET['debug'])){
-				var_dump($result);
-				var_dump($url);
-				var_dump($params);
-			}
+			
 			if ($result['status'] === 200):
 				$data['items'] = $result['content'];
 			else:
@@ -681,6 +677,7 @@
             $this->form_validation->set_rules('time_create_max', '结束时间', 'trim|required');
             $this->form_validation->set_rules('user_id', '用户id', 'trim|integer');
             $this->form_validation->set_rules('order_id', '起始订单id', 'trim|integer|max_length[11]');
+            $this->form_validation->set_rules('item_id', '商品id', 'trim|integer|max_length[11]');
             $this->form_validation->set_rules('limit', '总量', 'trim|integer|max_length[4]');
             $this->form_validation->set_rules('mobile', '手机号', 'trim|exact_length[11]');
             $this->form_validation->set_rules('payment_type', '支付方式', 'trim|in_list[现金,银行转账,微信支付,支付宝,余额,待支付]');
@@ -705,13 +702,16 @@
 				);
 				// 自动生成无需特别处理的数据
 				$data_need_no_prepare = array(
-                    'status','user_id','mobile','payment_type','limit'
+                    'status','user_id','mobile','payment_type','limit','item_id'
 				);
 				foreach ($data_need_no_prepare as $name)
 					$data_to_send[$name] = $this->input->post($name);
 
+				//订单商品类别
+				$orderitemType = empty($this->input->post('nature')) ? '' : $this->input->post('nature');
+
 				// 查找是否存在文件缓存
-				$new_condition = sha1(implode('-', $data_to_send));
+				$new_condition = sha1(implode('-', $data_to_send)) . $orderitemType;
 				if (isset($_COOKIE[$new_condition]) && file_exists($_COOKIE[$new_condition])) :
 					redirect('/' . $_COOKIE[$new_condition]);
 					exit;
@@ -721,6 +721,7 @@
 				$params = $data_to_send;
 				$url    = api_url($this->class_name. '/index');
 				$result = $this->curl->go($url, $params, 'array');
+
 				//api返回成功
 				if ($result['status'] == 200):
 					$this->user_id = $this->session->user_id;
@@ -747,20 +748,31 @@
 									$data_filterd['订单商品'] = '';
 								}
 								foreach ($value as $itemcount => $items) :
-									$orderitem = $items['item_id'] . ' ' . $items['name'] . ($items['sku_id'] ? '(【' . $items['sku_id'] . $items['sku_name'] . '】)' : '');
+									$orderitem = $items['nature'] . ' ' . $items['item_id'] . ' ' . $items['name'] . ($items['sku_id'] ? '(【' . $items['sku_id'] . $items['sku_name'] . '】)' : '');
 									$orderitem .= ' x ' . $items['count'] . '   ';
 									$data_filterd['订单商品'] .= $orderitem;
 								endforeach;
 							endif;
 						endforeach;
-						$data_list[] = $data_filterd;
+						if (empty($orderitemType)) {
+							$data_list[] = $data_filterd;
+						} elseif (strpos( '-' . $data_filterd['订单商品'], $orderitemType)) {
+							$data_list[] = $data_filterd;
+						}
 					endforeach;
+					if (empty($data_list)) {
+						$data['error'] = '没有符合条件的数据！';
+                        $this->load->view('templates/header', $data);
+                        $this->load->view($this->view_root.'/export', $data);
+                        $this->load->view('templates/footer', $data);
+                        return true;
+					}
 					//导出
 					$this->load->library('Excel');
 					$this->excel->export($data_list, $data_to_send['time_create_min'] . '-' . $data_to_send['time_create_max'] . '订单导出', 'save');
 					if ($this->result['status'] == 200) :
 						//文件生成 后 保存 cookie
-						$cookie_condition = sha1(implode('-', $params));
+						$cookie_condition = sha1(implode('-', $params)) . $orderitemType;
 						setcookie($cookie_condition,  $this->result['content'], time() + 180);
 						redirect('/' . $this->result['content']);
 						exit;
@@ -782,6 +794,52 @@
                     $this->load->view($this->view_root.'/export', $data);
                     $this->load->view('templates/footer', $data);
 				endif;
+			endif;
+		}
+
+		/**
+		 * TODO 根据条件导出订单信息为excel
+		 *
+		 * 起止时间、字段等
+		 */
+		public function orderitemsexport(){
+			// 页面信息
+            $data = [
+                'title' => '订单商品导出'. $this->class_name_cn,
+                'class' => 'orderitemsexport',
+                'error' => '', // 预设错误提示
+    
+            ];
+
+			// 待验证的表单项
+			$this->form_validation->set_error_delimiters('', '；');
+            $this->form_validation->set_rules('time_create_min', '开始时间', 'trim|required');
+            $this->form_validation->set_rules('time_create_max', '结束时间', 'trim|required');
+            $this->form_validation->set_rules('item_id', '商品id', 'trim|required|integer|max_length[11]');
+
+            // 若表单提交不成功
+			if ($this->form_validation->run() === FALSE):
+				$data['error'] .= validation_errors();
+				$this->load->view('templates/header', $data);
+				$this->load->view($this->view_root.'/orderitemsexport', $data);
+				$this->load->view('templates/footer', $data);
+			else:
+				$data = [];
+				$data['time_create_min'] = empty($this->input->post('time_create_min')) ? time() : strtotime($this->input->post('time_create_min'));
+				$data['time_create_max'] = empty($this->input->post('time_create_max')) ? time() : strtotime($this->input->post('time_create_max'));
+				$data['item_id']         = empty($this->input->post('item_id')) ? '' : intval($this->input->post('item_id'));
+
+				$this->load->model('orderitems_model');
+				$res = $this->orderitems_model->itemslist($data);
+				if (empty($res)) {
+					$data['error'] = '没有符合条件的数据！';
+					$this->load->view('templates/header', $data);
+					$this->load->view($this->view_root.'/orderitemsexport', $data);
+					$this->load->view('templates/footer', $data);
+				}
+				//导出
+				$this->load->library('Excel');
+				$this->excel->export($res, date('Y-m-d') . '订单导出');
 			endif;
 		}
 		/**

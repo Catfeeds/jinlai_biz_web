@@ -70,7 +70,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-$active_group = (ENVIRONMENT === 'production')? 'production': 'development_liuyajie';
+$active_group = (ENVIRONMENT === 'production')? 'production': 'newbase';
 $query_builder = TRUE;
 
 $db['production'] = array(
@@ -138,6 +138,48 @@ $db['development_liuyajie'] = array(
     'failover' => array(),
     'save_queries' => TRUE,
 );
-
+$db['newbase'] = array(
+    // 'dsn' => 'mysqli://basic:Basic2016@sensestrong.mysql.rds.aliyuncs.com/basic',
+    'dsn'      => '',
+    'hostname' => 'ybdevelopouter01.mysql.zhangbei.rds.aliyuncs.com', // 数据库URL，以阿里云为例
+    'username' => 'dbroot', // 数据库用户名
+    'password' => 'j4mWRpqZWBmV', // 数据库密码
+    'database' => 'jinlai', //数据库名
+    'dbdriver' => 'mysqli',
+    'dbprefix' => '',
+    'pconnect' => FALSE,
+    'db_debug' => (ENVIRONMENT !== 'production'),
+    'cache_on' => FALSE,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+    'swap_pre' => '',
+    'encrypt' => FALSE,
+    'compress' => FALSE,
+    'stricton' => FALSE,
+    'failover' => array(),
+    'save_queries' => TRUE
+);
+$db['local'] = array(
+    'dsn'   => '',
+    'hostname' => '127.0.0.1',
+    'username' => 'root',
+    'password' => '1234',
+    'database' => 'jinlailocal',
+    'dbdriver' => 'mysqli', // 根据本地环境的不同，可能需要修改为mysql
+    'dbprefix' => '',
+    'pconnect' => FALSE,
+    'db_debug' => TRUE,
+    'cache_on' => FALSE,
+    'cachedir' => '',
+    'char_set' => 'utf8',
+    'dbcollat' => 'utf8_general_ci',
+    'swap_pre' => '',
+    'encrypt' => FALSE,
+    'compress' => FALSE,
+    'stricton' => FALSE,
+    'failover' => array(),
+    'save_queries' => TRUE
+);
 /* End of file database.php */
 /* Location: ./application/config/database.php */

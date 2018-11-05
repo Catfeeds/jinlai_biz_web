@@ -32,7 +32,7 @@
 </div>
 
 <div id=content class=container>
-    <?php if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.$error.'</div>' ?>
+    <?php if ( !empty($error) ) echo '<div class="alert alert-warning" role=alert>'.print_r($error).'</div>' ?>
 
 	<h2><?php echo $title ?></h2>
 	<?php if ( !empty($content) ): ?>

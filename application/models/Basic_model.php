@@ -313,6 +313,7 @@
 			// 未传入创建时间时，默认创建时间为当前时间，创建者和最后操作者为当前用户
 			if ( !isset($data['time_create']) )
 				$data['time_create'] = date('Y-m-d H:i:s');
+
 			// 尝试写入
 			$insert_result = $this->db->insert($this->table_name, $data);
 
@@ -359,14 +360,6 @@
             $query = $this->db->get_where($id_name, $data);
             return $query->row_array();
         } // end password_check
-
-        //返回整表的字段
-        public function tablefields(){
-			if ($this->db->table_exists($this->table_name)){
-				return $this->db->list_fields($this->table_name);
-			}
-			return false;
-		}
 
 	} // end Class Basic_model
 

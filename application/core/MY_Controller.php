@@ -100,6 +100,7 @@
             if ( ! empty($this->session->stuff_id) )
                 $this->stuff = $this->get_stuff($this->session->stuff_id, FALSE);
 
+
             // 检查当前设备信息
 			$this->user_agent_determine();
 	    } // end __construct

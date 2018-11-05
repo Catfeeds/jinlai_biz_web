@@ -43,9 +43,7 @@
 						<div class="login-container">
 							<div class="center">
 								<h1>
-									<i class="ace-icon fa fa-leaf green"></i>
-									<span class="red">意帮</span>
-									<span class="white" id="id-text2">科技</span>
+									<span class="red">进来商城</span>
 								</h1>
 								<h4 class="blue" id="id-company-text">&copy; 商户中心</h4>
 							</div>

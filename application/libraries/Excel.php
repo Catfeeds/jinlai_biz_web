@@ -182,7 +182,7 @@
                 $this->CI->result['status'] = 411;
                 $this->CI->result['content']['error']['message'] = '请确定文件输出位置';
             endif;
-
+    
             //创建一个spreadsheet
             $this->_phpexcel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
             $this->_phpexcel->getProperties()
@@ -202,7 +202,7 @@
             endforeach;
 
             //文件名
-            $filename = $this->CI->user_id . '-' . $this->CI->class_name . '-' . date('Ymd_his') . '.xlsx' ;
+            $filename =  $this->CI->class_name . '-' . date('Ymd_his') . '.xlsx' ;
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($this->_phpexcel);
 
             //文件形式保存

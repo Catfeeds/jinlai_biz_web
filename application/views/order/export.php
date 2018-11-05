@@ -55,6 +55,18 @@
 					<input class=form-control name=time_create_max id="time_create_max" type="text" placeholder="选择订单开始时间" value="<?php echo set_value('time_create_min',date('Y-m-d H:i')) ?>" required>
 				</div>
 			</div>
+
+			<div class=form-group>
+				<label for=brand_id class="col-sm-2 control-label">订单类别</label>
+				<div class="col-sm-10">
+                    <select class=form-control name="nature">
+                        <option value="" selected="selected">全部</option>
+                        <option value="服务">服务</option>
+                        <option value="商品">商品</option>
+                    </select>
+                </div>
+			</div>
+
 			<div class=form-group>
 				<label for=brand_id class="col-sm-2 control-label">用户ID</label>
 				<div class="col-sm-10">
@@ -65,6 +77,12 @@
 				<label for=brand_id class="col-sm-2 control-label">手机号</label>
 				<div class="col-sm-10">
 					<input class=form-control name=mobile type=tel maxlength="11" value="<?php echo set_value('mobile') ?>" placeholder="填写手机号">
+				</div>
+			</div>
+			<div class=form-group>
+				<label for=brand_id class="col-sm-2 control-label">商品id</label>
+				<div class="col-sm-10">
+					<input class=form-control name="item_id" type=number maxlength="11" value="<?php echo set_value('item_id') ?>" placeholder="商品id">
 				</div>
 			</div>
 			<div class=form-group>

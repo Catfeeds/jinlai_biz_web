@@ -56,7 +56,11 @@
 			if($record_id) {
 				$res = $this->db->query("select * from " . $this->table_name . " where record_id={$record_id} and biz_id=" . $this->CI->session->biz_id);
 			} elseif (!empty($vcode) && strlen($vcode) == 10) {
-				$res = $this->db->query("select * from " . $this->table_name . " where verify_code='{$vcode}' and biz_id=" . $this->CI->session->biz_id);
+				if (intval($this->CI->session->biz_id) == 212) {
+					$res = $this->db->query("select * from " . $this->table_name . " where verify_code='{$vcode}' and (biz_id=212 or biz_id=246)");
+				} else {
+					$res = $this->db->query("select * from " . $this->table_name . " where verify_code='{$vcode}' and biz_id=" . $this->CI->session->biz_id);
+				}
 				// echo "select * from " . $this->table_name . " where verify_code='{$vcode}' and biz_id=" . $this->CI->session->biz_id;
 			}
 			
@@ -70,7 +74,12 @@
 
 		public function verify($vcode, $order_id){
 			$now = time();
-			$res = $this->db->query("update " . $this->table_name . " set time_verified={$now},`status`='已使用' where verify_code='{$vcode}' and time_expire>={$now} and status='未消费' and biz_id=" . $this->CI->session->biz_id);
+			$res = [];
+			if (intval($this->CI->session->biz_id) == 212) {
+				$res = $this->db->query("update " . $this->table_name . " set time_verified={$now},`status`='已使用' where verify_code='{$vcode}' and time_expire>={$now} and status='未消费' and (biz_id=212 or biz_id=246)");
+			} else {
+				$res = $this->db->query("update " . $this->table_name . " set time_verified={$now},`status`='已使用' where verify_code='{$vcode}' and time_expire>={$now} and status='未消费' and biz_id=" . $this->CI->session->biz_id);
+			}
 			if($res){
 				$res = $this->db->query("select count(*) count from " . $this->table_name . " where order_id=" . $order_id . " and status='未消费'");
 				$data = $res->result_array();
@@ -135,5 +144,20 @@
 
 	        $cur < $page_num ? $pagestr .= '<li class="next"><a href="'.$url.($cur+1).$url_suffix.'"><i class="fa fa-angle-right"></i></a></li><li class="next"><a href="'.$url.$page_num.$url_suffix.'"><i class="fa fa-angle-double-right"></i></a></li>' : $pagestr .= '<li class="next disabled"><a href="#"><i class="fa fa-angle-right"></i></a></li><li class="next disabled"><a href="#"><i class="fa fa-angle-double-right"></i></a></li>';
 	        return $pagestr;
+	    }
+
+	    public function itemslist($params) {
+	    	$sql  = 'select * from order_items where time_create >=' . intval($params['time_create_min']);
+	    	$sql .= ' and time_create <=' . intval($params['time_create_max']);
+	    	if (!empty($params['item_id'])) {
+	    		$sql .= ' and item_id=' . $params['item_id'];
+	    	}
+	    	$sql .= ' order by order_id limit 0, 500';
+	    	$res = $this->db->query($sql);
+	    	$data = $res->result_array();
+			if($data) {
+				return $data;
+			}
+			return [];
 	    }
 	}

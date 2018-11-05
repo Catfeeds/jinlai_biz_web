@@ -134,6 +134,54 @@
 						</a>
 						<b class="arrow"></b>
 					</li>
+
+				
+
+					<li>
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-list"></i>
+							<span class="menu-text"> 活动 </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+							<li>
+								<a href="/activity/activity_index">
+									<i class="menu-icon ace-icon glyphicon glyphicon-align-left"></i>
+									<span class="menu-text"> 已领取列表 </span>
+								</a>
+								<b class="arrow"></b>
+							</li>
+
+							<li>
+								<a href="/activity/activity_verify">
+									<i class="menu-icon ace-icon glyphicon glyphicon-ok"></i>
+									<span class="menu-text"> 确认活动券 </span>
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<?php if ($inWeb) :?>
+							<li >
+								<a href="/activity/activity_add">
+									<i class="menu-icon ace-icon glyphicon glyphicon-plus"></i>
+									<span class="menu-text"> 添加活动券 </span>
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<li>
+								<a href="/activity/activity_ticketlist">
+									<i class="menu-icon ace-icon glyphicon glyphicon-tags"></i>
+									<span class="menu-text"> 活动券列表 </span>
+								</a>
+								<b class="arrow"></b>
+							</li>
+							<?php endif; ?>
+
+						</ul>
+					</li>
 				</ul><!-- /.nav-list -->
 
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

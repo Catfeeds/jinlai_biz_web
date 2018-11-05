@@ -38,6 +38,7 @@
 				if(vcode){
 					$.get('/salor/confirm?verify_code=' + vcode + '&oid=' + oid, function(res){
 						if (res == 'success'){
+							alert('核销成功');
 							window.location = '<?php echo BASE_URL("salor/detail?done=1&record_id=") ?>' + rid
 						} else {
 							$("#errmsg").text('核销失败,请稍后重试');

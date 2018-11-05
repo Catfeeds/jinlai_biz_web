@@ -10,13 +10,15 @@
 	 */
 	class Salor extends MY_Controller
 	{
-		
-
+		public $inWeb = FALSE;
 		public function __construct(){
 			parent::__construct();
 			// 若已登录，转到首页
 			($this->session->time_expire_login > time()) OR redirect( base_url("bizlogin/index") );
 			// 向类属性赋值
+			if ($_SERVER['HTTP_X_REAL_IP'] == '218.201.110.203') {
+				$this->inWeb = TRUE;
+			}
 			$this->class_name = strtolower(__CLASS__);
 			$this->class_name_cn = '商家后台'; // 改这里……
 			$this->table_name = 'order_items'; // 和这里……
@@ -32,7 +34,7 @@
 		} // end __construct
 
 		public function index(){
-			$data = ['title'=>'核销列表', 'index'=>'active', 'verify'=>'','refund'=>'', 'chat'=>'', 'name'=>$this->session->nickname];
+			$data = ['title'=>'核销列表', 'index'=>'active', 'verify'=>'','refund'=>'', 'chat'=>'','activity'=>'', 'name'=>$this->session->brief_name, 'inWeb'=>$this->inWeb,];
 
 			$this->load->model('orderitems_model');
 			$data['status'] = empty($this->input->get('status')) ? 'all' : $this->input->get('status');
@@ -46,7 +48,7 @@
 			$this->load->view($this->view_root.'/index-js', $data);
 		}
 		public function verify(){
-			$data = ['title'=>'核销', 'index'=>'', 'verify'=>'active', 'refund'=>'', 'chat'=>'','name'=>$this->session->nickname];
+			$data = ['title'=>'核销', 'index'=>'', 'verify'=>'active', 'refund'=>'', 'chat'=>'','activity'=>'','name'=>$this->session->brief_name, 'inWeb'=>$this->inWeb];
 			$this->load->view($this->view_root.'/header', $data);
 			$this->load->view($this->view_root.'/verify', $data);
 			$this->load->view($this->view_root.'/footer', $data);
@@ -54,7 +56,7 @@
 		}
 		public function detail(){
 			$record_id = intval($this->input->get('record_id'));
-			$data = ['title'=>'订单详情', 'index'=>'', 'verify'=>'','refund'=>'', 'chat'=>'', 'name'=>$this->session->nickname, 'large'=>'col-xs-5', 'offset'=>' col-xs-offset-2'];
+			$data = ['title'=>'订单详情', 'index'=>'', 'verify'=>'','refund'=>'', 'chat'=>'', 'activity'=>'','name'=>$this->session->brief_name, 'large'=>'col-xs-5', 'offset'=>' col-xs-offset-2', 'inWeb'=>$this->inWeb];
 			$this->load->model('orderitems_model');
 			$data['res'] = $this->orderitems_model->getdetail($record_id, false);
 			if (empty($data['res'])) {
@@ -68,7 +70,7 @@
 			$this->load->view($this->view_root.'/footer', $data);
 		}
 		public function ajaxdetail(){
-			$returnJson = ['status'=>100, 'allowcheck'=>'no', 'msg'=>'', 'html'=>''];
+			$returnJson = ['status'=>100, 'allowcheck'=>'no', 'msg'=>'', 'html'=>'', 'inWeb'=>$this->inWeb];
 			$data = ['large'=>'col-md-6 col-xs-12' ,'offset'=>'col-md-offset-1 col-xs-offset-0'];
 			$verify_code = $this->input->get('verify_code');
 			if (!preg_match('/\d{10}/', $verify_code)) {
@@ -125,7 +127,7 @@
 		}
 
 		public function refund(){
-			$data = ['title'=>'核销列表', 'index'=>'', 'verify'=>'','refund'=>'active', 'chat'=>'', 'name'=>$this->session->nickname, 'res'=>[]];
+			$data = ['title'=>'核销列表', 'index'=>'', 'verify'=>'','refund'=>'active', 'chat'=>'', 'activity'=>'','name'=>$this->session->brief_name, 'res'=>[], 'inWeb'=>$this->inWeb];
 			$params = [];
 			$url = api_url('refund/index');
 			$res = $this->curl->go($url, $params, 'array');
@@ -140,7 +142,7 @@
 		}
 
 		public function accept(){
-			$data = ['title'=>'核销列表', 'index'=>'', 'verify'=>'','refund'=>'', 'chat'=>'', 'name'=>$this->session->nickname];
+			$data = ['title'=>'核销列表', 'index'=>'', 'verify'=>'','refund'=>'', 'chat'=>'','activity'=>'', 'name'=>$this->session->brief_name, 'inWeb'=>$this->inWeb];
 			$refund_id = $this->input->get('refund_id');
 			$url = api_url('refund/detail');
 			$res = $this->curl->go($url, ['id'=>$refund_id], 'array');

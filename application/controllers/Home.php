@@ -13,12 +13,10 @@
         public function __construct()
         {
             parent::__construct();
+
 			// 未登录用户转到登录页
 			($this->session->time_expire_login > time()) OR redirect( base_url('login') );
 
-			if (isset($this->session->hideorigin)){
-                redirect( base_url('salor/index') );
-            }
             // 向类属性赋值
             $this->class_name = strtolower(__CLASS__);
             $this->class_name_cn = '首页'; // 改这里……
@@ -30,7 +28,6 @@
 		// 首页
 		public function index()
 		{
-
 			// 页面信息
 			$data = array(
 				'title' => '进来商家中心', // 页面标题
